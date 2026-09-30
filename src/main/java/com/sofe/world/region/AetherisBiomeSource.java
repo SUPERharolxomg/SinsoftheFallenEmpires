@@ -12,6 +12,7 @@ import net.minecraft.world.level.biome.Climate;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -36,22 +37,38 @@ public class AetherisBiomeSource extends BiomeSource {
             Codec.INT.fieldOf("max_z").forGetter(RegionBounds::maxZ)
     ).apply(i, RegionBounds::new));
 
+    /**
+     * The Ashen Wastes: the outer ring of Sulthari, beyond {@code innerRadius} blocks from the
+     * region's center (with a wavy edge). Optional so worlds created before it keep their biomes.
+     */
+    public record Wastes(Holder<Biome> biome, int innerRadius) {
+        public static final Codec<Wastes> CODEC = RecordCodecBuilder.create(i -> i.group(
+                Biome.CODEC.fieldOf("biome").forGetter(Wastes::biome),
+                Codec.INT.fieldOf("inner_radius").forGetter(Wastes::innerRadius)
+        ).apply(i, Wastes::new));
+    }
+
     public static final Codec<AetherisBiomeSource> CODEC = RecordCodecBuilder.<AetherisBiomeSource>mapCodec(i -> i.group(
             BOUNDS_CODEC.listOf().fieldOf("regions").forGetter(s -> s.map.bounds()),
-            Codec.unboundedMap(REGION_CODEC, Biome.CODEC).fieldOf("biomes").forGetter(s -> s.biomes)
+            Codec.unboundedMap(REGION_CODEC, Biome.CODEC).fieldOf("biomes").forGetter(s -> s.biomes),
+            Wastes.CODEC.optionalFieldOf("ashen_wastes").forGetter(s -> s.wastes)
     ).apply(i, AetherisBiomeSource::new)).flatXmap(AetherisBiomeSource::validate, DataResult::success).codec();
 
     private final RegionMap map;
     private final Map<Region, Holder<Biome>> biomes;
+    private final Optional<Wastes> wastes;
+    private final Optional<RegionBounds> sulthari;
 
     /** Unchecked constructor used by the codec; {@link #validate} runs right after it. */
-    private AetherisBiomeSource(List<RegionBounds> bounds, Map<Region, Holder<Biome>> biomes) {
+    private AetherisBiomeSource(List<RegionBounds> bounds, Map<Region, Holder<Biome>> biomes, Optional<Wastes> wastes) {
         this.map = new RegionMap(bounds);
         this.biomes = new EnumMap<>(biomes);
+        this.wastes = wastes;
+        this.sulthari = bounds.stream().filter(b -> b.region() == Region.SULTHARI).findFirst();
     }
 
-    public AetherisBiomeSource(RegionMap map, Map<Region, Holder<Biome>> biomes) {
-        this(map.bounds(), biomes);
+    public AetherisBiomeSource(RegionMap map, Map<Region, Holder<Biome>> biomes, Optional<Wastes> wastes) {
+        this(map.bounds(), biomes, wastes);
         validate(this).getOrThrow(false, message -> {
             throw new IllegalArgumentException(message);
         });
@@ -77,12 +94,17 @@ public class AetherisBiomeSource extends BiomeSource {
 
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-        return biomes.values().stream().distinct();
+        return Stream.concat(biomes.values().stream(), wastes.stream().map(Wastes::biome)).distinct();
     }
 
     @Override
     public Holder<Biome> getNoiseBiome(int quartX, int quartY, int quartZ, Climate.Sampler sampler) {
-        Region region = map.regionAt(QuartPos.toBlock(quartX), QuartPos.toBlock(quartZ));
+        int x = QuartPos.toBlock(quartX), z = QuartPos.toBlock(quartZ);
+        Region region = map.regionAt(x, z);
+        if (region == Region.SULTHARI && wastes.isPresent() && sulthari.isPresent()
+                && AshenWastes.contains(sulthari.get(), wastes.get().innerRadius(), x, z)) {
+            return wastes.get().biome();
+        }
         return biomes.get(region);
     }
 }

@@ -1,14 +1,64 @@
 package com.sofe.registry;
 
 import com.sofe.SoFEMod;
+import com.sofe.entity.BearerCorpseEntity;
+import com.sofe.entity.VoidCreature;
+import com.sofe.entity.VoidStalker;
+import com.sofe.entity.VoidWretch;
+import com.sofe.entity.boss.BrassSentinelEntity;
+import com.sofe.entity.npc.BearerNpcEntity;
+import com.sofe.entity.npc.MerchantNpcEntity;
+import com.sofe.entity.npc.StoryNpcEntity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-/** Archsins, Broken Oaths, NPCs, summons and mobs are added here from Sprint 3 on. */
+/** Void creatures, story NPCs, merchants, the Bearer's corpse and the bosses. */
 public final class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, SoFEMod.MOD_ID);
 
+    public static final RegistryObject<EntityType<VoidWretch>> VOID_WRETCH = ENTITIES.register("void_wretch",
+            () -> EntityType.Builder.of(VoidWretch::new, MobCategory.MONSTER).sized(0.6f, 1.95f).clientTrackingRange(8).build("void_wretch"));
+    public static final RegistryObject<EntityType<VoidStalker>> VOID_STALKER = ENTITIES.register("void_stalker",
+            () -> EntityType.Builder.of(VoidStalker::new, MobCategory.MONSTER).sized(0.6f, 1.6f).clientTrackingRange(8).build("void_stalker"));
+
+    public static final RegistryObject<EntityType<StoryNpcEntity>> STORY_NPC = ENTITIES.register("story_npc",
+            () -> EntityType.Builder.of(StoryNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("story_npc"));
+    public static final RegistryObject<EntityType<BearerNpcEntity>> BEARER_NPC = ENTITIES.register("bearer_npc",
+            () -> EntityType.Builder.of(BearerNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("bearer_npc"));
+    public static final RegistryObject<EntityType<MerchantNpcEntity>> MERCHANT = ENTITIES.register("merchant",
+            () -> EntityType.Builder.of(MerchantNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("merchant"));
+
+    public static final RegistryObject<EntityType<BearerCorpseEntity>> BEARER_CORPSE = ENTITIES.register("bearer_corpse",
+            () -> EntityType.Builder.<BearerCorpseEntity>of(BearerCorpseEntity::new, MobCategory.MISC).sized(1.8f, 0.5f)
+                    .fireImmune().clientTrackingRange(16).build("bearer_corpse"));
+
+    public static final RegistryObject<EntityType<BrassSentinelEntity>> BRASS_SENTINEL = ENTITIES.register("brass_sentinel",
+            () -> EntityType.Builder.of(BrassSentinelEntity::new, MobCategory.MONSTER).sized(1.4f, 2.9f).fireImmune()
+                    .clientTrackingRange(10).build("brass_sentinel"));
+
     private EntityRegistry() {
+    }
+
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(VOID_WRETCH.get(), VoidWretch.attributes().build());
+        event.put(VOID_STALKER.get(), VoidStalker.attributes().build());
+        event.put(STORY_NPC.get(), StoryNpcEntity.attributes().build());
+        event.put(BEARER_NPC.get(), StoryNpcEntity.attributes().build());
+        event.put(MERCHANT.get(), StoryNpcEntity.attributes().build());
+        event.put(BRASS_SENTINEL.get(), BrassSentinelEntity.attributes().build());
+    }
+
+    public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
+        event.register(VOID_WRETCH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                VoidCreature::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(VOID_STALKER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                VoidCreature::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
 }

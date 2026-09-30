@@ -5,8 +5,9 @@ import com.sofe.network.SyncCombatPacket;
 import com.sofe.player.PlayerClass;
 import com.sofe.player.PlayerClassCapability;
 import com.sofe.player.PlayerClassData;
-import com.sofe.skill.SkillCatalog;
-import com.sofe.skill.SkillInfo;
+import com.sofe.progression.CharacterStats;
+import com.sofe.progression.ProgressionCapability;
+import com.sofe.skill.data.ResourceRules;
 import com.sofe.skill.data.SkillDataManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
@@ -31,9 +32,19 @@ public final class CombatHandler {
     public static void refresh(ServerPlayer player) {
         Optional<PlayerClass> playerClass = PlayerClassCapability.get(player).flatMap(PlayerClassData::get);
         CombatCapability.get(player).ifPresent(combat -> {
-            playerClass.flatMap(SkillDataManager::forClass).ifPresent(data -> combat.configure(data.resource()));
+            playerClass.flatMap(SkillDataManager::forClass).ifPresent(data -> combat.configure(withAttributes(player, data.resource())));
+            CharacterStats.applyHealth(player);
             sync(player);
         });
+    }
+
+    /** Intellect, Will and Charisma raise the class resource's maximum; Will its regeneration too. */
+    private static ResourceRules withAttributes(ServerPlayer player, ResourceRules base) {
+        Optional<PlayerClass> playerClass = PlayerClassCapability.get(player).flatMap(PlayerClassData::get);
+        return CharacterStats.effects(player).map(fx -> {
+            int max = base.max() + playerClass.map(c -> fx.maxResourceBonus(c.resource())).orElse(0);
+            return new ResourceRules(max, Math.min(base.start(), max), (float) (base.regenPerSecond() * fx.regenMultiplier()));
+        }).orElse(base);
     }
 
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
@@ -83,11 +94,12 @@ public final class CombatHandler {
         Optional<PlayerClass> playerClass = PlayerClassCapability.get(player).flatMap(PlayerClassData::get);
         if (playerClass.isEmpty() || combat.resource().isEmpty()) return;
         ResourcePool resource = combat.resource().get();
-        List<SyncCombatPacket.SlotCooldown> slots = SkillCatalog.defaultLoadout(playerClass.get()).stream()
-                .map(SkillInfo::id)
+        List<String> learned = ProgressionCapability.get(player).map(p -> p.skills().slots()).orElse(List.of());
+        List<SyncCombatPacket.SlotCooldown> slots = learned.stream()
+                .map(id -> id == null ? "" : id)
                 .map(id -> new SyncCombatPacket.SlotCooldown(id, combat.cooldowns().end(id), (int) combat.cooldowns().duration(id)))
                 .toList();
         SoFENetwork.sendTo(player, new SyncCombatPacket(playerClass.get().resource(), resource.current(), resource.max(),
-                combat.runes().current(), slots));
+                combat.runes().current(), slots, combat.marks(), combat.souls()));
     }
 }

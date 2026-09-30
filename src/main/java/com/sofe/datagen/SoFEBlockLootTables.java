@@ -1,6 +1,8 @@
 package com.sofe.datagen;
 
 import com.sofe.registry.BlockRegistry;
+import com.sofe.registry.SoFEBlocks;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
@@ -29,6 +31,15 @@ public class SoFEBlockLootTables extends BlockLootSubProvider {
                 } else {
                     dropSelf(block);
                 }
+            }
+        }
+        for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
+            Block block = entry.block().get();
+            if (block.getLootTable().equals(BuiltInLootTables.EMPTY)) continue; // the Seal Veil drops nothing
+            if (entry.shape() == SoFEBlocks.Shape.SLAB) {
+                add(block, createSlabItemTable(block));
+            } else {
+                dropSelf(block);
             }
         }
     }

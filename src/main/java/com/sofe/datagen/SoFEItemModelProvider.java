@@ -4,6 +4,7 @@ import com.sofe.SoFEMod;
 import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.registry.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -24,5 +25,7 @@ public class SoFEItemModelProvider extends ItemModelProvider {
                 }
             }
         }
+        basicItem(ItemRegistry.RETURN_SCROLL.get());
+        ItemRegistry.spawnEggs().forEach(egg -> withExistingParent(egg.getId().getPath(), mcLoc("item/template_spawn_egg")));
     }
 }

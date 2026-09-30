@@ -15,6 +15,8 @@ public final class CombatData {
     /** Resource value read from the save before the class rules were known. */
     private Float savedValue;
     private boolean dirty = true;
+    /** Thief Marks on the current target and Necromancer souls held; used by their skills (Sprint 6). */
+    private int marks, souls;
 
     public Optional<ResourcePool> resource() {
         return Optional.ofNullable(resource);
@@ -55,6 +57,26 @@ public final class CombatData {
         resource().ifPresent(ResourcePool::reset);
         cooldowns.clear();
         runes.clear();
+        marks = 0;
+        souls = 0;
+        markDirty();
+    }
+
+    public int marks() {
+        return marks;
+    }
+
+    public int souls() {
+        return souls;
+    }
+
+    public void setMarks(int value) {
+        marks = Math.max(0, value);
+        markDirty();
+    }
+
+    public void setSouls(int value) {
+        souls = Math.max(0, value);
         markDirty();
     }
 

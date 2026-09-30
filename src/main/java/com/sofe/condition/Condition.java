@@ -38,6 +38,22 @@ public sealed interface Condition {
         }
     }
 
+    /** A region's fate chosen in a side quest (docs/Jugabilidad.md, "Fates and epilogues"). */
+    record FateIs(String region, String fate) implements Condition {
+        @Override
+        public boolean test(ProgressView progress) {
+            return fate.equals(progress.fate(region));
+        }
+    }
+
+    /** The player's Bearer, for scenes that change with the hero (the King's variant of the Council). */
+    record ClassIs(String playerClass) implements Condition {
+        @Override
+        public boolean test(ProgressView progress) {
+            return playerClass.equals(progress.playerClass());
+        }
+    }
+
     record AllOf(List<Condition> conditions) implements Condition {
         public AllOf {
             conditions = List.copyOf(conditions);
