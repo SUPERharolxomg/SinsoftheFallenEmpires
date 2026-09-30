@@ -89,8 +89,18 @@ for name, box in zip(portraits, portrait_boxes):
 # --- Bearer selection cards without the hero (512x640) ---
 classes = ['knight', 'necromancer', 'sorceress', 'thief', 'king']
 card_boxes = [(660, 282, 854, 532), (866, 280, 1060, 532), (1072, 280, 1264, 532), (1274, 280, 1472, 532), (1484, 280, 1682, 532)]
+def solid_edges(img, threshold=160):
+    """Cards: pixels are either fully visible or fully transparent, so the sheet's soft halo
+    does not leave dark specks around the frame and the emblem."""
+    a = np.array(img)
+    a[..., 3] = np.where(a[..., 3] >= threshold, 255, 0)
+    return Image.fromarray(a)
+
+
 for name, box in zip(classes, card_boxes):
-    both(trim(assets.crop(box)), 'bearer_card', f'{name}_card', ('bearer', f'{name}_card.png'), (512, 640))
+    card = solid_edges(trim(assets.crop(box)))
+    save(card, EXTRACTED, 'bearer_card', f'{name}_card.png')
+    save(solid_edges(fit(card, 512, 640)), TEX, 'bearer', f'{name}_card.png')
 
 # --- Skill icons (32x32); the fourth icon repeats Wandering Spark ---
 skills = {'ember_verse': (648, 560, 748, 660), 'frost_lance': (760, 560, 856, 660), 'wandering_spark': (864, 560, 966, 660)}
