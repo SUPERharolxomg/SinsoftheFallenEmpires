@@ -6,20 +6,17 @@
   "sin.sofe.gluttony": "Gluttony",
   "sin.sofe.envy": "Envy",
   "sin.sofe.pride": "Pride",
-
   "resource.sofe.resolve": "Resolve",
   "resource.sofe.essence": "Essence",
   "resource.sofe.mana": "Mana",
   "resource.sofe.energy": "Energy",
   "resource.sofe.authority": "Authority",
-
   "region.sofe.sulthari": "Sulthari Dominion",
   "region.sofe.nordrath": "Nordrath Clans",
   "region.sofe.parsivan": "Parsivan Court",
   "region.sofe.khemet": "Khemet Ascendancy",
   "region.sofe.aureum": "Aureum Republic",
   "region.sofe.ocean": "Ocean",
-
   "class.sofe.knight": "Knight",
   "class.sofe.knight.hero": "Cassian Dravo",
   "class.sofe.knight.role": "Tank / melee",
@@ -39,5 +36,12 @@
   "class.sofe.king": "King",
   "class.sofe.king.hero": "Sultan Azhar Tevfirán",
   "class.sofe.king.role": "Leader / offensive support",
-  "class.sofe.king.quote": "My ancestor opened this door. I will be the one to close it."
+  "class.sofe.king.quote": "My ancestor opened this door. I will be the one to close it.",
+  "config.sofe.title": "Sins of the Fallen Empires settings",
+  "config.sofe.replace_title_screen": "SoFE title screen",
+  "config.sofe.replace_title_screen.tooltip": "Show the SoFE title screen and main menu instead of the vanilla one. Turn off if your modpack has its own menu.",
+  "config.sofe.preselect_journey_preset": "New worlds start as a journey",
+  "config.sofe.preselect_journey_preset.tooltip": "When you create a new world, the SoFE journey is already selected as the world type.",
+  "config.sofe.open_class_select_on_join": "Choose a Bearer on join",
+  "config.sofe.open_class_select_on_join.tooltip": "In a SoFE journey, players who have not chosen a Bearer see the selection screen when they join."
 }
