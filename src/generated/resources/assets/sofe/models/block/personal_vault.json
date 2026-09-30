@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/personal_vault_bottom",
+    "side": "sofe:block/personal_vault_side",
+    "top": "sofe:block/personal_vault_top"
+  }
+}
