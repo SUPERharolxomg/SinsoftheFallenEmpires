@@ -112,25 +112,23 @@ public class ClassSelectScreen extends Screen {
         graphics.drawCenteredString(this.font, this.title.copy().withStyle(ChatFormatting.BOLD), this.width / 2, 12, GOLD);
         graphics.drawCenteredString(this.font, Component.translatable("gui.sofe.class_select.subtitle"), this.width / 2, 26, MUTED);
 
-        renderCard(graphics);
+        renderCard(graphics, mouseX, mouseY);
         renderDetails(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
 
-    private void renderCard(GuiGraphics graphics) {
+    private void renderCard(GuiGraphics graphics, int mouseX, int mouseY) {
         int x = cardX(), y = cardY(), w = cardWidth(), h = cardHeight();
         graphics.blit(card(selected), x, y, w, h, 0f, 0f, CARD_W, CARD_H, CARD_W, CARD_H);
 
         if (this.minecraft != null && this.minecraft.player != null) {
-            // Slow sway instead of following the mouse, so the model always faces the viewer
-            // The last two arguments are how far the "mouse" is from the model (like vanilla's inventory):
-            // a slow sideways sway and 0 vertically, so the model turns gently and looks straight ahead
-            float sway = Mth.sin((System.currentTimeMillis() % 12000L) / 12000f * Mth.TWO_PI) * 40f;
             int feetX = x + w / 2;
             int feetY = y + h - h / 10;
             int scale = h / 4;
             InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, feetX, feetY, scale,
-                    sway, 0f, this.minecraft.player);
+                    // Like the vanilla inventory: the last two arguments are the distance from the model's
+                    // eyes to the mouse, so the body and head turn to follow the cursor
+                    feetX - mouseX, feetY - scale * 1.65f - mouseY, this.minecraft.player);
         }
     }
 
