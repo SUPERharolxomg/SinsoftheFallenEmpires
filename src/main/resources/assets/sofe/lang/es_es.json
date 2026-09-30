@@ -6,20 +6,17 @@
   "sin.sofe.gluttony": "Gula",
   "sin.sofe.envy": "Envidia",
   "sin.sofe.pride": "Soberbia",
-
   "resource.sofe.resolve": "Determinación",
   "resource.sofe.essence": "Esencia",
   "resource.sofe.mana": "Maná",
   "resource.sofe.energy": "Energía",
   "resource.sofe.authority": "Autoridad",
-
   "region.sofe.sulthari": "Dominio de Sulthari",
   "region.sofe.nordrath": "Clanes de Nordrath",
   "region.sofe.parsivan": "Corte de Parsivan",
   "region.sofe.khemet": "Ascendencia de Khemet",
   "region.sofe.aureum": "República de Aureum",
   "region.sofe.ocean": "Océano",
-
   "class.sofe.knight": "Caballero",
   "class.sofe.knight.hero": "Cassian Dravo",
   "class.sofe.knight.role": "Tanque / cuerpo a cuerpo",
@@ -39,5 +36,12 @@
   "class.sofe.king": "Rey",
   "class.sofe.king.hero": "Sultán Azhar Tevfirán",
   "class.sofe.king.role": "Líder / soporte ofensivo",
-  "class.sofe.king.quote": "Mi antepasado abrió esta puerta. Yo seré quien la cierre."
+  "class.sofe.king.quote": "Mi antepasado abrió esta puerta. Yo seré quien la cierre.",
+  "config.sofe.title": "Ajustes de Sins of the Fallen Empires",
+  "config.sofe.replace_title_screen": "Portada de SoFE",
+  "config.sofe.replace_title_screen.tooltip": "Muestra la portada y el menú de SoFE en lugar de los de Minecraft. Desactívalo si tu modpack trae su propio menú.",
+  "config.sofe.preselect_journey_preset": "Los mundos nuevos empiezan como aventura",
+  "config.sofe.preselect_journey_preset.tooltip": "Al crear un mundo nuevo, la aventura de SoFE ya viene seleccionada como tipo de mundo.",
+  "config.sofe.open_class_select_on_join": "Elegir Portador al entrar",
+  "config.sofe.open_class_select_on_join.tooltip": "En una aventura de SoFE, los jugadores que no han elegido Portador ven la pantalla de selección al entrar."
 }

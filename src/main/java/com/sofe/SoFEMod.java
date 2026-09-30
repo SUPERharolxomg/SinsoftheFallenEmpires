@@ -1,10 +1,15 @@
 package com.sofe;
 
 import com.mojang.logging.LogUtils;
+import com.sofe.client.ClientSetup;
 import com.sofe.condition.ConditionManager;
+import com.sofe.config.SoFEConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 
 /**
@@ -16,8 +21,15 @@ public class SoFEMod {
     public static final String MOD_ID = "sofe";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public SoFEMod() {
+    public SoFEMod(FMLJavaModLoadingContext context) {
+        IEventBus modBus = context.getModEventBus();
+
+        SoFEConfig.register(context);
         MinecraftForge.EVENT_BUS.addListener(ConditionManager::onAddReloadListeners);
+
+        if (FMLEnvironment.dist.isClient()) {
+            ClientSetup.init(modBus, context);
+        }
         LOGGER.info("Sins of the Fallen Empires loading");
     }
 
