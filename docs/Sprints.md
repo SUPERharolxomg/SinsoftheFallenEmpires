@@ -24,7 +24,7 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [x] Forge 1.20.1 MDK with the Gradle wrapper and a Java 17 toolchain
 - [x] Mod metadata: mod ID `sofe`, package `com.sofe`, `mods.toml`, MIT license
 - [x] Main mod class (`SoFEMod.java`) that loads in a GameTest server
-- [ ] Try the mod in the dev client (`./gradlew runClient`)
+- [x] Try the mod in the dev client (`./gradlew runClient`; reaches the SoFE title screen)
 - [x] Dependencies declared: GeckoLib, Curios (JourneyMap API later, optional)
 - [x] JUnit 5 for unit tests of pure game logic
 - [x] `LICENSE`, `CONTRIBUTING.md`, `.gitignore`, `.gitattributes`
@@ -33,16 +33,16 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 
 ## Sprint 1 — Foundation (Weeks 1-2)
 - [x] `PlayerClass` enum (Knight, Necromancer, Sorceress, Thief, King) with `ResourceType` and temptation `Sin`
-- [ ] `ClassSelectScreen` to choose one of the five Bearers, with the chosen class saved per player and synced to the client
+- [x] `ClassSelectScreen` to choose one of the five Bearers (card + the player's live model), with the chosen class saved per player and synced to the client
 - [x] `lang/en_us.json` and `lang/es_es.json` set up; no player-facing text in code
 - [x] Set up entity registry
 - [x] Create basic config system (client and server; common is added with its first option) with the in-game config screen
-- [ ] *(Annex)* `SoFETitleScreen` skeleton replacing the vanilla title screen, with `replaceTitleScreen` config
-- [ ] *(Annex)* Main menu buttons: Begin the Journey, Continue, Join an Expedition, Options, Mods, Quit
-- [ ] *(Annex)* `sofe:aetheris` world preset as the default for new worlds; vanilla strongholds disabled
+- [x] *(Annex)* `SoFETitleScreen` skeleton replacing the vanilla title screen, with `replaceTitleScreen` config
+- [x] *(Annex)* Main menu buttons: Begin the Journey, Continue, Join an Expedition, Options, Mods, Quit
+- [x] *(Annex)* `sofe:aetheris` world preset as the default for new worlds; vanilla strongholds disabled
 - [x] *(World)* `Region` enum and `RegionMap` with the default layout
 - [x] *(World)* `Condition` system (`act_reached`, `boss_defeated`, `quest_step`, `all_of`, `any_of`, `not`)
-- [ ] *(Annex)* Placeholder logo, panorama and lore splash texts
+- [x] *(Annex)* Placeholder logo (text), panorama (vanilla) and lore splash texts
 - [x] *(Annex)* `MaterialRegistry` with the naming convention `sofe:<material>_<form>` (en_us + es_es)
 
 ## Sprint 2 — Skill System (Weeks 3-4)
