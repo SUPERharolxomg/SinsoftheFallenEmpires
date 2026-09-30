@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and unit tests
+        run: |
+          chmod +x gradlew
+          ./gradlew build --console=plain
+
+      - name: GameTests
+        run: ./gradlew runGameTestServer --console=plain
+
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: sofe-jar
+          path: build/libs/*.jar

@@ -1,0 +1,34 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# vscode
+.vscode
+
+# gradle
+build
+.gradle
+
+# minecraft run folders
+eclipse
+run
+run-data
+mcmodsrepo
+
+# data generator cache
+src/generated/**/.cache
+
+# os
+.DS_Store
+Thumbs.db
