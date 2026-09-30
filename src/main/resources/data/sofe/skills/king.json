@@ -1,0 +1,54 @@
+{
+  "resource": {
+    "max": 100,
+    "start": 30,
+    "regen_per_second": 0.5
+  },
+  "skills": {
+    "scepter_slash": {
+      "cooldown_s": 1
+    },
+    "decree_of_steadfastness": {
+      "cost": 20,
+      "cooldown_s": 10,
+      "armor_bonus": 0.2
+    },
+    "janissary_guard": {
+      "cost": 30,
+      "cooldown_s": 20,
+      "soldiers": 2,
+      "duration_s": 30
+    },
+    "siege_decree": {
+      "cost": 35,
+      "cooldown_s": 18,
+      "damage_taken_bonus": 0.15
+    },
+    "command": {
+      "cost": 25,
+      "cooldown_s": 12,
+      "damage_bonus": 0.3
+    },
+    "royal_treasury": {
+      "cost": 30,
+      "cooldown_s": 15
+    },
+    "imperial_lineage": {
+      "regen_per_second": 0.01
+    },
+    "bronze_cannon": {
+      "cost": 50,
+      "cooldown_s": 30,
+      "shots": 5
+    },
+    "voice_of_the_throne": {
+      "duration_bonus": 0.5
+    },
+    "crown_of_the_five_lands": {
+      "cost": 100,
+      "cooldown_s": 180,
+      "duration_s": 12,
+      "soldiers": 6
+    }
+  }
+}

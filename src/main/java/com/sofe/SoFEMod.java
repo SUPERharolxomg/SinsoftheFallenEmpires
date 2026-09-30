@@ -2,6 +2,8 @@ package com.sofe;
 
 import com.mojang.logging.LogUtils;
 import com.sofe.client.ClientSetup;
+import com.sofe.combat.CombatCapability;
+import com.sofe.combat.CombatHandler;
 import com.sofe.condition.ConditionManager;
 import com.sofe.config.SoFEConfig;
 import com.sofe.datagen.DataGenerators;
@@ -14,6 +16,7 @@ import com.sofe.network.SoFENetwork;
 import com.sofe.player.ClassSelectionHandler;
 import com.sofe.player.PlayerClassCapability;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.skill.data.SkillDataManager;
 import com.sofe.world.region.RegionTitleHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -57,6 +60,15 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onLogin);
         MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onRespawn);
         MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onChangeDimension);
+
+        modBus.addListener(CombatCapability::register);
+        MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, CombatCapability::attach);
+        MinecraftForge.EVENT_BUS.addListener(CombatCapability::onClone);
+        MinecraftForge.EVENT_BUS.addListener(SkillDataManager::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(CombatHandler::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(CombatHandler::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(CombatHandler::onDatapackSync);
+        MinecraftForge.EVENT_BUS.addListener(CombatHandler::onPlayerTick);
 
         if (FMLEnvironment.dist.isClient()) {
             ClientSetup.init(modBus, context);

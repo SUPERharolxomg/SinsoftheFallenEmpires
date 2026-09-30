@@ -52,11 +52,19 @@ sins-of-fallen-empires/
 │   │   ├── PlayerClassData.java            # Class data capability
 │   │   ├── LevelingSystem.java             # XP and levels
 │   │   └── companion/CompanionManager.java # UC-22
+│   ├── combat/
+│   │   ├── CombatData.java                 # Resource, cooldowns and runes of a player (capability)
+│   │   ├── ResourcePool.java / CooldownTracker.java / RuneTracker.java
+│   │   ├── Constellation.java              # What three runes make
+│   │   └── CombatHandler.java              # Regeneration and HUD sync
 │   ├── skill/
-│   │   ├── Skill.java                      # Skill interface
+│   │   ├── Skill.java                      # Skill interface (the effect only)
+│   │   ├── SkillCatalog.java               # The 50 skills: class, level, type
+│   │   ├── SkillCaster.java                # Checks class, slot, cooldown and resource, then casts
+│   │   ├── SkillRegistry.java              # Skills with code; the rest are data until their sprint
+│   │   ├── SkillTargeting.java             # Aim, area search, damage, particle lines
 │   │   ├── SkillTree.java
-│   │   ├── SkillCooldownManager.java
-│   │   ├── SkillDataLoader.java            # Loads data/sofe/skills/*.json
+│   │   ├── data/SkillDataManager.java      # Loads data/sofe/skills/*.json
 │   │   ├── knight/                         # Stances, ScaleStrike, ...
 │   │   ├── necromancer/                    # SoulBinding, ThresholdTouch, ...
 │   │   ├── sorceress/                      # Constellations, EmberVerse, ...

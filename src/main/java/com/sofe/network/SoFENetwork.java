@@ -2,6 +2,7 @@ package com.sofe.network;
 
 import com.sofe.SoFEMod;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -43,9 +44,30 @@ public final class SoFENetwork {
                 .decoder(ChooseClassPacket::decode)
                 .consumerMainThread(ChooseClassPacket::handle)
                 .add();
+        registerCombat();
     }
 
+    private static void registerCombat() {
+        CHANNEL.messageBuilder(SyncCombatPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SyncCombatPacket::encode)
+                .decoder(SyncCombatPacket::decode)
+                .consumerMainThread(SyncCombatPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(CastSkillPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(CastSkillPacket::encode)
+                .decoder(CastSkillPacket::decode)
+                .consumerMainThread(CastSkillPacket::handle)
+                .add();
+    }
+
+    /**
+     * Sends to one player. Players without a real network connection (GameTest mock players,
+     * fake players from other mods) are skipped: Forge cannot send to them and they have no HUD.
+     */
     public static void sendTo(ServerPlayer player, Object packet) {
+        if (player instanceof FakePlayer || player.connection == null || player.connection.connection.channel() == null) {
+            return;
+        }
         CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
     }
 
