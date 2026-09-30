@@ -1,0 +1,243 @@
+# Core Gameplay Rules
+
+Rules for everything a player runs into while playing that the other documents do not cover yet: death, travel, quests and dialogue, controls, storage, difficulty, what happens outside the campaign and after the ending, and server administration.
+
+Each section gives the default behavior; the ones marked **Decided** were confirmed by the project owner. Every value is in the config.
+
+---
+
+## G1. Death and respawn: the Bearer's corpse
+
+**Decided: Diablo II style.** When the player dies, their body stays where they fell with everything they were carrying, and they have to go back for it.
+
+| On death | Rule |
+|----------|------|
+| Equipped gear and inventory | Stay on the **corpse** at the death spot |
+| Story items (Bearer's Flask, Codex fragments) | Stay with the player (they are soulbound) |
+| Dinars carried | −10% |
+| Levels and XP | Never lost (optional `xpLossOnDeath` for Hard: a small part of the current level's progress, never a whole level) |
+| Respawn | Last activated Waystone (see G2) or Sulthari, with no gear |
+
+**The corpse** (`BearerCorpseEntity`) looks like the player's Bearer lying on the ground, with a light beam so it can be seen from afar.
+
+- **Only the owner can loot it.** A Pact member can see it on the map, but not take anything (`corpseLootByPact = false`).
+- **Recovering it:** right-click the corpse and everything goes back to the same slots, equipment included. If a slot is taken, the item goes to the inventory, and anything that does not fit stays on the corpse.
+- **It never despawns** and nothing can destroy it: not lava, explosions, mobs or pistons.
+- **Unreachable deaths:** if the player died in lava, in the void or inside a wall, the corpse appears at their last safe position.
+- **Dying again** before recovering it leaves a second corpse with whatever the player had at that moment, like in Diablo II.
+- **Finding it:** the Quest Compass points to the latest corpse, and with JourneyMap it gets a "Your corpse" waypoint.
+- **Going back naked:** Yusuf sells cheap brass gear so the player can go back for their body. A companion or the Pact can escort them.
+- **Boss arenas:** a participant who died can go back into the sealed arena through its gate while the fight is still on, to pick up their corpse and fight again.
+
+**Why a corpse and not a grave block:** a block cannot be placed inside cities, dungeons or arenas (they are protected zones), and a block can be broken or covered. An entity does not have those problems.
+
+- **Hardcore:** vanilla hardcore rules; no corpse.
+- **Grave mods:** if the server uses another grave or corpse mod, `corpseSystem = false` turns ours off.
+
+### Boss fights
+
+- When the fight starts, the arena is sealed: no one enters or leaves until it ends.
+- If every participant dies or leaves, the boss **resets** to full health after 30 s and the arena reopens.
+- In multiplayer, a player at 0 health is downed first and can be revived (see [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires)).
+- **Avarok** gives back every item he stole when he dies or when the fight resets. He never steals story items or Relics.
+
+---
+
+## G2. Travel
+
+The map is 12,000 × 12,000 blocks. Walking back to Sulthari from Aureum to refill the Flask is not fun, so there is fast travel.
+
+- **Aetherium Waystones** (`sofe:waystone`) are found in Sulthari, in every liberated camp and at every discovered dungeon entrance. The player activates one by touching it.
+- Travel between activated Waystones is **free** from the Waystone screen. It is not allowed during combat, inside arenas, or toward a region the player has not unlocked.
+- **Return Scroll** (Yusuf, 10 Dinars): teleports the player to Sulthari after 5 s of channeling. It also works as the "I am stuck" option.
+- Horses, camels (Sulthari), boats and elytra work normally inside unlocked regions.
+- In multiplayer, each player has their own activated Waystones. With `PACT_ESCORT`, a player can travel to a Waystone another Pact member has activated.
+
+---
+
+## G3. Quests and dialogue
+
+### Quests
+
+| Type | Description | Required |
+|------|-------------|----------|
+| **Main quests** | The acts of the story, in order. They drive the progression locks ([Mundo.md](Mundo.md#w2-progression-locks)). | Yes |
+| **Bearer quests** | One short personal quest per act for the player's hero (Cassian and his order, Shirin and Laleh, etc.) | No, but they unlock extra dialogue and the full epilogue |
+| **Side quests** | Region bounties, lost caravans, lore pieces. Reward: Dinars, Favor, Blueprints. | No |
+
+- Quests are **data-driven** (`data/sofe/quests/*.json`): steps, conditions, rewards and dialogue keys.
+- The **Journal** shows active quests, the current act, completed quests and the Pact.
+- The active objective feeds the Quest Compass and map waypoints ([Mundo.md](Mundo.md#w3-minimap-and-map)).
+
+### Dialogue
+
+- NPCs talk through a dialogue screen with portrait, name, text and up to 4 answers. Every line is a lang key (`en_us.json`, `es_es.json`).
+- Most choices change only the conversation and small rewards (a discount, extra lore).
+- **Temptations:** each Archsin tempts the player before the fight. Resisting is always the path forward; the dialogue is stronger when it is the hero's own sin.
+
+**Decided — Prython's offer: the secret bad ending.** The player *can* accept. Accepting plays **"Crowned in Ash"**, a short animation of that player's own Bearer ruling a burning Aetheris, different for each of the five heroes. Then the player returns to just before the choice.
+
+- It is **not part of the official story**: the Journal, the Codex and the epilogues never mention it.
+- It is **secret**: the only trace is a hidden advancement, with no hint of how to get it.
+- It is **personal**: in multiplayer only the player who accepts sees it, on their own screen (see G14).
+
+---
+
+## G4. Controls
+
+**Problem found:** [Pociones.md](Pociones.md) puts the potion belt on keys 1–4, but vanilla uses 1–9 for the hotbar.
+
+**Recommended default:** a **Combat Bar** on top of the hotbar.
+
+| Action | Default key |
+|--------|-------------|
+| Skill slots 1–5 | Hold **Left Alt** + 1–5 |
+| Ultimate | Hold **Left Alt** + 6 |
+| Potion belt 1–4 | Hold **Left Alt** + 7–9 and 0 |
+| Bearer's Flask | **H** |
+| Switch stance (Knight) / main class action | **R** |
+| Skill tree | **K** |
+| Journal | **U** |
+| Codex Map | **N** |
+| Waystone travel / Return Scroll | From the Waystone or the item |
+
+- Every key can be changed in Minecraft's Controls menu (SoFE category).
+- Optional setting: *Combat Bar toggle*, so the player presses Left Alt once instead of holding it.
+- JourneyMap (J) and Xaero's (Y, B, M) are not used by default. Before release we check for conflicts with popular mods.
+
+---
+
+## G5. Storage
+
+Players cannot place chests inside Sulthari (it is a protected zone), and loot adds up fast.
+
+- **Personal Vault** at the Sulthari bank and in each liberated camp: 27 slots per player, expandable to 54 and 81 with Dinars. Same contents from every Vault block. Each player only sees their own.
+- The **Bearer's Homestead** allows normal chests, barrels and building.
+
+---
+
+## G6. Difficulty
+
+| Vanilla difficulty | SoFE effect |
+|--------------------|-------------|
+| Peaceful | **Not allowed in `sofe:aetheris`**: the story needs enemies. The game uses Easy instead. |
+| Easy | Bosses −25% health and damage |
+| Normal | Base values |
+| Hard | Bosses +25% health, extra mechanics in phase 2 |
+| Hardcore | Hard + vanilla hardcore death |
+
+---
+
+## G7. Other mods and free mode
+
+**Decided.** The story keeps going when other mods do not touch it; when a mod breaks it, that world switches to **free mode**.
+
+### Free mode
+
+Free mode means: SoFE items, ores, gear and classes work (a class is picked with an Altar item), but there is **no story, no progression locks and no bosses**. It is used in two cases:
+
+1. A world that was **not created with Begin the Journey** (a world the player already had, or one from a modpack). It does not have the map of Aetheris, so the story cannot happen there.
+2. A SoFE journey where **another mod breaks the story** (see the table below).
+
+The player always gets a message saying why: *"This world is in SoFE free mode: <reason>."* The server option `freeModeInOtherWorlds = false` turns SoFE content off in those worlds instead.
+
+### Other mods in a SoFE journey
+
+| Kind of mod | Examples | What happens |
+|-------------|----------|--------------|
+| **Content** | New swords, armor, tools, food, furniture, decoration | Story continues. Their items work like vanilla items (no affixes). |
+| **Client and performance** | JEI, inventory tweaks, Sodium/Embeddium, shaders, sound mods | Story continues. |
+| **Maps** | JourneyMap, Xaero's | Story continues (integration in [Mundo.md](Mundo.md#w3-minimap-and-map)). |
+| **Travel, teleport and flight** | Waystone mods, `/home` and `/tpa` commands, jetpacks | Story continues. Locked regions stay locked: `RegionEnforcer` sends the player back no matter how they got there. |
+| **Graves and death** | Grave or corpse mods | Story continues. The SoFE corpse is turned off (`corpseSystem = false`). |
+| **Extra dimensions** | Twilight Forest, The Aether | Story continues. Coming back to Aetheris into a locked region is blocked like any other teleport. |
+| **Structure mods** | Extra dungeons and villages | Story continues. They cannot generate inside SoFE protected zones or on the Seal Veil. |
+| **Overworld generation** | Terrain and biome overhauls | Usually no effect: the SoFE journey uses its own world generator. If the mod **replaces** it, the world goes to free mode. |
+| **Mods that break the story** | Mods that replace the SoFE world generator, remove bosses or story mobs, or change the SoFE dimensions | The world goes to **free mode**. |
+
+### How SoFE detects it
+
+- **Integrity check** every time a journey is loaded: the world still uses the SoFE generator, the saved region layout is there, and every story boss, NPC and structure is registered. If anything fails, the world switches to free mode and the reason is logged.
+- **Incompatible list:** `data/sofe/compat/incompatible_mods.json` lists mod IDs known to break the story. If one is installed, the title screen warns the player before *Begin the Journey*, and the journey is created in free mode.
+- **Adjustments instead of free mode** for mods that only need a switch: grave mods turn off the SoFE corpse, and the `keepInventory` game rule also skips the corpse.
+- A server can force the story anyway with `allowIncompatibleMods = true`, at its own risk.
+
+### Map layout versions
+
+The region layout JSON is **saved into the world when it is created**. If a mod update changes coordinates, existing worlds keep their original layout; only new worlds use the new one. This keeps updates from moving a city into the middle of a player's base.
+
+---
+
+## G8. Late joiners and the prologue
+
+A player who joins a server after the Night of the Eclipse has already happened still needs Act I:
+
+- They play the **prologue instanced** in `sofe:echo`: the Eclipse Festival, the invasion, the shard, the tutorial and the Brass Sentinel.
+- Then they arrive in the real Sulthari, in Act I, next to the Council.
+- Regions already restored by other players stay restored; the player gets their credit through the Echo shrines ([Anexos.md](Anexos.md#a6-unique-items-per-player-online)).
+
+---
+
+## G9. After the ending
+
+- The world stays open: every region is unlocked for that player and the landscape keeps healing.
+- **Echo fights can be repeated** for Oath Gems, materials and Dinars. A Relic already owned does not drop again (one per player).
+- **Ascended difficulty** (post-1.0): enemies scale beyond level 30 and gear gets one more affix.
+- The **Eighth Lock** is only teased (the sequel hook); no playable content for it in 1.0.
+
+---
+
+## G10. Advancements
+
+A custom advancement tab, **Sins of the Fallen Empires**, mirrors the story: one branch per act, plus branches for each Bearer quest, every Relic, every region's ore, and secrets (for example, accepting Prython's offer). This is how the player sees their progress in the vanilla way.
+
+---
+
+## G11. Disconnecting and leaving
+
+| Situation | Rule |
+|-----------|------|
+| Disconnect during a boss fight | The player keeps their participation. If the boss dies while they are away, their Reward Coffer waits for them. |
+| Everyone leaves the arena | The boss resets after 30 s (G1). |
+| Leaving a Pact | Co-op bonuses stop at once; progress and items are not affected. |
+| Quit in the middle of a dungeon | The dungeon keeps its state; the player logs in where they left. |
+| Companion dies | Goes back to Sulthari and can be hired again after 5 minutes. |
+
+---
+
+## G12. Server administration
+
+Commands, permission level 2 (operators):
+
+| Command | Does |
+|---------|------|
+| `/sofe progress <player> get` | Shows act, quests, bosses and unlocks |
+| `/sofe progress <player> set act <n>` | Moves the player to an act (grants earlier credit) |
+| `/sofe progress <player> grant boss <id>` / `revoke boss <id>` | Adds or removes credit for a boss |
+| `/sofe progress <player> reset` | Resets the player's campaign |
+| `/sofe unstuck <player>` | Sends a player to their last safe position or Sulthari |
+| `/sofe item restore <player>` | Gives back lost story items |
+| `/sofe reload` | Reloads quests, conditions, merchant offers and skill values |
+
+**Server performance.** The map is large and full of fixed structures. The server README recommends pre-generating the world with a chunk pre-generator before opening it to players.
+
+---
+
+## G13. Accessibility
+
+- Item rarity is shown with **text and color**, never color alone (colorblind players).
+- **Subtitles** for dialogue and for boss audio cues that warn of attacks.
+- Options to reduce screen shake, flashes and particle density.
+- Language follows the Minecraft setting (English and Spanish from 1.0).
+
+---
+
+## G14. Boss edge cases in multiplayer
+
+| Boss | Rule |
+|------|------|
+| **Envyris** (copies the player) | Creates one copy per participant, up to 3. With more players, the copies take the classes of the players who have dealt the most damage. |
+| **Luxara** (charms) | A charmed player cannot hurt their allies; the charm makes them walk toward Luxara instead. |
+| **Avarok** (steals items) | Steals from each player separately and returns everything when he dies or the fight resets. |
+| **Prython** (offer) | Each player answers the offer on their own screen. The fight continues for those who refused; anyone who accepts sees their own bad ending animation and then returns to just before the choice, rejoining the fight. |
+| **Nahrazel phase 3** | Each player enters their own view inside the Codex; the phase ends when everyone has finished, or after a time limit. |
