@@ -1,0 +1,65 @@
+{
+  "style": "sulthari",
+  "npc": "council_elder",
+  "priority": 10,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/sulthari_embers",
+        "step": 2
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/sulthari_embers",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.council_elder.embers.1"
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.council_elder.embers.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.council_elder.embers.bazaar",
+          "next": -1,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "sulthari",
+              "fate": "bazaar"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/sulthari_embers"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.council_elder.embers.observatory",
+          "next": -1,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "sulthari",
+              "fate": "observatory"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/sulthari_embers"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

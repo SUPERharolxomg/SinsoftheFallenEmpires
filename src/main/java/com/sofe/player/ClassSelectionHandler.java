@@ -7,6 +7,9 @@ import com.sofe.network.OpenClassSelectPacket;
 import com.sofe.network.SoFENetwork;
 import com.sofe.network.SyncClassPacket;
 import com.sofe.progression.ProgressionHandler;
+import com.sofe.quest.DialogueService;
+import com.sofe.quest.QuestEngine;
+import com.sofe.quest.StoryDataManager;
 import com.sofe.world.SoFEWorld;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -18,6 +21,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  * world is a journey and that the player has not chosen yet, then saves and syncs the class.
  */
 public final class ClassSelectionHandler {
+    /** The Night of the Eclipse intro shown before choosing a Bearer (UC-01). */
+    public static final String FESTIVAL = "sofe:act1/festival";
 
     private ClassSelectionHandler() {
     }
@@ -27,7 +32,12 @@ public final class ClassSelectionHandler {
             sync(player);
             boolean needsClass = PlayerClassCapability.get(player).map(d -> !d.hasClass()).orElse(false);
             if (needsClass && SoFEWorld.isJourney(player.server) && SoFEConfig.SERVER.openClassSelectOnJoin.get()) {
-                SoFENetwork.sendTo(player, new OpenClassSelectPacket());
+                // the Eclipse Festival intro plays first; closing or finishing it opens the selection
+                if (StoryDataManager.dialogue(FESTIVAL).isPresent()) {
+                    DialogueService.open(player, FESTIVAL, null);
+                } else {
+                    SoFENetwork.sendTo(player, new OpenClassSelectPacket());
+                }
             }
         }
     }
@@ -61,10 +71,28 @@ public final class ClassSelectionHandler {
             sync(player);
             CombatHandler.refresh(player);
             ProgressionHandler.onBearerChosen(player);
+            QuestEngine.onBearerChosen(player);
         });
     }
 
+    /** Opens the Bearer selection when the player still has none (in a journey). */
+    public static void openIfNeeded(ServerPlayer player) {
+        boolean needsClass = PlayerClassCapability.get(player).map(d -> !d.hasClass()).orElse(false);
+        if (needsClass && SoFEWorld.isJourney(player.server)) SoFENetwork.sendTo(player, new OpenClassSelectPacket());
+    }
+
     public static void sync(ServerPlayer player) {
-        PlayerClassCapability.get(player).ifPresent(data -> SoFENetwork.sendTo(player, new SyncClassPacket(data.get())));
+        PlayerClassCapability.get(player).ifPresent(data -> {
+            SoFENetwork.sendTo(player, new SyncClassPacket(data.get()));
+            SoFENetwork.sendToTracking(player, new com.sofe.network.BearerOfPacket(player.getId(), data.get()));
+        });
+    }
+
+    /** A client starts seeing another player: tell it their Bearer, for the outfit layer. */
+    public static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (event.getTarget() instanceof ServerPlayer target && event.getEntity() instanceof ServerPlayer viewer) {
+            PlayerClassCapability.get(target).ifPresent(data ->
+                    SoFENetwork.sendTo(viewer, new com.sofe.network.BearerOfPacket(target.getId(), data.get())));
+        }
     }
 }

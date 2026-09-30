@@ -16,4 +16,14 @@ public interface ProgressView {
 
     /** How many of an item the player carries (e.g. "minecraft:ender_eye"). */
     int countItem(String itemId);
+
+    /** The fate the player chose for a region (e.g. "sulthari" -> "bazaar"), or null. */
+    default String fate(String region) {
+        return null;
+    }
+
+    /** The player's Bearer class id (e.g. "king"), or null before choosing. */
+    default String playerClass() {
+        return null;
+    }
 }

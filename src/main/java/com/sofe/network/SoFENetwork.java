@@ -13,7 +13,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
  * bump it whenever a packet's format changes.
  */
 public final class SoFENetwork {
-    private static final String PROTOCOL = "1";
+    private static final String PROTOCOL = "3"; // 3: story sync, dialogue and quest tracking
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             SoFEMod.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -45,6 +45,50 @@ public final class SoFENetwork {
                 .consumerMainThread(ChooseClassPacket::handle)
                 .add();
         registerCombat();
+        registerStory();
+    }
+
+    private static void registerStory() {
+        CHANNEL.messageBuilder(SyncStoryPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SyncStoryPacket::encode)
+                .decoder(SyncStoryPacket::decode)
+                .consumerMainThread(SyncStoryPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(DialogueLinePacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(DialogueLinePacket::encode)
+                .decoder(DialogueLinePacket::decode)
+                .consumerMainThread(DialogueLinePacket::handle)
+                .add();
+        CHANNEL.messageBuilder(DialogueAnswerPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(DialogueAnswerPacket::encode)
+                .decoder(DialogueAnswerPacket::decode)
+                .consumerMainThread(DialogueAnswerPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(RegionLayoutPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(RegionLayoutPacket::encode)
+                .decoder(RegionLayoutPacket::decode)
+                .consumerMainThread(RegionLayoutPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(OpenWaystonesPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(OpenWaystonesPacket::encode)
+                .decoder(OpenWaystonesPacket::decode)
+                .consumerMainThread(OpenWaystonesPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(TravelPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(TravelPacket::encode)
+                .decoder(TravelPacket::decode)
+                .consumerMainThread(TravelPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(BearerOfPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(BearerOfPacket::encode)
+                .decoder(BearerOfPacket::decode)
+                .consumerMainThread(BearerOfPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(TrackQuestPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(TrackQuestPacket::encode)
+                .decoder(TrackQuestPacket::decode)
+                .consumerMainThread(TrackQuestPacket::handle)
+                .add();
     }
 
     private static void registerCombat() {
@@ -57,6 +101,16 @@ public final class SoFENetwork {
                 .encoder(SyncProgressPacket::encode)
                 .decoder(SyncProgressPacket::decode)
                 .consumerMainThread(SyncProgressPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(LearnSkillPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(LearnSkillPacket::encode)
+                .decoder(LearnSkillPacket::decode)
+                .consumerMainThread(LearnSkillPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(SpendAttributePacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SpendAttributePacket::encode)
+                .decoder(SpendAttributePacket::decode)
+                .consumerMainThread(SpendAttributePacket::handle)
                 .add();
         CHANNEL.messageBuilder(CastSkillPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(CastSkillPacket::encode)
@@ -74,6 +128,12 @@ public final class SoFENetwork {
             return;
         }
         CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+    }
+
+    /** Sends to every real player who can see this one (not to the player themselves). */
+    public static void sendToTracking(ServerPlayer player, Object packet) {
+        if (player instanceof FakePlayer || player.connection == null) return;
+        CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), packet);
     }
 
     public static void sendToServer(Object packet) {

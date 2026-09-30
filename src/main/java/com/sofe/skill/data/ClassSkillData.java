@@ -18,7 +18,8 @@ import java.util.Optional;
  * }
  * </pre>
  *
- * Any number besides cost and cooldown_s becomes a skill parameter. "constellations" is optional.
+ * Any number besides cost and cooldown_s becomes a skill parameter; "per_rank" overrides the default
+ * growth per rank of any value (docs/Clases.md). "constellations" is optional.
  */
 public record ClassSkillData(ResourceRules resource, Map<String, SkillStats> skills, Map<String, SkillStats> constellations) {
 
@@ -58,12 +59,16 @@ public record ClassSkillData(ResourceRules resource, Map<String, SkillStats> ski
                 throw new IllegalArgumentException(entry.getKey() + ": cost and cooldown_s cannot be negative");
             }
             Map<String, Double> params = new HashMap<>();
+            Map<String, Double> perRank = new HashMap<>();
             values.entrySet().forEach(v -> {
-                if (!v.getKey().equals("cost") && !v.getKey().equals("cooldown_s")) {
-                    params.put(v.getKey(), number(values, v.getKey()).doubleValue());
+                String key = v.getKey();
+                if (key.equals("per_rank")) {
+                    object(values, key).entrySet().forEach(g -> perRank.put(g.getKey(), number(object(values, key), g.getKey()).doubleValue()));
+                } else if (!key.equals("cost") && !key.equals("cooldown_s")) {
+                    params.put(key, number(values, key).doubleValue());
                 }
             });
-            result.put(entry.getKey(), new SkillStats(cost, (int) Math.round(cooldown * 20), params));
+            result.put(entry.getKey(), new SkillStats(cost, (int) Math.round(cooldown * 20), params, perRank));
         }
         return result;
     }

@@ -1,0 +1,49 @@
+{
+  "style": "sulthari",
+  "npc": "dilara",
+  "priority": 10,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act1_eclipse",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/sulthari_embers",
+          "step": 1
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "dilara",
+      "text": "dialogue.sofe.dilara.embers.1"
+    },
+    {
+      "speaker": "dilara",
+      "text": "dialogue.sofe.dilara.embers.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.dilara.embers.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:side/sulthari_embers"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.dilara.embers.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "yusuf",
+  "lines": [
+    {
+      "speaker": "yusuf",
+      "text": "dialogue.sofe.yusuf.1"
+    }
+  ]
+}

@@ -12,14 +12,17 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import com.sofe.config.SoFEConfig;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 
 import java.util.List;
 
 /**
- * Minimal combat HUD for Sprint 2 (bottom left): the class resource bar with its icon and value,
- * the runes waiting for a constellation, and the Combat Bar slots with their cooldowns.
- * The final HUD art comes in Sprint 3.
+ * The combat HUD (bottom left), in a brass frame: health, the class resource, level and experience,
+ * the runes waiting for a constellation, the Thief's Marks, the Necromancer's souls and the Combat
+ * Bar slots with their cooldowns. In a journey it replaces the vanilla hearts (option in the config).
  */
 public final class CombatHudOverlay {
     private static final int SLOT = 20;
@@ -44,6 +47,10 @@ public final class CombatHudOverlay {
             int x = MARGIN + i * (SLOT + 2);
             SyncCombatPacket.SlotCooldown slot = slots.get(i);
             graphics.fill(x, slotsY, x + SLOT, slotsY + SLOT, 0xAA000000);
+            if (slot.skill().isEmpty()) {
+                graphics.drawString(font, keyLabel(i), x + 1, slotsY - 8, 0x7A7264, true);
+                continue;
+            }
             graphics.blit(SoFEMod.id("textures/gui/skill/" + slot.skill() + ".png"), x + 2, slotsY + 2, 16, 16, 0f, 0f, 32, 32, 32, 32);
             long remaining = slot.endTick() - now;
             if (remaining > 0 && slot.durationTicks() > 0) {
@@ -55,6 +62,27 @@ public final class CombatHudOverlay {
 
         // Resource bar with icon and value, above the slots
         int barY = slotsY - 26;
+        int barX0 = MARGIN + 13, barW0 = 80;
+
+        // Brass frame behind the whole group
+        int frameTop = barY - 30, frameRight = MARGIN + slots.size() * (SLOT + 2) + 2;
+        frameRight = Math.max(frameRight, barX0 + barW0 + 58);
+        graphics.fill(MARGIN - 3, frameTop, frameRight, height - 1, 0x66000000);
+        graphics.fill(MARGIN - 3, frameTop, frameRight, frameTop + 1, 0xCCB5863A);
+        graphics.fill(MARGIN - 3, frameTop, MARGIN - 2, height - 1, 0xCCB5863A);
+
+        // Health, above the resource bar
+        int healthY = barY - 11;
+        float health = minecraft.player.getHealth(), maxHealth = minecraft.player.getMaxHealth();
+        float absorption = minecraft.player.getAbsorptionAmount();
+        graphics.fill(MARGIN, healthY, MARGIN + 10, healthY + 7, 0xFF1A1410);
+        graphics.fill(MARGIN + 2, healthY + 1, MARGIN + 8, healthY + 6, 0xFFC0392B);
+        graphics.fill(barX0 - 1, healthY, barX0 + barW0 + 1, healthY + 7, 0xFF1A1410);
+        graphics.fill(barX0, healthY + 1, barX0 + (int) (barW0 * Math.min(1f, health / Math.max(1f, maxHealth))), healthY + 6, 0xFFC0392B);
+        if (absorption > 0) {
+            graphics.fill(barX0, healthY + 1, barX0 + (int) (barW0 * Math.min(1f, absorption / Math.max(1f, maxHealth))), healthY + 3, 0xFFE8B64A);
+        }
+        graphics.drawString(font, (int) Math.ceil(health) + " / " + (int) maxHealth, barX0 + barW0 + 4, healthY, 0xE6DCC8, true);
         ResourceType resource = state.resource();
         graphics.blit(SoFEMod.id("textures/gui/hud/" + resource.id() + ".png"), MARGIN, barY - 2, 10, 10, 0f, 0f, 16, 16, 16, 16);
         int barX = MARGIN + 13;
@@ -76,12 +104,33 @@ public final class CombatHudOverlay {
             graphics.drawString(font, level, barX + barW + 4, barY + 9, 0xE8B64A, true);
         });
 
-        // Runes waiting for a constellation (Sorceress)
+        // Runes waiting for a constellation (Sorceress), Marks (Thief) and souls (Necromancer), above the health
+        int iconY = barY - 24;
         List<Rune> runes = state.runes();
         for (int i = 0; i < runes.size(); i++) {
             ResourceLocation icon = SoFEMod.id("textures/gui/rune/" + runes.get(i).id() + ".png");
-            graphics.blit(icon, MARGIN + 13 + i * 12, barY - 13, 10, 10, 0f, 0f, 16, 16, 16, 16);
+            graphics.blit(icon, MARGIN + 13 + i * 12, iconY, 10, 10, 0f, 0f, 16, 16, 16, 16);
         }
+        drawCounter(graphics, font, "mark", state.marks(), 5, MARGIN + 13, iconY);
+        drawCounter(graphics, font, "soul", state.souls(), 10, MARGIN + 13, iconY);
+    }
+
+    /** A row of icons, or one icon and a number when there are more than fit. */
+    private static void drawCounter(GuiGraphics graphics, Font font, String icon, int count, int maxIcons, int x, int y) {
+        if (count <= 0) return;
+        ResourceLocation texture = SoFEMod.id("textures/gui/hud/" + icon + ".png");
+        if (count <= maxIcons) {
+            for (int i = 0; i < count; i++) graphics.blit(texture, x + i * 11, y, 10, 10, 0f, 0f, 16, 16, 16, 16);
+        } else {
+            graphics.blit(texture, x, y, 10, 10, 0f, 0f, 16, 16, 16, 16);
+            graphics.drawString(font, "x" + count, x + 12, y + 1, 0xE6DCC8, true);
+        }
+    }
+
+    /** The vanilla hearts are hidden while this HUD shows health (a Bearer in a journey). */
+    public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
+        if (!event.getOverlay().id().equals(VanillaGuiOverlay.PLAYER_HEALTH.id())) return;
+        if (SoFEConfig.CLIENT.replaceHealthHud.get() && ClientCombatData.get().isPresent()) event.setCanceled(true);
     }
 
     private static String keyLabel(int slot) {

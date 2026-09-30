@@ -12,9 +12,11 @@ import java.util.function.Supplier;
 
 /**
  * Server → client: what the HUD shows. Resource value and maximum, the runes waiting, and for
- * each skill slot when its cooldown ends (in game ticks) and how long it lasts.
+ * each skill slot when its cooldown ends (in game ticks) and how long it lasts; the Thief's Marks
+ * and the Necromancer's souls.
  */
-public record SyncCombatPacket(ResourceType resource, float current, int max, List<Rune> runes, List<SlotCooldown> slots) {
+public record SyncCombatPacket(ResourceType resource, float current, int max, List<Rune> runes, List<SlotCooldown> slots,
+                               int marks, int souls) {
 
     public record SlotCooldown(String skill, long endTick, int durationTicks) {
     }
@@ -29,6 +31,8 @@ public record SyncCombatPacket(ResourceType resource, float current, int max, Li
             b.writeVarLong(s.endTick());
             b.writeVarInt(s.durationTicks());
         });
+        buf.writeVarInt(marks);
+        buf.writeVarInt(souls);
     }
 
     public static SyncCombatPacket decode(FriendlyByteBuf buf) {
@@ -37,7 +41,7 @@ public record SyncCombatPacket(ResourceType resource, float current, int max, Li
         int max = buf.readVarInt();
         List<Rune> runes = buf.readList(b -> b.readEnum(Rune.class));
         List<SlotCooldown> slots = buf.readList(b -> new SlotCooldown(b.readUtf(), b.readVarLong(), b.readVarInt()));
-        return new SyncCombatPacket(resource, current, max, runes, slots);
+        return new SyncCombatPacket(resource, current, max, runes, slots, buf.readVarInt(), buf.readVarInt());
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {

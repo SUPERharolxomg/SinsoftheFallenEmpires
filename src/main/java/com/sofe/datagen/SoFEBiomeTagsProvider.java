@@ -35,5 +35,7 @@ public class SoFEBiomeTagsProvider extends BiomeTagsProvider {
             tag(IS_AETHERIS).add(biome);
             tag(regionTag(region)).add(biome);
         });
+        tag(IS_AETHERIS).add(SoFEBiomes.ASHEN_WASTES);
+        tag(regionTag(Region.SULTHARI)).add(SoFEBiomes.ASHEN_WASTES);
     }
 }

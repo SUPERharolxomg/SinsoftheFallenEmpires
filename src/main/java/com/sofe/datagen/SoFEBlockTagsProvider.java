@@ -4,6 +4,7 @@ import com.sofe.SoFEMod;
 import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.registry.SoFEBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -54,5 +55,19 @@ public class SoFEBlockTagsProvider extends BlockTagsProvider {
                 }
             }
         }
+        for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
+            Block block = entry.block().get();
+            if (block == SoFEBlocks.SEAL_VEIL.get()) continue; // unbreakable
+            tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+            switch (entry.shape()) {
+                case STAIRS -> tag(BlockTags.STAIRS).add(block);
+                case SLAB -> tag(BlockTags.SLABS).add(block);
+                case WALL -> tag(BlockTags.WALLS).add(block);
+                default -> {
+                }
+            }
+        }
+        tag(BlockTags.DRAGON_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get());
+        tag(BlockTags.WITHER_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get());
     }
 }

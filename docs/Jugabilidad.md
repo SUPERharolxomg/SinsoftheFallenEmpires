@@ -142,6 +142,7 @@ With 5 regions × 2–3 fates plus 5 Bearer variants, there are many different e
 | Bearer's Flask | **H** |
 | Switch stance (Knight) / main class action | **R** |
 | Skill tree | **K** |
+| Character sheet | **I** |
 | Journal | **U** |
 | Codex Map | **N** |
 | Waystone travel / Return Scroll | From the Waystone or the item |

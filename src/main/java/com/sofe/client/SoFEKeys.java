@@ -21,6 +21,12 @@ public final class SoFEKeys {
     public static final KeyMapping[] SKILLS = new KeyMapping[6];
     public static final KeyMapping FLASK = new KeyMapping("key.sofe.flask", KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY);
+    public static final KeyMapping SKILL_TREE = new KeyMapping("key.sofe.skill_tree", KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, CATEGORY);
+    public static final KeyMapping CHARACTER = new KeyMapping("key.sofe.character", KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, CATEGORY);
+    public static final KeyMapping JOURNAL = new KeyMapping("key.sofe.journal", KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, CATEGORY);
 
     static {
         for (int i = 0; i < 5; i++) {
@@ -41,6 +47,9 @@ public final class SoFEKeys {
             event.register(key);
         }
         event.register(FLASK); // the Bearer's Flask arrives in Sprint 5.5; the key is reserved now
+        event.register(SKILL_TREE);
+        event.register(CHARACTER);
+        event.register(JOURNAL);
     }
 
     /**
@@ -51,6 +60,19 @@ public final class SoFEKeys {
         if (event.phase != TickEvent.Phase.START) return;
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.screen != null) return;
+
+        if (ClientClassData.get().isPresent()) {
+            while (SKILL_TREE.consumeClick()) {
+                minecraft.setScreen(new com.sofe.client.screen.SkillTreeScreen());
+            }
+            while (CHARACTER.consumeClick()) {
+                minecraft.setScreen(new com.sofe.client.screen.CharacterSheetScreen());
+            }
+            while (JOURNAL.consumeClick()) {
+                minecraft.setScreen(new com.sofe.client.screen.JournalScreen());
+            }
+            if (minecraft.screen != null) return;
+        }
 
         for (int slot = 0; slot < SKILLS.length; slot++) {
             boolean pressed = false;

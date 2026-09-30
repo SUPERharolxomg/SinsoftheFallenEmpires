@@ -4,6 +4,8 @@ package com.sofe.progression;
  * A player's level, experience and unspent points (UC-03). Plain Java so it is unit tested directly.
  */
 public final class ProgressionData {
+    private final com.sofe.skill.SkillBook skills = new com.sofe.skill.SkillBook();
+    private final AttributeSheet attributes = new AttributeSheet();
     private int level = 1;
     private long xp;
     private int skillPoints;
@@ -24,6 +26,19 @@ public final class ProgressionData {
 
     public boolean startingPointsGranted() {
         return startingPointsGranted;
+    }
+
+    public com.sofe.skill.SkillBook skills() {
+        return skills;
+    }
+
+    public AttributeSheet attributes() {
+        return attributes;
+    }
+
+    /** Respec (Sulthari Training Grounds): every skill and attribute point comes back. */
+    public void respec() {
+        refund(skills.reset(), attributes.reset());
     }
 
     public int level() {

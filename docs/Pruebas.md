@@ -35,6 +35,11 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] A region fate can be set only once and is stored per player
 - [ ] The ending shows one slide per region matching that player's fates, and the Bearer epilogue matches their personal quests
 - [ ] The `fate_is` condition reads the player's fate
+- [ ] Every quest and dialogue file parses, and every quest, step, line, answer and speaker name has a lang key (`StoryDataFilesTest`)
+- [ ] The Journal lists active and completed quests, the act and the fates; tracking a quest moves the Quest Compass
+- [ ] The Festival intro plays before the Bearer selection, and closing it still opens the selection
+- [ ] Each Bearer sees their own shard scene; the player who is a Bearer never sees that hero as an NPC
+- [ ] The Brass Sentinel wakes when the player reaches the Observatory, turns to the Void phase below half health and gives credit to everyone who fought
 
 - [ ] Boss phase transitions trigger at the right health thresholds
 - [ ] All 7 Archsins, the Brass Sentinel and Nahrazel (3 phases) can be defeated
@@ -54,6 +59,10 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] Creative, spectator and `opsBypass` operators are never blocked
 - [ ] No block in a protected zone changes from breaking, placing, explosions, pistons, fire or mob griefing
 - [ ] Blocks in the Bearer's Homestead can be changed
+- [ ] The Seal Veil stands on every shared border and not on the coast; its color changes when the player opens the region
+- [ ] The Ashen Wastes ring surrounds the city; a world created before it keeps its old biomes
+- [ ] New players appear in the plaza of Sulthari
+- [ ] The buildings, NPCs, Waystones and the Vault of Sulthari are placed once per world, never twice
 - [ ] The Nordrath Caverns gate stays closed in Act II and opens in Act IV
 - [ ] `all_of`, `any_of` and `not` conditions evaluate correctly from JSON
 - [ ] With `PER_PLAYER`, unlocking a region for player A does not unlock it for player B; with `PACT_ESCORT`, B can pass next to A
@@ -69,6 +78,10 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 ## Gear, potions and economy
 
 - [ ] Rolled rarity matches configured odds (10,000 rolls, 2% margin)
+- [ ] An equipped item with +Vitality raises maximum health, and taking it off removes the bonus
+- [ ] +1 to all Sorceress skills raises only learned skills, and never above rank 8
+- [ ] An item whose level or attribute requirement is not met gives nothing
+- [ ] Talismans only count inside the Talisman Pouch
 - [ ] An item never has more affixes than its rarity allows
 - [ ] Affix values stay within the range for their item level
 - [ ] Class bias yields between 55% and 65% class-affine items
@@ -120,6 +133,10 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] Combat Bar keys do not trigger vanilla hotbar selection; every SoFE key can be rebound
 - [ ] The Personal Vault shows the same items in every Vault block and only to its owner
 - [ ] Peaceful is replaced by Easy in `sofe:aetheris`
+- [ ] Bosses have −25% health and damage on Easy and +25% on Hard
+- [ ] No villager, wandering trader or trader llama appears in `sofe:aetheris`, even from a spawn egg or a cured zombie villager
+- [ ] The Quest Compass points to the player's latest body until it is recovered
+- [ ] Without a bed, a player respawns at the last activated Waystone; the Return Scroll takes them to Sulthari after 5 s
 - [ ] A world keeps its saved region layout after a mod update that changes the layout JSON
 - [ ] Free mode works in a vanilla world and can be turned off
 - [ ] With content mods (e.g. an extra swords mod), JEI and a map mod installed, the story runs normally

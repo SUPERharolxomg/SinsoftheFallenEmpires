@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "sofe:block/personal_vault"
+    }
+  }
+}

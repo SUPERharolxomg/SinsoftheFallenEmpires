@@ -7,6 +7,8 @@ import com.sofe.combat.ResourcePool;
 import com.sofe.player.PlayerClass;
 import com.sofe.player.PlayerClassCapability;
 import com.sofe.player.PlayerClassData;
+import com.sofe.progression.ProgressionCapability;
+import com.sofe.progression.ProgressionData;
 import com.sofe.skill.data.ClassSkillData;
 import com.sofe.skill.data.SkillDataManager;
 import com.sofe.skill.data.SkillStats;
@@ -14,13 +16,13 @@ import com.sofe.skill.sorceress.Constellations;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 /**
  * Casts the skill in a Combat Bar slot (UC-02). The server decides everything: the player's
- * class, the skill in the slot, cooldown and resource. Refusals are shown on the action bar.
+ * class, the learned skill in the slot and its rank, the cooldown and the resource. Refusals are
+ * shown on the action bar.
  */
 public final class SkillCaster {
 
@@ -31,18 +33,20 @@ public final class SkillCaster {
         if (player.isSpectator() || !player.isAlive()) return;
         Optional<PlayerClass> playerClass = PlayerClassCapability.get(player).flatMap(PlayerClassData::get);
         Optional<CombatData> combat = CombatCapability.get(player);
-        if (playerClass.isEmpty() || combat.isEmpty()) return;
+        Optional<ProgressionData> progress = ProgressionCapability.get(player);
+        if (playerClass.isEmpty() || combat.isEmpty() || progress.isEmpty()) return;
 
-        List<SkillInfo> loadout = SkillCatalog.defaultLoadout(playerClass.get());
-        if (slot < 0 || slot >= loadout.size()) {
+        Optional<SkillInfo> learned = progress.get().skills().slot(slot).flatMap(SkillCatalog::byId);
+        if (learned.isEmpty()) {
             tell(player, Component.translatable("message.sofe.skill.empty_slot"));
             return;
         }
-        SkillInfo info = loadout.get(slot);
+        SkillInfo info = learned.get();
         Component name = Component.translatable(info.translationKey());
         Optional<Skill> skill = SkillRegistry.get(info.id());
         Optional<ClassSkillData> classData = SkillDataManager.forClass(info.owner());
-        Optional<SkillStats> stats = classData.flatMap(d -> d.skill(info.id()));
+        int rank = Math.max(1, progress.get().skills().rank(info.id()));
+        Optional<SkillStats> stats = classData.flatMap(d -> d.skill(info.id())).map(s -> s.withRank(rank));
         Optional<ResourcePool> resource = combat.get().resource();
         if (skill.isEmpty() || stats.isEmpty() || resource.isEmpty()) {
             tell(player, Component.translatable("message.sofe.skill.not_ready", name));

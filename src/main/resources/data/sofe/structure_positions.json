@@ -1,0 +1,168 @@
+{
+  "_comment": "Fixed places of the story (docs/Mundo.md, W1 and W6). x and z are the center; size_x and size_z the footprint. Structures with a zone are protected when a journey is created. Changing this file only affects new worlds.",
+  "spawn": {
+    "x": 0,
+    "z": 12
+  },
+  "structures": {
+    "sofe:sulthari/city": {
+      "x": 0,
+      "z": 0,
+      "size_x": 320,
+      "size_z": 320,
+      "zone": "city"
+    },
+    "sofe:sulthari/homestead": {
+      "x": 232,
+      "z": 0,
+      "size_x": 96,
+      "size_z": 128,
+      "zone": "homestead"
+    },
+    "sofe:sulthari/plaza": {
+      "x": 0,
+      "z": 12,
+      "size_x": 48,
+      "size_z": 48
+    },
+    "sofe:sulthari/great_observatory": {
+      "x": 0,
+      "z": -96,
+      "size_x": 64,
+      "size_z": 64
+    },
+    "sofe:sulthari/palace": {
+      "x": 0,
+      "z": 100,
+      "size_x": 72,
+      "size_z": 56
+    },
+    "sofe:sulthari/low_bazaar": {
+      "x": -92,
+      "z": 24,
+      "size_x": 64,
+      "size_z": 56
+    },
+    "sofe:sulthari/lower_district": {
+      "x": -96,
+      "z": 100,
+      "size_x": 96,
+      "size_z": 80
+    },
+    "sofe:sulthari/training_grounds": {
+      "x": 96,
+      "z": 40,
+      "size_x": 56,
+      "size_z": 56
+    },
+    "sofe:sulthari/forge": {
+      "x": 72,
+      "z": -40,
+      "size_x": 32,
+      "size_z": 32
+    },
+    "sofe:sulthari/bank": {
+      "x": -40,
+      "z": -40,
+      "size_x": 24,
+      "size_z": 24
+    }
+  },
+  "waystones": {
+    "sofe:sulthari/plaza": {
+      "x": 6,
+      "z": 12
+    },
+    "sofe:sulthari/observatory": {
+      "x": 8,
+      "z": -70
+    },
+    "sofe:sulthari/low_bazaar": {
+      "x": -70,
+      "z": 24
+    }
+  },
+  "npcs": [
+    {
+      "npc": "ozhan",
+      "type": "story",
+      "x": 0,
+      "z": 84,
+      "yaw": 180
+    },
+    {
+      "npc": "council_elder",
+      "type": "story",
+      "x": 4,
+      "z": -74,
+      "yaw": 0
+    },
+    {
+      "npc": "knight",
+      "type": "bearer",
+      "x": -6,
+      "z": 90,
+      "yaw": 180
+    },
+    {
+      "npc": "necromancer",
+      "type": "bearer",
+      "x": -3,
+      "z": 92,
+      "yaw": 180
+    },
+    {
+      "npc": "sorceress",
+      "type": "bearer",
+      "x": 3,
+      "z": 92,
+      "yaw": 180
+    },
+    {
+      "npc": "thief",
+      "type": "bearer",
+      "x": 6,
+      "z": 90,
+      "yaw": 180
+    },
+    {
+      "npc": "king",
+      "type": "bearer",
+      "x": 0,
+      "z": 94,
+      "yaw": 180
+    },
+    {
+      "npc": "ferid",
+      "type": "merchant",
+      "role": "alchemist",
+      "x": -84,
+      "z": 14,
+      "yaw": 90
+    },
+    {
+      "npc": "dilara",
+      "type": "merchant",
+      "role": "smith",
+      "x": 70,
+      "z": -36,
+      "yaw": 270
+    },
+    {
+      "npc": "yusuf",
+      "type": "merchant",
+      "role": "quartermaster",
+      "x": -84,
+      "z": 34,
+      "yaw": 90
+    },
+    {
+      "npc": "selim",
+      "type": "merchant",
+      "role": "money_changer",
+      "x": -40,
+      "z": -34,
+      "yaw": 0
+    }
+  ]
+}

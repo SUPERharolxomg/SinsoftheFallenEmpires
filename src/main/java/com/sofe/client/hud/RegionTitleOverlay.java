@@ -1,5 +1,6 @@
 package com.sofe.client.hud;
 
+import com.sofe.world.lock.RegionStatus;
 import com.sofe.world.region.Region;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,13 +21,15 @@ public final class RegionTitleOverlay {
     private static final int PARCHMENT = 0xE6DCC8;
 
     private static Region region;
+    private static RegionStatus status = RegionStatus.NONE;
     private static long shownAt;
 
     private RegionTitleOverlay() {
     }
 
-    public static void show(Region newRegion) {
+    public static void show(Region newRegion, RegionStatus newStatus) {
         region = newRegion;
+        status = newStatus;
         shownAt = System.currentTimeMillis();
     }
 
@@ -55,5 +58,10 @@ public final class RegionTitleOverlay {
         graphics.pose().scale(scale, scale, 1f);
         graphics.drawCenteredString(font, name, 0, 0, (a << 24) | GOLD);
         graphics.pose().popPose();
+
+        if (status != RegionStatus.NONE) {
+            int color = status == RegionStatus.SEALED ? 0xB04A8C : 0x9FD86A;
+            graphics.drawCenteredString(font, Component.translatable(status.translationKey()), width / 2, top + 12 + (int) (font.lineHeight * scale) + 4, (a << 24) | color);
+        }
     }
 }
