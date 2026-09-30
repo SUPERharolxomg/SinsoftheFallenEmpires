@@ -86,7 +86,17 @@ One skill point every 2 levels; max level 30. Costs and cooldowns below are star
 
 **Motivation and temptation.** She wants to rescue Laleh, or at least give her peace. Her weakness is **Lust**, understood as desire: Luxara shows her a perfect life with her sister and asks her to stay in the dream.
 
-**Unique mechanic — Constellations.** Each basic spell leaves a star rune (Fire, Frost or Storm). With 3 runes a constellation is completed and fires an extra effect depending on the combination (for example, Fire + Frost + Storm = a steam explosion that stuns).
+**Unique mechanic — Constellations.** Each basic spell leaves a star rune (Fire, Frost or Storm). With 3 runes a constellation is completed and fires an extra effect depending on the combination (for example, Fire + Frost + Storm = a steam explosion that stuns). The runes then clear and a new constellation starts.
+
+| Runes | Constellation | Effect (at the last spell's impact point) |
+|-------|---------------|-------------------------------------------|
+| Fire + Frost + Storm | **Steam Burst** | Area damage and a short stun |
+| Fire × 3 | **Solar Flare** | Area fire damage and burning |
+| Frost × 3 | **Winter's Grasp** | Area damage and a strong slow |
+| Storm × 3 | **Tempest Crown** | Lightning jumps to up to 5 nearby enemies |
+| Two of one + one other | **Lesser Constellation** | Small area damage of the rune that appears twice |
+
+Damage, radius and durations live in `data/sofe/skills/sorceress.json`, next to the spells' costs and cooldowns.
 
 | Level | Skill | Type | Effect | Cost | Cooldown |
 |-------|-------|------|--------|------|----------|
