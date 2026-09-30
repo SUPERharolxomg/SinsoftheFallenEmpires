@@ -1,0 +1,7 @@
+{
+  "max_level": 30,
+  "xp_base": 60,
+  "xp_exponent": 1.5,
+  "skill_points_per_level": 1,
+  "attribute_points_per_level": 5
+}

@@ -6,6 +6,7 @@ import com.sofe.config.SoFEConfig;
 import com.sofe.network.OpenClassSelectPacket;
 import com.sofe.network.SoFENetwork;
 import com.sofe.network.SyncClassPacket;
+import com.sofe.progression.ProgressionHandler;
 import com.sofe.world.SoFEWorld;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -59,6 +60,7 @@ public final class ClassSelectionHandler {
             // Always sync: if the choice was refused, the client learns the real class and closes the screen
             sync(player);
             CombatHandler.refresh(player);
+            ProgressionHandler.onBearerChosen(player);
         });
     }
 

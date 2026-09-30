@@ -176,5 +176,7 @@
   "message.sofe.skill.no_resource": "Not enough %s",
   "message.sofe.skill.not_ready": "%s is not ready yet",
   "message.sofe.skill.empty_slot": "No skill in this slot yet",
-  "message.sofe.constellation": "Constellation: %s"
+  "message.sofe.constellation": "Constellation: %s",
+  "message.sofe.level_up": "Level %s! +%s skill point(s), +%s attribute points",
+  "gui.sofe.hud.level": "Lv %s"
 }

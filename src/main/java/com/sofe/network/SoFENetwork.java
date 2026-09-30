@@ -53,6 +53,11 @@ public final class SoFENetwork {
                 .decoder(SyncCombatPacket::decode)
                 .consumerMainThread(SyncCombatPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(SyncProgressPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SyncProgressPacket::encode)
+                .decoder(SyncProgressPacket::decode)
+                .consumerMainThread(SyncProgressPacket::handle)
+                .add();
         CHANNEL.messageBuilder(CastSkillPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(CastSkillPacket::encode)
                 .decoder(CastSkillPacket::decode)

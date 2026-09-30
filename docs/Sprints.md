@@ -56,7 +56,8 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [x] Implement skill visual effects (particles and vanilla sounds)
 
 ## Sprint 3 — Combat & Leveling (Weeks 5-6)
-- [ ] Implement XP and leveling system
+- [x] Implement XP and leveling system (levels 1-30, XP from kills by mob level, values in `data/sofe/leveling.json`)
+- [x] *(Rules)* Mob levels for every hostile mob (vanilla, SoFE and other mods): region range and act floor, health/damage/armor scaling from `data/sofe/mob_scaling.json` ([Jugabilidad.md](Jugabilidad.md#difficulty-rises-with-each-act)). The act floor reads the player's act, which is Act I for everyone until `StoryProgress` arrives in Sprint 4
 - [ ] Skill points (1 per level) and ranks 1-5 with the unlock and level rules ([Clases.md](Clases.md#skill-points-and-ranks-diablo-ii-style))
 - [ ] Per-rank growth of damage, duration, cost and cooldown from `per_rank` in the class files
 - [ ] Diablo II style SkillTreeScreen: grid by unlock level, arrows, ranks, "Points spent", Active and Passive tabs
@@ -108,6 +109,7 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [ ] *(World)* Sealed Gates for dungeons and arena; protection for dungeons and arenas
 - [ ] Implement boss health bar GUI
 - [ ] Add loot tables for boss drops
+- [ ] *(Rules)* Act II traits for vanilla mobs (zombies with empire armor, poison spiders)
 - [ ] *(Rules)* Arena seal, boss reset after 30 s without participants, and re-entry to recover a corpse
 - [ ] *(World)* The Burning Deep: Nether portals locked until Vorath falls, 1:8 region locks, portal link rules
 - [ ] *(World)* Region title in the Nether: "Welcome to" the region the Nether position maps to
@@ -163,6 +165,7 @@ Skill tables in [Clases.md](Clases.md).
 - [ ] Temptation dialogues for each Archsin, per Bearer
 - [ ] "Sulthari is under siege" transition to Act V
 - [ ] Add empire-specific mobs and loot
+- [ ] *(Rules)* Act III and IV traits for vanilla mobs (frost and fire arrows, shorter creeper fuse, blinding and teleporting endermen, web-shooting spiders)
 - [ ] Jeweler, Purifier, Tempering Anvil and remaining ores (from [Pociones.md](Pociones.md))
 - [ ] *(Annex)* Remaining secondary materials: Moonsilk, Sunreed Papyrus, Imperial Marble
 - [ ] *(Annex)* 7 sin gems (rough, cut, oath)
@@ -207,6 +210,7 @@ See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
 - [ ] Write and translate (en/es) the Act V dialogue and epilogues
 - [ ] Ending inside the Codex, the region fate slides and the Bearer epilogues (full and unfinished versions), plus the eighth-lock sequel hook
 - [ ] Implement multiplayer boss scaling
+- [ ] *(Rules)* Act V traits for vanilla mobs (corrupted zombies, arrow volleys, charged creepers)
 - [ ] Add sound effects and ambient music
 - [ ] Localization (English + Spanish)
 - [ ] *(Rules)* Post-game: all regions open, repeatable Echo fights
