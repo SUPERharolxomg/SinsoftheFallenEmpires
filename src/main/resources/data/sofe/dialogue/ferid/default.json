@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "ferid",
+  "lines": [
+    {
+      "speaker": "ferid",
+      "text": "dialogue.sofe.ferid.1"
+    }
+  ]
+}

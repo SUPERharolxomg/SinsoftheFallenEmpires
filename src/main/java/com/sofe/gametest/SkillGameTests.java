@@ -8,6 +8,9 @@ import com.sofe.combat.ResourcePool;
 import com.sofe.combat.Rune;
 import com.sofe.player.PlayerClass;
 import com.sofe.player.PlayerClassCapability;
+import com.sofe.progression.CharacterAttribute;
+import com.sofe.progression.ProgressionCapability;
+import com.sofe.progression.ProgressionHandler;
 import com.sofe.skill.SkillCaster;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.gametest.framework.GameTest;
@@ -52,6 +55,11 @@ public class SkillGameTests {
         player.lookAt(EntityAnchorArgument.Anchor.EYES, zombie.position().add(0, zombie.getBbHeight() / 2, 0));
 
         PlayerClassCapability.get(player).orElseThrow().choose(PlayerClass.SORCERESS);
+        // A level 10 Sorceress who learns her three spells (slots 1, 2 and 3 in that order)
+        ProgressionCapability.get(player).orElseThrow().load(10, 0, 3, 0, true);
+        for (String spell : new String[]{"ember_verse", "frost_lance", "wandering_spark"}) {
+            ProgressionHandler.learnSkill(player, spell);
+        }
         CombatHandler.refresh(player);
         return new Setup(player, zombie, CombatCapability.get(player).orElseThrow());
     }
@@ -100,6 +108,40 @@ public class SkillGameTests {
         helper.assertTrue(s.combat().runes().current().isEmpty(), "runes should clear after the constellation");
         MobEffectInstance slow = s.target().getEffect(MobEffects.MOVEMENT_SLOWDOWN);
         helper.assertTrue(slow != null && slow.getAmplifier() >= 9, "Steam Burst should stun (strong slowness), got " + slow);
+        helper.succeed();
+    }
+
+    /** Higher rank, stronger skill: the same Ember Verse hits harder at rank 5 than at rank 1. */
+    @GameTest(template = "empty")
+    public static void higherRankHitsHarder(GameTestHelper helper) {
+        Setup s = setup(helper);
+        s.target().getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(500);
+        s.target().setHealth(500);
+        SkillCaster.cast(s.sorceress(), 0);
+        float rank1Damage = 500 - s.target().getHealth();
+
+        var progress = ProgressionCapability.get(s.sorceress()).orElseThrow();
+        progress.load(10, 0, 4, 0, true);
+        progress.skills().load(java.util.Map.of("ember_verse", 1), progress.skills().slots());
+        for (int i = 0; i < 4; i++) ProgressionHandler.learnSkill(s.sorceress(), "ember_verse");
+        helper.assertTrue(progress.skills().rank("ember_verse") == 5, "Ember Verse should be rank 5, is " + progress.skills().rank("ember_verse"));
+
+        s.target().setHealth(500);
+        s.combat().cooldowns().clear();
+        s.target().invulnerableTime = 0;
+        SkillCaster.cast(s.sorceress(), 0);
+        float rank5Damage = 500 - s.target().getHealth();
+        helper.assertTrue(rank5Damage > rank1Damage * 1.5f, "rank 5 did " + rank5Damage + ", rank 1 did " + rank1Damage);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void vitalityRaisesMaximumHealth(GameTestHelper helper) {
+        Setup s = setup(helper);
+        float before = s.sorceress().getMaxHealth();
+        ProgressionCapability.get(s.sorceress()).orElseThrow().load(10, 0, 0, 4, true);
+        for (int i = 0; i < 4; i++) ProgressionHandler.spendAttribute(s.sorceress(), CharacterAttribute.VITALITY);
+        helper.assertTrue(s.sorceress().getMaxHealth() == before + 2, "4 Vitality should add 2 health: " + before + " -> " + s.sorceress().getMaxHealth());
         helper.succeed();
     }
 }

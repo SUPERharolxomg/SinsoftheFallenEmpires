@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_aetheris",
+  "features": "sofe:seal_veil",
+  "step": "top_layer_modification"
+}

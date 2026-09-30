@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "azhar",
+  "lines": [
+    {
+      "speaker": "azhar",
+      "text": "dialogue.sofe.azhar.1"
+    }
+  ]
+}

@@ -58,46 +58,59 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 ## Sprint 3 — Combat & Leveling (Weeks 5-6)
 - [x] Implement XP and leveling system (levels 1-30, XP from kills by mob level, values in `data/sofe/leveling.json`)
 - [x] *(Rules)* Mob levels for every hostile mob (vanilla, SoFE and other mods): region range and act floor, health/damage/armor scaling from `data/sofe/mob_scaling.json` ([Jugabilidad.md](Jugabilidad.md#difficulty-rises-with-each-act)). The act floor reads the player's act, which is Act I for everyone until `StoryProgress` arrives in Sprint 4
-- [ ] Skill points (1 per level) and ranks 1-5 with the unlock and level rules ([Clases.md](Clases.md#skill-points-and-ranks-diablo-ii-style))
-- [ ] Per-rank growth of damage, duration, cost and cooldown from `per_rank` in the class files
-- [ ] Diablo II style SkillTreeScreen: grid by unlock level, arrows, ranks, "Points spent", Active and Passive tabs
-- [ ] Combat Bar slots filled from the skills the player has learned (instead of the fixed level-1 loadout)
-- [ ] Attributes: 6 attributes, 5 points per level, starting values per class, effects from `data/sofe/attributes.json`
-- [ ] Diablo II style character sheet screen (spend attribute points, see the resulting values)
-- [ ] Implement combat damage modifiers per class
-- [ ] HUD overlay for health, Marks and souls (the resource bar and runes come in Sprint 2), final HUD art
-- [ ] Create basic Void creature entities
+
+- The remaining Sprint 3 tasks moved to Sprint 4 (part 4.1) after PR #5 was merged.
 
 ## Sprint 4 — Act I: The Night of the Eclipse (Weeks 7-8)
-- [ ] *(World)* `AetherisBiomeSource` with the fixed layout; Sulthari and Ashen Wastes biomes
-- [ ] Build Sulthari: Great Observatory, lower district, Low Bazaar, palace, Training Grounds, forge
-- [ ] *(World)* Build pipeline for the empires: Structure Block pieces, jigsaw pools, `structure_positions.json` ([Mundo.md](Mundo.md#w6-the-empires-built-from-scratch))
-- [ ] *(World)* Sulthari building blocks: sandstone bricks, brass plating and trims, glazed tiles, aetherium lamps
-- [ ] Eclipse Festival and Void invasion tutorial (first 3 skills)
-- [ ] Bearer-specific intro scenes (the shard piercing each hero)
-- [ ] Bearer outfits: a cosmetic armor layer per class over the player's own skin, with a setting to hide it ([Clases.md](Clases.md#how-the-player-looks))
-- [ ] The other four Bearers as NPCs (`BearerNpcEntity`) and the Council of Sulthari with Grand Vizier Ozhan
-- [ ] Act I boss: the Brass Sentinel
-- [ ] Add Sulthari-themed textures and models (brass, clockwork, aetherium)
-- [ ] *(World)* Seal Veil on every region border (per-player collision and tint)
-- [ ] *(World)* `RegionEnforcer` (flight, pearls, coast) and `opsBypass`
-- [ ] *(World)* Protected zones for Sulthari city and the Bearer's Homestead plot
+Split into five parts, one pull request each.
+
+### Part 4.1 — Character: ranks, skill tree, attributes
+- [x] *(from Sprint 3)* Skill points (1 per level) and ranks 1-5 with the unlock and level rules ([Clases.md](Clases.md#skill-points-and-ranks-diablo-ii-style))
+- [x] *(from Sprint 3)* Per-rank growth of damage, duration, cost and cooldown from `per_rank` in the class files
+- [x] *(from Sprint 3)* Diablo II style SkillTreeScreen (key K): grid by unlock level, arrows, ranks, "Points spent", Active and Passive tabs
+- [x] *(from Sprint 3)* Combat Bar slots filled from the skills the player has learned (each new active takes the first free slot, the ultimate slot 6; moving skills between slots comes later)
+- [x] *(from Sprint 3)* Attributes: 6 attributes, 5 points per level, starting values per class, effects from `data/sofe/attributes.json`
+- [x] *(from Sprint 3)* Diablo II style character sheet screen (key I) (spend attribute points, see the resulting values)
+- [x] *(from Sprint 3)* Implement combat damage modifiers per class (Strength and Intellect, with each class starting 10 points ahead in its primary attribute; critical hits and dodge from Agility)
+
+### Part 4.2 — Story: progress, quests, dialogue
+- [x] *(Rules)* Quest system (`data/sofe/quests/`) and Journal (key U; quests by type, steps with counts, fates, tracking for the Quest Compass)
+- [x] *(Rules)* Warcraft III style dialogue box (portrait, name, letter-by-letter text, answers), cinematic letterbox mode, `data/sofe/dialogue/`; text only, no voices. Uses the wide bars per style ([Arte.md](Arte.md#dialogue-box-one-style-per-empire)); the square box is the fallback. In a conversation the player keeps walking; walking away ends it
+- [x] *(Rules)* Region fates in `StoryProgress` and the `fate_is` condition (add it to `ConditionParser`); first Sulthari fate side quest ("Embers of the Eclipse": the Low Bazaar or the Observatory)
+- [x] *(Annex)* `StoryProgress` player capability (act, quests, credit per boss); mob levels now read the real act
+- [x] *(Annex)* King variant: the Council led by Ozhan when the player is Azhar (`class_is` condition on dialogue lines)
+
+### Part 4.3 — World: locks and protected places
+- [x] *(World)* `AetherisBiomeSource` with the fixed layout; Sulthari and Ashen Wastes biomes (the Wastes are the outer ring of Sulthari; saved with the world, optional so older worlds keep loading)
+- [x] *(World)* Seal Veil on every region border (per-player collision and tint)
+- [x] *(World)* `RegionEnforcer` (flight, pearls, coast) and `opsBypass`
+- [x] *(World)* Protected zones for Sulthari city and the Bearer's Homestead plot (fire spread is not covered yet: Forge has no event for it)
 - [x] *(World)* Region title ("Welcome to ..." when entering a region; done in Sprint 1)
-- [ ] *(World)* Quest Compass on the HUD; lock status in the region title ("— Sealed" / "— Liberated")
-- [ ] *(Rules)* Quest system (`data/sofe/quests/`) and Journal
-- [ ] *(Rules)* Warcraft III style dialogue box (portrait, name, letter-by-letter text, answers), cinematic letterbox mode, `data/sofe/dialogue/`; text only, no voices. Uses the wide bars per style ([Arte.md](Arte.md#dialogue-box-one-style-per-empire)); the square box is the fallback
-- [ ] *(Rules)* Region fates in `StoryProgress` and the `fate_is` condition (add it to `ConditionParser`); first Sulthari fate side quest
-- [ ] *(World)* New players spawn inside the city of Sulthari (today they spawn near the center of the region, not always in the city)
-- [ ] *(Rules)* Diablo II style corpse (`BearerCorpseEntity`), compass and map marker
-- [ ] *(Rules)* Waystones in Sulthari and the Return Scroll
-- [ ] *(Rules)* Personal Vault at the Sulthari bank
-- [ ] *(Rules)* Peaceful replaced by Easy; difficulty scaling for bosses
+- [x] *(World)* Quest Compass on the HUD; lock status in the region title ("— Sealed" / "— Liberated")
+- [x] *(World)* New players spawn inside the city of Sulthari (the plaza, from `structure_positions.json`)
 - [x] *(Rules)* Save the region layout into the world at creation (done in Sprint 1: it is part of the world preset)
-- [ ] *(Annex)* `MerchantNpcEntity` base class and `MerchantRole` enum (not vanilla villagers)
-- [ ] *(Annex)* Place Ferid, Dilara, Yusuf and Selim in Sulthari with placeholder models
-- [ ] *(Annex)* Disable vanilla villager spawning in the `sofe:aetheris` world
-- [ ] *(Annex)* `StoryProgress` player capability (act, quests, credit per boss)
-- [ ] *(Annex)* King variant: the Council led by Ozhan when the player is Azhar
+
+### Part 4.4 — Life in Sulthari: NPCs, death, travel, storage
+- [x] *(from Sprint 3)* HUD overlay for health, Marks and souls (the resource bar and runes come in Sprint 2), final HUD art (brass frame; the Marks and souls counters fill in with their classes in Sprint 6)
+- [x] *(from Sprint 3)* Create basic Void creature entities (Void Wretch and Void Stalker; they spawn in the Ashen Wastes)
+- [x] The other four Bearers as NPCs (`BearerNpcEntity`) and the Council of Sulthari with Grand Vizier Ozhan
+- [x] *(Rules)* Diablo II style corpse (`BearerCorpseEntity`) and compass (the JourneyMap marker comes with the plugin in Sprint 7.5)
+- [x] *(Rules)* Waystones in Sulthari and the Return Scroll
+- [x] *(Rules)* Personal Vault at the Sulthari bank (27 slots; the 54 and 81 slot upgrades need Dinars, Sprint 5.5)
+- [x] *(Rules)* Peaceful replaced by Easy; difficulty scaling for bosses
+- [x] *(Annex)* `MerchantNpcEntity` base class and `MerchantRole` enum (not vanilla villagers)
+- [x] *(Annex)* Place Ferid, Dilara, Yusuf and Selim in Sulthari with placeholder models
+- [x] *(Annex)* Disable vanilla villager spawning in the `sofe:aetheris` world (villagers, wandering traders and their llamas)
+
+### Part 4.5 — Act I: Sulthari, the Eclipse and the Brass Sentinel
+- [x] Build Sulthari: Great Observatory, lower district, Low Bazaar, palace, Training Grounds, forge (blockouts made of the Sulthari blocks; each is replaced by its hand-made build as soon as the template exists)
+- [x] *(World)* Build pipeline for the empires: Structure Block pieces, jigsaw pools, `structure_positions.json` ([Mundo.md](Mundo.md#w6-the-empires-built-from-scratch)). Templates in `data/sofe/structures/sulthari/<piece>.nbt` are placed at their position; the jigsaw pools for ordinary houses come with the first real builds
+- [x] *(World)* Sulthari building blocks: sandstone bricks (with stairs, slab and wall), brass plating and trims, glazed tiles, aetherium lamps
+- [x] Eclipse Festival and Void invasion tutorial (first 3 skills)
+- [x] Bearer-specific intro scenes (the shard piercing each hero), as cinematic dialogue with sound and light
+- [x] Bearer outfits: a cosmetic armor layer per class over the player's own skin, with a setting to hide it ([Clases.md](Clases.md#how-the-player-looks))
+- [x] Act I boss: the Brass Sentinel
+- [x] Add Sulthari-themed textures and models (brass, clockwork, aetherium): placeholders drawn by `scripts/make_sprint4_textures.py` until the final art
 
 ## Sprint 5 — Act II: The Northern Campaign (Weeks 9-10)
 - [ ] Implement ArchsinEntity abstract class
@@ -123,7 +136,10 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 ## Sprint 5.5 — Loot and Economy (Weeks 11-12)
 Design: [Pociones.md](Pociones.md).
 - [ ] `Rarity` enum with name colors and loot beams
-- [ ] `Affix`, `AffixRegistry` and 20 starter affixes in JSON
+- [ ] `Affix`, `AffixRegistry` and the starter affixes in JSON, including the ones that raise the character: attributes, health, resource, damage, critical, dodge, resistances and +skill ranks ([Pociones.md](Pociones.md#affixes-that-raise-the-character-diablo-ii-style))
+- [ ] Gear bonuses added to the character sheet (green values) and to skill ranks from gear (up to rank 8)
+- [ ] Item level and attribute requirements; Diablo II style tooltips
+- [ ] Talismans and the Talisman Pouch (Curios, 6 spaces)
 - [ ] `LootGenerator` with Builder and class bias
 - [ ] Global Loot Modifier for mod enemies
 - [ ] Sulthari Brass and Glacial Iron ores with worldgen by region (heights and frequencies from [Mundo.md](Mundo.md#w4-resource-distribution))

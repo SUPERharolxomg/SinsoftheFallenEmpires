@@ -16,17 +16,19 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Loads data/sofe/leveling.json and data/sofe/mob_scaling.json on start and on /reload.
+ * Loads data/sofe/leveling.json, mob_scaling.json and attributes.json on start and on /reload.
  * A missing or broken file keeps the documented defaults and logs why.
  */
 public final class ProgressionRulesManager extends SimplePreparableReloadListener<ProgressionRulesManager.Loaded> {
     private static final ResourceLocation LEVELING = SoFEMod.id("leveling.json");
     private static final ResourceLocation MOB_SCALING = SoFEMod.id("mob_scaling.json");
+    private static final ResourceLocation ATTRIBUTES = SoFEMod.id("attributes.json");
 
     private static volatile LevelingRules leveling = LevelingRules.DEFAULT;
     private static volatile MobScalingRules mobScaling = MobScalingRules.defaults();
+    private static volatile AttributeRules attributes = AttributeRules.DEFAULT;
 
-    record Loaded(LevelingRules leveling, MobScalingRules mobScaling) {
+    record Loaded(LevelingRules leveling, MobScalingRules mobScaling, AttributeRules attributes) {
     }
 
     public static void onAddReloadListeners(AddReloadListenerEvent event) {
@@ -41,17 +43,23 @@ public final class ProgressionRulesManager extends SimplePreparableReloadListene
         return mobScaling;
     }
 
+    public static AttributeRules attributes() {
+        return attributes;
+    }
+
     @Override
     protected Loaded prepare(ResourceManager resources, ProfilerFiller profiler) {
         return new Loaded(
                 read(resources, LEVELING, LevelingRules::parse).orElse(LevelingRules.DEFAULT),
-                read(resources, MOB_SCALING, MobScalingRules::parse).orElse(MobScalingRules.defaults()));
+                read(resources, MOB_SCALING, MobScalingRules::parse).orElse(MobScalingRules.defaults()),
+                read(resources, ATTRIBUTES, AttributeRules::parse).orElse(AttributeRules.DEFAULT));
     }
 
     @Override
     protected void apply(Loaded loaded, ResourceManager resources, ProfilerFiller profiler) {
         leveling = loaded.leveling();
         mobScaling = loaded.mobScaling();
+        attributes = loaded.attributes();
     }
 
     private static <T> Optional<T> read(ResourceManager resources, ResourceLocation id, Function<JsonObject, T> parser) {

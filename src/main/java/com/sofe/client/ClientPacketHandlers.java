@@ -14,8 +14,23 @@ public final class ClientPacketHandlers {
     private ClientPacketHandlers() {
     }
 
-    public static void showRegionTitle(Region region) {
-        RegionTitleOverlay.show(region);
+    public static void showRegionTitle(Region region, com.sofe.world.lock.RegionStatus status) {
+        RegionTitleOverlay.show(region, status);
+    }
+
+    public static void showDialogue(com.sofe.network.DialogueLinePacket line) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (line.isClose()) {
+            if (minecraft.screen instanceof com.sofe.client.screen.DialogueScreen) minecraft.setScreen(null);
+        } else if (minecraft.screen instanceof com.sofe.client.screen.DialogueScreen open) {
+            open.show(line);
+        } else {
+            minecraft.setScreen(new com.sofe.client.screen.DialogueScreen(line));
+        }
+    }
+
+    public static void openWaystones(java.util.List<com.sofe.network.OpenWaystonesPacket.Entry> entries) {
+        Minecraft.getInstance().setScreen(new com.sofe.client.screen.WaystoneScreen(entries));
     }
 
     public static void openClassSelect() {

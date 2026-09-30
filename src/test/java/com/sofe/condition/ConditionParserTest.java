@@ -79,6 +79,24 @@ class ConditionParserTest {
     }
 
     @Test
+    void fateIsAndClassIsReadTheStoryAndTheBearer() {
+        ProgressView bazaarKing = new ProgressView() {
+            @Override public int act() { return 1; }
+            @Override public boolean hasDefeated(String bossId) { return false; }
+            @Override public int questStep(String questId) { return 0; }
+            @Override public int countItem(String itemId) { return 0; }
+            @Override public String fate(String region) { return region.equals("sulthari") ? "bazaar" : null; }
+            @Override public String playerClass() { return "king"; }
+        };
+        assertTrue(parse("{\"type\":\"fate_is\",\"region\":\"sulthari\",\"fate\":\"bazaar\"}").test(bazaarKing));
+        assertFalse(parse("{\"type\":\"fate_is\",\"region\":\"sulthari\",\"fate\":\"observatory\"}").test(bazaarKing));
+        assertFalse(parse("{\"type\":\"fate_is\",\"region\":\"nordrath\",\"fate\":\"peace\"}").test(bazaarKing));
+        assertTrue(parse("{\"type\":\"class_is\",\"class\":\"king\"}").test(bazaarKing));
+        assertFalse(parse("{\"type\":\"class_is\",\"class\":\"king\"}").test(act(1)), "no Bearer chosen yet");
+        assertThrows(IllegalArgumentException.class, () -> parse("{\"type\":\"fate_is\",\"region\":\"sulthari\"}"));
+    }
+
+    @Test
     void errorsSayWhereTheProblemIs() {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> parse("""
                 {"type":"all_of","conditions":[{"type":"act_reached","act":3},{"type":"boss_defeatd","boss":"sofe:luxara"}]}"""));

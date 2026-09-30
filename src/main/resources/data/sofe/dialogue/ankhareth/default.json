@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "ankhareth",
+  "lines": [
+    {
+      "speaker": "ankhareth",
+      "text": "dialogue.sofe.ankhareth.1"
+    }
+  ]
+}

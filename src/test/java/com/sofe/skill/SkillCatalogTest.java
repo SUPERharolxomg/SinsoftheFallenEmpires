@@ -45,7 +45,7 @@ class SkillCatalogTest {
     @Test
     void theSorceressStartsWithHerThreeSpells() {
         assertEquals(List.of("ember_verse", "frost_lance", "wandering_spark"),
-                SkillCatalog.defaultLoadout(PlayerClass.SORCERESS).stream().map(SkillInfo::id).toList());
+                SkillCatalog.startingSkills(PlayerClass.SORCERESS).stream().map(SkillInfo::id).toList());
     }
 
     @Test

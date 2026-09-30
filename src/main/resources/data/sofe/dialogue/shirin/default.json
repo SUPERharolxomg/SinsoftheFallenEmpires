@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "shirin",
+  "lines": [
+    {
+      "speaker": "shirin",
+      "text": "dialogue.sofe.shirin.1"
+    }
+  ]
+}

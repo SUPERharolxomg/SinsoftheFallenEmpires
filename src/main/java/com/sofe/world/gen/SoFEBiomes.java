@@ -7,7 +7,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.AmbientParticleSettings;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
@@ -29,6 +35,8 @@ public final class SoFEBiomes {
     public static final ResourceKey<Biome> KHEMET_VALLEY = key(Region.KHEMET, "khemet_valley");
     public static final ResourceKey<Biome> AUREUM_HILLS = key(Region.AUREUM, "aureum_hills");
     public static final ResourceKey<Biome> AETHERIS_OCEAN = key(Region.OCEAN, "aetheris_ocean");
+    /** The corrupted wilderness around the city, in the outer ring of Sulthari (docs/Mundo.md, W1). */
+    public static final ResourceKey<Biome> ASHEN_WASTES = ResourceKey.create(Registries.BIOME, SoFEMod.id("ashen_wastes"));
 
     private SoFEBiomes() {
     }
@@ -49,5 +57,32 @@ public final class SoFEBiomes {
         context.register(KHEMET_VALLEY, OverworldBiomes.savanna(features, carvers, false, false));
         context.register(AUREUM_HILLS, OverworldBiomes.plains(features, carvers, false, false, false));
         context.register(AETHERIS_OCEAN, OverworldBiomes.ocean(features, carvers, false));
+        context.register(ASHEN_WASTES, ashenWastes(OverworldBiomes.desert(features, carvers)));
+    }
+
+    /** The desert's terrain features under a grey sky with falling ash; only hostile creatures live here. */
+    private static Biome ashenWastes(Biome desert) {
+        MobSpawnSettings.Builder spawns = new MobSpawnSettings.Builder();
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.HUSK, 80, 2, 4));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SKELETON, 60, 1, 3));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 50, 1, 2));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(com.sofe.registry.EntityRegistry.VOID_WRETCH.get(), 70, 2, 4));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(com.sofe.registry.EntityRegistry.VOID_STALKER.get(), 30, 1, 2));
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .temperature(2.0f)
+                .downfall(0.0f)
+                .specialEffects(new BiomeSpecialEffects.Builder()
+                        .fogColor(0x6E6660)
+                        .skyColor(0x7C736C)
+                        .waterColor(0x4A4F52)
+                        .waterFogColor(0x2E3133)
+                        .grassColorOverride(0x7D7766)
+                        .foliageColorOverride(0x6B6656)
+                        .ambientParticle(new AmbientParticleSettings(ParticleTypes.WHITE_ASH, 0.025f))
+                        .build())
+                .mobSpawnSettings(spawns.build())
+                .generationSettings(desert.getGenerationSettings())
+                .build();
     }
 }
