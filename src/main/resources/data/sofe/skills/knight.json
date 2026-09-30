@@ -1,0 +1,50 @@
+{
+  "resource": {
+    "max": 100,
+    "start": 50,
+    "regen_per_second": 1
+  },
+  "skills": {
+    "scale_strike": {
+      "cost": 10,
+      "cooldown_s": 3
+    },
+    "shield_wall": {
+      "cost": 15,
+      "cooldown_s": 8,
+      "duration_s": 2
+    },
+    "banner_cry": {
+      "cost": 10,
+      "cooldown_s": 10
+    },
+    "legionary_charge": {
+      "cost": 20,
+      "cooldown_s": 8
+    },
+    "verdict": {
+      "cost": 25,
+      "cooldown_s": 12
+    },
+    "protectors_oath": {
+      "cost": 20,
+      "cooldown_s": 15,
+      "absorb": 0.3,
+      "duration_s": 6
+    },
+    "iron_discipline": {
+      "armor_bonus": 0.15
+    },
+    "living_rampart": {
+      "cost": 35,
+      "cooldown_s": 25,
+      "width": 5
+    },
+    "contained_wrath": {},
+    "last_one_standing": {
+      "cost": 100,
+      "cooldown_s": 120,
+      "duration_s": 10
+    }
+  }
+}
