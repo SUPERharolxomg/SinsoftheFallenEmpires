@@ -12,7 +12,11 @@ import com.sofe.registry.CreativeTabRegistry;
 import com.sofe.registry.EntityRegistry;
 import com.sofe.registry.ItemRegistry;
 import com.sofe.registry.WorldgenRegistry;
+import com.sofe.mob.MobLevels;
 import com.sofe.network.SoFENetwork;
+import com.sofe.progression.ProgressionCapability;
+import com.sofe.progression.ProgressionHandler;
+import com.sofe.progression.ProgressionRulesManager;
 import com.sofe.player.ClassSelectionHandler;
 import com.sofe.player.PlayerClassCapability;
 import com.sofe.registry.material.MaterialRegistry;
@@ -69,6 +73,15 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(CombatHandler::onRespawn);
         MinecraftForge.EVENT_BUS.addListener(CombatHandler::onDatapackSync);
         MinecraftForge.EVENT_BUS.addListener(CombatHandler::onPlayerTick);
+
+        modBus.addListener(ProgressionCapability::register);
+        MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, ProgressionCapability::attach);
+        MinecraftForge.EVENT_BUS.addListener(ProgressionCapability::onClone);
+        MinecraftForge.EVENT_BUS.addListener(ProgressionRulesManager::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(ProgressionHandler::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(ProgressionHandler::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(ProgressionHandler::onKill);
+        MinecraftForge.EVENT_BUS.addListener(MobLevels::onJoin);
 
         if (FMLEnvironment.dist.isClient()) {
             ClientSetup.init(modBus, context);
