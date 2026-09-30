@@ -13,13 +13,18 @@ sins-of-fallen-empires/
 │   ├── client/
 │   │   ├── screen/SoFETitleScreen.java     # Title screen and main menu
 │   │   ├── screen/CodexScreen.java         # Lore, bestiary, splash art gallery
-│   │   ├── screen/JournalScreen.java       # Quests, act, Pact
+│   │   ├── screen/JournalScreen.java       # Quests, act, fates, Pact (key U)
+│   │   ├── screen/DialogueScreen.java      # Warcraft III style box: portrait, name, typewriter text, letterbox
+│   │   ├── screen/WaystoneScreen.java      # Travel between activated Waystones
 │   │   ├── screen/ClassSelectScreen.java   # Choose a Bearer
-│   │   ├── screen/SkillTreeScreen.java
+│   │   ├── screen/SkillTreeScreen.java     # Diablo II tree (key K)
+│   │   ├── screen/CharacterSheetScreen.java # Attributes (key I)
 │   │   ├── hud/BossHealthBar.java
-│   │   ├── hud/ResourceOverlay.java        # Health + class resource, runes, Marks, souls
-│   │   ├── hud/QuestCompass.java           # Arrow + distance to the objective
-│   │   ├── hud/RegionTitle.java            # Title when entering a region
+│   │   ├── hud/CombatHudOverlay.java       # Health + class resource, runes, Marks, souls, Combat Bar
+│   │   ├── hud/QuestCompassOverlay.java    # Strip + distance to the objective (or the player's body)
+│   │   ├── hud/RegionTitleOverlay.java     # Title when entering a region, with "Sealed" / "Liberated"
+│   │   ├── render/SoFEEntityRenderers.java # Placeholder renderers, Bearer outfit layer
+│   │   ├── ClientLockData.java             # Region layout + act on the client, for the Seal Veil
 │   │   ├── screen/CodexMapScreen.java      # Illustrated map of Aetheris
 │   │   └── TitleScreenHandler.java         # ScreenEvent.Opening → replace TitleScreen
 │   ├── entity/
@@ -29,7 +34,7 @@ sins-of-fallen-empires/
 │   │   │   ├── LuxaraEntity.java           # Lust
 │   │   │   ├── ...                         # Morthis, Avarok, Gularth, Envyris, Prython
 │   │   │   ├── NahrazelEntity.java         # The First Fallen, 3 phases
-│   │   │   └── BrassSentinelEntity.java    # Act I boss
+│   │   │   └── BrassSentinelEntity.java    # Act I boss (2 phases, difficulty scaling, reset)
 │   │   ├── oath/
 │   │   │   ├── BrokenOathEntity.java       # Abstract base for the Ten Broken Oaths
 │   │   │   ├── KalethEntity.java           # Law I — The Burning Blade
@@ -39,13 +44,13 @@ sins-of-fallen-empires/
 │   │   │   ├── JanissaryGuardEntity.java   # King
 │   │   │   └── BronzeCannonEntity.java     # King
 │   │   ├── npc/
+│   │   │   ├── StoryNpcEntity.java         # Ozhan, the Council elder...: talk through dialogue files
 │   │   │   ├── BearerNpcEntity.java        # The four Bearers not chosen; companions
 │   │   │   ├── MerchantNpcEntity.java      # Ferid, Dilara, Kerem, ...
 │   │   │   ├── MerchantRole.java           # enum: ALCHEMIST, SMITH, JEWELER, ...
 │   │   │   └── CaravanSpawner.java         # Zahir every 3 days
-│   │   └── mob/
-│   │       ├── VoidCreature.java
-│   │       └── ...                         # Common corrupted enemies
+│   │   ├── VoidCreature.java               # VoidWretch, VoidStalker
+│   │   └── BearerCorpseEntity.java         # Holds the gear, owner only (see death/)
 │   ├── player/
 │   │   ├── PlayerClass.java                # enum: KNIGHT, NECROMANCER, SORCERESS, THIEF, KING
 │   │   ├── ResourceType.java               # enum: RESOLVE, ESSENCE, MANA, ENERGY, AUTHORITY
@@ -80,21 +85,26 @@ sins-of-fallen-empires/
 │   │   ├── journeymap/SoFEJourneyMapPlugin.java  # Regions, locks, waypoints
 │   │   └── xaero/XaeroCompat.java          # Basic support, only if the API allows
 │   ├── quest/
-│   │   ├── Quest.java                      # Steps, conditions, rewards (data/sofe/quests/*.json)
-│   │   ├── QuestManager.java
-│   │   ├── dialogue/DialogueTree.java      # data/sofe/dialogue/*.json: lines, answers, effects
-│   │   ├── dialogue/DialogueOverlay.java   # Warcraft III style box: portrait, name, typewriter text, letterbox
-│   │   └── Fate.java                       # Region fates set by side quests, read by the ending
+│   │   ├── QuestDefinition.java            # Steps, objectives, rewards (data/sofe/quests/*.json)
+│   │   ├── DialogueDefinition.java         # data/sofe/dialogue/*.json: lines, answers, effects, on_end
+│   │   ├── StoryParser.java / StoryDataManager.java  # JSON → definitions, reload listeners
+│   │   ├── QuestLogic.java / DialogueLogic.java      # Pure rules (unit tested)
+│   │   ├── QuestEngine.java                # Game events → objectives, effect runner, Journal/compass sync
+│   │   ├── DialogueService.java            # Server-side conversation sessions
+│   │   └── QuestEffect.java / Objective.java / QuestEvent.java
 │   ├── travel/
-│   │   ├── WaystoneBlock.java
-│   │   └── WaystoneData.java               # Activated Waystones per player
-│   ├── stash/PersonalVault.java            # Per-player storage (capability)
+│   │   ├── WaystoneBlock.java / WaystoneService.java # Activation, travel rules, respawn at the last one
+│   │   ├── TravelData.java / TravelCapability.java   # Activated Waystones + Personal Vault per player
+│   │   ├── VaultBlock.java                 # Same storage from every Vault block
+│   │   └── ReturnScrollItem.java           # 5 s channel back to Sulthari
 │   ├── death/
 │   │   ├── CorpseHandler.java              # Diablo II style death
-│   │   └── BearerCorpseEntity.java         # Holds the gear, owner only
+│   │   └── CorpseRegistry.java             # Where each player's bodies lie (for the compass)
 │   ├── command/SoFECommands.java           # /sofe progress, unstuck, item restore, reload
 │   ├── story/
-│   │   ├── StoryProgress.java              # Per-player act, quests, boss credit (capability)
+│   │   ├── StoryProgress.java              # Per-player act, quests, boss credit, fates (StoryCapability)
+│   │   ├── RegionFates.java                # The fates each region can end with
+│   │   ├── PlayerProgressView.java         # What conditions see of a real player
 │   │   ├── Act.java                        # enum: ECLIPSE, NORTH, EAST, WEST, ASCENSION
 │   │   └── CutsceneManager.java            # Intros, temptations, epilogues per hero
 │   ├── item/
@@ -134,17 +144,26 @@ sins-of-fallen-empires/
 │   │   ├── region/
 │   │   │   ├── Region.java                 # enum: SULTHARI, NORDRATH, PARSIVAN, KHEMET, AUREUM, OCEAN
 │   │   │   ├── RegionMap.java              # regionAt(x, z); layout saved in each world by the biome source
-│   │   │   ├── AetherisBiomeSource.java    # Biomes by region (fixed layout, procedural terrain)
-│   │   │   └── RegionEnforcer.java         # Server check once per second + teleport events
+│   │   │   ├── AetherisBiomeSource.java    # Biomes by region + the Ashen Wastes ring (fixed layout, procedural terrain)
+│   │   │   └── AshenWastes.java
+│   │   ├── lock/
+│   │   │   ├── RegionLocks.java            # Pure rules: where a player may stand, Veil columns, coast limit
+│   │   │   ├── LockAccess.java             # Same answer on server and client (act, bypass)
+│   │   │   ├── RegionEnforcer.java         # Server check once per second + teleport events
+│   │   │   ├── SealVeilBlock.java          # Region border wall, per-player collision and tint
+│   │   │   └── SealVeilFeature.java        # Raises the Veil on border columns (biome modifier)
 │   │   ├── gate/
-│   │   │   ├── SealVeilBlock.java          # Region border wall, per-player collision
 │   │   │   ├── SealedGateBlock.java        # Doors with a condition
 │   │   │   ├── VoidGateBlock.java          # The only End portal, under the Observatory
 │   │   │   └── NetherPortalLock.java       # Lighting and linking rules for Nether portals
-│   │   ├── protection/
-│   │   │   ├── ProtectedZone.java          # Bounds + rules
-│   │   │   ├── ProtectedZoneData.java      # World SavedData
-│   │   │   └── ProtectionHandler.java      # Break, place, explosions, pistons, fire, griefing
+│   │   ├── zone/
+│   │   │   ├── ProtectedZone.java / ZoneRules.java # Bounds + rules (Chain of Responsibility)
+│   │   │   ├── ProtectedZoneData.java      # World SavedData, copied once from structure_positions.json
+│   │   │   ├── StructurePositions.java     # data/sofe/structure_positions.json: spawn, structures, NPCs, Waystones
+│   │   │   └── ZoneProtectionHandler.java  # Break, place, explosions, pistons, fluids, griefing; spawn in the city
+│   │   ├── build/SultharisBuilder.java     # Structure Block templates, or blockouts until the builds exist
+│   │   ├── StoryPlacements.java            # Buildings, NPCs, Waystones and the Vault, placed once per world
+│   │   ├── JourneyRules.java               # No villagers or traders; Peaceful becomes Easy
 │   │   ├── dimension/                      # inverted_throne, codex_interior, echo
 │   │   ├── structure/                      # Cities, dungeons, arenas at fixed positions
 │   │   ├── biome/
