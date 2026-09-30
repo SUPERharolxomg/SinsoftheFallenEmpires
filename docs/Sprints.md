@@ -57,8 +57,12 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 
 ## Sprint 3 — Combat & Leveling (Weeks 5-6)
 - [ ] Implement XP and leveling system
-- [ ] Create SkillTree with point allocation
-- [ ] Add SkillTreeScreen GUI
+- [ ] Skill points (1 per level) and ranks 1-5 with the unlock and level rules ([Clases.md](Clases.md#skill-points-and-ranks-diablo-ii-style))
+- [ ] Per-rank growth of damage, duration, cost and cooldown from `per_rank` in the class files
+- [ ] Diablo II style SkillTreeScreen: grid by unlock level, arrows, ranks, "Points spent", Active and Passive tabs
+- [ ] Combat Bar slots filled from the skills the player has learned (instead of the fixed level-1 loadout)
+- [ ] Attributes: 6 attributes, 5 points per level, starting values per class, effects from `data/sofe/attributes.json`
+- [ ] Diablo II style character sheet screen (spend attribute points, see the resulting values)
 - [ ] Implement combat damage modifiers per class
 - [ ] HUD overlay for health, Marks and souls (the resource bar and runes come in Sprint 2), final HUD art
 - [ ] Create basic Void creature entities
