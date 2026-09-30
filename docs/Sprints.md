@@ -46,20 +46,21 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [x] *(Annex)* `MaterialRegistry` with the naming convention `sofe:<material>_<form>` (en_us + es_es)
 
 ## Sprint 2 — Skill System (Weeks 3-4)
-- [ ] Implement Skill interface and abstract class
-- [ ] Create SkillCooldownManager
-- [ ] `SkillDataLoader`: costs and cooldowns from `data/sofe/skills/*.json`
-- [ ] Resource system for the 5 resources (Resolve, Essence, Mana, Energy, Authority)
-- [ ] Sorceress level-1 skills (Ember Verse, Frost Lance, Wandering Spark) and the rune / constellation system
-- [ ] *(Rules)* Combat Bar keybinding system (Left Alt + numbers), Flask on H, all rebindable
-- [ ] Implement skill visual effects (particles)
+- [x] Implement the Skill interface (effect only; cost, cooldown and checks are shared in `SkillCaster`) and the catalog of the 50 skills
+- [x] Cooldowns per player and per skill (`CooldownTracker`)
+- [x] `SkillDataManager`: costs, cooldowns, damage and resource rules from `data/sofe/skills/*.json` (reloads with /reload)
+- [x] Resource system for the 5 resources (Resolve, Essence, Mana, Energy, Authority): maximum, start value and regeneration per class; class-specific gains (blocking, kills, healing) come with each class in Sprint 6
+- [x] Minimal HUD: the class resource bar with its icon, the Sorceress runes and the Combat Bar slots with cooldowns (moved up from Sprint 3 so skills can be tested)
+- [x] Sorceress level-1 skills (Ember Verse, Frost Lance, Wandering Spark) and the rune / constellation system (5 constellations)
+- [x] *(Rules)* Combat Bar keybinding system (Left Alt + 1-6), Flask key reserved on H, all rebindable; the potion belt keys come with the belt in Sprint 5.5
+- [x] Implement skill visual effects (particles and vanilla sounds)
 
 ## Sprint 3 — Combat & Leveling (Weeks 5-6)
 - [ ] Implement XP and leveling system
 - [ ] Create SkillTree with point allocation
 - [ ] Add SkillTreeScreen GUI
 - [ ] Implement combat damage modifiers per class
-- [ ] HUD overlay for health, class resource, runes, Marks and souls
+- [ ] HUD overlay for health, Marks and souls (the resource bar and runes come in Sprint 2), final HUD art
 - [ ] Create basic Void creature entities
 
 ## Sprint 4 — Act I: The Night of the Eclipse (Weeks 7-8)
@@ -79,8 +80,9 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [x] *(World)* Region title ("Welcome to ..." when entering a region; done in Sprint 1)
 - [ ] *(World)* Quest Compass on the HUD; lock status in the region title ("— Sealed" / "— Liberated")
 - [ ] *(Rules)* Quest system (`data/sofe/quests/`) and Journal
-- [ ] *(Rules)* Warcraft III style dialogue box (portrait, name, letter-by-letter text, answers), cinematic letterbox mode, `data/sofe/dialogue/`; text only, no voices
-- [ ] *(Rules)* Region fates in `StoryProgress` and the `fate_is` condition; first Sulthari fate side quest
+- [ ] *(Rules)* Warcraft III style dialogue box (portrait, name, letter-by-letter text, answers), cinematic letterbox mode, `data/sofe/dialogue/`; text only, no voices. Uses the wide bars per style ([Arte.md](Arte.md#dialogue-box-one-style-per-empire)); the square box is the fallback
+- [ ] *(Rules)* Region fates in `StoryProgress` and the `fate_is` condition (add it to `ConditionParser`); first Sulthari fate side quest
+- [ ] *(World)* New players spawn inside the city of Sulthari (today they spawn near the center of the region, not always in the city)
 - [ ] *(Rules)* Diablo II style corpse (`BearerCorpseEntity`), compass and map marker
 - [ ] *(Rules)* Waystones in Sulthari and the Return Scroll
 - [ ] *(Rules)* Personal Vault at the Sulthari bank
@@ -104,6 +106,7 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [ ] Add loot tables for boss drops
 - [ ] *(Rules)* Arena seal, boss reset after 30 s without participants, and re-entry to recover a corpse
 - [ ] *(World)* The Burning Deep: Nether portals locked until Vorath falls, 1:8 region locks, portal link rules
+- [ ] *(World)* Region title in the Nether: "Welcome to" the region the Nether position maps to
 - [ ] *(World)* Nether materials: Infernal Ember, Wailing Soul
 - [ ] *(Rules)* SoFE advancement tab (Act I and II branches)
 - [ ] Vorath's temptation dialogue (stronger for the Knight) and the "Thank you, Bearer" twist
@@ -211,5 +214,6 @@ See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
 - [ ] Full testing pass
 - [ ] *(Annex)* Final title screen: logo, panorama, key art and main theme
 - [ ] *(Annex)* The Codex screen (lore, bestiary, splash art gallery) and the illustrated Codex Map
+- [ ] *(Annex)* Row of icon buttons on the title screen (Codex, Codex Map and others from `art/concepts/menu_icons_mockup.jpg`), once those screens exist
 - [ ] *(Annex)* Themed pause menu, Journal and loading screens with lore tips
 - [ ] *(Annex)* Swap every splash art and 3D model placeholder for the final asset (list in [Anexos.md](Anexos.md#a2-splash-arts-and-3d-models))
