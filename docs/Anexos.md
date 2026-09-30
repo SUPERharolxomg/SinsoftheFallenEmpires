@@ -59,7 +59,8 @@ SoFE is a **linear story** (Act I → Act V), not a sandbox add-on. From the fir
 | Set | Quantity | Resolution | Used in | Placeholder |
 | --- | --- | --- | --- | --- |
 | Key art for the title screen | 1 | 1920×1080 | Title screen, CurseForge/Modrinth page | Screenshot of Sulthari |
-| Bearer selection cards (emblem and scene; the player's own model is drawn live on top, see [Arte.md](Arte.md#bearer-selection-cards)) | 5 | 512×640 | Bearer selection GUI, Codex | Solid color card with the hero name |
+| Bearer selection cards (emblem and scene; the player's own model is drawn live on top, see [Arte.md](Arte.md#bearer-selection-cards)) | 5 | 512×640 | Bearer selection GUI | Solid color card with the hero name |
+| Hero cards (the Bearers drawn as characters, see [Arte.md](Arte.md#hero-cards)) | 5 | 448×640 | Codex, companion screen, epilogues | Selection card |
 | Archsins + Nahrazel | 8 | 1920×1080 | Boss intro, Codex (unlocked on defeat) | In-game screenshot of the boss |
 | Broken Oaths | 10 | 1920×1080 | Codex (unlocked on defeat) | In-game screenshot |
 | Empires | 5 | 1920×1080 | Region loading screen, Codex | Biome screenshot |

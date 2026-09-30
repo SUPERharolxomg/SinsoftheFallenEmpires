@@ -72,6 +72,14 @@ The player's model is drawn on the lower-center part of the card, so keep the **
 | Thief — Rurik | Two crossed short axes over an ember | The Low Bazaar at night, a burning village in the smoke | Dark gray, ice blue, red |
 | King — Azhar | Brass crown with an aetherium crystal | The throne room of Sulthari, the court in shadow | Gold, red, dark brown |
 
+### Hero cards
+
+`gui/bearer/<class>_hero.png` — **448×640**. The same cards **with the hero drawn** (Cassian, Ankhareth, Shirin, Rurik, Azhar). They are not used on the selection screen (that one shows the player's own model); they show the Bearers as characters of the story:
+
+- the Bearers page of the Codex;
+- the companion screen, when hiring one of the other Bearers (UC-22);
+- the Bearer's epilogue in the ending.
+
 ### Dialogue box, one style per empire
 
 Six styles: `sulthari`, `nordrath`, `parsivan`, `khemet`, `aureum` and `void`. The style comes from **where the conversation happens**; `void` is used in the Outer Void, inside the Codex, for Nahrazel and for the secret bad ending.
@@ -128,7 +136,96 @@ First ones needed (Act I): the five Bearers as NPCs and companions (`cassian`, `
 | Frost | `frost.png` | Six-pointed snowflake glyph, cyan with a white center |
 | Storm | `storm.png` | Zigzag bolt glyph, turquoise with a pale yellow center |
 
-Icons for the other four classes are briefed in the sprint that adds their skills (Sprint 6), in the style of each Bearer's empire.
+#### All skill icons
+
+Same rules for every icon: `gui/skill/<id>.png`, **32×32** in game (deliver 128×128 or larger in the same square shape; it is downscaled), full square, one clear shape. The UI adds the frame: square for active skills, round for passives, gold for ultimates, so the icon itself never needs a frame.
+
+**Knight — Cassian (Aureum):** Roman and Byzantine motifs (scutum shield, laurels, the Scale); marble white, silver, royal blue and gold; dark royal blue background.
+
+| Skill | `id` | What it shows |
+|-------|------|---------------|
+| Scale Strike | `scale_strike` | A sword striking down, with a golden scale behind it tipping to one side |
+| Shield Wall | `shield_wall` | A rectangular scutum seen from the front, with a golden crack, sparks on its edge |
+| Banner Cry | `banner_cry` | The royal blue banner of the Order waving, with sound waves coming out |
+| Legionary Charge | `legionary_charge` | A shield rushing forward with speed lines behind it |
+| Verdict | `verdict` | A sword planted in the ground with a golden shockwave ring |
+| Protector's Oath | `protectors_oath` | Two hands clasped under a small shield, a silver-blue glow |
+| Iron Discipline (passive) | `iron_discipline` | A shield with a thick steel border and a laurel wreath |
+| Living Rampart | `living_rampart` | A glowing wall of shields in a row, arrows breaking against it |
+| Contained Wrath (passive) | `contained_wrath` | A shield with red cracks, red light leaking out |
+| Last One Standing (ultimate) | `last_one_standing` | A lone knight silhouette in golden light, the broken banner behind |
+
+**Necromancer — Ankhareth (Khemet):** Egyptian motifs (jackal, scarabs, canopic jars, papyrus, linen wraps); souls are turquoise wisps; sand, black, turquoise and gold; black and dark teal background.
+
+| Skill | `id` | What it shows |
+|-------|------|---------------|
+| Threshold Touch | `threshold_touch` | An open hand with a short turquoise beam and a small soul wisp |
+| Clay Warden | `clay_warden` | The head of a clay golem with a gold-painted face, a soul in its chest |
+| Burial Wraps | `burial_wraps` | Linen bandages wrapping around a figure, turquoise hieroglyphs |
+| Scales of Anubet | `scales_of_anubet` | A golden scale: a heart on one side, a feather on the other |
+| Scarab Plague | `scarab_plague` | A swarm of golden scarabs in a spiral |
+| Canopic Jars | `canopic_jars` | Three canopic jars with animal heads, souls flowing in |
+| Rite of Passage (passive) | `rite_of_passage` | A soul rising through an open stone doorway |
+| Boat of the Dead | `boat_of_the_dead` | A spectral turquoise boat sailing across the icon |
+| Heavy Heart (passive) | `heavy_heart` | A clay heart cracking with turquoise light |
+| The Great Judgment (ultimate) | `the_great_judgment` | A huge underworld gate half open, a jackal head above it |
+
+**Sorceress — Shirin (Parsivan), the rest of her skills** (same style as the first three):
+
+| Skill | `id` | What it shows |
+|-------|------|---------------|
+| Burning Calligraphy | `burning_calligraphy` | A line of calligraphy on the ground, burning |
+| Water Mirror | `water_mirror` | A silhouette next to its ice copy, a water ripple between them |
+| Petal Tempest | `petal_tempest` | A whirlwind of pink and silver petals |
+| Sky Map (passive) | `sky_map` | A star map with three stars joined by lines |
+| Starfall | `starfall` | Seven stars falling on a marked circle |
+| Arcane Poetry (passive) | `arcane_poetry` | An open book with three runes of different colors above it |
+| Written Eclipse (ultimate) | `written_eclipse` | The eclipse (black sun with a violet ring) framed by calligraphy |
+
+**Thief — Rurik "Ash" (Nordrath):** Norse motifs (short axes, wolf fur, embers and ash, rope); dark gray, ice blue and red; dark slate background.
+
+| Skill | `id` | What it shows |
+|-------|------|---------------|
+| Double Edge | `double_edge` | Two short axes crossing, two red slash lines |
+| Light Fingers | `light_fingers` | A gloved hand grabbing a glowing potion |
+| Smoke Step | `smoke_step` | A figure fading into a cloud of gray smoke |
+| Cutthroat | `cutthroat` | An axe with five small red marks around it |
+| Fjord Snare | `fjord_snare` | A rope noose tightening, ice blue background |
+| Throwing Axe | `throwing_axe` | A spinning axe with a curved arrow showing its return |
+| Deep Pockets (passive) | `deep_pockets` | An open pouch spilling coins |
+| Thousand Cuts | `thousand_cuts` | Many red slash lines crossing in every direction |
+| Scavenger's Instinct (passive) | `scavengers_instinct` | A wolf eye glowing in the dark |
+| The Great Heist (ultimate) | `the_great_heist` | A hand stealing a glowing orb of power, embers around it |
+
+**King — Azhar (Sulthari):** Ottoman motifs (scimitar-scepter, brass, Janissaries, decrees with a wax seal, aetherium); gold, red and dark brown; deep red-brown background.
+
+| Skill | `id` | What it shows |
+|-------|------|---------------|
+| Scepter Slash | `scepter_slash` | A curved scimitar with a crowned pommel, a gold arc |
+| Decree of Steadfastness | `decree_of_steadfastness` | A rolled decree with a red seal over a shield |
+| Janissary Guard | `janissary_guard` | The helmet of a brass Janissary with visible gears |
+| Siege Decree | `siege_decree` | A decree with a seal over a closed ring of chains |
+| Command | `command` | A pointing scepter with a target mark |
+| Royal Treasury | `royal_treasury` | Aetherium coins (cyan crystal in the center) falling |
+| Imperial Lineage (passive) | `imperial_lineage` | A family tree with a crown at the top |
+| Bronze Cannon | `bronze_cannon` | A bronze siege cannon firing |
+| Voice of the Throne (passive) | `voice_of_the_throne` | A throne with golden sound waves |
+| Crown of the Five Lands (ultimate) | `crown_of_the_five_lands` | A crown with five colored gems (one per empire) |
+
+#### Class mechanic and resource icons
+
+`gui/hud/<id>.png` — **16×16** (deliver 64×64 or larger), transparent background. Shown on the HUD next to the resource bar.
+
+| `id` | What it shows |
+|------|---------------|
+| `resolve` | Knight's resource: a small silver-blue shield |
+| `essence` | Necromancer's resource: a turquoise flame |
+| `mana` | Sorceress's resource: a purple drop with a star inside |
+| `energy` | Thief's resource: a red lightning bolt |
+| `authority` | King's resource: a small gold crown |
+| `stance_shield` / `stance_charge` | Knight's two stances: a shield / a sword pointing forward |
+| `soul` | A bound soul of the Necromancer: a turquoise wisp |
+| `mark` | A Mark of the Thief on an enemy: a red ember sigil |
 
 ### Bearer outfits
 
