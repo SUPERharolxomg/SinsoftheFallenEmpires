@@ -1,0 +1,52 @@
+{
+  "resource": {
+    "max": 100,
+    "start": 50,
+    "regen_per_second": 1
+  },
+  "skills": {
+    "threshold_touch": {
+      "cost": 8,
+      "cooldown_s": 1
+    },
+    "clay_warden": {
+      "cooldown_s": 4,
+      "souls": 1,
+      "duration_s": 30,
+      "max_wardens": 3
+    },
+    "burial_wraps": {
+      "cost": 15,
+      "cooldown_s": 10,
+      "duration_s": 3
+    },
+    "scales_of_anubet": {
+      "cost": 30,
+      "cooldown_s": 20,
+      "execute_below": 0.25
+    },
+    "scarab_plague": {
+      "cost": 20,
+      "cooldown_s": 8
+    },
+    "canopic_jars": {
+      "cooldown_s": 15,
+      "souls": 3
+    },
+    "rite_of_passage": {
+      "damage_bonus": 0.05,
+      "duration_s": 10,
+      "max_stacks": 5
+    },
+    "boat_of_the_dead": {
+      "cost": 50,
+      "cooldown_s": 30
+    },
+    "heavy_heart": {},
+    "the_great_judgment": {
+      "cost": 100,
+      "cooldown_s": 150,
+      "duration_s": 12
+    }
+  }
+}
