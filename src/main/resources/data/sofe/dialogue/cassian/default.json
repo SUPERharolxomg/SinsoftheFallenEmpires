@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "cassian",
+  "lines": [
+    {
+      "speaker": "cassian",
+      "text": "dialogue.sofe.cassian.1"
+    }
+  ]
+}

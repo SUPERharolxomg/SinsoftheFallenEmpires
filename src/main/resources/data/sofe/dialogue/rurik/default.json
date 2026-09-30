@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "rurik",
+  "lines": [
+    {
+      "speaker": "rurik",
+      "text": "dialogue.sofe.rurik.1"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "on_end": [
+    {
+      "type": "open_class_select"
+    }
+  ],
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.festival.1",
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:block.note_block.chime",
+          "volume": 0.6,
+          "pitch": 0.8
+        }
+      ]
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.festival.2"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.festival.3"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.festival.4"
+    }
+  ]
+}

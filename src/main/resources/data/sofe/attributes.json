@@ -1,0 +1,8 @@
+{
+  "strength": { "physical_damage": 0.01 },
+  "agility": { "crit_chance": 0.005, "crit_multiplier": 1.5, "dodge_chance": 0.003, "dodge_cap": 0.30 },
+  "intellect": { "magic_damage": 0.01, "max_mana": 1 },
+  "will": { "resource_regen": 0.02, "max_essence": 1, "max_resolve": 1 },
+  "charisma": { "max_authority": 1, "decree_strength": 0.01 },
+  "vitality": { "max_health": 0.5 }
+}

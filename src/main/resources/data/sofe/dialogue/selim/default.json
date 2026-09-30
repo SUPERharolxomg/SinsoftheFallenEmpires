@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "selim",
+  "lines": [
+    {
+      "speaker": "selim",
+      "text": "dialogue.sofe.selim.1"
+    }
+  ]
+}
