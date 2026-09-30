@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "sofe:block/sulthari_brass_trim_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "sofe:block/sulthari_brass_trim"
+    },
+    "axis=z": {
+      "model": "sofe:block/sulthari_brass_trim_horizontal",
+      "x": 90
+    }
+  }
+}

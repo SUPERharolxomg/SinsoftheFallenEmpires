@@ -17,6 +17,16 @@
     "sofe:raw_orichalcum_block",
     "sofe:orichalcum_block",
     "sofe:deepslate_aetherium_ore",
-    "sofe:aetherium_block"
+    "sofe:aetherium_block",
+    "sofe:waystone",
+    "sofe:personal_vault",
+    "sofe:sulthari_sandstone_bricks",
+    "sofe:sulthari_sandstone_brick_stairs",
+    "sofe:sulthari_sandstone_brick_slab",
+    "sofe:sulthari_sandstone_brick_wall",
+    "sofe:sulthari_brass_plating",
+    "sofe:sulthari_brass_trim",
+    "sofe:sulthari_glazed_tiles",
+    "sofe:sulthari_aetherium_lamp"
   ]
 }

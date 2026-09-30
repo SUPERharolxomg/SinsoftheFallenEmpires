@@ -6,6 +6,10 @@
         "type": "minecraft:noise",
         "biome_source": {
           "type": "sofe:aetheris",
+          "ashen_wastes": {
+            "biome": "sofe:ashen_wastes",
+            "inner_radius": 800
+          },
           "biomes": {
             "aureum": "sofe:aureum_hills",
             "khemet": "sofe:khemet_valley",
