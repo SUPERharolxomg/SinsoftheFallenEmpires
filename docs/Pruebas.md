@@ -25,6 +25,13 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 
 ## Story and bosses
 
+- [ ] The dialogue box shows portrait, name and text; a key completes the line, the next press advances
+- [ ] Cinematic mode shows the letterbox bars and blocks movement; conversation mode does not
+- [ ] Every dialogue line is a lang key present in `en_us` and `es_es`
+- [ ] A region fate can be set only once and is stored per player
+- [ ] The ending shows one slide per region matching that player's fates, and the Bearer epilogue matches their personal quests
+- [ ] The `fate_is` condition reads the player's fate
+
 - [ ] Boss phase transitions trigger at the right health thresholds
 - [ ] All 7 Archsins, the Brass Sentinel and Nahrazel (3 phases) can be defeated
 - [ ] All 10 Broken Oaths can be defeated

@@ -65,7 +65,19 @@ SoFE is a **linear story** (Act I → Act V), not a sandbox add-on. From the fir
 | Empires | 5 | 1920×1080 | Region loading screen, Codex | Biome screenshot |
 | Codex Map (illustrated map of Aetheris, see [Mundo.md](Mundo.md#w3-minimap-and-map)) | 1 | 2048×2048 | Journal map screen | Rendered top-down map |
 | Night of the Eclipse (intro) | 1 | 1920×1080 | Intro, Act I | Black screen with text |
-| Epilogues | 5 (one per Bearer) | 1920×1080 | Ending sequence | Black screen with text |
+| Epilogues | 5 Bearers × 2 (full / unfinished quests) | 1920×1080 | Ending sequence | Black screen with text |
+| Region fate slides | ~12 (2–3 per region) | 1920×1080 | Ending sequence ([Jugabilidad.md](Jugabilidad.md#fates-and-epilogues-fallout-style)) | Black screen with text |
+
+### Dialogue portraits
+
+| Set | Quantity | Resolution | Used in | Placeholder |
+| --- | --- | --- | --- | --- |
+| Bearers | 5 | 64×64 (drawn at 128×128) | Dialogue box | Head of the Bearer's skin |
+| Archsins, Nahrazel, Brass Sentinel | 9 | 64×64 | Boss intros, temptations | Colored silhouette |
+| Broken Oaths | 10 | 64×64 | Dungeon dialogue | Colored silhouette |
+| Story NPCs (Ozhan, Council, Laleh, merchants) | ~12 | 64×64 | Dialogue box | Villager-style head |
+
+Files live in `assets/sofe/textures/gui/portrait/<id>.png`. Portraits are still images; there is no lip sync because there are no voices.
 
 Files live in `assets/sofe/textures/gui/splash/<set>/<id>.png`. A PNG that big is heavy inside a jar, so export at the listed size and compress (target < 1 MB each).
 
@@ -94,6 +106,9 @@ Files live in `assets/sofe/textures/gui/splash/<set>/<id>.png`. A PNG that big i
 | Skill sounds | ~50 | Every skill | Vanilla sounds |
 | UI sounds | ~10 | Menus, Journal, Waystones, level up | Vanilla UI sounds |
 | Story stingers | ~10 | Twists, temptations, the bad ending, epilogues | Silence |
+| Dialogue text blip | 1–3 | Letters appearing in the dialogue box | Vanilla UI click |
+
+**No voice acting:** characters speak only with text in the dialogue box ([Jugabilidad.md](Jugabilidad.md#dialogue-warcraft-iii-style-text-only)).
 
 Files go in `assets/sofe/sounds/` as OGG Vorbis and are registered in `sounds.json`. Every sound has a subtitle (see [Jugabilidad.md](Jugabilidad.md#g13-accessibility)).
 
