@@ -78,7 +78,7 @@ The map is 12,000 × 12,000 blocks. Walking back to Sulthari from Aureum to refi
 | Part | Description |
 |------|-------------|
 | Bar | Dark bar across the bottom of the screen with a gold Sulthari-style border |
-| Portrait | 64×64 portrait of the speaker on the left (a still image; one per character, see [Anexos.md](Anexos.md#a2-splash-arts-and-3d-models)) |
+| Portrait | 64×64 portrait of the speaker on the left, in the frame of the empire where the scene happens. NPCs and bosses use a still image; when the player speaks, their own head is drawn live from their skin and outfit ([Arte.md](Arte.md#asset-specs-and-briefs)) |
 | Name | Speaker's name in gold above the text |
 | Text | Appears letter by letter; a key finishes the line, the next press moves to the next line |
 | Answers | Up to 4 answers when the player has a choice |
