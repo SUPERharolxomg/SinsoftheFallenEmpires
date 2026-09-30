@@ -44,6 +44,8 @@ Every use case of *Sins of the Fallen Empires* in one place. Story and terms: [R
 | UC-38 | Open the Void Gate (End) | World |
 | UC-39 | Recover your corpse | Core rules |
 | UC-40 | Play a journey with other mods installed | Menu |
+| UC-41 | Decide the fate of a region | Story |
+| UC-42 | See the ending shaped by your choices | Story |
 
 ---
 
@@ -280,9 +282,22 @@ Every use case of *Sins of the Fallen Empires* in one place. Story and terms: [R
 
 ### UC-30: Talk to an NPC and choose an answer
 - **Actor:** Player
-- **Flow:** the player talks to an NPC → the dialogue screen shows portrait, text and answers → the player picks one → the conversation continues or ends with its effect (lore, discount, quest).
+- **Flow:** the player talks to an NPC → the Warcraft III style dialogue box opens at the bottom of the screen (portrait, name, text appearing letter by letter, no voice) → the player presses a key to advance → at a choice, picks one of up to 4 answers → the conversation continues or ends with its effect (lore, discount, quest, fate).
+- **Alternate flow (cinematic):** in story scenes the letterbox bars appear and the player cannot move until the scene ends.
 - **Special case:** accepting Prython's offer plays the "Crowned in Ash" bad ending and brings the player back to just before the choice.
-- **Postcondition:** dialogue state saved in `StoryProgress`.
+- **Postcondition:** dialogue state and any fate saved in `StoryProgress`.
+
+### UC-41: Decide the fate of a region
+- **Actor:** Player
+- **Precondition:** the player is on a side quest that sets a region's fate, and that fate is not set yet.
+- **Flow:** the quest reaches its choice → the dialogue box shows the options → the player picks one → the region's fate is saved for that player → small reactions change in the world (an NPC, a merchant, a camp) → the Journal marks the choice as made.
+- **Postcondition:** the fate is final and will pick that region's slide in the ending (UC-42).
+
+### UC-42: See the ending shaped by your choices
+- **Actor:** Player
+- **Precondition:** Nahrazel has been defeated by this player.
+- **Flow:** the moment inside the Codex plays → one slide per region is shown, picked by that region's fate → the Bearer's epilogue is shown, full or sad version depending on their personal quests → credits.
+- **Postcondition:** the ending is recorded in the Journal and advancements; UC-33 follows.
 
 ### UC-33: Keep playing after the ending
 - **Actor:** Player

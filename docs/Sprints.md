@@ -74,7 +74,9 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [ ] *(World)* `RegionEnforcer` (flight, pearls, coast) and `opsBypass`
 - [ ] *(World)* Protected zones for Sulthari city and the Bearer's Homestead plot
 - [ ] *(World)* Region title and Quest Compass on the HUD
-- [ ] *(Rules)* Quest system (`data/sofe/quests/`), Journal and dialogue screen with lang keys
+- [ ] *(Rules)* Quest system (`data/sofe/quests/`) and Journal
+- [ ] *(Rules)* Warcraft III style dialogue box (portrait, name, letter-by-letter text, answers), cinematic letterbox mode, `data/sofe/dialogue/`; text only, no voices
+- [ ] *(Rules)* Region fates in `StoryProgress` and the `fate_is` condition; first Sulthari fate side quest
 - [ ] *(Rules)* Diablo II style corpse (`BearerCorpseEntity`), compass and map marker
 - [ ] *(Rules)* Waystones in Sulthari and the Return Scroll
 - [ ] *(Rules)* Personal Vault at the Sulthari bank
@@ -135,7 +137,8 @@ Skill tables in [Clases.md](Clases.md).
 - [ ] Balance damage/cooldown values in `data/sofe/skills/`
 - [ ] Companion system: hire one of the other four Bearers (UC-22)
 - [ ] *(Rules)* Bearer quests for Acts I–II
-- [ ] Write and translate (en/es) the Act I–II dialogue
+- [ ] *(Rules)* Nordrath fate side quests
+- [ ] Write and translate (en/es) the Act I–II dialogue; placeholder portraits for every speaker
 - [ ] *(Annex)* Class Concord passives (one per class) ready for Sprint 7.5
 
 ## Sprint 7 — Empires & Bosses (Weeks 15-18)
@@ -154,7 +157,7 @@ Skill tables in [Clases.md](Clases.md).
 - [ ] *(Annex)* Liberated camps with merchant copies after each Archsin
 - [ ] *(Annex)* Zahir the Wanderer (traveling caravan every 3 days)
 - [ ] *(World)* Void Gate under the Great Observatory (after Envyris, 12 Eyes of Ender); Void Crystal and Void Ink
-- [ ] *(Rules)* Waystones and Vaults in liberated camps and dungeon entrances; side quests per region; Bearer quests for Acts III–IV
+- [ ] *(Rules)* Waystones and Vaults in liberated camps and dungeon entrances; side quests per region, with the Parsivan, Khemet and Aureum fate choices; Bearer quests for Acts III–IV
 - [ ] Write and translate (en/es) the Act III–IV dialogue
 - [ ] *(Annex)* Kerem and Sister Nilufar as NPCs
 - [ ] *(Annex)* Personal loot (Reward Coffer) for every Archsin and Broken Oath
@@ -189,7 +192,7 @@ See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
 - [ ] Dimensions `sofe:inverted_throne` and `sofe:codex_interior`
 - [ ] Nahrazel, the First Fallen: colossus of ash, seven sins at once, rewriting the seal inside the Codex
 - [ ] Write and translate (en/es) the Act V dialogue and epilogues
-- [ ] Ending inside the Codex and the five epilogues (one per Bearer), plus the eighth-lock sequel hook
+- [ ] Ending inside the Codex, the region fate slides and the Bearer epilogues (full and unfinished versions), plus the eighth-lock sequel hook
 - [ ] Implement multiplayer boss scaling
 - [ ] Add sound effects and ambient music
 - [ ] Localization (English + Spanish)

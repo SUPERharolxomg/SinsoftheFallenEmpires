@@ -1,0 +1,14 @@
+{
+  "values": [
+    "#forge:storage_blocks/raw_sulthari_brass",
+    "#forge:storage_blocks/sulthari_brass",
+    "#forge:storage_blocks/raw_glacial_iron",
+    "#forge:storage_blocks/glacial_iron",
+    "#forge:storage_blocks/star_lapis",
+    "#forge:storage_blocks/raw_solar_gold",
+    "#forge:storage_blocks/solar_gold",
+    "#forge:storage_blocks/raw_orichalcum",
+    "#forge:storage_blocks/orichalcum",
+    "#forge:storage_blocks/aetherium"
+  ]
+}

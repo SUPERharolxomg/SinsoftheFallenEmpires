@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sofe:block/raw_glacial_iron_block"
+  }
+}
