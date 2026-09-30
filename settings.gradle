@@ -1,0 +1,16 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+    }
+}
+
+plugins {
+    // Downloads a Java 17 toolchain automatically when the machine only has a newer JDK
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.10.0'
+}
+
+rootProject.name = 'sins-of-the-fallen-empires'
