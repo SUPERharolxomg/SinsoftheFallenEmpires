@@ -161,6 +161,15 @@ One skill point every 2 levels; max level 30. Costs and cooldowns below are star
 
 ---
 
+## How the player looks
+
+**Decided: the player keeps their own Minecraft skin and wears the Bearer's outfit.** When the shard chooses them, the player receives the starter outfit of their Bearer (for example, Cassian's silver plate with the royal blue cape and the cracked scutum). The outfit is a cosmetic armor layer:
+
+- It is drawn over the player's skin and can be hidden in the SoFE settings.
+- It does not give stats; real armor goes on top of it and hides it, as in vanilla.
+- In multiplayer, two players with the same Bearer still look different, because each keeps their own skin.
+- Screens that show the player's own Bearer (the selection screen, the dialogue portrait when the player speaks) draw the player's real model live, with their skin and outfit. The heroes' own faces appear only in the portraits of the Bearers as NPCs and companions ([Arte.md](Arte.md#the-player-is-drawn-live-not-as-a-fixed-image)).
+
 ## Companions and multiplayer
 
 - **Single-player:** the four Bearers not chosen live in Sulthari. The player can hire one at a time as an AI companion (see [CasosDeUso.md](CasosDeUso.md#uc-22-hire-a-bearer-as-a-companion)).
