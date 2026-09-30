@@ -21,14 +21,14 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 | 8 | 21-24 | Act V: Solrath, Prython, Nahrazel, epilogues, final art |
 
 ## Sprint 0 — Project Setup (Week 0)
-- [ ] Forge 1.20.1 MDK with the Gradle wrapper and a Java 17 toolchain
-- [ ] Mod metadata: mod ID `sofe`, package `com.sofe`, `mods.toml`, MIT license
-- [ ] Main mod class (`SoFEMod.java`) that loads in a GameTest server
+- [x] Forge 1.20.1 MDK with the Gradle wrapper and a Java 17 toolchain
+- [x] Mod metadata: mod ID `sofe`, package `com.sofe`, `mods.toml`, MIT license
+- [x] Main mod class (`SoFEMod.java`) that loads in a GameTest server
 - [ ] Try the mod in the dev client (`./gradlew runClient`)
-- [ ] Dependencies declared: GeckoLib, Curios (JourneyMap API later, optional)
-- [ ] JUnit 5 for unit tests of pure game logic
-- [ ] `LICENSE`, `CONTRIBUTING.md`, `.gitignore`, `.gitattributes`
-- [ ] Issue templates (bug, feature) and pull request template
+- [x] Dependencies declared: GeckoLib, Curios (JourneyMap API later, optional)
+- [x] JUnit 5 for unit tests of pure game logic
+- [x] `LICENSE`, `CONTRIBUTING.md`, `.gitignore`, `.gitattributes`
+- [x] Issue templates (bug, feature) and pull request template
 - [ ] GitHub Actions: build and tests on every push and pull request (workflow written; confirm the first run on GitHub)
 
 ## Sprint 1 — Foundation (Weeks 1-2)
