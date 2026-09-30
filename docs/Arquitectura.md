@@ -125,7 +125,7 @@ sins-of-fallen-empires/
 │   │   ├── preset/AetherisPreset.java      # sofe:aetheris
 │   │   ├── region/
 │   │   │   ├── Region.java                 # enum: SULTHARI, NORDRATH, PARSIVAN, KHEMET, AUREUM, OCEAN
-│   │   │   ├── RegionMap.java              # regionAt(x, z) from data/sofe/regions/*.json
+│   │   │   ├── RegionMap.java              # regionAt(x, z); layout saved in each world by the biome source
 │   │   │   ├── AetherisBiomeSource.java    # Biomes by region (fixed layout, procedural terrain)
 │   │   │   └── RegionEnforcer.java         # Server check once per second + teleport events
 │   │   ├── gate/
@@ -167,7 +167,6 @@ sins-of-fallen-empires/
 │   │   ├── skills/                         # Costs and cooldowns per class
 │   │   ├── affixes/
 │   │   ├── merchant_offers/
-│   │   ├── regions/                        # Region bounds
 │   │   ├── conditions/                     # Lock conditions
 │   │   ├── quests/                         # Main, Bearer and side quests
 │   │   ├── advancements/                   # SoFE advancement tab

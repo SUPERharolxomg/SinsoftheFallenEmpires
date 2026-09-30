@@ -7,6 +7,7 @@ Minecraft is an open world, but SoFE tells a linear story with fixed places. Thi
 3. **Minimap**: integration with JourneyMap and Xaero's, plus a small built-in map for players without map mods.
 4. **Resource distribution**: which material appears where (coordinates, height, frequency), so tools unlock in story order.
 5. **The Nether and the End**: when they open and what they are needed for.
+6. **The empires, built from scratch**: cities, camps and ruins are original builds with their own building blocks, not vanilla villages.
 
 **Guiding rule: open inside, sealed across.** Inside every region the player has unlocked, it is normal Minecraft: mine, build, farm, explore. What they cannot do is cross into a region, city or dungeon the story has not reached yet.
 
@@ -85,7 +86,7 @@ Regions only touch at their borders; the Seal Veil runs along every shared borde
 | Nether (Burning Deep) | Same as the overworld region it maps to, +2 |
 | End (Outer Void) | 27–30 |
 
-**Fixed locations (examples).** Sulthari city at (0, 0). Burning Citadel ~(0, −4,500). Enchanted Gardens ~(4,200, −1,000). Stagnant Marsh ~(3,500, 4,200). Golden Vaults ~(−4,000, 0). The Celestial Spire rises above Sulthari only in Act V. Exact coordinates live in `data/sofe/regions/*.json` and `data/sofe/structure_positions.json`, so they can change without code.
+**Fixed locations (examples).** Sulthari city at (0, 0). Burning Citadel ~(0, −4,500). Enchanted Gardens ~(4,200, −1,000). Stagnant Marsh ~(3,500, 4,200). Golden Vaults ~(−4,000, 0). The Celestial Spire rises above Sulthari only in Act V. The region bounds are part of the `sofe:aetheris` world preset (`data/sofe/worldgen/world_preset/aetheris.json`, generated from `RegionMap.defaultLayout()`) and are **saved inside each world** when it is created, so a later change to the layout only affects new worlds. Structure positions will live in `data/sofe/structure_positions.json`, so they can change without code.
 
 ---
 
@@ -171,7 +172,7 @@ Do **not** build a full minimap: good ones already exist and players already use
    - remove waypoints when the objective is done.
 2. **Xaero's Minimap / World Map: compatible, basic support.** It maps the world the player explores with no work from us. Its integration API is more limited than JourneyMap's; when we implement it, we check what it allows (at least objective waypoints). If there is nothing stable, it keeps working without integration.
 3. **Built-in, always available** (no map mod needed):
-   - **Region title** when crossing into a region: *"Nordrath Clans — Liberated"*.
+   - **Region title** when crossing into a region: a small *"Welcome to"* line and the region name in large letters (*"Nordrath Clans"*), later with its status (*"— Liberated"*). It also shows when the player joins, for the region they are in.
    - **Quest Compass** on the HUD: an arrow and distance to the current objective.
    - **Codex Map** (screen from the Journal): an illustrated map of Aetheris with regions, lock status and objective markers. As the layout is fixed, it can be a hand-drawn piece of art (add it to the asset list in [Anexos.md](Anexos.md#a2-splash-arts-and-3d-models)).
 
@@ -303,3 +304,34 @@ Act III  Nether materials: War Oil, Sin Resistance, Relic awakening
 Act IV   Envyris falls ──► the Void Gate can be opened (12 Eyes of Ender)
 Act V    End materials: Aetherium gear, Void Ink ──► Sealing Quill ──► Nahrazel
 ```
+
+---
+
+## W6. The empires, built from scratch
+
+**Decided: no vanilla villages.** Vanilla villages look like Minecraft, not like five fallen empires, so they do not generate in a journey (the SoFE biomes are in none of the vanilla structure tags). Every city, camp, dungeon and ruin is an **original build**, made with building blocks that match each empire's story, palette and state (living Sulthari vs. corrupted ruins).
+
+### How the builds are made
+
+1. **Build in game:** in a dev world, with the SoFE building blocks and vanilla blocks where they fit.
+2. **Save with Structure Blocks** as `.nbt` files in `data/sofe/structures/<empire>/<piece>.nbt` (a city is split into pieces: gate, market, palace, houses, walls).
+3. **Assemble with jigsaw pools** (`data/sofe/worldgen/template_pool/`), so a city has a fixed layout for the story buildings and some variety in the houses around them.
+4. **Place at fixed coordinates** from `data/sofe/structure_positions.json` (see W1), and register the bounds as protected zones (W2, layer 3).
+
+Big landmarks (the Great Observatory, the Burning Citadel, the Celestial Spire) are single hand-made builds; ordinary houses and ruins come from pools so the map does not feel copied.
+
+### Building blocks per empire
+
+Each empire gets its own set of building blocks, in two states: **intact** (for Sulthari, liberated camps and restored areas) and **corrupted** (cracked, blackened, with veins of black aetherium) for the ruins. Liberating a region swaps corrupted blocks near the camp for intact ones, which is how "the landscape heals".
+
+| Empire | Main building blocks | Details and props | Corrupted variant |
+|--------|----------------------|-------------------|-------------------|
+| **Sulthari** | Sandstone bricks, brass plating and trims | Blue-white glazed tiles, brass domes, clockwork gears, aetherium lamps, brass tramway rails | (only in Act V, when Prython attacks) |
+| **Nordrath** | Runestone bricks, dark timber | Carved beams with dragon heads, iron braziers, fur rugs, volcanic basalt forges | Scorched runestone, burning timber |
+| **Parsivan** | Turquoise glazed tiles, white plaster | Lapis mosaics, silver lattice screens, Moonsilk carpets and awnings, garden fountains | Faded tiles, overgrown vines, illusion-glass |
+| **Khemet** | Carved sandstone, painted limestone | Gold hieroglyph blocks, obelisk pieces, Sunreed thatch, canopic urns, jackal statues | Sunken sandstone, marsh mud, cracked urns |
+| **Aureum** | Imperial Marble (polished, bricks, pillars) | Gold mosaics, bronze statues, aqueduct arches, colosseum seating, coin piles | Cracked marble, black-gold veins |
+
+**Naming** follows A3 in [Anexos.md](Anexos.md#a3-naming-the-new-materials): `sofe:<empire>_<block>` plus the vanilla shape suffixes (`_stairs`, `_slab`, `_wall`), and `corrupted_` in front for the ruined version (`sofe:aureum_marble_bricks`, `sofe:corrupted_aureum_marble_bricks`). Each set is added in the sprint of its empire, and like every other block it has en/es names, placeholder textures and data-generated models, loot and tags.
+
+**Players can use them too:** the blocks are craftable from the empire's materials (Imperial Marble, Runestone, Sulthari Brass...), so players can build with them on their Homestead.

@@ -9,8 +9,14 @@ import com.sofe.registry.BlockRegistry;
 import com.sofe.registry.CreativeTabRegistry;
 import com.sofe.registry.EntityRegistry;
 import com.sofe.registry.ItemRegistry;
+import com.sofe.registry.WorldgenRegistry;
+import com.sofe.network.SoFENetwork;
+import com.sofe.player.ClassSelectionHandler;
+import com.sofe.player.PlayerClassCapability;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.world.region.RegionTitleHandler;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -37,9 +43,20 @@ public class SoFEMod {
         ItemRegistry.ITEMS.register(modBus);
         EntityRegistry.ENTITIES.register(modBus);
         CreativeTabRegistry.TABS.register(modBus);
+        WorldgenRegistry.BIOME_SOURCES.register(modBus);
         modBus.addListener(DataGenerators::gatherData);
 
+        SoFENetwork.register();
         MinecraftForge.EVENT_BUS.addListener(ConditionManager::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(RegionTitleHandler::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(RegionTitleHandler::onLogout);
+
+        modBus.addListener(PlayerClassCapability::register);
+        MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, PlayerClassCapability::attach);
+        MinecraftForge.EVENT_BUS.addListener(PlayerClassCapability::onClone);
+        MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onChangeDimension);
 
         if (FMLEnvironment.dist.isClient()) {
             ClientSetup.init(modBus, context);

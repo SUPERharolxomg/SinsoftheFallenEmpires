@@ -59,7 +59,8 @@ SoFE is a **linear story** (Act I → Act V), not a sandbox add-on. From the fir
 | Set | Quantity | Resolution | Used in | Placeholder |
 | --- | --- | --- | --- | --- |
 | Key art for the title screen | 1 | 1920×1080 | Title screen, CurseForge/Modrinth page | Screenshot of Sulthari |
-| Bearers (Cassian, Ankhareth, Shirin, Rurik, Azhar) | 5 | 1080×1350 (portrait) | Bearer selection GUI, Codex | Solid color card with the hero name |
+| Bearer selection cards (emblem and scene; the player's own model is drawn live on top, see [Arte.md](Arte.md#bearer-selection-cards)) | 5 | 512×640 | Bearer selection GUI | Solid color card with the hero name |
+| Hero cards (the Bearers drawn as characters, see [Arte.md](Arte.md#hero-cards)) | 5 | 448×640 | Codex, companion screen, epilogues | Selection card |
 | Archsins + Nahrazel | 8 | 1920×1080 | Boss intro, Codex (unlocked on defeat) | In-game screenshot of the boss |
 | Broken Oaths | 10 | 1920×1080 | Codex (unlocked on defeat) | In-game screenshot |
 | Empires | 5 | 1920×1080 | Region loading screen, Codex | Biome screenshot |
@@ -72,7 +73,8 @@ SoFE is a **linear story** (Act I → Act V), not a sandbox add-on. From the fir
 
 | Set | Quantity | Resolution | Used in | Placeholder |
 | --- | --- | --- | --- | --- |
-| Bearers | 5 | 64×64 (drawn at 128×128) | Dialogue box | Head of the Bearer's skin |
+| Bearers (as companions and NPCs; the player's own Bearer is drawn live from their skin) | 5 | 64×64 | Dialogue box | Head of the Bearer's skin |
+| Dialogue box styles (one per empire + Void, see [Arte.md](Arte.md#dialogue-box-one-style-per-empire)) | 6 × 4 files | 64×64, 80×80, 96×16, 48×16 | Dialogue box | Plain dark box |
 | Archsins, Nahrazel, Brass Sentinel | 9 | 64×64 | Boss intros, temptations | Colored silhouette |
 | Broken Oaths | 10 | 64×64 | Dungeon dialogue | Colored silhouette |
 | Story NPCs (Ozhan, Council, Laleh, merchants) | ~12 | 64×64 | Dialogue box | Villager-style head |
@@ -89,6 +91,7 @@ Files live in `assets/sofe/textures/gui/splash/<set>/<id>.png`. A PNG that big i
 | Nahrazel (3 phases) and Brass Sentinel | 2 | 3–6 tall | Yes | Blockbench + GeckoLib |
 | Broken Oaths | 10 | 2–3 tall | Yes | Blockbench + GeckoLib |
 | Bearers (as NPCs and companions) | 5 | Player size | Yes | Blockbench + GeckoLib |
+| Bearer outfits (cosmetic armor worn by the player over their own skin) | 5 | Player size | No | Blockbench (armor layer texture 64×32) |
 | Summons (Clay Warden, Janissary, Bronze Cannon) | 3 | 1–2 | Yes | Blockbench + GeckoLib |
 | Common corrupted mobs | ~15 | 1–2 | Yes | Blockbench (vanilla-style Java model or GeckoLib) |
 | Merchant and story NPCs (merchants, Grand Vizier Ozhan, Council) | ~9 | Player size | Idle only | Blockbench |

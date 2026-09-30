@@ -1,7 +1,11 @@
 package com.sofe.client;
 
+import com.sofe.client.hud.RegionTitleOverlay;
 import com.sofe.client.screen.SoFEConfigScreen;
 import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 
@@ -17,5 +21,11 @@ public final class ClientSetup {
     public static void init(IEventBus modBus, ModLoadingContext context) {
         context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new SoFEConfigScreen(parent)));
+        modBus.addListener(ClientSetup::registerOverlays);
+        MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
+    }
+
+    private static void registerOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAbove(VanillaGuiOverlay.TITLE_TEXT.id(), "region_title", RegionTitleOverlay::render);
     }
 }
