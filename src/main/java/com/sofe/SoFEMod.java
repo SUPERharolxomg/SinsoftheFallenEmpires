@@ -9,7 +9,10 @@ import com.sofe.registry.BlockRegistry;
 import com.sofe.registry.CreativeTabRegistry;
 import com.sofe.registry.EntityRegistry;
 import com.sofe.registry.ItemRegistry;
+import com.sofe.registry.WorldgenRegistry;
+import com.sofe.network.SoFENetwork;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.world.region.RegionTitleHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -37,9 +40,13 @@ public class SoFEMod {
         ItemRegistry.ITEMS.register(modBus);
         EntityRegistry.ENTITIES.register(modBus);
         CreativeTabRegistry.TABS.register(modBus);
+        WorldgenRegistry.BIOME_SOURCES.register(modBus);
         modBus.addListener(DataGenerators::gatherData);
 
+        SoFENetwork.register();
         MinecraftForge.EVENT_BUS.addListener(ConditionManager::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(RegionTitleHandler::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(RegionTitleHandler::onLogout);
 
         if (FMLEnvironment.dist.isClient()) {
             ClientSetup.init(modBus, context);
