@@ -6,6 +6,7 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 
 /**
@@ -31,12 +32,24 @@ public final class SoFENoiseSettings {
                         SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(Blocks.SAND.defaultBlockState())),
                         SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(Blocks.SANDSTONE.defaultBlockState())))));
 
+        // Ashen Wastes: coarse dirt and gravel over sandstone, with patches of smooth basalt
+        SurfaceRules.RuleSource wastes = SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(SoFEBiomes.ASHEN_WASTES),
+                SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), SurfaceRules.sequence(
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(
+                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, 0.25),
+                                        SurfaceRules.state(Blocks.SMOOTH_BASALT.defaultBlockState())),
+                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.GRAVEL, 0.0),
+                                        SurfaceRules.state(Blocks.GRAVEL.defaultBlockState())),
+                                SurfaceRules.state(Blocks.COARSE_DIRT.defaultBlockState()))),
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(Blocks.SANDSTONE.defaultBlockState())))));
+
         context.register(AETHERIS, new NoiseGeneratorSettings(
                 vanilla.noiseSettings(),
                 vanilla.defaultBlock(),
                 vanilla.defaultFluid(),
                 vanilla.noiseRouter(),
-                SurfaceRules.sequence(desert, vanilla.surfaceRule()),
+                SurfaceRules.sequence(desert, wastes, vanilla.surfaceRule()),
                 vanilla.spawnTarget(),
                 vanilla.seaLevel(),
                 vanilla.disableMobGeneration(),

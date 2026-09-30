@@ -23,6 +23,7 @@ import net.minecraft.world.level.levelgen.presets.WorldPreset;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * The sofe:aetheris world preset: the journey. Overworld with the fixed region layout;
@@ -30,6 +31,8 @@ import java.util.Map;
  */
 public final class SoFEWorldPresets {
     public static final ResourceKey<WorldPreset> AETHERIS = ResourceKey.create(Registries.WORLD_PRESET, SoFEMod.id("aetheris"));
+    /** The city and its desert plateau fill the middle of Sulthari; the Ashen Wastes start about here. */
+    public static final int ASHEN_WASTES_INNER_RADIUS = 800;
 
     private SoFEWorldPresets() {
     }
@@ -44,7 +47,8 @@ public final class SoFEWorldPresets {
         SoFEBiomes.BY_REGION.forEach((region, key) -> regionBiomes.put(region, biomes.getOrThrow(key)));
 
         LevelStem overworld = new LevelStem(dimensionTypes.getOrThrow(BuiltinDimensionTypes.OVERWORLD),
-                new NoiseBasedChunkGenerator(new AetherisBiomeSource(RegionMap.defaultLayout(), regionBiomes),
+                new NoiseBasedChunkGenerator(new AetherisBiomeSource(RegionMap.defaultLayout(), regionBiomes,
+                        Optional.of(new AetherisBiomeSource.Wastes(biomes.getOrThrow(SoFEBiomes.ASHEN_WASTES), ASHEN_WASTES_INNER_RADIUS))),
                         noise.getOrThrow(SoFENoiseSettings.AETHERIS)));
         LevelStem nether = new LevelStem(dimensionTypes.getOrThrow(BuiltinDimensionTypes.NETHER),
                 new NoiseBasedChunkGenerator(MultiNoiseBiomeSource.createFromPreset(parameterLists.getOrThrow(MultiNoiseBiomeSourceParameterLists.NETHER)),

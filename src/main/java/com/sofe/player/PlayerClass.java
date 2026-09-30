@@ -54,6 +54,17 @@ public enum PlayerClass {
         return translationKey() + ".hero";
     }
 
+    /** The hero as an NPC and a dialogue speaker: cassian, ankhareth, shirin, rurik, azhar. */
+    public String npcId() {
+        return switch (this) {
+            case KNIGHT -> "cassian";
+            case NECROMANCER -> "ankhareth";
+            case SORCERESS -> "shirin";
+            case THIEF -> "rurik";
+            case KING -> "azhar";
+        };
+    }
+
     public String roleKey() {
         return translationKey() + ".role";
     }

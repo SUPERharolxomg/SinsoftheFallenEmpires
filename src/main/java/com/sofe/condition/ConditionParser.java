@@ -33,6 +33,8 @@ public final class ConditionParser {
             case "quest_step" -> new Condition.QuestStep(id(obj, "quest", path), positive(obj, "step", path));
             case "item_owned" -> new Condition.ItemOwned(id(obj, "item", path),
                     obj.has("count") ? positive(obj, "count", path) : 1);
+            case "fate_is" -> new Condition.FateIs(string(obj, "region", path), string(obj, "fate", path));
+            case "class_is" -> new Condition.ClassIs(string(obj, "class", path));
             case "all_of" -> new Condition.AllOf(list(obj, path));
             case "any_of" -> new Condition.AnyOf(list(obj, path));
             case "not" -> {

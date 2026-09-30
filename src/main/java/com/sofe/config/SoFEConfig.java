@@ -35,6 +35,10 @@ public final class SoFEConfig {
     public static final class Client {
         public final ForgeConfigSpec.BooleanValue replaceTitleScreen;
         public final ForgeConfigSpec.BooleanValue preselectJourneyPreset;
+        public final ForgeConfigSpec.BooleanValue dialogueBlip;
+        public final ForgeConfigSpec.BooleanValue showQuestCompass;
+        public final ForgeConfigSpec.BooleanValue hideBearerOutfit;
+        public final ForgeConfigSpec.BooleanValue replaceHealthHud;
 
         private Client(ForgeConfigSpec.Builder builder) {
             builder.push("menu");
@@ -48,11 +52,32 @@ public final class SoFEConfig {
                     .translation("config.sofe.preselect_journey_preset")
                     .define("preselectJourneyPreset", true);
             builder.pop();
+            builder.push("story");
+            dialogueBlip = builder
+                    .comment("Play a soft blip while the letters of a dialogue line appear. There are no voices.")
+                    .translation("config.sofe.dialogue_blip")
+                    .define("dialogueBlip", true);
+            showQuestCompass = builder
+                    .comment("Show the Quest Compass at the top of the screen, pointing to the tracked quest.")
+                    .translation("config.sofe.show_quest_compass")
+                    .define("showQuestCompass", true);
+            hideBearerOutfit = builder
+                    .comment("Hide the Bearer outfit layer and show only your own skin and armor.")
+                    .translation("config.sofe.hide_bearer_outfit")
+                    .define("hideBearerOutfit", false);
+            replaceHealthHud = builder
+                    .comment("Show health as a bar in the SoFE HUD instead of the vanilla hearts.")
+                    .translation("config.sofe.replace_health_hud")
+                    .define("replaceHealthHud", true);
+            builder.pop();
         }
     }
 
     public static final class Server {
         public final ForgeConfigSpec.BooleanValue openClassSelectOnJoin;
+        public final ForgeConfigSpec.BooleanValue opsBypass;
+        public final ForgeConfigSpec.BooleanValue protectZones;
+        public final ForgeConfigSpec.BooleanValue corpseSystem;
 
         private Server(ForgeConfigSpec.Builder builder) {
             builder.push("bearers");
@@ -60,6 +85,23 @@ public final class SoFEConfig {
                     .comment("In a SoFE journey, open the Bearer selection for players who have not chosen one yet.")
                     .translation("config.sofe.open_class_select_on_join")
                     .define("openClassSelectOnJoin", true);
+            builder.pop();
+            builder.push("world");
+            opsBypass = builder
+                    .comment("Operators in creative or spectator mode pass through the Seal Veil and can build in protected zones.")
+                    .translation("config.sofe.ops_bypass")
+                    .define("opsBypass", true);
+            protectZones = builder
+                    .comment("Stop players from breaking or placing blocks in the city of Sulthari and other protected places.")
+                    .translation("config.sofe.protect_zones")
+                    .define("protectZones", true);
+            builder.pop();
+            builder.push("death");
+            corpseSystem = builder
+                    .comment("Leave the Bearer's corpse with the gear where a player dies (Diablo II style).",
+                            "Turn off when the server uses another grave or corpse mod.")
+                    .translation("config.sofe.corpse_system")
+                    .define("corpseSystem", true);
             builder.pop();
         }
     }

@@ -2,6 +2,8 @@ package com.sofe.world.region;
 
 import com.sofe.network.RegionEnteredPacket;
 import com.sofe.network.SoFENetwork;
+import com.sofe.quest.QuestEngine;
+import com.sofe.quest.QuestEvent;
 import com.sofe.world.SoFEWorld;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -26,7 +28,11 @@ public final class RegionTitleHandler {
 
         SoFEWorld.regionMap(player.server).ifPresent(map ->
                 TRACKER.update(player.getUUID(), map.regionAt(player.getBlockX(), player.getBlockZ()))
-                        .ifPresent(region -> SoFENetwork.sendTo(player, new RegionEnteredPacket(region))));
+                        .ifPresent(region -> {
+                            SoFENetwork.sendTo(player, new RegionEnteredPacket(region, com.sofe.story.StoryCapability.get(player)
+                                    .map(story -> com.sofe.world.lock.RegionStatus.of(region, story)).orElse(com.sofe.world.lock.RegionStatus.NONE)));
+                            QuestEngine.event(player, new QuestEvent.EnteredRegion(region.id()));
+                        }));
     }
 
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {

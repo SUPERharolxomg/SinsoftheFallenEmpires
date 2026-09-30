@@ -5,7 +5,13 @@ import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
 import net.minecraft.data.PackOutput;
+import com.sofe.registry.SoFEBlocks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -24,6 +30,35 @@ public class SoFEBlockStateProvider extends BlockStateProvider {
                     Block block = MaterialRegistry.block(material, form);
                     simpleBlockWithItem(block, cubeAll(block));
                 }
+            }
+        }
+        for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
+            Block block = entry.block().get();
+            String name = entry.block().getId().getPath();
+            switch (entry.shape()) {
+                case CUBE -> simpleBlockWithItem(block, cubeAll(block));
+                case CUBE_SIDES -> simpleBlockWithItem(block, models().cubeBottomTop(name,
+                        modLoc("block/" + name + "_side"), modLoc("block/" + name + "_bottom"), modLoc("block/" + name + "_top")));
+                case PILLAR -> {
+                    axisBlock((RotatedPillarBlock) block, modLoc("block/" + name), modLoc("block/" + name + "_end"));
+                    simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name)));
+                }
+                case STAIRS -> {
+                    ResourceLocation texture = blockTexture(entry.base().get());
+                    stairsBlock((StairBlock) block, texture);
+                    simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name)));
+                }
+                case SLAB -> {
+                    ResourceLocation texture = blockTexture(entry.base().get());
+                    slabBlock((SlabBlock) block, texture, texture);
+                    simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name)));
+                }
+                case WALL -> {
+                    ResourceLocation texture = blockTexture(entry.base().get());
+                    wallBlock((WallBlock) block, texture);
+                    itemModels().wallInventory(name, texture);
+                }
+                case HAND_MADE -> simpleBlockWithItem(block, models().getExistingFile(modLoc("block/" + name)));
             }
         }
     }

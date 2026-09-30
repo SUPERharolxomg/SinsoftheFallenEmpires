@@ -1,0 +1,81 @@
+package com.sofe.world.zone;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.saveddata.SavedData;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The protected zones of one world, saved with it (data/sofe_protected_zones.dat). They are copied
+ * from structure_positions.json when a journey starts for the first time, so a later mod update
+ * that moves a structure never changes the zones of an existing world.
+ */
+public class ProtectedZoneData extends SavedData {
+    private static final String NAME = "sofe_protected_zones";
+    private final List<ProtectedZone> zones = new ArrayList<>();
+    private boolean initialized;
+
+    public static ProtectedZoneData get(MinecraftServer server) {
+        return server.overworld().getDataStorage().computeIfAbsent(ProtectedZoneData::load, ProtectedZoneData::new, NAME);
+    }
+
+    public List<ProtectedZone> zones() {
+        return List.copyOf(zones);
+    }
+
+    public boolean initialized() {
+        return initialized;
+    }
+
+    /** Copies the zones once; later calls do nothing. */
+    public void initialize(List<ProtectedZone> fromLayout) {
+        if (initialized) return;
+        zones.clear();
+        zones.addAll(fromLayout);
+        initialized = true;
+        setDirty();
+    }
+
+    /** Structures placed later (camps, dungeons) register their own zones here. */
+    public void add(ProtectedZone zone) {
+        zones.removeIf(z -> z.id().equals(zone.id()));
+        zones.add(zone);
+        setDirty();
+    }
+
+    public void remove(String id) {
+        if (zones.removeIf(z -> z.id().equals(id))) setDirty();
+    }
+
+    @Override
+    public CompoundTag save(CompoundTag tag) {
+        ListTag list = new ListTag();
+        for (ProtectedZone z : zones) {
+            CompoundTag t = new CompoundTag();
+            t.putString("id", z.id());
+            t.putString("kind", z.kind().id());
+            t.putIntArray("box", new int[]{z.minX(), z.minY(), z.minZ(), z.maxX(), z.maxY(), z.maxZ()});
+            list.add(t);
+        }
+        tag.put("zones", list);
+        tag.putBoolean("initialized", initialized);
+        return tag;
+    }
+
+    private static ProtectedZoneData load(CompoundTag tag) {
+        ProtectedZoneData data = new ProtectedZoneData();
+        ListTag list = tag.getList("zones", Tag.TAG_COMPOUND);
+        for (int i = 0; i < list.size(); i++) {
+            CompoundTag t = list.getCompound(i);
+            int[] b = t.getIntArray("box");
+            if (b.length != 6) continue;
+            data.zones.add(new ProtectedZone(t.getString("id"), ProtectedZone.Kind.byId(t.getString("kind")), b[0], b[1], b[2], b[3], b[4], b[5]));
+        }
+        data.initialized = tag.getBoolean("initialized");
+        return data;
+    }
+}
