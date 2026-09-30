@@ -17,7 +17,7 @@ out
 .vscode
 
 # gradle
-build
+/build
 .gradle
 
 # minecraft run folders
