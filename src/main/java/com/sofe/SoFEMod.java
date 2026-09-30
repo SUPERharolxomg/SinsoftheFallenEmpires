@@ -4,6 +4,12 @@ import com.mojang.logging.LogUtils;
 import com.sofe.client.ClientSetup;
 import com.sofe.condition.ConditionManager;
 import com.sofe.config.SoFEConfig;
+import com.sofe.datagen.DataGenerators;
+import com.sofe.registry.BlockRegistry;
+import com.sofe.registry.CreativeTabRegistry;
+import com.sofe.registry.EntityRegistry;
+import com.sofe.registry.ItemRegistry;
+import com.sofe.registry.material.MaterialRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,6 +31,14 @@ public class SoFEMod {
         IEventBus modBus = context.getModEventBus();
 
         SoFEConfig.register(context);
+
+        MaterialRegistry.init();
+        BlockRegistry.BLOCKS.register(modBus);
+        ItemRegistry.ITEMS.register(modBus);
+        EntityRegistry.ENTITIES.register(modBus);
+        CreativeTabRegistry.TABS.register(modBus);
+        modBus.addListener(DataGenerators::gatherData);
+
         MinecraftForge.EVENT_BUS.addListener(ConditionManager::onAddReloadListeners);
 
         if (FMLEnvironment.dist.isClient()) {
