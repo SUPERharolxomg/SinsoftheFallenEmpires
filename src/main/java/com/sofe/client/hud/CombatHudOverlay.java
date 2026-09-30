@@ -2,6 +2,7 @@ package com.sofe.client.hud;
 
 import com.sofe.SoFEMod;
 import com.sofe.client.ClientCombatData;
+import com.sofe.client.ClientProgressData;
 import com.sofe.client.SoFEKeys;
 import com.sofe.combat.Rune;
 import com.sofe.network.SyncCombatPacket;
@@ -9,6 +10,7 @@ import com.sofe.player.ResourceType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 
@@ -52,7 +54,7 @@ public final class CombatHudOverlay {
         }
 
         // Resource bar with icon and value, above the slots
-        int barY = slotsY - 22;
+        int barY = slotsY - 26;
         ResourceType resource = state.resource();
         graphics.blit(SoFEMod.id("textures/gui/hud/" + resource.id() + ".png"), MARGIN, barY - 2, 10, 10, 0f, 0f, 16, 16, 16, 16);
         int barX = MARGIN + 13;
@@ -61,6 +63,18 @@ public final class CombatHudOverlay {
         graphics.fill(barX - 1, barY, barX + barW + 1, barY + 7, 0xFF1A1410);
         graphics.fill(barX, barY + 1, barX + (int) (barW * fraction), barY + 6, 0xFF000000 | color(resource));
         graphics.drawString(font, (int) state.current() + " / " + state.max(), barX + barW + 4, barY, 0xE6DCC8, true);
+
+        // Level and experience toward the next level, just under the resource bar
+        ClientProgressData.get().ifPresent(progress -> {
+            float xpFraction = progress.xpToNext() > 0 ? Math.min(1f, progress.xp() / (float) progress.xpToNext()) : 1f;
+            graphics.fill(barX - 1, barY + 8, barX + barW + 1, barY + 11, 0xFF1A1410);
+            graphics.fill(barX, barY + 9, barX + (int) (barW * xpFraction), barY + 10, 0xFF7BC96F);
+            String level = Component.translatable("gui.sofe.hud.level", progress.level()).getString();
+            if (progress.skillPoints() > 0 || progress.attributePoints() > 0) {
+                level += " +";
+            }
+            graphics.drawString(font, level, barX + barW + 4, barY + 9, 0xE8B64A, true);
+        });
 
         // Runes waiting for a constellation (Sorceress)
         List<Rune> runes = state.runes();

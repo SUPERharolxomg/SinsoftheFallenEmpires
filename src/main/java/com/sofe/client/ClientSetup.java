@@ -41,5 +41,6 @@ public final class ClientSetup {
     private static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         ClientClassData.set(Optional.empty());
         ClientCombatData.clear();
+        ClientProgressData.clear();
     }
 }
