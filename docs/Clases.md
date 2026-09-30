@@ -20,7 +20,57 @@ Every class has 10 skills:
 | 11–20 | 3 active + 1 passive |
 | 21–30 | 1 active + 1 passive + 1 ultimate |
 
-One skill point every 2 levels; max level 30. Costs and cooldowns below are starting values: they live in data files so they can be balanced without recompiling (see [Arquitectura.md](Arquitectura.md#4-implementation-notes-for-the-classes)).
+Costs and cooldowns below are the **rank 1** values: they live in data files so they can be balanced without recompiling (see [Arquitectura.md](Arquitectura.md#4-implementation-notes-for-the-classes)).
+
+## Skill points and ranks (Diablo II style)
+
+**Decided.**
+
+- **1 skill point per level**, 30 in total at the maximum level.
+- **Ranks:** each active and passive skill goes from rank 1 to **rank 5**; each point adds one rank. **Ultimates have a single rank.**
+- **Filling everything is impossible:** the nine skills with ranks plus the ultimate need 46 points, and there are only 30. Every Bearer is built differently, as in Diablo II.
+- **When a point can go in:**
+  - A skill must be unlocked: the player's level is at least its level (1, 11, 21 or 30), and they have at least one point in the skill it comes from (the arrows of the tree).
+  - Each rank needs **one more level**: rank 2 of a level-11 skill needs level 12, rank 5 needs level 15.
+- **Higher rank, stronger skill.** Each rank adds to the skill's main values, with the growth per rank in the class data file (for example `"per_rank": { "damage": 0.25, "duration_s": 0.15 }`):
+
+| Value | Default growth per rank | At rank 5 |
+|-------|------------------------|-----------|
+| Damage, healing, shields | +25% | ×2 |
+| Durations, radius, number of targets or bounces | +15% (targets and bounces rounded down) | ×1.6 |
+| Resource cost | +8% | ×1.32 |
+| Cooldown | −5% | ×0.8 |
+
+- **Later skills are stronger by design:** level-21 skills and ultimates start from higher base values, so investing in them pays off.
+- **Skill tree screen:** the class's skills in a grid, one row per unlock level (1, 11, 21, 30), arrows for the unlock order, the rank on each skill, a "Points spent" counter and tabs (Active, Passive), like the Diablo II tree.
+- **Respec** at the Sulthari Training Grounds refunds every point.
+
+## Attributes (Diablo II style character sheet)
+
+**Decided: six attributes and 5 attribute points per level** (150 at level 30), spent on the character sheet screen.
+
+| Attribute | What each point gives |
+|-----------|-----------------------|
+| **Strength** | +1% physical damage (weapons and melee skills) |
+| **Agility** | +0.5% critical chance and +0.3% chance to dodge (dodge capped at 30%) |
+| **Intellect** | +1% magic damage and +1 maximum Mana |
+| **Will** | +2% resource regeneration and +1 maximum Essence and Resolve |
+| **Charisma** | +1 maximum Authority and +1% strength of Decrees and auras |
+| **Vitality** | +0.5 maximum health (a full heart every 4 points) |
+
+**Starting values:** 10 in every attribute, plus 10 in the class's primary attribute:
+
+| Class | Primary attribute |
+|-------|-------------------|
+| Knight | Strength |
+| Necromancer | Will |
+| Sorceress | Intellect |
+| Thief | Agility |
+| King | Charisma |
+
+- Points are spent one at a time on the **character sheet**, with a "+" next to each attribute and the resulting values shown (damage, critical chance, health, resource), like the Diablo II stats screen.
+- Every value per point lives in `data/sofe/attributes.json`.
+- The **respec** at the Training Grounds also refunds attribute points.
 
 ---
 

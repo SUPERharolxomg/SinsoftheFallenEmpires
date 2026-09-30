@@ -186,7 +186,9 @@ The player picks one Bearer. The other four stay alive as NPCs in Sulthari and c
 - Levels 11–20: 3 active + 1 passive
 - Levels 21–30: 1 active + 1 passive + 1 ultimate
 
-One skill point every 2 levels; max level 30. Respec at the Sulthari Training Grounds for Dinars.
+One skill point per level (30 at max level), spent on ranks 1–5 of each skill, Diablo II style: 46 ranks exist, so each Bearer is built differently. Higher rank, stronger skill. Respec at the Sulthari Training Grounds for Dinars. Details: [docs/Clases.md](docs/Clases.md#skill-points-and-ranks-diablo-ii-style).
+
+**Attributes:** 5 points per level for Strength, Agility, Intellect, Will, Charisma and Vitality, on a Diablo II style character sheet ([docs/Clases.md](docs/Clases.md#attributes-diablo-ii-style-character-sheet)).
 
 Full hero stories, skill tables and visuals: [docs/Clases.md](docs/Clases.md).
 
