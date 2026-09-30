@@ -28,12 +28,42 @@ Every mod item has an **item level** (the level of the enemy or zone it came fro
 
 **Affixes.** One prefix and one suffix per 2 affixes, defined in JSON (`data/sofe/affixes/*.json`) with value ranges per item level. Examples: *Burning* (+fire damage), *of the Sentinel* (+armor), *Thirsting* (life steal), *of the Eclipse* (−skill cooldown).
 
+### Affixes that raise the character (Diablo II style)
+
+Gear is how a Bearer grows beyond their level: affixes add to the same attributes and values as the character sheet ([Clases.md](Clases.md#attributes-diablo-ii-style-character-sheet)). Values roll inside a range that grows with the item level (ranges below are for item level 1 → 30).
+
+| Group | Affix (prefix / suffix) | Effect | Range | Rarity |
+| --- | --- | --- | --- | --- |
+| **Attributes** | *of the Bull* / *of the Lynx* / *of the Sage* / *of the Stoic* / *of the Sultan* / *of the Oak* | + Strength / Agility / Intellect / Will / Charisma / Vitality | +1 → +25 | Tempered+ |
+| | *of the Five Crowns* | + all attributes | +1 → +8 | Imperial+ |
+| **Life and resource** | *Hale* | + maximum health | +2 → +20 | Tempered+ |
+| | *Brimming* | + maximum class resource | +5 → +50 | Tempered+ |
+| | *of the Spring* | + resource regeneration | +5% → +40% | Tempered+ |
+| | *Thirsting* | life steal on hit | 1% → 8% | Tempered+ |
+| **Damage** | *Keen* / *Arcane* | + physical / magic damage | +3% → +40% | Tempered+ |
+| | *Burning* / *Frozen* / *Storming* | + fire / frost / storm damage on hit | +1 → +12 | Tempered+ |
+| | *of Precision* | + critical chance | +1% → +10% | Tempered+ |
+| | *of Ruin* | + critical damage | +10% → +60% | Imperial+ |
+| **Defense** | *of the Sentinel* | + armor | +1 → +10 | Tempered+ |
+| | *of Shadows* | + dodge chance (the 30% cap still applies) | +1% → +6% | Imperial+ |
+| | *of Warding* (fire / frost / storm / Void) | + resistance to one element | +5% → +40% | Tempered+ |
+| **Skills** | *of the Eclipse* | − skill cooldown | −3% → −15% | Imperial+ |
+| | *of the <Bearer>* (of the Knight, of the Sorceress...) | **+1 rank to all skills of that class** | +1 → +2 | Imperial+, Relic |
+| | *<skill>-touched* (e.g. *Frost-touched*) | **+1 → +3 ranks to one skill** | +1 → +3 | Imperial+, Relic |
+
+- **Ranks from gear go past the tree:** a skill at rank 5 with +2 from gear works at rank 7 (up to rank 8). Gear ranks only apply to skills the player has learned (at least one point).
+- **Resistances** reduce elemental damage from enemies and bosses (Vorath's fire, Frost of Nordrath, Void attacks), capped at 75%.
+- **Item requirements:** every item needs **level ≥ item level − 3**. Heavy weapons and armor also ask for an attribute (for example, a Glacial Iron greataxe needs 30 Strength). An item whose requirements are not met stays in the inventory but gives nothing.
+- **Tooltips** follow Diablo II: name in the rarity color, base stats in white, affixes in blue, set bonuses in green, unmet requirements in red.
+- **Character sheet:** values raised by gear show in green, with the base value in the tooltip.
+- **Talismans** (Diablo II charms): small items that give their affixes only while they are in the **Talisman Pouch**, a Curios slot with 6 spaces. They drop from elites and Broken Oaths. Sizes and limits keep them from replacing gear.
+
 **Class affinity.** Some affixes only roll on items tied to a class: +1 Clay Warden (Necromancer), +runes per spell (Sorceress), +Authority per hit (King). Every class can use everything, but loot is 60% biased toward the player's class to avoid a junk-filled inventory.
 
 **Equipment slots.**
 
 - **Vanilla:** helmet, chestplate, leggings, boots, main hand and off hand.
-- **Mod:** amulet, 2 rings and potion belt, via the **Curios** API (a widely used dependency on Forge 1.20.1).
+- **Mod:** amulet, 2 rings, potion belt and Talisman Pouch, via the **Curios** API (a widely used dependency on Forge 1.20.1).
 - **Sockets:** weapons and chestplates can have 0–3 sockets for **Oath Gems** (see Forges).
 
 ## Mining: ores by empire
