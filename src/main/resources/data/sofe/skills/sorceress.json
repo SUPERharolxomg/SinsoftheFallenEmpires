@@ -1,0 +1,87 @@
+{
+  "resource": {
+    "max": 100,
+    "start": 100,
+    "regen_per_second": 2
+  },
+  "skills": {
+    "ember_verse": {
+      "cost": 8,
+      "cooldown_s": 1,
+      "damage": 5,
+      "range": 18,
+      "burn_s": 3
+    },
+    "frost_lance": {
+      "cost": 10,
+      "cooldown_s": 2,
+      "damage": 6,
+      "range": 20,
+      "slow_s": 3,
+      "slow_level": 2
+    },
+    "wandering_spark": {
+      "cost": 12,
+      "cooldown_s": 3,
+      "damage": 4,
+      "range": 16,
+      "bounces": 2,
+      "bounce_range": 6
+    },
+    "burning_calligraphy": {
+      "cost": 25,
+      "cooldown_s": 10
+    },
+    "water_mirror": {
+      "cost": 20,
+      "cooldown_s": 8
+    },
+    "petal_tempest": {
+      "cost": 30,
+      "cooldown_s": 12
+    },
+    "sky_map": {
+      "mana_refund": 20
+    },
+    "starfall": {
+      "cost": 60,
+      "cooldown_s": 25,
+      "stars": 7
+    },
+    "arcane_poetry": {
+      "damage_bonus": 0.2
+    },
+    "written_eclipse": {
+      "cost": 100,
+      "cooldown_s": 150,
+      "duration_s": 10
+    }
+  },
+  "constellations": {
+    "steam_burst": {
+      "damage": 4,
+      "radius": 3,
+      "stun_s": 1.5
+    },
+    "solar_flare": {
+      "damage": 6,
+      "radius": 3,
+      "burn_s": 4
+    },
+    "winters_grasp": {
+      "damage": 3,
+      "radius": 3.5,
+      "slow_s": 4,
+      "slow_level": 4
+    },
+    "tempest_crown": {
+      "damage": 3,
+      "radius": 8,
+      "targets": 5
+    },
+    "lesser_constellation": {
+      "damage": 2,
+      "radius": 2
+    }
+  }
+}

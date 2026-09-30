@@ -43,6 +43,7 @@ SoFE is a **linear story** (Act I → Act V), not a sandbox add-on. From the fir
 **Other screens with the mod's look:**
 
 - **Pause menu:** adds a *Journal* button (active quests, current act).
+- **Icon row (later):** a row of icon buttons under the menu for the Codex, the Codex Map and similar screens (idea in `art/concepts/menu_icons_mockup.jpg`), added in Sprints 7.5 and 8 when those screens exist.
 - **World loading screen:** random key art + a lore tip ("Every road to an Archsin is guarded by a Broken Oath").
 - **World creation:** the `sofe:aetheris` preset is the default. A server/common config `allowVanillaWorldPresets` (default `true`) controls whether the other presets can still be picked.
 

@@ -82,6 +82,19 @@ The player's model is drawn on the lower-center part of the card, so keep the **
 
 ### Dialogue box, one style per empire
 
+**Decided: the dialogue box is a wide bar** (portrait window on the left, text area on the right, ornaments along the top), like `art/extracted/dialogue_bars`. The square 9-slice box below stays as the fallback for styles that do not have a bar yet.
+
+| Wide bar | Style |
+|----------|-------|
+| Ice and frost | `nordrath` |
+| Lava with runes | `burning_deep` (the Nether) |
+| Purple vines | `void` |
+| Sandstone with scarab | `khemet` |
+| Brass with gears | `sulthari` |
+| *(missing)* | `parsivan`, `aureum` |
+
+Wide bars: `gui/dialogue/<style>_bar.png`, about **5:1** (for example 1000×200; the first sheet had this shape, the transparent one is thinner), with the portrait window as a transparent square on the left.
+
 Six styles: `sulthari`, `nordrath`, `parsivan`, `khemet`, `aureum` and `void`. The style comes from **where the conversation happens**; `void` is used in the Outer Void, inside the Codex, for Nahrazel and for the secret bad ending.
 
 Per style, in `gui/dialogue/`:
@@ -114,7 +127,7 @@ First ones needed (Act I): the five Bearers as NPCs and companions (`cassian`, `
 |------|------|-------------|
 | `gui/title/logo.png` | **1024 px wide**, any height (the current one is 1024×599) | "Sins of the Fallen Empires" on a transparent background, with the cracked Void Codex behind the text. The title screen reads its real size and fits it above the buttons without stretching it. |
 | `gui/title/background/panorama_0.png` … `_5.png` | **6 × 1024×1024** | Rotating panorama of Sulthari during the Eclipse Festival: brass domes, tramways, the Great Observatory lit up, the eclipse in the sky. Order: 0 front, 1 right, 2 back, 3 left, 4 up, 5 down. Easiest once Sulthari is built in game. |
-| `gui/title/keyart.png` | **1920×1080** | Alternative to the panorama: one static illustration. **Used automatically as soon as the file exists.** The logo covers the top-center (about the upper 25%) and the menu buttons the center column from 40% to 90% of the height, so keep the main subject to the sides or behind the logo, and the center calm and dark. On screens that are not 16:9 the sides or top are cropped a little. |
+| `gui/title/keyart.png` | **1920×1080** (provisional: the "Sulthari from the walls" scene, upscaled; see `art/extracted/scene`) | Alternative to the panorama: one static illustration. **Used automatically as soon as the file exists.** The logo covers the top-center (about the upper 25%) and the menu buttons the center column from 40% to 90% of the height, so keep the main subject to the sides or behind the logo, and the center calm and dark. On screens that are not 16:9 the sides or top are cropped a little. |
 
 The logo is also **used automatically when `gui/title/logo.png` exists**; until then the menu shows the title as text.
 

@@ -1,6 +1,7 @@
 package com.sofe.player;
 
 import com.sofe.SoFEMod;
+import com.sofe.combat.CombatHandler;
 import com.sofe.config.SoFEConfig;
 import com.sofe.network.OpenClassSelectPacket;
 import com.sofe.network.SoFENetwork;
@@ -57,6 +58,7 @@ public final class ClassSelectionHandler {
             }
             // Always sync: if the choice was refused, the client learns the real class and closes the screen
             sync(player);
+            CombatHandler.refresh(player);
         });
     }
 

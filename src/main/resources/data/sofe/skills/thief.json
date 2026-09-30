@@ -1,0 +1,51 @@
+{
+  "resource": {
+    "max": 100,
+    "start": 100,
+    "regen_per_second": 10
+  },
+  "skills": {
+    "double_edge": {
+      "cost": 10,
+      "cooldown_s": 1,
+      "marks": 2
+    },
+    "light_fingers": {
+      "cost": 15,
+      "cooldown_s": 8
+    },
+    "smoke_step": {
+      "cost": 20,
+      "cooldown_s": 12,
+      "duration_s": 3
+    },
+    "cutthroat": {
+      "cost": 25,
+      "cooldown_s": 6,
+      "bonus_per_mark": 0.2
+    },
+    "fjord_snare": {
+      "cost": 20,
+      "cooldown_s": 10
+    },
+    "throwing_axe": {
+      "cost": 15,
+      "cooldown_s": 5
+    },
+    "deep_pockets": {
+      "gold_bonus": 0.25,
+      "double_loot_chance": 0.1
+    },
+    "thousand_cuts": {
+      "cost": 40,
+      "cooldown_s": 20,
+      "targets": 6
+    },
+    "scavengers_instinct": {},
+    "the_great_heist": {
+      "cost": 100,
+      "cooldown_s": 120,
+      "duration_s": 8
+    }
+  }
+}

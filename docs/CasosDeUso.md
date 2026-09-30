@@ -69,7 +69,9 @@ Every use case of *Sins of the Fallen Empires* in one place. Story and terms: [R
 ### UC-03: Level up
 - **Actor:** Player
 - **Precondition:** the player earns enough XP.
-- **Flow:** XP threshold reached → level-up notification → skill point awarded (every 2 levels) → the player opens the skill tree → assigns the point.
+- **Flow:** XP threshold reached → level-up notification → one skill point awarded → the player opens the skill tree → puts the point in an unlocked skill whose next rank their level allows → the skill gets stronger.
+- **Also:** 5 attribute points are awarded; the player spends them on the character sheet (Strength, Agility, Intellect, Will, Charisma, Vitality).
+- **Exception:** a point cannot go into a locked skill, a skill whose next rank needs a higher level, or an ultimate that already has its rank.
 - **Postcondition:** level increased, new skill available.
 
 ### UC-06: Respec skills

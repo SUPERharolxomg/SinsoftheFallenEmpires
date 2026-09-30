@@ -20,7 +20,11 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] Sorceress: 3 runes complete a constellation and the combination picks the right effect
 - [ ] Thief: Marks never exceed 5 and Cutthroat consumes them all
 - [ ] King: only one Decree is active at a time (except during Crown of the Five Lands)
-- [ ] Leveling awards a skill point every 2 levels, max level 30
+- [ ] Leveling awards one skill point per level, max level 30
+- [ ] A point cannot go into a locked skill, past rank 5, past the level each rank needs, or into an ultimate twice
+- [ ] Each rank applies the per-rank growth from the class file (rank 5 damage = 2x rank 1 by default)
+- [ ] Each level gives 5 attribute points; every class starts with 10 in each attribute and 20 in its primary one
+- [ ] Attribute effects apply (Vitality health, Intellect mana, Agility dodge capped at 30%) and are removed after a respec
 - [ ] Respec refunds every point
 
 ## Story and bosses
