@@ -28,9 +28,28 @@ public final class SoFENetwork {
                 .decoder(RegionEnteredPacket::decode)
                 .consumerMainThread(RegionEnteredPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(OpenClassSelectPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(OpenClassSelectPacket::encode)
+                .decoder(OpenClassSelectPacket::decode)
+                .consumerMainThread(OpenClassSelectPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(SyncClassPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SyncClassPacket::encode)
+                .decoder(SyncClassPacket::decode)
+                .consumerMainThread(SyncClassPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(ChooseClassPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(ChooseClassPacket::encode)
+                .decoder(ChooseClassPacket::decode)
+                .consumerMainThread(ChooseClassPacket::handle)
+                .add();
     }
 
     public static void sendTo(ServerPlayer player, Object packet) {
         CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
+    }
+
+    public static void sendToServer(Object packet) {
+        CHANNEL.sendToServer(packet);
     }
 }
