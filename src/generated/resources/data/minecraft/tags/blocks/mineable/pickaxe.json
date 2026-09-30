@@ -1,0 +1,22 @@
+{
+  "values": [
+    "sofe:sulthari_brass_ore",
+    "sofe:raw_sulthari_brass_block",
+    "sofe:sulthari_brass_block",
+    "sofe:glacial_iron_ore",
+    "sofe:deepslate_glacial_iron_ore",
+    "sofe:raw_glacial_iron_block",
+    "sofe:glacial_iron_block",
+    "sofe:star_lapis_ore",
+    "sofe:star_lapis_block",
+    "sofe:solar_gold_ore",
+    "sofe:deepslate_solar_gold_ore",
+    "sofe:raw_solar_gold_block",
+    "sofe:solar_gold_block",
+    "sofe:deepslate_orichalcum_ore",
+    "sofe:raw_orichalcum_block",
+    "sofe:orichalcum_block",
+    "sofe:deepslate_aetherium_ore",
+    "sofe:aetherium_block"
+  ]
+}

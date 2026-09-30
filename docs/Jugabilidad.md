@@ -63,17 +63,62 @@ The map is 12,000 × 12,000 blocks. Walking back to Sulthari from Aureum to refi
 |------|-------------|----------|
 | **Main quests** | The acts of the story, in order. They drive the progression locks ([Mundo.md](Mundo.md#w2-progression-locks)). | Yes |
 | **Bearer quests** | One short personal quest per act for the player's hero (Cassian and his order, Shirin and Laleh, etc.) | No, but they unlock extra dialogue and the full epilogue |
-| **Side quests** | Region bounties, lost caravans, lore pieces. Reward: Dinars, Favor, Blueprints. | No |
+| **Side quests** | Region bounties, lost caravans, lore pieces. Reward: Dinars, Favor, Blueprints. Some of them set the region's **fate** (see below). | No, but they change the ending |
 
 - Quests are **data-driven** (`data/sofe/quests/*.json`): steps, conditions, rewards and dialogue keys.
 - The **Journal** shows active quests, the current act, completed quests and the Pact.
 - The active objective feeds the Quest Compass and map waypoints ([Mundo.md](Mundo.md#w3-minimap-and-map)).
 
-### Dialogue
+### Dialogue: Warcraft III style, text only
 
-- NPCs talk through a dialogue screen with portrait, name, text and up to 4 answers. Every line is a lang key (`en_us.json`, `es_es.json`).
+**Decided: no voice acting.** Bosses, Bearers and NPCs speak only with text, so there are no audio files to break and every line can be translated. Animations stay simple for now.
+
+**The dialogue box** is drawn on top of the game, in the style of Warcraft III:
+
+| Part | Description |
+|------|-------------|
+| Bar | Dark bar across the bottom of the screen with a gold Sulthari-style border |
+| Portrait | 64×64 portrait of the speaker on the left (a still image; one per character, see [Anexos.md](Anexos.md#a2-splash-arts-and-3d-models)) |
+| Name | Speaker's name in gold above the text |
+| Text | Appears letter by letter; a key finishes the line, the next press moves to the next line |
+| Answers | Up to 4 answers when the player has a choice |
+| Sound | Only a soft text blip while letters appear (can be turned off). No voices. |
+
+Two modes:
+
+- **Cinematic** (story scenes, boss intros, temptations, the ending): black letterbox bars at the top and bottom, the camera stays still and the player cannot move.
+- **Conversation** (merchants, quest givers, companions): the box only, and the player can keep moving; walking away closes it.
+
+**Simple animations for now:** the speaker turns to face the player and plays one talking gesture (a GeckoLib animation or a vanilla arm swing). Richer animations can come later without changing the dialogue files.
+
+**Data:** every conversation is a JSON file in `data/sofe/dialogue/`: a list of lines with speaker, portrait, lang key and optional answers, each answer with its effect (set a fate, start a quest, give a reward). Every line is a lang key in `en_us.json` and `es_es.json`.
+
 - Most choices change only the conversation and small rewards (a discount, extra lore).
 - **Temptations:** each Archsin tempts the player before the fight. Resisting is always the path forward; the dialogue is stronger when it is the hero's own sin.
+
+### Fates and epilogues (Fallout style)
+
+**Decided.** Side quests change how the story ends for the world and for the hero, without splitting the main story into different branches:
+
+- **The main story does not change:** Nahrazel is always defeated (plus the secret bad ending of Prython's offer, below).
+- **Region fates:** each region has 2–3 side quests with a real choice. The choice sets a **fate** for that region. Example: in Nordrath, free the warriors trapped in Vorath's endless war, or let them fight forever.
+- **Epilogue built from fates:** after the moment inside the Codex, the ending shows one slide per region (illustration + text), picked by that region's fate, then the Bearer's own epilogue.
+- **Bearer variants:** the Bearer quests change the hero's epilogue. Example: if Shirin's quests are not done, Laleh does not find peace and the last slide is different.
+- **Small reactions in the world:** an NPC remembers what the player did, a merchant gives or refuses a discount, a camp looks different.
+
+| Region | Example choice | Fates |
+|--------|----------------|-------|
+| Sulthari | Protect the Low Bazaar during the invasion, or the Observatory | Bazaar thrives / Observatory rebuilt first |
+| Nordrath | Free the warriors of the endless war, or let them fight | Clans at peace / Clans still at war |
+| Parsivan | Wake the dreamers of the Gardens, or leave them in the dream | Court awakens / Court sleeps |
+| Khemet | Guide the trapped souls, or bind them to protect the living | Souls at rest / Souls as guardians |
+| Aureum | Rebuild the courts, or give the gold back to the people | Law restored / Wealth shared |
+
+With 5 regions × 2–3 fates plus 5 Bearer variants, there are many different endings, but only about 15 slides and 10 epilogue texts to write, translate and test.
+
+- Fates are stored **per player** in their story progress, so in multiplayer each player gets the ending of their own choices.
+- A region fate is set once; the Journal shows which choices are still open.
+- Fates are also **conditions** (`fate_is`), so a later quest or dialogue can react to them.
 
 **Decided — Prython's offer: the secret bad ending.** The player *can* accept. Accepting plays **"Crowned in Ash"**, a short animation of that player's own Bearer ruling a burning Aetheris, different for each of the five heroes. Then the player returns to just before the choice.
 

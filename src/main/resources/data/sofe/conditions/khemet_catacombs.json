@@ -1,0 +1,7 @@
+{
+  "type": "all_of",
+  "conditions": [
+    { "type": "act_reached", "act": 3 },
+    { "type": "boss_defeated", "boss": "sofe:luxara" }
+  ]
+}
