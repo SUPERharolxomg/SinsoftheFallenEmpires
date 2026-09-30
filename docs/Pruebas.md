@@ -91,6 +91,9 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 ## Multiplayer
 
 - [ ] Boss health scales with player count and damage does not
+- [ ] A mob spawning in Nordrath gets a level in 5-12; near a player in Act IV it is at least level 20
+- [ ] Level scaling multiplies health and damage as configured and survives a world reload
+- [ ] Vanilla mob traits appear only from their act; mobs from other mods get scaling but no traits; free mode worlds are untouched
 - [ ] XP split plus bonus in a Pact of 3 is correct, and a solo player gets exactly 100%
 - [ ] Co-op bonuses turn off beyond 48 blocks or in another dimension
 - [ ] 4 participants in a boss fight → 4 Relics, each with its own `sofe:owner`

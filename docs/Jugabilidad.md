@@ -171,6 +171,51 @@ Players cannot place chests inside Sulthari (it is a protected zone), and loot a
 | Hard | Bosses +25% health, extra mechanics in phase 2 |
 | Hardcore | Hard + vanilla hardcore death |
 
+### Difficulty rises with each act
+
+**Decided.** Every hostile mob in a journey (SoFE enemies, vanilla zombies, skeletons, spiders, creepers, endermen... and hostile mobs from other mods) gets a **level** when it spawns, and the level sets how strong it is.
+
+**Its level** is the higher of two values:
+
+1. **The region's level range** ([Mundo.md](Mundo.md#w1-one-world-with-a-fixed-map)): a mob in Nordrath is level 5–12, one in Aureum 20–27.
+2. **The act floor** of the nearest player: once a player advances an act, mobs around them never spawn below it, even in regions from earlier acts. Coming back to Sulthari in Act IV means level 20 mobs, not level 1.
+
+| Act | Act floor |
+|-----|-----------|
+| I | 1 |
+| II | 5 |
+| III | 12 |
+| IV | 20 |
+| V | 27 |
+
+**What a level does**, for every level above 1 (values in `data/sofe/mob_scaling.json`):
+
+| Stat | Per level | At level 30 |
+|------|-----------|-------------|
+| Health | +8% | ×3.3 |
+| Damage | +6% | ×2.7 |
+| Armor | +0.3 | +8.7 |
+
+The vanilla difficulty (Easy, Normal, Hard) still applies on top.
+
+**New traits for vanilla mobs as the story advances** (the act floor of the nearest player):
+
+| Mob | From Act II | From Act III | From Act IV | From Act V |
+|-----|-------------|--------------|-------------|------------|
+| Zombie | Sometimes wears empire armor | Calls more reinforcements | Tougher reinforcements | Corrupted look (violet eyes), faster |
+| Skeleton | — | Frost arrows (slowness) | Fire arrows | Volleys of two arrows |
+| Spider | Poison bite, like cave spiders | Longer poison | Web shot that slows | — |
+| Creeper | — | Shorter fuse | — | 10% chance to spawn charged |
+| Enderman | — | Blinds for a moment when it hits | Teleports behind the player after being hit | — |
+
+Creeper explosions still cannot break protected places ([Mundo.md](Mundo.md#layer-3--protected-places-cities-camps-dungeons-arenas)), so a shorter fuse makes them dangerous without wrecking the story's cities.
+
+**Rewards follow the level:** a higher-level mob gives more experience and drops loot of its item level ([Pociones.md](Pociones.md#rarities-affixes-and-slots)).
+
+- In multiplayer, the act floor comes from the nearest player within 64 blocks; with no player nearby, only the region's range is used.
+- Mobs from other mods get the health, damage and armor scaling but none of the vanilla traits. A server can list mods to leave out in `mob_scaling.json`.
+- Free mode worlds (not a journey) keep vanilla mobs as they are.
+
 ---
 
 ## G7. Other mods and free mode

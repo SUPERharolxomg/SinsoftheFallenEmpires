@@ -26,7 +26,7 @@ Costs and cooldowns below are the **rank 1** values: they live in data files so 
 
 **Decided.**
 
-- **1 skill point per level**, 30 in total at the maximum level.
+- **1 skill point per level**, 30 in total at the maximum level. The level-1 point (and the 5 level-1 attribute points) are given when the Bearer is chosen, so the first decision is which skill to learn first, as in Diablo II.
 - **Ranks:** each active and passive skill goes from rank 1 to **rank 5**; each point adds one rank. **Ultimates have a single rank.**
 - **Filling everything is impossible:** the nine skills with ranks plus the ultimate need 46 points, and there are only 30. Every Bearer is built differently, as in Diablo II.
 - **When a point can go in:**
