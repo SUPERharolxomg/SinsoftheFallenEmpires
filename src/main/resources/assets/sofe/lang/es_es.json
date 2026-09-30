@@ -176,5 +176,7 @@
   "message.sofe.skill.no_resource": "No tienes suficiente %s",
   "message.sofe.skill.not_ready": "%s todavía no está disponible",
   "message.sofe.skill.empty_slot": "Todavía no hay habilidad en este espacio",
-  "message.sofe.constellation": "Constelación: %s"
+  "message.sofe.constellation": "Constelación: %s",
+  "message.sofe.level_up": "¡Nivel %s! +%s punto(s) de habilidad, +%s puntos de atributo",
+  "gui.sofe.hud.level": "Nv %s"
 }
