@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.epilogue.1"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.epilogue.2"
+    }
+  ]
+}

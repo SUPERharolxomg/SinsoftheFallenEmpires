@@ -1,0 +1,182 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.1"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.knight",
+      "condition": {
+        "type": "class_is",
+        "class": "knight"
+      },
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:entity.lightning_bolt.thunder",
+          "volume": 0.6,
+          "pitch": 1.4
+        },
+        {
+          "type": "particles",
+          "particle": "minecraft:end_rod",
+          "count": 40
+        }
+      ]
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.act1.shard.knight.2",
+      "condition": {
+        "type": "class_is",
+        "class": "knight"
+      }
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.necromancer",
+      "condition": {
+        "type": "class_is",
+        "class": "necromancer"
+      },
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:entity.lightning_bolt.thunder",
+          "volume": 0.6,
+          "pitch": 1.4
+        },
+        {
+          "type": "particles",
+          "particle": "minecraft:end_rod",
+          "count": 40
+        }
+      ]
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.act1.shard.necromancer.2",
+      "condition": {
+        "type": "class_is",
+        "class": "necromancer"
+      }
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.sorceress",
+      "condition": {
+        "type": "class_is",
+        "class": "sorceress"
+      },
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:entity.lightning_bolt.thunder",
+          "volume": 0.6,
+          "pitch": 1.4
+        },
+        {
+          "type": "particles",
+          "particle": "minecraft:end_rod",
+          "count": 40
+        }
+      ]
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.act1.shard.sorceress.2",
+      "condition": {
+        "type": "class_is",
+        "class": "sorceress"
+      }
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.thief",
+      "condition": {
+        "type": "class_is",
+        "class": "thief"
+      },
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:entity.lightning_bolt.thunder",
+          "volume": 0.6,
+          "pitch": 1.4
+        },
+        {
+          "type": "particles",
+          "particle": "minecraft:end_rod",
+          "count": 40
+        }
+      ]
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.act1.shard.thief.2",
+      "condition": {
+        "type": "class_is",
+        "class": "thief"
+      }
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.king",
+      "condition": {
+        "type": "class_is",
+        "class": "king"
+      },
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:entity.lightning_bolt.thunder",
+          "volume": 0.6,
+          "pitch": 1.4
+        },
+        {
+          "type": "particles",
+          "particle": "minecraft:end_rod",
+          "count": 40
+        }
+      ]
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.act1.shard.king.2",
+      "condition": {
+        "type": "class_is",
+        "class": "king"
+      }
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.2"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.shard.ozhan",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "king"
+        }
+      }
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.shard.ozhan.king",
+      "condition": {
+        "type": "class_is",
+        "class": "king"
+      }
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.shard.hint"
+    }
+  ]
+}

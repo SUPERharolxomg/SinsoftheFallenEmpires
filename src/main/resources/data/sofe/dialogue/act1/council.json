@@ -1,0 +1,100 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "npc": "ozhan",
+  "priority": 10,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act1_eclipse",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act1_eclipse",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.council.1",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "king"
+        }
+      }
+    },
+    {
+      "speaker": "azhar",
+      "text": "dialogue.sofe.act1.council.2",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "king"
+        }
+      }
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.council.1.king",
+      "condition": {
+        "type": "class_is",
+        "class": "king"
+      }
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.act1.council.3"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.council.4",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act1.council.4.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act1_eclipse"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.act1.council.4.lore",
+          "next": 5
+        }
+      ]
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.act1.council.lore"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.council.lore.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act1.council.4.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act1_eclipse"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

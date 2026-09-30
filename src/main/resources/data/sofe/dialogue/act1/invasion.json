@@ -1,0 +1,29 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act1.invasion.1"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.invasion.2",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "king"
+        }
+      }
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act1.invasion.2.king",
+      "condition": {
+        "type": "class_is",
+        "class": "king"
+      }
+    }
+  ]
+}

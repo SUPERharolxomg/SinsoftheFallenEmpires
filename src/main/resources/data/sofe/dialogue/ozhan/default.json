@@ -1,0 +1,25 @@
+{
+  "style": "sulthari",
+  "npc": "ozhan",
+  "lines": [
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.ozhan.1",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "king"
+        }
+      }
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.ozhan.1.king",
+      "condition": {
+        "type": "class_is",
+        "class": "king"
+      }
+    }
+  ]
+}
