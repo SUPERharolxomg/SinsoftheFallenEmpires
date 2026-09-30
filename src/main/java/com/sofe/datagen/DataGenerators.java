@@ -34,5 +34,9 @@ public final class DataGenerators {
                 List.of(new LootTableProvider.SubProviderEntry(SoFEBlockLootTables::new, LootContextParamSets.BLOCK))));
         SoFEBlockTagsProvider blockTags = generator.addProvider(event.includeServer(), new SoFEBlockTagsProvider(output, lookup, files));
         generator.addProvider(event.includeServer(), new SoFEItemTagsProvider(output, lookup, blockTags.contentsGetter(), files));
+
+        // Biome tags need the SoFE biomes, so they read the lookup that includes the worldgen entries
+        SoFEWorldgenProvider worldgen = generator.addProvider(event.includeServer(), new SoFEWorldgenProvider(output, lookup));
+        generator.addProvider(event.includeServer(), new SoFEBiomeTagsProvider(output, worldgen.getRegistryProvider(), files));
     }
 }

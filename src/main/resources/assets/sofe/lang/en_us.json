@@ -79,5 +79,13 @@
   "block.sofe.deepslate_aetherium_ore": "Deepslate Aetherium Ore",
   "item.sofe.aetherium_shard": "Aetherium Shard",
   "block.sofe.aetherium_block": "Block of Aetherium",
-  "item.sofe.black_aetherium_shard": "Black Aetherium Shard"
+  "item.sofe.black_aetherium_shard": "Black Aetherium Shard",
+  "generator.sofe.aetheris": "SoFE: Journey",
+  "biome.sofe.sulthari_desert": "Sulthari Desert",
+  "biome.sofe.nordrath_tundra": "Nordrath Tundra",
+  "biome.sofe.parsivan_gardens": "Parsivan Gardens",
+  "biome.sofe.khemet_valley": "Khemet Valley",
+  "biome.sofe.aureum_hills": "Aureum Hills",
+  "biome.sofe.aetheris_ocean": "Ocean of Aetheris",
+  "gui.sofe.region_title.welcome": "Welcome to"
 }

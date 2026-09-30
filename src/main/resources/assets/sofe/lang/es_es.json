@@ -79,5 +79,13 @@
   "block.sofe.deepslate_aetherium_ore": "Mena de Aeterio de pizarra profunda",
   "item.sofe.aetherium_shard": "Fragmento de Aeterio",
   "block.sofe.aetherium_block": "Bloque de Aeterio",
-  "item.sofe.black_aetherium_shard": "Fragmento de Aeterio Negro"
+  "item.sofe.black_aetherium_shard": "Fragmento de Aeterio Negro",
+  "generator.sofe.aetheris": "SoFE: Aventura",
+  "biome.sofe.sulthari_desert": "Desierto de Sulthari",
+  "biome.sofe.nordrath_tundra": "Tundra de Nordrath",
+  "biome.sofe.parsivan_gardens": "Jardines de Parsivan",
+  "biome.sofe.khemet_valley": "Valle de Khemet",
+  "biome.sofe.aureum_hills": "Colinas de Aureum",
+  "biome.sofe.aetheris_ocean": "Océano de Aetheris",
+  "gui.sofe.region_title.welcome": "Bienvenido a"
 }
