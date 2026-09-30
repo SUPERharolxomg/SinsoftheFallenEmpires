@@ -1,0 +1,80 @@
+{
+  "dimensions": {
+    "minecraft:overworld": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "sofe:aetheris",
+          "biomes": {
+            "aureum": "sofe:aureum_hills",
+            "khemet": "sofe:khemet_valley",
+            "nordrath": "sofe:nordrath_tundra",
+            "ocean": "sofe:aetheris_ocean",
+            "parsivan": "sofe:parsivan_gardens",
+            "sulthari": "sofe:sulthari_desert"
+          },
+          "regions": [
+            {
+              "max_x": 1500,
+              "max_z": 1500,
+              "min_x": -1500,
+              "min_z": -1500,
+              "region": "sulthari"
+            },
+            {
+              "max_x": 2500,
+              "max_z": -1500,
+              "min_x": -2500,
+              "min_z": -5800,
+              "region": "nordrath"
+            },
+            {
+              "max_x": 5800,
+              "max_z": 1500,
+              "min_x": 1500,
+              "min_z": -1500,
+              "region": "parsivan"
+            },
+            {
+              "max_x": 5800,
+              "max_z": 5800,
+              "min_x": 800,
+              "min_z": 1500,
+              "region": "khemet"
+            },
+            {
+              "max_x": -1500,
+              "max_z": 3500,
+              "min_x": -5800,
+              "min_z": -1500,
+              "region": "aureum"
+            }
+          ]
+        },
+        "settings": "sofe:aetheris"
+      }
+    },
+    "minecraft:the_end": {
+      "type": "minecraft:the_end",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:the_end"
+        },
+        "settings": "minecraft:end"
+      }
+    },
+    "minecraft:the_nether": {
+      "type": "minecraft:the_nether",
+      "generator": {
+        "type": "minecraft:noise",
+        "biome_source": {
+          "type": "minecraft:multi_noise",
+          "preset": "minecraft:nether"
+        },
+        "settings": "minecraft:nether"
+      }
+    }
+  }
+}
