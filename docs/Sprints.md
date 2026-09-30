@@ -29,21 +29,21 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [x] JUnit 5 for unit tests of pure game logic
 - [x] `LICENSE`, `CONTRIBUTING.md`, `.gitignore`, `.gitattributes`
 - [x] Issue templates (bug, feature) and pull request template
-- [ ] GitHub Actions: build and tests on every push and pull request (workflow written; confirm the first run on GitHub)
+- [x] GitHub Actions: build and tests on every push and pull request (first runs passed on PR #1 and PR #2)
 
 ## Sprint 1 — Foundation (Weeks 1-2)
-- [ ] `PlayerClass` enum (Knight, Necromancer, Sorceress, Thief, King) with `ResourceType` and temptation `Sin`
-- [ ] `ClassSelectScreen` to choose one of the five Bearers
-- [ ] `lang/en_us.json` and `lang/es_es.json` set up; no player-facing text in code
-- [ ] Set up entity registry
-- [ ] Create basic config system (client, common, server) with the in-game config screen
+- [x] `PlayerClass` enum (Knight, Necromancer, Sorceress, Thief, King) with `ResourceType` and temptation `Sin`
+- [ ] `ClassSelectScreen` to choose one of the five Bearers, with the chosen class saved per player and synced to the client
+- [x] `lang/en_us.json` and `lang/es_es.json` set up; no player-facing text in code
+- [x] Set up entity registry
+- [x] Create basic config system (client and server; common is added with its first option) with the in-game config screen
 - [ ] *(Annex)* `SoFETitleScreen` skeleton replacing the vanilla title screen, with `replaceTitleScreen` config
 - [ ] *(Annex)* Main menu buttons: Begin the Journey, Continue, Join an Expedition, Options, Mods, Quit
 - [ ] *(Annex)* `sofe:aetheris` world preset as the default for new worlds; vanilla strongholds disabled
-- [ ] *(World)* `Region` enum, `RegionMap` and region bounds in `data/sofe/regions/`
-- [ ] *(World)* `Condition` system (`act_reached`, `boss_defeated`, `quest_step`, `all_of`, `any_of`, `not`)
+- [x] *(World)* `Region` enum and `RegionMap` with the default layout
+- [x] *(World)* `Condition` system (`act_reached`, `boss_defeated`, `quest_step`, `all_of`, `any_of`, `not`)
 - [ ] *(Annex)* Placeholder logo, panorama and lore splash texts
-- [ ] *(Annex)* `MaterialRegistry` with the naming convention `sofe:<material>_<form>` (en_us + es_es)
+- [x] *(Annex)* `MaterialRegistry` with the naming convention `sofe:<material>_<form>` (en_us + es_es)
 
 ## Sprint 2 — Skill System (Weeks 3-4)
 - [ ] Implement Skill interface and abstract class
@@ -65,15 +65,19 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 ## Sprint 4 — Act I: The Night of the Eclipse (Weeks 7-8)
 - [ ] *(World)* `AetherisBiomeSource` with the fixed layout; Sulthari and Ashen Wastes biomes
 - [ ] Build Sulthari: Great Observatory, lower district, Low Bazaar, palace, Training Grounds, forge
+- [ ] *(World)* Build pipeline for the empires: Structure Block pieces, jigsaw pools, `structure_positions.json` ([Mundo.md](Mundo.md#w6-the-empires-built-from-scratch))
+- [ ] *(World)* Sulthari building blocks: sandstone bricks, brass plating and trims, glazed tiles, aetherium lamps
 - [ ] Eclipse Festival and Void invasion tutorial (first 3 skills)
 - [ ] Bearer-specific intro scenes (the shard piercing each hero)
+- [ ] Bearer outfits: a cosmetic armor layer per class over the player's own skin, with a setting to hide it ([Clases.md](Clases.md#how-the-player-looks))
 - [ ] The other four Bearers as NPCs (`BearerNpcEntity`) and the Council of Sulthari with Grand Vizier Ozhan
 - [ ] Act I boss: the Brass Sentinel
 - [ ] Add Sulthari-themed textures and models (brass, clockwork, aetherium)
 - [ ] *(World)* Seal Veil on every region border (per-player collision and tint)
 - [ ] *(World)* `RegionEnforcer` (flight, pearls, coast) and `opsBypass`
 - [ ] *(World)* Protected zones for Sulthari city and the Bearer's Homestead plot
-- [ ] *(World)* Region title and Quest Compass on the HUD
+- [x] *(World)* Region title ("Welcome to ..." when entering a region; done in Sprint 1)
+- [ ] *(World)* Quest Compass on the HUD; lock status in the region title ("— Sealed" / "— Liberated")
 - [ ] *(Rules)* Quest system (`data/sofe/quests/`) and Journal
 - [ ] *(Rules)* Warcraft III style dialogue box (portrait, name, letter-by-letter text, answers), cinematic letterbox mode, `data/sofe/dialogue/`; text only, no voices
 - [ ] *(Rules)* Region fates in `StoryProgress` and the `fate_is` condition; first Sulthari fate side quest
@@ -81,7 +85,7 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [ ] *(Rules)* Waystones in Sulthari and the Return Scroll
 - [ ] *(Rules)* Personal Vault at the Sulthari bank
 - [ ] *(Rules)* Peaceful replaced by Easy; difficulty scaling for bosses
-- [ ] *(Rules)* Save the region layout into the world at creation
+- [x] *(Rules)* Save the region layout into the world at creation (done in Sprint 1: it is part of the world preset)
 - [ ] *(Annex)* `MerchantNpcEntity` base class and `MerchantRole` enum (not vanilla villagers)
 - [ ] *(Annex)* Place Ferid, Dilara, Yusuf and Selim in Sulthari with placeholder models
 - [ ] *(Annex)* Disable vanilla villager spawning in the `sofe:aetheris` world
@@ -94,6 +98,7 @@ Total: **24 weeks** plus a setup week (Sprint 0). Sprint 5.5 comes from [Pocione
 - [ ] Build Burning Citadel structure
 - [ ] `BrokenOathEntity` base and Broken Oaths Kaleth (Law I) and Serath (Law II)
 - [ ] Nordrath region biomes and fixed structure positions; Nordrath Forge and Arena dungeons
+- [ ] *(World)* Nordrath building blocks (runestone, dark timber) with corrupted variants
 - [ ] *(World)* Sealed Gates for dungeons and arena; protection for dungeons and arenas
 - [ ] Implement boss health bar GUI
 - [ ] Add loot tables for boss drops
@@ -143,6 +148,7 @@ Skill tables in [Clases.md](Clases.md).
 
 ## Sprint 7 — Empires & Bosses (Weeks 15-18)
 - [ ] Parsivan, Khemet and Aureum regions: biomes, fixed structures, Veil unlocks per act, Star Lapis / Solar Gold / Orichalcum / Void Rifts worldgen and tiers
+- [ ] *(World)* Parsivan, Khemet and Aureum building blocks with corrupted variants; corrupted-to-intact swap when a region is liberated
 - [ ] Parsivan: Luxara (Laleh's voice in the Enchanted Gardens)
 - [ ] Khemet: Morthis (Catacombs gated until Luxara falls); the sultan's diary twist
 - [ ] Aureum: Avarok, Gularth, Envyris (fight against a copy of the player's character)
