@@ -143,7 +143,7 @@ Every lock points to a condition in `data/sofe/conditions/`, so progression can 
 }
 ```
 
-Types: `act_reached`, `boss_defeated`, `quest_step`, `item_owned`, `all_of`, `any_of`, `not`.
+Types: `act_reached`, `boss_defeated`, `quest_step`, `item_owned`, `fate_is` (a region's fate, see [Jugabilidad.md](Jugabilidad.md#fates-and-epilogues-fallout-style)), `all_of`, `any_of`, `not`.
 
 **Example of why two layers are needed:** the Nordrath region opens in Act II, but the **Nordrath Caverns** (Fenrath and Gularth) are only for Act IV. The region is open, the dungeon gate is not.
 

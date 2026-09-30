@@ -153,6 +153,8 @@ Prython has raised the Celestial Spire above the city, and Grand Vizier Ozhan tu
 
 When Nahrazel dies, the Codex closes with the Bearer inside its pages for a moment. There the player sees the temptation of their sin one last time and rejects it. They wake up in the ruins of the Inverted Throne, and the black aetherium of Aetheris begins to turn clear.
 
+The ending then shows what became of each empire, one scene per region, shaped by the choices the player made in the side quests (the **fates** of the regions, see [docs/Jugabilidad.md](docs/Jugabilidad.md#fates-and-epilogues-fallout-style)). It closes with the Bearer's own epilogue:
+
 | Hero | Epilogue |
 |------|----------|
 | **Cassian** (Knight) | Refounds the Order of the Scale in Aureum, but now accepts anyone, whatever their empire. |
@@ -160,6 +162,8 @@ When Nahrazel dies, the Codex closes with the Bearer inside its pages for a mome
 | **Shirin** (Sorceress) | Frees Laleh, who dies in peace. She writes a new map of the sky in the stars with her sister's name. |
 | **Rurik** (Thief) | Returns the gold of the Vaults to the Nordrath clans and rebuilds his village. He keeps a single coin. |
 | **Azhar** (King) | Refuses to be emperor of Aetheris and calls a new Pact between equals. He keeps the sealed Codex beneath the throne. |
+
+These are the full epilogues; a Bearer who did not finish their personal quests gets a different, sadder version.
 
 **Sequel hook:** the seal has eight locks, not seven. No one knows which sin is missing.
 

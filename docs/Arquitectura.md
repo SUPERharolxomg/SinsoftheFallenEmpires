@@ -74,7 +74,9 @@ sins-of-fallen-empires/
 │   ├── quest/
 │   │   ├── Quest.java                      # Steps, conditions, rewards (data/sofe/quests/*.json)
 │   │   ├── QuestManager.java
-│   │   └── dialogue/DialogueTree.java      # Lang keys, answers, effects
+│   │   ├── dialogue/DialogueTree.java      # data/sofe/dialogue/*.json: lines, answers, effects
+│   │   ├── dialogue/DialogueOverlay.java   # Warcraft III style box: portrait, name, typewriter text, letterbox
+│   │   └── Fate.java                       # Region fates set by side quests, read by the ending
 │   ├── travel/
 │   │   ├── WaystoneBlock.java
 │   │   └── WaystoneData.java               # Activated Waystones per player
