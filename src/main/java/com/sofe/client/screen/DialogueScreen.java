@@ -30,7 +30,9 @@ import java.util.List;
  * player can keep walking (walking away ends it on the server).
  */
 public class DialogueScreen extends Screen {
-    private static final int GOLD = 0xE8B64A, TEXT = 0xF2E8D5, MUTED = 0xA89F8E;
+    private static final int GOLD = 0xF2C25A, TEXT = 0xF6E7C1, OUTLINE = 0x2A1A0C, MUTED = 0xA89F8E;
+    /** The widest the bar is drawn, in GUI pixels (about 1:1 with the 4x bar textures at GUI scale 2). */
+    private static final float MAX_BAR_WIDTH = 880f;
     private static final int LINES_PER_PAGE = 3;
     private static final float LETTERS_PER_TICK = 1.6f;
     private static final int MAX_ANSWERS = 4;
@@ -89,7 +91,7 @@ public class DialogueScreen extends Screen {
     // --- layout ---
 
     private float barScale() {
-        return DialogueArt.bar(line.style()).map(bar -> Math.min((this.width - 16) / (float) bar.width(), 2.0f)).orElse(1f);
+        return DialogueArt.bar(line.style()).map(bar -> Math.min(this.width - 16, MAX_BAR_WIDTH) / bar.width()).orElse(1f);
     }
 
     private int boxWidth() {
@@ -119,11 +121,37 @@ public class DialogueScreen extends Screen {
         }).orElse(new int[]{l + 8, t + 8, 48});
     }
 
-    private void layout() {
+    /**
+     * The framed portrait: larger than the bar's window and centered on it, rising above the bar,
+     * so the speaker is clearly seen. Returns x, y, size of the picture (the frame goes around it).
+     */
+    private int[] portraitCard() {
         int[] window = portraitWindow();
-        textX = window[0] + window[2] + 10;
-        textW = boxLeft() + boxWidth() - textX - 12;
-        textY = boxTop() + Math.max(6, (boxHeight() - LINES_PER_PAGE * 10) / 2);
+        int h = boxHeight();
+        int size = Math.max(40, Math.round(h * 1.25f));
+        int centerX = window[0] + window[2] / 2;
+        int left = Math.max(boxLeft() + size / 8 + 2, centerX - size / 2);
+        int bottom = boxTop() + h - Math.round(h * 0.12f);
+        return new int[]{left, bottom - size, size};
+    }
+
+    private void layout() {
+        int[] card = portraitCard();
+        textX = card[0] + card[2] + card[2] / 8 + 10;
+        textW = boxLeft() + boxWidth() - textX - Math.round(boxWidth() * 0.05f);
+        int lines = Math.max(1, Math.min(LINES_PER_PAGE, wrapped.size() - page * LINES_PER_PAGE));
+        // centered on the lower band of the bar (36%-88% of its height), clear of the plate and ornaments on top
+        int bandTop = Math.round(boxHeight() * 0.36f), bandBottom = Math.round(boxHeight() * 0.88f);
+        textY = boxTop() + bandTop + (bandBottom - bandTop - lines * 10) / 2 + 1;
+    }
+
+    /** Text with a dark outline, like engraved on the brass. */
+    private void engraved(GuiGraphics g, FormattedCharSequence text, int x, int y, int color) {
+        g.drawString(this.font, text, x - 1, y, OUTLINE, false);
+        g.drawString(this.font, text, x + 1, y, OUTLINE, false);
+        g.drawString(this.font, text, x, y - 1, OUTLINE, false);
+        g.drawString(this.font, text, x, y + 1, OUTLINE, false);
+        g.drawString(this.font, text, x, y, color, false);
     }
 
     // --- input ---
@@ -249,24 +277,25 @@ public class DialogueScreen extends Screen {
         }
         layout();
         int l = boxLeft(), t = boxTop(), w = boxWidth(), h = boxHeight();
-        int[] window = portraitWindow();
+        int[] card = portraitCard();
 
-        DialogueArt.bar(line.style()).ifPresentOrElse(bar -> {
-            drawPortrait(g, window);
-            g.blit(bar.texture(), l, t, w, h, 0f, 0f, bar.width(), bar.height(), bar.width(), bar.height());
-            g.fill(textX - 4, t + 5, l + w - 8, t + h - 5, 0x66000000); // keeps the text readable on light bars
-        }, () -> {
-            DialogueArt.nineSlice(g, DialogueArt.box(line.style()), l, t, w, h, 8, 64);
-            drawPortrait(g, window);
-            g.blit(DialogueArt.portraitFrame(line.style()), window[0] - 6, window[1] - 6, window[2] + 12, window[2] + 12, 0f, 0f, 80, 80, 80, 80);
-        });
+        DialogueArt.bar(line.style()).ifPresentOrElse(
+                bar -> g.blit(bar.texture(), l, t, w, h, 0f, 0f, bar.width(), bar.height(), bar.width(), bar.height()),
+                () -> DialogueArt.nineSlice(g, DialogueArt.box(line.style()), l, t, w, h, 8, 64));
+        // the portrait sits over the bar's window, in the empire's frame (8 px border around a 64 px picture)
+        drawPortrait(g, card);
+        int border = card[2] / 8;
+        g.pose().pushPose();
+        g.pose().translate(0, 0, 50);
+        g.blit(DialogueArt.portraitFrame(line.style()), card[0] - border, card[1] - border, card[2] + border * 2, card[2] + border * 2,
+                0f, 0f, 80, 80, 80, 80);
+        g.pose().popPose();
 
         Component name = speakerName();
         if (name != null) {
-            int nameW = this.font.width(name) + 10;
-            g.fill(textX - 5, t - 12, textX - 5 + nameW, t, 0xDD120E0A);
-            g.fill(textX - 5, t - 1, textX - 5 + nameW, t, 0xFF000000 | GOLD);
-            g.drawString(this.font, name, textX, t - 10, GOLD, true);
+            int nameY = t - 11;
+            engraved(g, name.getVisualOrderText(), textX, nameY, GOLD);
+            g.fill(textX, nameY + 9, textX + this.font.width(name), nameY + 10, 0xFF000000 | 0xB5863A);
         }
 
         int remaining = (int) letters;
@@ -274,12 +303,12 @@ public class DialogueScreen extends Screen {
         for (FormattedCharSequence s : pageLines()) {
             int len = length(s);
             if (remaining <= 0) break;
-            g.drawString(this.font, remaining >= len ? s : cut(s, remaining), textX, y, TEXT, true);
+            engraved(g, remaining >= len ? s : cut(s, remaining), textX, y, TEXT);
             remaining -= len;
             y += 10;
         }
         if (fullyShown() && (line.answers().isEmpty() || !lastPage()) && (System.currentTimeMillis() / 400) % 2 == 0) {
-            g.drawString(this.font, "▼", l + w - 16, t + h - 14, GOLD, true);
+            engraved(g, Component.literal("\u25BC").getVisualOrderText(), l + w - Math.round(w * 0.04f), t + h - 16, GOLD);
         }
         if (fullyShown() && lastPage() && !line.answers().isEmpty()) {
             int count = Math.min(MAX_ANSWERS, line.answers().size());
@@ -299,23 +328,39 @@ public class DialogueScreen extends Screen {
         };
     }
 
-    /** NPCs use their still portrait; the player is drawn live from their skin and outfit. */
+    /**
+     * NPCs use their still portrait; the player is drawn live from their skin and outfit; the narrator
+     * shows the eclipse emblem.
+     */
     private void drawPortrait(GuiGraphics g, int[] window) {
         int x = window[0], y = window[1], size = window[2];
-        g.fill(x, y, x + size, y + size, 0xFF1A1410);
+        g.fill(x, y, x + size, y + size, 0xFF2A1E14);
+        if ("narrator".equals(line.speaker())) {
+            ResourceLocation emblem = SoFEMod.id("textures/gui/portrait/narrator.png");
+            if (DialogueArt.exists(emblem)) blitWhole(g, emblem, x, y, size);
+            return;
+        }
         if ("player".equals(line.speaker())) {
             Minecraft mc = Minecraft.getInstance();
             if (mc.player == null) return;
-            int scale = Math.round(size / 0.55f);
+            // a bust: the head and most of the torso fit in the frame (the model is 1.8 blocks tall)
+            int scale = Math.round(size / 1.3f);
+            int feet = y + Math.round(size * 0.08f) + Math.round(scale * 1.8f);
             g.enableScissor(x, y, x + size, y + size);
-            InventoryScreen.renderEntityInInventoryFollowsMouse(g, x + size / 2, y + Math.round(scale * 1.95f), scale, -18f, -6f, mc.player);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(g, x + size / 2, feet, scale, -18f, -6f, mc.player);
             g.disableScissor();
         } else if (!"narrator".equals(line.speaker())) {
             ResourceLocation portrait = SoFEMod.id("textures/gui/portrait/" + line.speaker() + ".png");
             if (DialogueArt.exists(portrait)) {
-                g.blit(portrait, x, y, size, size, 0f, 0f, 64, 64, 64, 64);
+                blitWhole(g, portrait, x, y, size);
             }
         }
+    }
+
+    /** A whole texture drawn into a size by size square, whatever its resolution. */
+    private static void blitWhole(GuiGraphics g, ResourceLocation texture, int x, int y, int size) {
+        int[] tex = DialogueArt.size(texture);
+        g.blit(texture, x, y, size, size, 0f, 0f, tex[0], tex[1], tex[0], tex[1]);
     }
 
     private static int length(FormattedCharSequence s) {
