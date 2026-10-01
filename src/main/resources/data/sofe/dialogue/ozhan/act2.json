@@ -1,0 +1,27 @@
+{
+  "style": "sulthari",
+  "npc": "ozhan",
+  "priority": 5,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "act_reached",
+        "act": 2
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "boss_defeated",
+          "boss": "sofe:vorath"
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.ozhan.act2.1"
+    }
+  ]
+}

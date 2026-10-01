@@ -10,5 +10,11 @@
       "speaker": "ozhan",
       "text": "dialogue.sofe.act1.epilogue.2"
     }
+  ],
+  "on_end": [
+    {
+      "type": "start_quest",
+      "quest": "sofe:act2_north"
+    }
   ]
 }

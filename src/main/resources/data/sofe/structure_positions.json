@@ -66,6 +66,55 @@
       "z": -40,
       "size_x": 24,
       "size_z": 24
+    },
+    "sofe:nordrath/forge": {
+      "x": -1200,
+      "z": -3000,
+      "size_x": 48,
+      "size_z": 64,
+      "zone": "dungeon"
+    },
+    "sofe:nordrath/forge_boss_room": {
+      "x": -1200,
+      "z": -3022,
+      "size_x": 44,
+      "size_z": 20,
+      "zone": "arena"
+    },
+    "sofe:nordrath/arena": {
+      "x": 1200,
+      "z": -3000,
+      "size_x": 64,
+      "size_z": 64,
+      "zone": "dungeon"
+    },
+    "sofe:nordrath/arena_floor": {
+      "x": 1200,
+      "z": -3000,
+      "size_x": 50,
+      "size_z": 50,
+      "zone": "arena"
+    },
+    "sofe:nordrath/burning_citadel": {
+      "x": 0,
+      "z": -4500,
+      "size_x": 96,
+      "size_z": 96,
+      "zone": "dungeon"
+    },
+    "sofe:nordrath/citadel_arena": {
+      "x": 0,
+      "z": -4500,
+      "size_x": 48,
+      "size_z": 48,
+      "zone": "arena"
+    },
+    "sofe:nordrath/caverns_entrance": {
+      "x": -600,
+      "z": -2400,
+      "size_x": 16,
+      "size_z": 16,
+      "zone": "dungeon"
     }
   },
   "waystones": {
@@ -80,6 +129,18 @@
     "sofe:sulthari/low_bazaar": {
       "x": -70,
       "z": 24
+    },
+    "sofe:nordrath/forge": {
+      "x": -1200,
+      "z": -2960
+    },
+    "sofe:nordrath/arena": {
+      "x": 1200,
+      "z": -2962
+    },
+    "sofe:nordrath/burning_citadel": {
+      "x": 6,
+      "z": -4444
     }
   },
   "npcs": [
@@ -164,5 +225,31 @@
       "z": -34,
       "yaw": 0
     }
-  ]
+  ],
+  "gates": {
+    "sofe:nordrath/forge": {
+      "x": -1200,
+      "z": -2969,
+      "condition": "sofe:nordrath_forge",
+      "hint": "message.sofe.gate.nordrath_forge"
+    },
+    "sofe:nordrath/arena": {
+      "x": 1200,
+      "z": -2970,
+      "condition": "sofe:nordrath_arena",
+      "hint": "message.sofe.gate.nordrath_arena"
+    },
+    "sofe:nordrath/burning_citadel": {
+      "x": 0,
+      "z": -4453,
+      "condition": "sofe:burning_citadel",
+      "hint": "message.sofe.gate.burning_citadel"
+    },
+    "sofe:nordrath/caverns": {
+      "x": -600,
+      "z": -2400,
+      "condition": "sofe:nordrath_caverns",
+      "hint": "message.sofe.gate.nordrath_caverns"
+    }
+  }
 }
