@@ -210,6 +210,113 @@ MERCHANTS = {
 }
 
 
+NORDRATH_CITIZENS = {
+    "nordrath_shieldmaiden": (("Shieldmaiden Ylva", "Ylva, la doncella escudera"), {
+        2: [("I died on the ice yesterday. And the day before. Every dawn Vorath's fire wakes us and the war starts again.",
+             "Ayer morí en el hielo. Y anteayer. Cada amanecer el fuego de Vorath nos despierta y la guerra empieza otra vez."),
+            ("You do not wake with us, Bearer. That means you can end it.", "Tú no despiertas con nosotros, Portador. Eso significa que puedes terminarlo.")],
+        3: [("This morning I woke and nobody called me to the shieldwall. I did not know what to do with my hands.",
+             "Esta mañana desperté y nadie me llamó al muro de escudos. No supe qué hacer con las manos.")],
+    }),
+    "nordrath_fisher": (("Fisher Bjarke", "Bjarke el pescador"), {
+        2: [("The fjord does not freeze anymore. The mountain keeps it warm, and the fish taste of ash.",
+             "El fiordo ya no se congela. La montaña lo mantiene tibio, y los peces saben a ceniza.")],
+        3: [("The water is cold again! Cold and clean. I never thought I would be glad to lose a finger to the ice.",
+             "¡El agua vuelve a estar fría! Fría y limpia. Nunca pensé que me alegraría perder un dedo por el hielo.")],
+    }),
+    "nordrath_widow": (("Widow Asta", "Asta la viuda"), {
+        2: [("My husband falls every evening and stands up every morning. I have buried him a hundred times. Do not ask me to cry again.",
+             "Mi esposo cae cada tarde y se levanta cada mañana. Lo he enterrado cien veces. No me pidas que llore otra vez.")],
+        3: [("He did not wake today. I sat by him until noon. Then I laughed, Bearer, because he looked rested.",
+             "Hoy no despertó. Me senté junto a él hasta el mediodía. Luego me reí, Portador, porque se veía descansado.")],
+    }),
+    "nordrath_apprentice": (("Apprentice Eirik", "Eirik el aprendiz"), {
+        2: [("The forges here drink lava straight from the mountain. Master says Kaleth taught the first smiths before he broke his oath.",
+             "Aquí las forjas beben lava directo de la montaña. El maestro dice que Kaleth enseñó a los primeros herreros antes de romper su juramento.")],
+        3: [("The lava runs slower since Vorath fell. Master says the mountain is sleeping. I say it is listening.",
+             "La lava corre más lenta desde que cayó Vorath. El maestro dice que la montaña duerme. Yo digo que escucha.")],
+    }),
+    "nordrath_hunter": (("Hunter Sigrun", "Sigrun la cazadora"), {
+        2: [("Wolves stay away from the hold. Even beasts know the dead here do not stay dead.",
+             "Los lobos no se acercan a la fortaleza. Hasta las bestias saben que aquí los muertos no se quedan muertos.")],
+        3: [("The wolves came back to the forest last night. I have never been so happy to hear them howl.",
+             "Anoche los lobos volvieron al bosque. Nunca había estado tan feliz de oírlos aullar.")],
+    }),
+    "nordrath_elder": (("Elder Gunnhild", "Gunnhild la anciana"), {
+        2: [("The Pact gave us the Law of the winter bread, and Kaleth the Law of mercy. Now Kaleth burns those who kneel.",
+             "El Pacto nos dio la Ley del pan del invierno, y Kaleth la Ley de la piedad. Ahora Kaleth quema a quienes se arrodillan.")],
+        3: [("Something sleeps under the Caverns, Bearer. It is hungry. When the time comes, do not go down there with an empty stomach.",
+             "Algo duerme bajo las Cavernas, Portador. Tiene hambre. Cuando llegue el momento, no bajes allí con el estómago vacío.")],
+    }),
+    "nordrath_child": (("Little Tove", "La pequeña Tove"), {
+        2: [("Papa says when I grow up I will fight forever too. I do not want to fight forever.",
+             "Papá dice que cuando crezca yo también lucharé para siempre. No quiero luchar para siempre.")],
+        3: [("Now I can grow up and be a fisher instead! Or a dragon. A small one.",
+             "¡Ahora puedo crecer y ser pescadora! O un dragón. Uno pequeño.")],
+    }),
+    "nordrath_brewer": (("Brewer Halvard", "Halvard el cervecero"), {
+        2: [("Mead does not help the dead, but it helps the living watch them march out again.",
+             "El hidromiel no ayuda a los muertos, pero ayuda a los vivos a verlos marchar otra vez.")],
+        3: [("A feast! The first in a hundred years without a war the next morning. Drink, Bearer, you paid for it.",
+             "¡Un festín! El primero en cien años sin guerra a la mañana siguiente. Bebe, Portador, tú lo pagaste.")],
+    }),
+    "nordrath_raider": (("Old Raider Ketil", "Ketil, el viejo saqueador"), {
+        2: [("I sailed to Aureum once, when there were still ships worth robbing. Now the only plunder left is our own graves.",
+             "Una vez navegué hasta Aureum, cuando aún había barcos que valía la pena saquear. Ahora el único botín que queda son nuestras tumbas.")],
+        3: [("Serath honoured no blood but her own. Thank you for showing her the old law, Bearer.",
+             "Serath no honró más sangre que la suya. Gracias por recordarle la vieja ley, Portador.")],
+    }),
+}
+
+NORDRATH_SKALD = ("nordrath_skald", ("Skald Hrolf", "Hrolf el escaldo"), {
+    "ask": ("Sit by the fire, stranger. A skald pays for his mead with sagas. Which one will you hear?",
+            "Siéntate junto al fuego, forastero. Un escaldo paga su hidromiel con sagas. ¿Cuál quieres oír?"),
+    "topics": [
+        (("The clans of Nordrath", "Los clanes de Nordrath"),
+         ("Nine clans signed the Pact for Nordrath: the axe and the oar, the forge and the fjord. We kept the Laws of mercy and of the winter bread longer than any.",
+          "Nueve clanes firmaron el Pacto por Nordrath: el hacha y el remo, la forja y el fiordo. Guardamos las Leyes de la piedad y del pan del invierno más tiempo que nadie.")),
+        (("The endless war", "La guerra sin fin"),
+         ("When Wrath came out of the crack, it found the bravest warriors of Aetheris. Vorath gave them what they wanted most: a battle that never ends. Every dawn, his fire raises the fallen.",
+          "Cuando la Ira salió de la grieta, encontró a los guerreros más valientes de Aetheris. Vorath les dio lo que más deseaban: una batalla que nunca termina. Cada amanecer, su fuego levanta a los caídos.")),
+        (("Kaleth and Serath", "Kaleth y Serath"),
+         ("Kaleth guarded the Law of mercy and now finishes the fallen in his Forge. Serath guarded the blood of our fathers and now drinks it in her Arena. Both serve Vorath in the Burning Citadel.",
+          "Kaleth custodiaba la Ley de la piedad y ahora remata a los caídos en su Forja. Serath custodiaba la sangre de nuestros padres y ahora la bebe en su Arena. Ambos sirven a Vorath en la Ciudadela Ardiente.")),
+        (("The fire under the mountain", "El fuego bajo la montaña"),
+         ("Our forges burn with a fire that comes from below. The old ones say there is a deep beneath the deep, and that it opens only when Wrath is silenced.",
+          "Nuestras forjas arden con un fuego que viene de abajo. Los viejos dicen que hay un abismo bajo el abismo, y que solo se abre cuando la Ira calla.")),
+    ],
+    "more": ("Another saga", "Otra saga"),
+    "bye": ("Farewell, skald", "Adiós, escaldo"),
+})
+
+NORDRATH_MERCHANTS = {
+    "nordrath_furrier": (("Furrier Ragna", "Ragna la peletera"), "quartermaster", [
+        ("Furs, smoked fish and mead. Nothing keeps a Bearer alive in the north like a good cloak.",
+         "Pieles, pescado ahumado e hidromiel. Nada mantiene vivo a un Portador en el norte como una buena capa."),
+    ], [("Business is good since the dead stopped buying. They never paid anyway.",
+         "El negocio va bien desde que los muertos dejaron de comprar. De todas formas nunca pagaban.")], {
+        "offers": [("minecraft:leather", 4, 3, 16), ("minecraft:white_wool", 4, 2, 16), ("minecraft:cooked_cod", 4, 3, 16),
+                   ("minecraft:cooked_salmon", 4, 4, 16), ("minecraft:bread", 4, 3, 16), ("minecraft:honey_bottle", 1, 4, 8),
+                   ("minecraft:leather_boots", 1, 8, 2), ("minecraft:leather_chestplate", 1, 12, 2)],
+        "buys": [("minecraft:rabbit_hide", 1), ("minecraft:leather", 2), ("minecraft:cod", 1)]}),
+    "nordrath_runesmith": (("Runesmith Torvald", "Torvald el herrero de runas"), "smith", [
+        ("Glacial iron, forged in volcano fire and quenched in the fjord. Nothing else holds an edge in this cold.",
+         "Hierro glacial, forjado en fuego de volcán y templado en el fiordo. Nada más conserva el filo con este frío."),
+    ], [("Vorath's fall cooled the mountain a little. My forge will miss him. I will not.",
+         "La caída de Vorath enfrió un poco la montaña. Mi forja lo extrañará. Yo no.")], {
+        "offers": [("sofe:glacial_iron_ingot", 2, 8, 12), ("sofe:glacial_iron_sword", 1, 40, 2), ("sofe:glacial_iron_pickaxe", 1, 36, 2),
+                   ("minecraft:iron_ingot", 4, 6, 16), ("minecraft:shield", 1, 10, 4), ("minecraft:arrow", 16, 5, 8)],
+        "buys": [("minecraft:iron_ingot", 1), ("sofe:glacial_iron_ingot", 3), ("minecraft:coal", 1)]}),
+}
+
+NORDRATH_PLACES = {
+    "waystone.sofe.nordrath.city": ("Skarnhold", "Skarnhold"),
+    "waystone.sofe.nordrath.forge": ("Nordrath Forge", "Forja de Nordrath"),
+    "waystone.sofe.nordrath.arena": ("Nordrath Arena", "Arena de Nordrath"),
+    "waystone.sofe.nordrath.burning_citadel": ("Burning Citadel", "Ciudadela Ardiente"),
+}
+
+
 def act_requirement(act):
     return {"type": "act_reached", "act": act}
 
@@ -229,9 +336,9 @@ def text(key, pair):
     return key
 
 
-def act_dialogues(npc, acts):
+def act_dialogues(npc, acts, style="sulthari"):
     for act, lines in acts.items():
-        data = {"style": "sulthari", "npc": npc}
+        data = {"style": style, "npc": npc}
         if act > 1:
             data["priority"] = act
             data["requires"] = act_requirement(act)
@@ -243,27 +350,45 @@ for npc, (names, acts) in CITIZENS.items():
     text("npc.sofe." + npc, names)
     act_dialogues(npc, acts)
 
-npc, names, tale = STORYTELLER
-text("npc.sofe." + npc, names)
-topics = tale["topics"]
-more = text("dialogue.sofe.%s.more" % npc, tale["more"])
-bye = text("dialogue.sofe.%s.bye" % npc, tale["bye"])
-lines = [{"speaker": npc, "text": text("dialogue.sofe.%s.ask" % npc, tale["ask"]),
-          "answers": [{"text": text("dialogue.sofe.%s.topic.%d" % (npc, i + 1), title), "next": i + 1} for i, (title, _) in enumerate(topics)]
-          + [{"text": bye, "next": -1}]}]
-for i, (_, story) in enumerate(topics):
-    lines.append({"speaker": npc, "text": text("dialogue.sofe.%s.tale.%d" % (npc, i + 1), story),
-                  "answers": [{"text": more, "next": 0}, {"text": bye, "next": -1}]})
-write(os.path.join(DATA, "dialogue", npc, "tales.json"), {"style": "sulthari", "npc": npc, "lines": lines})
-
-for npc, (names, role, act1, act2, shop) in MERCHANTS.items():
+def storyteller(npc, names, tale, style):
+    """Someone who tells the old tales: the player picks a topic, then another or farewell."""
     text("npc.sofe." + npc, names)
-    act_dialogues(npc, {1: act1, 2: act2})
-    write(os.path.join(DATA, "merchant_offers", npc + ".json"), {
-        "role": role,
-        "offers": [dict({"sell": item, "price": price, "stock": stock}, **({"count": count} if count > 1 else {}))
-                   for item, count, price, stock in shop["offers"]],
-        "buys": [{"item": item, "price": price} for item, price in shop["buys"]]})
+    topics = tale["topics"]
+    more = text("dialogue.sofe.%s.more" % npc, tale["more"])
+    bye = text("dialogue.sofe.%s.bye" % npc, tale["bye"])
+    lines = [{"speaker": npc, "text": text("dialogue.sofe.%s.ask" % npc, tale["ask"]),
+              "answers": [{"text": text("dialogue.sofe.%s.topic.%d" % (npc, i + 1), title), "next": i + 1} for i, (title, _) in enumerate(topics)]
+              + [{"text": bye, "next": -1}]}]
+    for i, (_, story) in enumerate(topics):
+        lines.append({"speaker": npc, "text": text("dialogue.sofe.%s.tale.%d" % (npc, i + 1), story),
+                      "answers": [{"text": more, "next": 0}, {"text": bye, "next": -1}]})
+    write(os.path.join(DATA, "dialogue", npc, "tales.json"), {"style": style, "npc": npc, "lines": lines})
+
+
+def merchants(table, style, first_act=1):
+    for npc, (names, role, now, later, shop) in table.items():
+        text("npc.sofe." + npc, names)
+        act_dialogues(npc, {1: now, first_act + 1: later}, style)
+        write(os.path.join(DATA, "merchant_offers", npc + ".json"), {
+            "role": role,
+            "offers": [dict({"sell": item, "price": price, "stock": stock}, **({"count": count} if count > 1 else {}),
+                            **({"min_act": act} if act > 1 else {}))
+                       for item, count, price, stock, act in [o if len(o) == 5 else o + (1,) for o in shop["offers"]]],
+            "buys": [{"item": item, "price": price} for item, price in shop["buys"]]})
+
+
+storyteller(*STORYTELLER, "sulthari")
+merchants(MERCHANTS, "sulthari")
+
+# --- Nordrath: the hold of the clans (Act II). Their first lines are for Act II, while Vorath's war goes on;
+# the second for when he has fallen and the dead can rest.
+for npc, (names, acts) in NORDRATH_CITIZENS.items():
+    text("npc.sofe." + npc, names)
+    act_dialogues(npc, {1 if act == 2 else act: lines for act, lines in acts.items()}, "nordrath")  # Act II lines are their default
+storyteller(*NORDRATH_SKALD, "nordrath")
+merchants(NORDRATH_MERCHANTS, "nordrath", first_act=2)
+for key, pair in NORDRATH_PLACES.items():
+    text(key, pair)
 
 text("entity.sofe.citizen", ("Citizen", "Ciudadano"))
 

@@ -52,6 +52,7 @@ public final class SoFEEntityRenderers {
         event.registerEntityRenderer(EntityRegistry.BEARER_NPC.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.MERCHANT.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.CITIZEN.get(), NpcRenderer::new);
+        event.registerBlockEntityRenderer(com.sofe.registry.SoFEBlocks.CLAN_BANNER_ENTITY.get(), ClanBannerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BEARER_CORPSE.get(), CorpseRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BRASS_SENTINEL.get(), ctx -> new GeoMobRenderer<BrassSentinelEntity>(ctx,
                 new SentinelModel(), 1.0f));
@@ -113,7 +114,11 @@ public final class SoFEEntityRenderers {
             Map.entry("citizen_guard", "zuri"), Map.entry("citizen_weaver", "makena"), Map.entry("citizen_pilgrim", "efe"),
             Map.entry("citizen_widow", "alex"), Map.entry("citizen_clockmaker", "ari"), Map.entry("citizen_storyteller", "steve"),
             Map.entry("citizen_child", "kai"), Map.entry("bazaar_spicer", "noor"), Map.entry("bazaar_weaver", "sunny"),
-            Map.entry("bazaar_fruiterer", "efe"), Map.entry("bazaar_lampwright", "zuri"));
+            Map.entry("bazaar_fruiterer", "efe"), Map.entry("bazaar_lampwright", "zuri"),
+            Map.entry("nordrath_shieldmaiden", "alex"), Map.entry("nordrath_fisher", "steve"), Map.entry("nordrath_widow", "sunny"),
+            Map.entry("nordrath_apprentice", "kai"), Map.entry("nordrath_hunter", "makena"), Map.entry("nordrath_elder", "noor"),
+            Map.entry("nordrath_child", "efe"), Map.entry("nordrath_brewer", "zuri"), Map.entry("nordrath_raider", "ari"),
+            Map.entry("nordrath_skald", "steve"), Map.entry("nordrath_furrier", "alex"), Map.entry("nordrath_runesmith", "zuri"));
 
     static class NpcRenderer extends HumanoidMobRenderer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
         NpcRenderer(EntityRendererProvider.Context ctx) {

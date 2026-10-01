@@ -135,6 +135,14 @@ public final class SoFEBlocks {
     public static final RegistryObject<net.minecraft.world.level.block.entity.BlockEntityType<com.sofe.entity.boss.RewardCoffer.Entity>> REWARD_COFFER_ENTITY =
             BLOCK_ENTITIES.register("reward_coffer", com.sofe.entity.boss.RewardCoffer::type);
 
+    /** The great banner of the clans: hand-written model and blockstate, so it is not in ENTRIES (no datagen). */
+    public static final RegistryObject<Block> CLAN_BANNER = BlockRegistry.BLOCKS.register("clan_banner",
+            () -> new com.sofe.block.ClanBanner(BlockBehaviour.Properties.copy(Blocks.RED_BANNER).noOcclusion().noLootTable()));
+    public static final RegistryObject<Item> CLAN_BANNER_ITEM = ItemRegistry.ITEMS.register("clan_banner",
+            () -> new BlockItem(CLAN_BANNER.get(), new Item.Properties()));
+    public static final RegistryObject<net.minecraft.world.level.block.entity.BlockEntityType<com.sofe.block.ClanBanner.Entity>> CLAN_BANNER_ENTITY =
+            BLOCK_ENTITIES.register("clan_banner", com.sofe.block.ClanBanner::type);
+
     private static RegistryObject<Block> ore(String id, Supplier<Block> factory, Supplier<? extends net.minecraft.world.item.Item> drop) {
         RegistryObject<Block> block = register(id, Shape.CUBE, null, true, factory);
         Entry plain = ENTRIES.remove(ENTRIES.size() - 1);
@@ -170,6 +178,7 @@ public final class SoFEBlocks {
         for (int i = 0; i < ENTRIES.size(); i++) {
             if (ENTRIES.get(i).inCreativeTab()) items.add(ITEMS.get(i).get());
         }
+        items.add(CLAN_BANNER_ITEM.get());
         return items;
     }
 }

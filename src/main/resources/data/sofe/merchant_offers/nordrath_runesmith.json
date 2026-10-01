@@ -1,0 +1,52 @@
+{
+  "role": "smith",
+  "offers": [
+    {
+      "sell": "sofe:glacial_iron_ingot",
+      "price": 8,
+      "stock": 12,
+      "count": 2
+    },
+    {
+      "sell": "sofe:glacial_iron_sword",
+      "price": 40,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:glacial_iron_pickaxe",
+      "price": 36,
+      "stock": 2
+    },
+    {
+      "sell": "minecraft:iron_ingot",
+      "price": 6,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:shield",
+      "price": 10,
+      "stock": 4
+    },
+    {
+      "sell": "minecraft:arrow",
+      "price": 5,
+      "stock": 8,
+      "count": 16
+    }
+  ],
+  "buys": [
+    {
+      "item": "minecraft:iron_ingot",
+      "price": 1
+    },
+    {
+      "item": "sofe:glacial_iron_ingot",
+      "price": 3
+    },
+    {
+      "item": "minecraft:coal",
+      "price": 1
+    }
+  ]
+}

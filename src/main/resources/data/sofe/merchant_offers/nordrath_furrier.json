@@ -1,0 +1,64 @@
+{
+  "role": "quartermaster",
+  "offers": [
+    {
+      "sell": "minecraft:leather",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:white_wool",
+      "price": 2,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:cooked_cod",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:cooked_salmon",
+      "price": 4,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:bread",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:honey_bottle",
+      "price": 4,
+      "stock": 8
+    },
+    {
+      "sell": "minecraft:leather_boots",
+      "price": 8,
+      "stock": 2
+    },
+    {
+      "sell": "minecraft:leather_chestplate",
+      "price": 12,
+      "stock": 2
+    }
+  ],
+  "buys": [
+    {
+      "item": "minecraft:rabbit_hide",
+      "price": 1
+    },
+    {
+      "item": "minecraft:leather",
+      "price": 2
+    },
+    {
+      "item": "minecraft:cod",
+      "price": 1
+    }
+  ]
+}

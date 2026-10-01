@@ -23,8 +23,27 @@ final class Furniture {
     }
 
     static BlockState of(String id, BlockState fallback) {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(MOD, id));
+        return from(MOD, id, fallback);
+    }
+
+    /** A block of another decoration mod (Supplementaries...), or the fallback when it is missing. */
+    static BlockState from(String mod, String id, BlockState fallback) {
+        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(mod, id));
         return block == null || block == Blocks.AIR ? fallback : block.defaultBlockState();
+    }
+
+    /** A Supplementaries flag of a colour, flying toward direction. */
+    static BlockState flag(String color, Direction flying) {
+        return facing(from("supplementaries", "flag_" + color, Blocks.RED_WOOL.defaultBlockState()), flying);
+    }
+
+    /** A lit Supplementaries sconce on a wall, facing out. */
+    static BlockState sconce(Direction out) {
+        BlockState s = from("supplementaries", "sconce_wall", Blocks.WALL_TORCH.defaultBlockState());
+        for (var property : s.getProperties()) {
+            if (property.getName().equals("lit") && property instanceof net.minecraft.world.level.block.state.properties.BooleanProperty b) s = s.setValue(b, true);
+        }
+        return facing(s, out);
     }
 
     /** Turns a piece to face a direction, whatever its facing property is called. */

@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "sofe:block/clan_banner",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "sofe:block/clan_banner",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "sofe:block/clan_banner",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "sofe:block/clan_banner",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_shieldmaiden",
+  "lines": [
+    {
+      "speaker": "nordrath_shieldmaiden",
+      "text": "dialogue.sofe.nordrath_shieldmaiden.act1.1"
+    },
+    {
+      "speaker": "nordrath_shieldmaiden",
+      "text": "dialogue.sofe.nordrath_shieldmaiden.act1.2"
+    }
+  ]
+}
