@@ -117,6 +117,24 @@ public final class SoFEBlocks {
                     .mapColor(MapColor.COLOR_CYAN).lightLevel(s -> 3), net.minecraft.util.valueproviders.UniformInt.of(2, 5)),
             ItemRegistry.WAILING_SOUL);
 
+    // --- Sprint 5.5: crafting stations, the Reward Coffer and Runestone
+    public static final RegistryObject<Block> RUNESTONE = cube("runestone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_LIGHT_GRAY)));
+    public static final RegistryObject<Block> IMPERIAL_FORGE = register("imperial_forge", Shape.CUBE_SIDES, null, true,
+            () -> new com.sofe.crafting.StationBlock(com.sofe.crafting.StationRecipe.Kind.IMPERIAL_FORGE,
+                    BlockBehaviour.Properties.copy(Blocks.ANVIL).sound(SoundType.ANVIL).lightLevel(s -> 6)));
+    public static final RegistryObject<Block> ALEMBIC = register("alembic", Shape.CUBE_SIDES, null, true,
+            () -> new com.sofe.crafting.StationBlock(com.sofe.crafting.StationRecipe.Kind.ALEMBIC,
+                    BlockBehaviour.Properties.copy(Blocks.BREWING_STAND).strength(2.0f).noOcclusion()));
+    public static final RegistryObject<Block> REWARD_COFFER = register("reward_coffer", Shape.CUBE_SIDES, null, false,
+            () -> new com.sofe.entity.boss.RewardCoffer.Block(BlockBehaviour.Properties.copy(Blocks.CHEST)
+                    .strength(-1.0f, 3_600_000.0f).noLootTable().lightLevel(s -> 8)));
+
+    public static final net.minecraftforge.registries.DeferredRegister<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITIES =
+            net.minecraftforge.registries.DeferredRegister.create(net.minecraftforge.registries.ForgeRegistries.BLOCK_ENTITY_TYPES, com.sofe.SoFEMod.MOD_ID);
+    public static final RegistryObject<net.minecraft.world.level.block.entity.BlockEntityType<com.sofe.entity.boss.RewardCoffer.Entity>> REWARD_COFFER_ENTITY =
+            BLOCK_ENTITIES.register("reward_coffer", com.sofe.entity.boss.RewardCoffer::type);
+
     private static RegistryObject<Block> ore(String id, Supplier<Block> factory, Supplier<? extends net.minecraft.world.item.Item> drop) {
         RegistryObject<Block> block = register(id, Shape.CUBE, null, true, factory);
         Entry plain = ENTRIES.remove(ENTRIES.size() - 1);

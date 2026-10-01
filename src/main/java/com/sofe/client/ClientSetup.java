@@ -40,6 +40,8 @@ public final class ClientSetup {
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::addLayers);
         MinecraftForge.EVENT_BUS.addListener(CombatHudOverlay::onRenderOverlay);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
+        MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
+        MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
         modBus.addListener(SoFEKeys::register);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(SoFEKeys::onClientTick);
@@ -69,5 +71,6 @@ public final class ClientSetup {
         ClientStoryData.clear();
         ClientLockData.clear();
         ClientBearers.clear();
+        ClientEconomyData.clear();
     }
 }

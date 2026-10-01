@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 public class CharacterSheetScreen extends Screen {
     private static final int PANEL_W = 280, PANEL_H = 190;
-    private static final int GOLD = 0xE8B64A, PARCHMENT = 0xE6DCC8, MUTED = 0xA89F8E;
+    private static final int GOLD = 0xE8B64A, PARCHMENT = 0xE6DCC8, MUTED = 0xA89F8E, GEAR_GREEN = 0x6FD86A;
     private final Map<CharacterAttribute, Button> plus = new EnumMap<>(CharacterAttribute.class);
 
     public CharacterSheetScreen() {
@@ -85,10 +85,15 @@ public class CharacterSheetScreen extends Screen {
             CharacterAttribute[] attributes = CharacterAttribute.values();
             for (int i = 0; i < attributes.length; i++) {
                 CharacterAttribute a = attributes[i];
-                int value = AttributeSheet.base(a, c) + p.added(a);
+                int base = AttributeSheet.base(a, c) + p.added(a);
+                int gear = p.gearPoints(a);
                 boolean primary = AttributeSheet.primary(c) == a;
                 graphics.drawString(this.font, Component.translatable(a.translationKey()), l + 12, rowY(i), primary ? GOLD : PARCHMENT, false);
-                graphics.drawString(this.font, String.valueOf(value), l + 96, rowY(i), 0xFFFFFF, false);
+                // values raised by gear are green, Diablo II style; the tooltip says how much comes from gear
+                graphics.drawString(this.font, String.valueOf(base + gear), l + 96, rowY(i), gear > 0 ? GEAR_GREEN : 0xFFFFFF, false);
+                if (gear > 0 && mouseX >= l + 90 && mouseX < l + 116 && mouseY >= rowY(i) - 2 && mouseY < rowY(i) + 10) {
+                    graphics.renderTooltip(this.font, Component.translatable("gui.sofe.character.gear", gear), mouseX, mouseY);
+                }
             }
 
             SyncProgressPacket.Derived d = p.derived();
@@ -99,7 +104,9 @@ public class CharacterSheetScreen extends Screen {
             y = stat(graphics, x, y, "gui.sofe.character.magic", percent(d.magicDamage() - 1));
             y = stat(graphics, x, y, "gui.sofe.character.crit", percent(d.critChance()));
             y = stat(graphics, x, y, "gui.sofe.character.dodge", percent(d.dodgeChance()));
-            stat(graphics, x, y, "gui.sofe.character.regen", percent(d.regen() - 1));
+            y = stat(graphics, x, y, "gui.sofe.character.regen", percent(d.regen() - 1));
+            long dinars = com.sofe.client.ClientEconomyData.get().map(e -> e.dinars()).orElse(0L);
+            stat(graphics, x, y, "gui.sofe.character.dinars", String.valueOf(dinars));
         }
         super.render(graphics, mouseX, mouseY, partialTick);
     }

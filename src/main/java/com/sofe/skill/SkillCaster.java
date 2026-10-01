@@ -45,7 +45,10 @@ public final class SkillCaster {
         Component name = Component.translatable(info.translationKey());
         Optional<Skill> skill = SkillRegistry.get(info.id());
         Optional<ClassSkillData> classData = SkillDataManager.forClass(info.owner());
-        int rank = Math.max(1, progress.get().skills().rank(info.id()));
+        // ranks from gear raise a learned skill past rank 5, up to 8 (docs/Pociones.md)
+        var gear = com.sofe.gear.PlayerGear.bonuses(player);
+        int rank = Math.max(1, com.sofe.gear.GearBonuses.effectiveRank(progress.get().skills().rank(info.id()),
+                gear.bonusRanks(info.id(), info.owner().id())));
         Optional<SkillStats> stats = classData.flatMap(d -> d.skill(info.id())).map(s -> s.withRank(rank));
         Optional<ResourcePool> resource = combat.get().resource();
         if (skill.isEmpty() || stats.isEmpty() || resource.isEmpty()) {
@@ -65,7 +68,8 @@ public final class SkillCaster {
                     Component.translatable(info.owner().resource().translationKey())));
             return;
         }
-        data.cooldowns().start(info.id(), now, stats.get().cooldownTicks());
+        int cooldown = (int) Math.round(stats.get().cooldownTicks() * (1 - gear.fraction(com.sofe.gear.GearStat.COOLDOWN_REDUCTION)));
+        data.cooldowns().start(info.id(), now, cooldown);
 
         Skill.Result result = skill.get().cast(new Skill.Context(player, info, stats.get(), data, classData.get()));
         result.rune().flatMap(rune -> data.runes().add(rune)).ifPresent(done ->

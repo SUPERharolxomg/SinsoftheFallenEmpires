@@ -36,4 +36,9 @@ public abstract class BrokenOathEntity extends SoFEBossEntity {
         player.sendSystemMessage(Component.translatable("message.sofe.oath_broken", getDisplayName(), Component.translatable(lawKey()))
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
+
+    @Override
+    protected boolean usesRewardCoffer() {
+        return true;
+    }
 }

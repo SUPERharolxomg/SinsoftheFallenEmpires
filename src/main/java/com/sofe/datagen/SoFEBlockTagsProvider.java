@@ -4,6 +4,7 @@ import com.sofe.SoFEMod;
 import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.gear.SoFETiers;
 import com.sofe.registry.SoFEBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -37,10 +38,16 @@ public class SoFEBlockTagsProvider extends BlockTagsProvider {
                 tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
 
                 if (form.isOre()) {
-                    tag(switch (material.miningLevel()) {
-                        case STONE -> BlockTags.NEEDS_STONE_TOOL;
-                        case IRON -> BlockTags.NEEDS_IRON_TOOL;
-                        case DIAMOND -> BlockTags.NEEDS_DIAMOND_TOOL;
+                    // the empire tool chain (docs/Mundo.md, W4): brass mines Glacial Iron and Star Lapis,
+                    // Glacial Iron mines Solar Gold; Orichalcum and Aetherium wait for their own tiers
+                    tag(switch (material) {
+                        case GLACIAL_IRON, STAR_LAPIS -> SoFETiers.NEEDS_BRASS_TOOL;
+                        case SOLAR_GOLD -> SoFETiers.NEEDS_GLACIAL_IRON_TOOL;
+                        default -> switch (material.miningLevel()) {
+                            case STONE -> BlockTags.NEEDS_STONE_TOOL;
+                            case IRON -> BlockTags.NEEDS_IRON_TOOL;
+                            case DIAMOND -> BlockTags.NEEDS_DIAMOND_TOOL;
+                        };
                     }).add(block);
                     tag(form == MaterialForm.ORE ? Tags.Blocks.ORES_IN_GROUND_STONE : Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(block);
                     TagKey<Block> ores = forgeTag(form.forgeTag(material.id()));
