@@ -147,27 +147,27 @@ Split into five parts. The dungeons and the Citadel are blockouts until their ha
 
 ## Sprint 5.5 — Loot and Economy (Weeks 11-12)
 Design: [Pociones.md](Pociones.md).
-- [ ] `Rarity` enum with name colors and loot beams
-- [ ] `Affix`, `AffixRegistry` and the starter affixes in JSON, including the ones that raise the character: attributes, health, resource, damage, critical, dodge, resistances and +skill ranks ([Pociones.md](Pociones.md#affixes-that-raise-the-character-diablo-ii-style))
-- [ ] Gear bonuses added to the character sheet (green values) and to skill ranks from gear (up to rank 8)
-- [ ] Item level and attribute requirements; Diablo II style tooltips
-- [ ] Talismans and the Talisman Pouch (Curios, 6 spaces)
-- [ ] `LootGenerator` with Builder and class bias
-- [ ] Global Loot Modifier for mod enemies
-- [ ] Sulthari Brass and Glacial Iron ores with worldgen by region (heights and frequencies from [Mundo.md](Mundo.md#w4-resource-distribution))
-- [ ] *(World)* Custom tool tiers with `TierSortingRegistry` (Brass, Glacial Iron)
-- [ ] Imperial Forge with custom recipe type and 5 Blueprints
-- [ ] Alembic, Pomegranate Elixir and Bearer's Tonic
-- [ ] Bearer's Flask and potion belt (Curios)
-- [ ] `Wallet` capability and merchant Ferid
-- [ ] Relics of Kaleth, Serath and Vorath
-- [ ] *(Annex)* Merchant offers in JSON (`data/sofe/merchant_offers/`) filtered by act
-- [ ] *(Annex)* Per-player stock with daily restock
-- [ ] *(Annex)* Selling back and buyback of the last 5 items
-- [ ] *(Annex)* Selim the Money Changer (emeralds ↔ Dinars)
-- [ ] *(Annex)* `sofe:owner` component and `BindPolicy` (Flask and Codex Shards soulbound)
-- [ ] *(Annex)* Reward Coffer with personal loot for Vorath and his Broken Oaths
-- [ ] *(Annex)* Secondary materials for Act I–II: Dune Leather, Frostpelt, Runestone, Void Ash
+- [x] `Rarity` enum with name colors and loot beams
+- [x] `Affix`, `AffixRegistry` and the starter affixes in JSON (36 affixes in `data/sofe/affixes/`)
+- [x] Gear bonuses added to the character sheet (green values) and to skill ranks from gear (up to rank 8); elemental damage, life steal, resistances (75% cap) and cooldown reduction in combat
+- [x] Item level and attribute requirements; Diablo II style tooltips
+- [x] Talismans and the Talisman Pouch (Curios, 6 spaces); amulet and two rings as Curios slots too
+- [x] `LootGenerator` with Builder and class bias (about 60%, tested over 10,000 rolls)
+- [x] Global Loot Modifier for mod enemies (gear of the enemy's level and Dinars from every levelled enemy of a journey, twice as often from SoFE's own)
+- [x] Sulthari Brass and Glacial Iron ores with worldgen by region
+- [x] *(World)* Custom tool tiers with `TierSortingRegistry` (Brass, Glacial Iron), with brass and glacial iron pickaxes
+- [x] Imperial Forge with custom recipe type and 5 Blueprints (Blueprints drop from the Brass Sentinel, Kaleth and Serath)
+- [x] Alembic, Pomegranate Elixir and Bearer's Tonic (pomegranate and desert lotus are sold by Ferid until herbs can be farmed)
+- [x] Bearer's Flask (key H) and potion belt (Curios, Left Alt + 7, 8, 9, 0)
+- [x] `Wallet` capability and merchant Ferid (plus Dilara, Yusuf and Selim)
+- [x] Relics of Kaleth, Serath and Vorath
+- [x] *(Annex)* Merchant offers in JSON (`data/sofe/merchant_offers/`) filtered by act (Favor filters come with Sprint 7)
+- [x] *(Annex)* Per-player stock with daily restock
+- [x] *(Annex)* Selling back and buyback of the last 5 items
+- [x] *(Annex)* Selim the Money Changer (emeralds ↔ Dinars)
+- [x] *(Annex)* `sofe:owner` component and `BindPolicy` (Flask and Codex Shards soulbound: never dropped or sold, kept through death). Keeping them out of other players' chests and `PACT_ONLY` come with the Pact in Sprint 7.5
+- [x] *(Annex)* Reward Coffer with personal loot for Vorath and his Broken Oaths
+- [x] *(Annex)* Secondary materials for Act I–II: Dune Leather, Frostpelt, Runestone, Void Ash
 
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).
