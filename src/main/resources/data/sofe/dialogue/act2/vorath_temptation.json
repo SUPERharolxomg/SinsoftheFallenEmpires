@@ -1,0 +1,43 @@
+{
+  "style": "nordrath",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "vorath",
+      "text": "dialogue.sofe.act2.vorath.1"
+    },
+    {
+      "speaker": "vorath",
+      "text": "dialogue.sofe.act2.vorath.knight",
+      "condition": {
+        "type": "class_is",
+        "class": "knight"
+      }
+    },
+    {
+      "speaker": "vorath",
+      "text": "dialogue.sofe.act2.vorath.other",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "knight"
+        }
+      }
+    },
+    {
+      "speaker": "vorath",
+      "text": "dialogue.sofe.act2.vorath.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act2.vorath.refuse",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.act2.vorath.silent",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}
