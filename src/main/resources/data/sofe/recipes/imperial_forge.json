@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "SSS"
+  ],
+  "key": {
+    "B": {
+      "item": "sofe:sulthari_brass_ingot"
+    },
+    "A": {
+      "item": "minecraft:anvil"
+    },
+    "S": {
+      "item": "minecraft:stone_bricks"
+    }
+  },
+  "result": {
+    "item": "sofe:imperial_forge",
+    "count": 1
+  }
+}

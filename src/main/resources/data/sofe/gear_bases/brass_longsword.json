@@ -1,0 +1,8 @@
+{
+  "item": "sofe:brass_longsword",
+  "slot": "weapon",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 1
+}

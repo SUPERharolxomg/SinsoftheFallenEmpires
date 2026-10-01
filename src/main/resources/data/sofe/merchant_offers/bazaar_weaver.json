@@ -1,0 +1,50 @@
+{
+  "role": "quartermaster",
+  "offers": [
+    {
+      "sell": "minecraft:red_wool",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:yellow_wool",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:white_wool",
+      "price": 2,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:red_carpet",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:red_banner",
+      "price": 6,
+      "stock": 4
+    },
+    {
+      "sell": "minecraft:string",
+      "price": 2,
+      "stock": 16,
+      "count": 8
+    }
+  ],
+  "buys": [
+    {
+      "item": "minecraft:string",
+      "price": 1
+    },
+    {
+      "item": "minecraft:white_wool",
+      "price": 1
+    }
+  ]
+}

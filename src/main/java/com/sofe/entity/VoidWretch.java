@@ -13,6 +13,11 @@ public class VoidWretch extends VoidCreature {
         super(type, level);
     }
 
+    @Override
+    public String modelName() {
+        return "void_wretch";
+    }
+
     public static AttributeSupplier.Builder attributes() {
         return baseAttributes()
                 .add(Attributes.MAX_HEALTH, 22.0)

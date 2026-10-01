@@ -1,0 +1,18 @@
+{
+  "kind": "suffix",
+  "stat": "crit_damage",
+  "low": [
+    10,
+    15
+  ],
+  "high": [
+    45,
+    60
+  ],
+  "min_rarity": "imperial",
+  "slots": [
+    "weapon",
+    "jewelry"
+  ],
+  "weight": 10
+}

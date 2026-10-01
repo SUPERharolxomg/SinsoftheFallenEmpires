@@ -1,0 +1,19 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_scholar",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "citizen_scholar",
+      "text": "dialogue.sofe.citizen_scholar.act3.1"
+    },
+    {
+      "speaker": "citizen_scholar",
+      "text": "dialogue.sofe.citizen_scholar.act3.2"
+    }
+  ]
+}

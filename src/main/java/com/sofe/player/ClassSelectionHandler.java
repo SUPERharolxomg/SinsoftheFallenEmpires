@@ -72,8 +72,19 @@ public final class ClassSelectionHandler {
             CombatHandler.refresh(player);
             ProgressionHandler.onBearerChosen(player);
             com.sofe.story.SoFEAdvancements.award(player, "story/root");
+            giveFlask(player);
             QuestEngine.onBearerChosen(player);
         });
+    }
+
+    /** Every Bearer receives the Bearer's Flask in Act I (docs/Pociones.md), bound to them. */
+    private static void giveFlask(ServerPlayer player) {
+        var flask = com.sofe.registry.ItemRegistry.BEARERS_FLASK.get();
+        if (player.getInventory().contains(new net.minecraft.world.item.ItemStack(flask))) return;
+        var stack = new net.minecraft.world.item.ItemStack(flask);
+        com.sofe.gear.GearNbt.bind(stack, player);
+        if (!player.getInventory().add(stack)) player.drop(stack, false);
+        com.sofe.economy.EconomyHandler.sync(player);
     }
 
     /** Opens the Bearer selection when the player still has none (in a journey). */

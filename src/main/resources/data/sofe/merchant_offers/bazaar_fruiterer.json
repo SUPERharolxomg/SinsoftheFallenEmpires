@@ -1,0 +1,50 @@
+{
+  "role": "quartermaster",
+  "offers": [
+    {
+      "sell": "minecraft:apple",
+      "price": 3,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:bread",
+      "price": 4,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:sweet_berries",
+      "price": 2,
+      "stock": 16,
+      "count": 8
+    },
+    {
+      "sell": "minecraft:melon_slice",
+      "price": 2,
+      "stock": 16,
+      "count": 8
+    },
+    {
+      "sell": "minecraft:honey_bottle",
+      "price": 4,
+      "stock": 8
+    },
+    {
+      "sell": "minecraft:cookie",
+      "price": 3,
+      "stock": 16,
+      "count": 8
+    }
+  ],
+  "buys": [
+    {
+      "item": "minecraft:wheat",
+      "price": 1
+    },
+    {
+      "item": "minecraft:apple",
+      "price": 1
+    }
+  ]
+}

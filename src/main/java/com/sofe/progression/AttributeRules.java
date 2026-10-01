@@ -26,12 +26,17 @@ public record AttributeRules(double physicalDamage, double critChance, double cr
     }
 
     public Effects effects(AttributeSheet sheet, PlayerClass playerClass) {
-        int str = sheet.aboveBase(CharacterAttribute.STRENGTH, playerClass);
-        int agi = sheet.aboveBase(CharacterAttribute.AGILITY, playerClass);
-        int intel = sheet.aboveBase(CharacterAttribute.INTELLECT, playerClass);
-        int will = sheet.aboveBase(CharacterAttribute.WILL, playerClass);
-        int cha = sheet.aboveBase(CharacterAttribute.CHARISMA, playerClass);
-        int vit = sheet.aboveBase(CharacterAttribute.VITALITY, playerClass);
+        return effects(sheet, playerClass, java.util.Map.of());
+    }
+
+    /** With points added by gear on top of the sheet (docs/Pociones.md, "Affixes that raise the character"). */
+    public Effects effects(AttributeSheet sheet, PlayerClass playerClass, java.util.Map<CharacterAttribute, Integer> extra) {
+        int str = sheet.aboveBase(CharacterAttribute.STRENGTH, playerClass) + extra.getOrDefault(CharacterAttribute.STRENGTH, 0);
+        int agi = sheet.aboveBase(CharacterAttribute.AGILITY, playerClass) + extra.getOrDefault(CharacterAttribute.AGILITY, 0);
+        int intel = sheet.aboveBase(CharacterAttribute.INTELLECT, playerClass) + extra.getOrDefault(CharacterAttribute.INTELLECT, 0);
+        int will = sheet.aboveBase(CharacterAttribute.WILL, playerClass) + extra.getOrDefault(CharacterAttribute.WILL, 0);
+        int cha = sheet.aboveBase(CharacterAttribute.CHARISMA, playerClass) + extra.getOrDefault(CharacterAttribute.CHARISMA, 0);
+        int vit = sheet.aboveBase(CharacterAttribute.VITALITY, playerClass) + extra.getOrDefault(CharacterAttribute.VITALITY, 0);
 
         int[] resource = new int[ResourceType.values().length];
         resource[ResourceType.MANA.ordinal()] = (int) Math.round(intel * maxMana);

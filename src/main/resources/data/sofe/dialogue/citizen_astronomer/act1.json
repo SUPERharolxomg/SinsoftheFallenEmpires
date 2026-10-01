@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_astronomer",
+  "lines": [
+    {
+      "speaker": "citizen_astronomer",
+      "text": "dialogue.sofe.citizen_astronomer.act1.1"
+    }
+  ]
+}

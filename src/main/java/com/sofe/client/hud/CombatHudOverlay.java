@@ -111,6 +111,9 @@ public final class CombatHudOverlay {
             ResourceLocation icon = SoFEMod.id("textures/gui/rune/" + runes.get(i).id() + ".png");
             graphics.blit(icon, MARGIN + 13 + i * 12, iconY, 10, 10, 0f, 0f, 16, 16, 16, 16);
         }
+        // the Bearer's Flask charges, at the right of the health bar
+        com.sofe.client.ClientEconomyData.get().ifPresent(e -> graphics.drawString(font, "\u2B2E " + e.flaskCharges() + "/" + e.flaskMax(),
+                barX0 + barW0 + 46, healthY, 0xFF7FD4E0, true));
         drawCounter(graphics, font, "mark", state.marks(), 5, MARGIN + 13, iconY);
         drawCounter(graphics, font, "soul", state.souls(), 10, MARGIN + 13, iconY);
     }

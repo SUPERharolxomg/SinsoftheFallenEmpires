@@ -1,0 +1,18 @@
+{
+  "kind": "prefix",
+  "stat": "life_steal",
+  "low": [
+    1,
+    2
+  ],
+  "high": [
+    6,
+    8
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "weapon",
+    "jewelry"
+  ],
+  "weight": 10
+}

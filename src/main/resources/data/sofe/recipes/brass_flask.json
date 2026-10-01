@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B B",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "sofe:sulthari_brass_nugget"
+    }
+  },
+  "result": {
+    "item": "sofe:brass_flask",
+    "count": 3
+  }
+}

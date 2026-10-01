@@ -1,0 +1,45 @@
+{
+  "role": "smith",
+  "offers": [
+    {
+      "sell": "minecraft:lantern",
+      "price": 4,
+      "stock": 16,
+      "count": 2
+    },
+    {
+      "sell": "sofe:sulthari_aetherium_lamp",
+      "price": 8,
+      "stock": 8,
+      "count": 2
+    },
+    {
+      "sell": "minecraft:glass",
+      "price": 3,
+      "stock": 16,
+      "count": 8
+    },
+    {
+      "sell": "minecraft:torch",
+      "price": 2,
+      "stock": 16,
+      "count": 16
+    },
+    {
+      "sell": "sofe:sulthari_brass_trim",
+      "price": 5,
+      "stock": 8,
+      "count": 8
+    }
+  ],
+  "buys": [
+    {
+      "item": "minecraft:copper_ingot",
+      "price": 1
+    },
+    {
+      "item": "minecraft:glass",
+      "price": 1
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_water_carrier",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "citizen_water_carrier",
+      "text": "dialogue.sofe.citizen_water_carrier.act3.1"
+    }
+  ]
+}

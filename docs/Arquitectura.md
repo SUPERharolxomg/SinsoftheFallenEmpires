@@ -108,11 +108,24 @@ sins-of-fallen-empires/
 │   │   ├── PlayerProgressView.java         # What conditions see of a real player
 │   │   ├── Act.java                        # enum: ECLIPSE, NORTH, EAST, WEST, ASCENSION
 │   │   └── CutsceneManager.java            # Intros, temptations, epilogues per hero
+│   ├── gear/                               # Loot and gear (Sprint 5.5)
+│   │   ├── Rarity.java / GearStat.java / GearSlot.java
+│   │   ├── Affix.java / GearBase.java      # data/sofe/affixes, data/sofe/gear_bases (GearDataManager loads them and relics)
+│   │   ├── GearData.java / GearNbt.java    # Item level, rarity, rolled affixes, requirements, owner (NBT)
+│   │   ├── GearBonuses.java / PlayerGear.java # What equipped gear adds up to (armor, main hand, Curios)
+│   │   ├── LootGenerator.java              # Builder + class bias (UC-09), plain Java
+│   │   ├── GearMaker.java / GearItems.java / SoFETiers.java
+│   │   └── loot/GearLoot.java              # Loot functions and the global loot modifier
+│   ├── economy/
+│   │   ├── EconomyData.java / EconomyCapability.java # Wallet, per-player stock, buyback, Blueprints, Flask charges
+│   │   ├── MerchantOffer.java / MerchantService.java # data/sofe/merchant_offers, every trade checked on the server
+│   │   └── Prices.java
+│   ├── crafting/
+│   │   ├── StationRecipe.java              # Custom recipe types: sofe:imperial_forge, sofe:alembic
+│   │   └── StationBlock.java / StationService.java
 │   ├── item/
-│   │   ├── tier/SoFETiers.java             # Brass, Glacial Iron, Solar Gold, Orichalcum (TierSortingRegistry)
-│   │   ├── rarity/Rarity.java              # COMMON, TEMPERED, IMPERIAL, RELIC, LEGACY
-│   │   ├── affix/Affix.java
-│   │   ├── affix/AffixRegistry.java        # Loads data/sofe/affixes/*.json
+│   │   ├── ConsumableItems.java            # Elixir, Tonic, Bearer's Flask
+│   │   ├── PotionBelt.java / Soulbound.java / BlueprintItem.java / CodexShardItem.java
 │   │   ├── gem/GemItem.java
 │   │   ├── weapon/SoFEWeapon.java
 │   │   ├── armor/SoFEArmor.java

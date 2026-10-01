@@ -62,12 +62,20 @@ public class SoFEMod {
 
         MaterialRegistry.init();
         SoFEBlocks.init();
+        com.sofe.registry.HerbRegistry.init();
         BlockRegistry.BLOCKS.register(modBus);
         ItemRegistry.ITEMS.register(modBus);
         EntityRegistry.ENTITIES.register(modBus);
         CreativeTabRegistry.TABS.register(modBus);
         WorldgenRegistry.BIOME_SOURCES.register(modBus);
         WorldgenRegistry.FEATURES.register(modBus);
+        com.sofe.registry.SoFEBlocks.BLOCK_ENTITIES.register(modBus);
+        com.sofe.registry.SoFEEffects.EFFECTS.register(modBus);
+        com.sofe.registry.SoFERecipes.TYPES.register(modBus);
+        com.sofe.registry.SoFERecipes.SERIALIZERS.register(modBus);
+        com.sofe.gear.loot.GearLoot.FUNCTIONS.register(modBus);
+        com.sofe.gear.loot.GearLoot.MODIFIERS.register(modBus);
+        modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent e) -> e.enqueueWork(com.sofe.gear.SoFETiers::register));
         modBus.addListener(DataGenerators::gatherData);
 
         SoFENetwork.register();
@@ -119,6 +127,8 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(StructurePositions::onAddReloadListeners);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onCreateSpawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.command.SoFECommands::register);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onSpawnCheck);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onBreak);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onPlace);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onRightClickBlock);
@@ -148,6 +158,25 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.world.region.RegionTitleHandler::onChangeDimension);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, com.sofe.mob.MobTraits::onJoin);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onHurt);
+
+        // Sprint 5.5: gear, economy, stations, potions
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.GearDataManager::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.MerchantService::onAddReloadListeners);
+        modBus.addListener(com.sofe.economy.EconomyCapability::register);
+        MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, com.sofe.economy.EconomyCapability::attach);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.EconomyCapability::onClone);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.EconomyHandler::onPickup);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.EconomyHandler::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.EconomyHandler::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.MerchantService::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.crafting.StationService::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.PlayerGear::onEquipmentChange);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.PlayerGear::onCurioChange);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.PlayerGear::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(CharacterStats::onKill);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.loot.SecondaryDrops::onDrops);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.item.Soulbound::onToss);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.item.Soulbound::onClone);
         MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onStartTracking);
 
         if (FMLEnvironment.dist.isClient()) {

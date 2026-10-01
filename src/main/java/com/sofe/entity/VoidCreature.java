@@ -23,9 +23,17 @@ import net.minecraft.util.RandomSource;
 
 /**
  * The creatures that poured out of the broken seal (README, Act I): shapes without faces that hunt
- * the living. They get mob levels like every hostile mob. Placeholder look: a dark violet humanoid.
+ * the living. They get mob levels like every hostile mob. Drawn with GeckoLib models (SoFEAnimated).
  */
-public abstract class VoidCreature extends Monster {
+public abstract class VoidCreature extends Monster implements SoFEAnimated {
+
+    private final software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache animationCache =
+            software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache() {
+        return animationCache;
+    }
 
     protected VoidCreature(EntityType<? extends Monster> type, Level level) {
         super(type, level);

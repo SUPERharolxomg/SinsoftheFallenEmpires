@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_child",
+  "lines": [
+    {
+      "speaker": "citizen_child",
+      "text": "dialogue.sofe.citizen_child.act1.1"
+    }
+  ]
+}

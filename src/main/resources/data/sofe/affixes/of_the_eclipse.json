@@ -1,0 +1,18 @@
+{
+  "kind": "suffix",
+  "stat": "cooldown_reduction",
+  "low": [
+    3,
+    4
+  ],
+  "high": [
+    12,
+    15
+  ],
+  "min_rarity": "imperial",
+  "slots": [
+    "weapon",
+    "jewelry"
+  ],
+  "weight": 10
+}

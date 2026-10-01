@@ -89,6 +89,39 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 2,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "sofe:roll_gear",
+              "min_rarity": "imperial"
+            }
+          ]
+        }
+      ],
+      "sofe_extra": true
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sofe:vorath_wrath",
+          "functions": [
+            {
+              "function": "sofe:make_relic",
+              "relic": "vorath_wrath"
+            }
+          ]
+        }
+      ],
+      "sofe_extra": true
     }
   ]
 }

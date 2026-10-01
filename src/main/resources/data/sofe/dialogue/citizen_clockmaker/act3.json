@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_clockmaker",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "citizen_clockmaker",
+      "text": "dialogue.sofe.citizen_clockmaker.act3.1"
+    }
+  ]
+}

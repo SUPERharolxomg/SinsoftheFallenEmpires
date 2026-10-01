@@ -17,7 +17,8 @@ import java.util.function.Supplier;
  */
 public record SyncProgressPacket(int level, long xp, long xpToNext, int skillPoints, int attributePoints,
                                  Map<String, Integer> ranks, List<String> slots,
-                                 Map<CharacterAttribute, Integer> attributes, Derived derived) {
+                                 Map<CharacterAttribute, Integer> attributes, Derived derived,
+                                 Map<CharacterAttribute, Integer> gearAttributes) {
 
     /** Values computed on the server from the attributes, shown on the character sheet. */
     public record Derived(float maxHealth, float physicalDamage, float magicDamage, float critChance,
@@ -41,6 +42,7 @@ public record SyncProgressPacket(int level, long xp, long xpToNext, int skillPoi
         buf.writeFloat(derived.dodgeChance());
         buf.writeFloat(derived.regen());
         buf.writeVarInt(derived.maxResource());
+        buf.writeMap(gearAttributes, FriendlyByteBuf::writeEnum, FriendlyByteBuf::writeVarInt);
     }
 
     public static SyncProgressPacket decode(FriendlyByteBuf buf) {
@@ -54,7 +56,9 @@ public record SyncProgressPacket(int level, long xp, long xpToNext, int skillPoi
         Map<CharacterAttribute, Integer> attributes = buf.readMap(
                 b -> new EnumMap<CharacterAttribute, Integer>(CharacterAttribute.class), b -> b.readEnum(CharacterAttribute.class), FriendlyByteBuf::readVarInt);
         Derived derived = new Derived(buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readVarInt());
-        return new SyncProgressPacket(level, xp, xpToNext, skillPoints, attributePoints, ranks, slots, attributes, derived);
+        Map<CharacterAttribute, Integer> gear = buf.readMap(
+                b -> new EnumMap<CharacterAttribute, Integer>(CharacterAttribute.class), b -> b.readEnum(CharacterAttribute.class), FriendlyByteBuf::readVarInt);
+        return new SyncProgressPacket(level, xp, xpToNext, skillPoints, attributePoints, ranks, slots, attributes, derived, gear);
     }
 
     public int rank(String skill) {
@@ -63,6 +67,11 @@ public record SyncProgressPacket(int level, long xp, long xpToNext, int skillPoi
 
     public int added(CharacterAttribute attribute) {
         return attributes.getOrDefault(attribute, 0);
+    }
+
+    /** Points added to an attribute by the gear the player wears (shown in green on the sheet). */
+    public int gearPoints(CharacterAttribute attribute) {
+        return gearAttributes.getOrDefault(attribute, 0);
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {

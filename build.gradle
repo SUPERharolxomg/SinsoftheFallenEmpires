@@ -74,6 +74,11 @@ repositories {
         url = 'https://maven.theillusivec4.top/'
         content { includeGroup('top.theillusivec4.curios') }
     }
+    maven {
+        name = 'CurseMaven'
+        url = 'https://cursemaven.com'
+        content { includeGroup('curse.maven') }
+    }
 }
 
 dependencies {
@@ -85,6 +90,10 @@ dependencies {
     // Amulet, rings and potion belt slots
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+
+    // Furniture for the interiors of the cities (MrCrayfish, MIT), placed by id, so only needed at runtime
+    runtimeOnly fg.deobf("curse.maven:refurbished-furniture-897116:${furniture_file}")
+    runtimeOnly fg.deobf("curse.maven:framework-549225:${framework_file}")
 
     // Unit tests for pure game logic (no Minecraft classes)
     testImplementation platform("org.junit:junit-bom:${junit_version}")

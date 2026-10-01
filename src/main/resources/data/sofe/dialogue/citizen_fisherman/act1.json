@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_fisherman",
+  "lines": [
+    {
+      "speaker": "citizen_fisherman",
+      "text": "dialogue.sofe.citizen_fisherman.act1.1"
+    }
+  ]
+}

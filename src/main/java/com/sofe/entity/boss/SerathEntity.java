@@ -42,6 +42,11 @@ public class SerathEntity extends BrokenOathEntity {
         super(type, level);
     }
 
+    @Override
+    public String modelName() {
+        return "serath";
+    }
+
     public static AttributeSupplier.Builder attributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 200.0)

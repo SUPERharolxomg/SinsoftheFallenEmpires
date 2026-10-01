@@ -1,0 +1,60 @@
+{
+  "role": "quartermaster",
+  "offers": [
+    {
+      "sell": "sofe:return_scroll",
+      "price": 10,
+      "stock": 5
+    },
+    {
+      "sell": "minecraft:bread",
+      "count": 4,
+      "price": 4,
+      "stock": 16
+    },
+    {
+      "sell": "minecraft:torch",
+      "count": 16,
+      "price": 3,
+      "stock": 16
+    },
+    {
+      "sell": "minecraft:arrow",
+      "count": 16,
+      "price": 5,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:brass_helmet",
+      "price": 20,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:brass_boots",
+      "price": 18,
+      "stock": 2
+    }
+  ],
+  "buys": [
+    {
+      "item": "minecraft:rotten_flesh",
+      "price": 1
+    },
+    {
+      "item": "minecraft:bone",
+      "price": 1
+    },
+    {
+      "item": "sofe:dune_leather",
+      "price": 3
+    },
+    {
+      "item": "sofe:frostpelt",
+      "price": 4
+    },
+    {
+      "item": "sofe:void_ash",
+      "price": 2
+    }
+  ]
+}

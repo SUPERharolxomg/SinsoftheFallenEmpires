@@ -1,0 +1,18 @@
+{
+  "item": "sofe:serath_fang",
+  "item_level": 9,
+  "affixes": [
+    {
+      "stat": "life_steal",
+      "value": 6
+    },
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "physical_damage",
+      "value": 12
+    }
+  ]
+}

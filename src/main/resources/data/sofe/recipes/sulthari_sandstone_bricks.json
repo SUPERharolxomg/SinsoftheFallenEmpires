@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:cut_sandstone"
+    }
+  },
+  "result": {
+    "item": "sofe:sulthari_sandstone_bricks",
+    "count": 4
+  }
+}

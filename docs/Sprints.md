@@ -147,27 +147,36 @@ Split into five parts. The dungeons and the Citadel are blockouts until their ha
 
 ## Sprint 5.5 — Loot and Economy (Weeks 11-12)
 Design: [Pociones.md](Pociones.md).
-- [ ] `Rarity` enum with name colors and loot beams
-- [ ] `Affix`, `AffixRegistry` and the starter affixes in JSON, including the ones that raise the character: attributes, health, resource, damage, critical, dodge, resistances and +skill ranks ([Pociones.md](Pociones.md#affixes-that-raise-the-character-diablo-ii-style))
-- [ ] Gear bonuses added to the character sheet (green values) and to skill ranks from gear (up to rank 8)
-- [ ] Item level and attribute requirements; Diablo II style tooltips
-- [ ] Talismans and the Talisman Pouch (Curios, 6 spaces)
-- [ ] `LootGenerator` with Builder and class bias
-- [ ] Global Loot Modifier for mod enemies
-- [ ] Sulthari Brass and Glacial Iron ores with worldgen by region (heights and frequencies from [Mundo.md](Mundo.md#w4-resource-distribution))
-- [ ] *(World)* Custom tool tiers with `TierSortingRegistry` (Brass, Glacial Iron)
-- [ ] Imperial Forge with custom recipe type and 5 Blueprints
-- [ ] Alembic, Pomegranate Elixir and Bearer's Tonic
-- [ ] Bearer's Flask and potion belt (Curios)
-- [ ] `Wallet` capability and merchant Ferid
-- [ ] Relics of Kaleth, Serath and Vorath
-- [ ] *(Annex)* Merchant offers in JSON (`data/sofe/merchant_offers/`) filtered by act
-- [ ] *(Annex)* Per-player stock with daily restock
-- [ ] *(Annex)* Selling back and buyback of the last 5 items
-- [ ] *(Annex)* Selim the Money Changer (emeralds ↔ Dinars)
-- [ ] *(Annex)* `sofe:owner` component and `BindPolicy` (Flask and Codex Shards soulbound)
-- [ ] *(Annex)* Reward Coffer with personal loot for Vorath and his Broken Oaths
-- [ ] *(Annex)* Secondary materials for Act I–II: Dune Leather, Frostpelt, Runestone, Void Ash
+- [x] `Rarity` enum with name colors and loot beams
+- [x] `Affix`, `AffixRegistry` and the starter affixes in JSON (36 affixes in `data/sofe/affixes/`)
+- [x] Gear bonuses added to the character sheet (green values) and to skill ranks from gear (up to rank 8); elemental damage, life steal, resistances (75% cap) and cooldown reduction in combat
+- [x] Item level and attribute requirements; Diablo II style tooltips
+- [x] Talismans and the Talisman Pouch (Curios, 6 spaces); amulet and two rings as Curios slots too
+- [x] `LootGenerator` with Builder and class bias (about 60%, tested over 10,000 rolls)
+- [x] Global Loot Modifier for mod enemies (gear of the enemy's level and Dinars from every levelled enemy of a journey, twice as often from SoFE's own)
+- [x] Sulthari Brass and Glacial Iron ores with worldgen by region
+- [x] *(World)* Custom tool tiers with `TierSortingRegistry` (Brass, Glacial Iron), with brass and glacial iron pickaxes
+- [x] Imperial Forge with custom recipe type and 5 Blueprints (Blueprints drop from the Brass Sentinel, Kaleth and Serath)
+- [x] Alembic, Pomegranate Elixir and Bearer's Tonic (pomegranate and desert lotus are sold by Ferid until herbs can be farmed)
+- [x] Bearer's Flask (key H) and potion belt (Curios, Left Alt + 7, 8, 9, 0)
+- [x] `Wallet` capability and merchant Ferid (plus Dilara, Yusuf and Selim)
+- [x] Relics of Kaleth, Serath and Vorath
+- [x] *(Annex)* Merchant offers in JSON (`data/sofe/merchant_offers/`) filtered by act (Favor filters come with Sprint 7)
+- [x] *(Annex)* Per-player stock with daily restock
+- [x] *(Annex)* Selling back and buyback of the last 5 items
+- [x] *(Annex)* Selim the Money Changer (emeralds ↔ Dinars)
+- [x] *(Annex)* `sofe:owner` component and `BindPolicy` (Flask and Codex Shards soulbound: never dropped or sold, kept through death). Keeping them out of other players' chests and `PACT_ONLY` come with the Pact in Sprint 7.5
+- [x] *(Annex)* Reward Coffer with personal loot for Vorath and his Broken Oaths
+- [x] *(Annex)* Secondary materials for Act I–II: Dune Leather, Frostpelt, Runestone, Void Ash
+- [x] *(Extra)* Herbs that can be farmed: Mountain Sage (Sulthari), Pomegranate (Parsivan) and Desert Lotus (Khemet) grow wild in their region and as crops on farmland; Ferid sells their seeds
+- [x] *(Extra, art pass after the first playtest)* GeckoLib models with animations and glow masks for the Void Wretch, Void Stalker, Kaleth, Serath, the Brass Sentinel (with its Void phase) and Vorath (`scripts/make_mob_models.py`); hand-drawn 16×16 sprites for gear and Relics (`scripts/make_gear_sprites.py`); high-resolution dialogue bars split per empire with their portrait windows (`scripts/split_dialogue_bars.py`); a larger framed portrait and engraved text in the dialogue box; a smaller Observatory dome; NPCs placed inside buildings instead of on their roofs
+- [x] *(Extra)* Sulthari rebuilt after its concept art: banded terracotta walls on an escarpment with towers, gatehouses and banners; the palace with a golden dome, red domes, minarets and a great portal; a golden-domed Observatory; varied houses, bazaar stalls and trees (`world/build/Architecture.java`, a kit the other empires will reuse with the concepts in `art/concepts/city_*.png`); portraits drawn at their own resolution
+- [x] *(Extra)* Sulthari on its terracotta mesa (`SultharisCity`): a rounded mesa with banded cliffs above the desert and the sea, cream walls with towers, crescent banners and four gatehouses, raised terraces for the palace and the Observatory, dirt avenues and roads going down from the gates as fenced causeways over the water (`Roads`), and the city filled with houses, chapels, gardens and wells
+- [x] *(Extra)* Citizens of Sulthari who talk about what is happening, act by act; Rasim the meddah tells the old tales on request; four bazaar merchants with their own shops; NPCs without a painted portrait are drawn live in the dialogue box (`scripts/make_citizens.py`)
+- [x] *(Extra)* The palace rebuilt with pointed arches in red and cream voussoirs, a front arcade and a hall with dark wooden columns, arches, a coffered ceiling, chandeliers, banners and a throne; blue tiles only as the palace floor; the city ground mixes earth, coarse earth, terracotta, sand and packed mud; 16 citizens who stroll near their homes (`CitizenEntity`); houses furnished; no monsters spawn by themselves inside a city; panes, fences and walls placed by the builders join up
+- [x] *(Extra)* MrCrayfish's Furniture Mod: Refurbished as a dependency, for the interiors (chairs, tables, desks, drawers, cabinets, jars, crates and divans; looked up by id with vanilla stand-ins); larger palace domes and arcades on three sides; seating areas in the hall; the Observatory with three floors, a stair along the wall, a library, a map room and a telescope; a furnished forge around the Imperial Forge and a bank with clerks' desks and a strongroom; a smaller archery range; lanterns on streets, walls, terraces, gardens and house doors
+- [x] *(Extra)* Farms in Sulthari (fenced fields of wheat, carrots, potatoes and beetroots, and pens of cows, pigs, sheep and chickens); the plaza with a sadirvan, a star mosaic, flower beds and benches; the palace hall after its reference (gold capitals and banners on the columns, patterned rugs, divans and armchairs, plants, a tapestry behind the throne, a grand chandelier and a gold ring under the dome); no gap under the first row of house roofs; cinematic dialogue inside a taller lower black band
+- [x] *(Extra)* The palace hall rebuilt again: square columns of dark wood banded in gold up to the ceiling, the domes on solid rings (no gap between roof and drum), the main dome toward the door and a second golden dome over the throne on a dais of three steps, aetherium lamps on brass posts along the carpet and around the grounds; the Observatory with straight flights on solid supports, rugs, plants and lamps; grass between the houses; a lantern post at every plot
 
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).

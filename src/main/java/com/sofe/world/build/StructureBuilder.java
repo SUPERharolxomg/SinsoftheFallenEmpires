@@ -34,13 +34,16 @@ public final class StructureBuilder {
         return built;
     }
 
-    /** A template saved with Structure Blocks, placed with its center on the structure's position. */
+    /**
+     * A template (saved with /sofe export or Structure Blocks), placed with its center on the
+     * structure's position and its bottom layer, the floor, on the top layer of the ground.
+     */
     private static boolean placeTemplate(ServerLevel level, StructurePositions.Structure structure, String piece) {
         ResourceLocation id = SoFEMod.id(piece);
         Optional<StructureTemplate> template = level.getStructureManager().get(id);
         if (template.isEmpty() || template.get().getSize().getX() == 0) return false;
         var size = template.get().getSize();
-        int y = SultharisBuilder.surfaceY(level, structure.x(), structure.z());
+        int y = SultharisBuilder.surfaceY(level, structure.x(), structure.z()) - 1; // a template holds its own floor layer
         BlockPos corner = new BlockPos(structure.x() - size.getX() / 2, y, structure.z() - size.getZ() / 2);
         template.get().placeInWorld(level, corner, corner, new StructurePlaceSettings(), level.getRandom(), Block.UPDATE_CLIENTS);
         SoFEMod.LOGGER.info("Placed template {} at {}", id, corner);

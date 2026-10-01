@@ -34,8 +34,10 @@ public final class CorpseHandler {
 
     /** Runs before the drops, so vanilla finds an empty inventory and drops nothing. */
     public static void onDeath(LivingDeathEvent event) {
-        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer player) || !appliesTo(player)) return;
-        if (player.getInventory().isEmpty()) return;
+        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer player)) return;
+        // story items are bound to the soul: they never drop and never stay on the body
+        if (!player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) com.sofe.item.Soulbound.keepOnDeath(player);
+        if (!appliesTo(player) || player.getInventory().isEmpty()) return;
         leaveCorpse(player);
     }
 

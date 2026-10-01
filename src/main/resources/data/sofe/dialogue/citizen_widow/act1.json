@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_widow",
+  "lines": [
+    {
+      "speaker": "citizen_widow",
+      "text": "dialogue.sofe.citizen_widow.act1.1"
+    },
+    {
+      "speaker": "citizen_widow",
+      "text": "dialogue.sofe.citizen_widow.act1.2"
+    }
+  ]
+}
