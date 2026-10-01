@@ -144,6 +144,26 @@ public final class ZoneProtectionHandler {
         if (added > 0) SoFEMod.LOGGER.info("Registered {} new protected zones for this journey", added);
     }
 
+    /**
+     * No monsters spawn by themselves inside a city (the palace hall is big and its corners dark).
+     * The Void creatures of the story still come: quests spawn them as events.
+     */
+    public static void onSpawnCheck(net.minecraftforge.event.entity.living.MobSpawnEvent.SpawnPlacementCheck event) {
+        if (event.getEntityType().getCategory() != net.minecraft.world.entity.MobCategory.MONSTER) return;
+        var type = event.getSpawnType();
+        if (type != net.minecraft.world.entity.MobSpawnType.NATURAL && type != net.minecraft.world.entity.MobSpawnType.CHUNK_GENERATION
+                && type != net.minecraft.world.entity.MobSpawnType.PATROL) return;
+        ServerLevel level = event.getLevel().getLevel();
+        if (level.dimension() != Level.OVERWORLD) return;
+        BlockPos pos = event.getPos();
+        for (ProtectedZone zone : ProtectedZoneData.get(level.getServer()).zones()) {
+            if (zone.kind() == ProtectedZone.Kind.CITY && zone.contains(pos.getX(), pos.getY(), pos.getZ())) {
+                event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
+                return;
+            }
+        }
+    }
+
     /** New players appear in the plaza of Sulthari, not somewhere in the region. */
     public static void onCreateSpawn(LevelEvent.CreateSpawnPosition event) {
         if (!(event.getLevel() instanceof ServerLevel level) || level.dimension() != Level.OVERWORLD) return;

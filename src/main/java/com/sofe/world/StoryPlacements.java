@@ -115,9 +115,30 @@ public final class StoryPlacements extends SavedData {
         return count;
     }
 
+    /**
+     * Where something stands in this column: the ground, or, under a roof of a building, the floor
+     * inside (so NPCs and Waystones end up in the palace hall, not on its dome). Scans down from the
+     * roof to the first room with a floor; stops at natural terrain, so caves never count.
+     */
     private static BlockPos surface(ServerLevel level, int x, int z) {
         level.getChunk(x >> 4, z >> 4);
-        return new BlockPos(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
+        int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, top - 1, z);
+        for (int y = top - 1; y > top - 40 && y > level.getMinBuildHeight() + 1; y--) {
+            pos.setY(y);
+            var state = level.getBlockState(pos);
+            if (natural(state)) break;
+            if (state.isAir() && level.getBlockState(pos.above()).isAir() && level.getBlockState(pos.below()).isSolid()) {
+                return new BlockPos(x, y, z);
+            }
+        }
+        return new BlockPos(x, top, z);
+    }
+
+    private static boolean natural(net.minecraft.world.level.block.state.BlockState state) {
+        return state.is(net.minecraft.tags.BlockTags.DIRT) || state.is(net.minecraft.tags.BlockTags.SAND)
+                || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD) || state.is(net.minecraft.tags.BlockTags.TERRACOTTA)
+                || state.is(net.minecraft.world.level.block.Blocks.SANDSTONE) || state.is(net.minecraft.world.level.block.Blocks.GRAVEL);
     }
 
     private static void placeBlock(ServerLevel level, BlockPos column, net.minecraft.world.level.block.state.BlockState state) {
@@ -143,6 +164,13 @@ public final class StoryPlacements extends SavedData {
                 if (m == null) return Optional.empty();
                 m.setMerchant(npc.npc(), role.get());
                 entity = m;
+            }
+            case "citizen" -> {
+                com.sofe.entity.npc.CitizenEntity c = EntityRegistry.CITIZEN.get().create(level);
+                if (c == null) return Optional.empty();
+                c.setNpcId(npc.npc());
+                c.setHome(pos);
+                entity = c;
             }
             default -> {
                 StoryNpcEntity s = EntityRegistry.STORY_NPC.get().create(level);
