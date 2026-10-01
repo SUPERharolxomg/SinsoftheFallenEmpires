@@ -74,6 +74,52 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> VORATH_WRATH = ITEMS.register("vorath_wrath",
             () -> new GearItems.Axe(SoFETiers.GLACIAL_IRON, 7f, -3.1f, new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
 
+    // --- the arsenal, batch 1 (docs/Pociones.md, "The arsenal"): melee weapons with traits, and the empire shields
+    public static final RegistryObject<Item> IMPERIAL_HALBERD = ITEMS.register("imperial_halberd",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 5, -3.0f, 1.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), new Item.Properties()));
+    public static final RegistryObject<Item> CITY_HAMMER = ITEMS.register("city_hammer",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 5, -3.2f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.STUN), new Item.Properties()));
+    public static final RegistryObject<Item> WAR_HAMMER = ITEMS.register("war_hammer",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 6, -3.3f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SLAM), new Item.Properties()));
+    public static final RegistryObject<Item> SERRATED_DAGGER = ITEMS.register("serrated_dagger",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 1, -1.5f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.BLEED), new Item.Properties()));
+    public static final RegistryObject<Item> HUNTING_KNIFE = ITEMS.register("hunting_knife",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 1, -1.4f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.BEAST), new Item.Properties()));
+    public static final RegistryObject<Item> JOUSTING_LANCE = ITEMS.register("jousting_lance",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 4, -3.0f, 2.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.CHARGE), new Item.Properties()));
+    public static final RegistryObject<Item> EXPLORER_MACHETE = ITEMS.register("explorer_machete",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 2, -2.0f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.PLANTS, com.sofe.gear.WeaponTrait.BLEED), new Item.Properties()));
+    public static final RegistryObject<Item> WAR_MACE = ITEMS.register("war_mace",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.8f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.PIERCE), new Item.Properties()));
+    public static final RegistryObject<Item> CHAIN_SWORD = ITEMS.register("chain_sword",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 2, -2.4f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.MULTI_HIT), new Item.Properties()));
+    public static final RegistryObject<Item> CRYSTAL_TRIDENT = ITEMS.register("crystal_trident",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.9f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.FROST), new Item.Properties()));
+    public static final RegistryObject<Item> SHADOW_SCYTHE = ITEMS.register("shadow_scythe",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 5, -3.0f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP, com.sofe.gear.WeaponTrait.LIFE_STEAL), new Item.Properties()));
+    public static final RegistryObject<Item> BATTLE_GREATSWORD = ITEMS.register("battle_greatsword",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 7, -3.2f, 0.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), new Item.Properties()));
+    public static final RegistryObject<Item> PHLEGM_MACE = ITEMS.register("phlegm_mace",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 4, -2.9f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SLOW), new Item.Properties()));
+    public static final RegistryObject<Item> DOUBLE_FLAIL = ITEMS.register("double_flail",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.9f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.MULTI_HIT), new Item.Properties()));
+    public static final RegistryObject<Item> HOOK_BLADE = ITEMS.register("hook_blade",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 3, -2.2f, 0.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.PULL, com.sofe.gear.WeaponTrait.BLEED), new Item.Properties()));
+    public static final RegistryObject<Item> GRAVITY_HAMMER = ITEMS.register("gravity_hammer",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 6, -3.3f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.KNOCK_UP), new Item.Properties()));
+    public static final RegistryObject<Item> VORTEX_DAGGER = ITEMS.register("vortex_dagger",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 2, -1.6f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.VOID), new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDIAN_RITUAL_DAGGER = ITEMS.register("obsidian_ritual_dagger",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 2, -1.7f, 0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SACRIFICE), new Item.Properties()));
+    public static final RegistryObject<Item> SULTHARI_SHIELD = ITEMS.register("sulthari_shield",
+            () -> new com.sofe.gear.EmpireShield(com.sofe.gear.EmpireShield.Power.SULTHARI, new Item.Properties().durability(420)));
+    public static final RegistryObject<Item> NORDRATH_SHIELD = ITEMS.register("nordrath_shield",
+            () -> new com.sofe.gear.EmpireShield(com.sofe.gear.EmpireShield.Power.NORDRATH, new Item.Properties().durability(520)));
+    public static final RegistryObject<Item> OBSERVATORY_SHIELD = ITEMS.register("observatory_shield",
+            () -> new com.sofe.gear.EmpireShield(com.sofe.gear.EmpireShield.Power.OBSERVATORY, new Item.Properties().durability(460)));
+    public static final RegistryObject<Item> VOID_SHIELD = ITEMS.register("void_shield",
+            () -> new com.sofe.gear.EmpireShield(com.sofe.gear.EmpireShield.Power.VOID, new Item.Properties().durability(600)));
+
     // --- trade, crafting and alchemy
     public static final RegistryObject<Item> BLUEPRINT = ITEMS.register("blueprint", () -> new BlueprintItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> BRASS_FLASK = ITEMS.register("brass_flask", () -> new Item(new Item.Properties().stacksTo(16)));
@@ -123,7 +169,13 @@ public final class ItemRegistry {
     /** Weapons and tools, held like a sword (handheld item models). */
     public static List<RegistryObject<Item>> handheld() {
         return List.of(BRASS_SCIMITAR, BRASS_DAGGER, BRASS_LONGSWORD, BRASS_STAFF, BRASS_ANKH_ROD, GLACIAL_IRON_SWORD, GLACIAL_IRON_GREATAXE,
-                GLACIAL_IRON_STAFF, BRASS_PICKAXE, GLACIAL_IRON_PICKAXE, KALETH_BLADE, SERATH_FANG, VORATH_WRATH);
+                GLACIAL_IRON_STAFF, BRASS_PICKAXE, GLACIAL_IRON_PICKAXE, KALETH_BLADE, SERATH_FANG, VORATH_WRATH,
+                IMPERIAL_HALBERD, CITY_HAMMER, WAR_HAMMER, SERRATED_DAGGER, HUNTING_KNIFE, JOUSTING_LANCE, EXPLORER_MACHETE, WAR_MACE, CHAIN_SWORD, CRYSTAL_TRIDENT, SHADOW_SCYTHE, BATTLE_GREATSWORD, PHLEGM_MACE, DOUBLE_FLAIL, HOOK_BLADE, GRAVITY_HAMMER, VORTEX_DAGGER, OBSIDIAN_RITUAL_DAGGER);
+    }
+
+    /** The empire shields: hand-written models, drawn flat and raised when blocking. */
+    public static List<RegistryObject<Item>> shields() {
+        return List.of(SULTHARI_SHIELD, NORDRATH_SHIELD, OBSERVATORY_SHIELD, VOID_SHIELD);
     }
 
     public static List<RegistryObject<Item>> armorPieces() {
@@ -136,6 +188,7 @@ public final class ItemRegistry {
         List<Item> items = new ArrayList<>();
         handheld().forEach(i -> items.add(i.get()));
         armorPieces().forEach(i -> items.add(i.get()));
+        shields().forEach(i -> items.add(i.get()));
         for (RegistryObject<Item> i : List.of(BRASS_AMULET, BRASS_RING, SMALL_TALISMAN, LARGE_TALISMAN, RETURN_SCROLL, CODEX_SHARD,
                 INFERNAL_EMBER, WAILING_SOUL, DINAR, BLUEPRINT, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS, MINOR_POMEGRANATE_ELIXIR,
                 BEARERS_TONIC, BEARERS_FLASK, DUNE_LEATHER, FROSTPELT, VOID_ASH)) {

@@ -1,0 +1,9 @@
+{
+  "item": "sofe:explorer_machete",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "king"
+  ],
+  "min_item_level": 1
+}
