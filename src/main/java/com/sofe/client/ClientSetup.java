@@ -35,7 +35,6 @@ public final class ClientSetup {
         ClientLockData.install();
         modBus.addListener(ClientSetup::registerOverlays);
         modBus.addListener(ClientSetup::registerBlockColors);
-        modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::registerLayers);
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::registerRenderers);
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::addLayers);
         MinecraftForge.EVENT_BUS.addListener(CombatHudOverlay::onRenderOverlay);

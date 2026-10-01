@@ -12,7 +12,15 @@ import net.minecraft.world.level.Level;
  * One of the Ten Broken Oaths (README, "The Ten Broken Oaths"): a guardian who betrayed one Law of the
  * Codex and fights with its inverted mechanic. Each serves an Archsin and guards the way to them.
  */
-public abstract class BrokenOathEntity extends SoFEBossEntity {
+public abstract class BrokenOathEntity extends SoFEBossEntity implements com.sofe.entity.SoFEAnimated {
+
+    private final software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache animationCache =
+            software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache() {
+        return animationCache;
+    }
 
     protected BrokenOathEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level, BossEvent.BossBarColor.WHITE);
