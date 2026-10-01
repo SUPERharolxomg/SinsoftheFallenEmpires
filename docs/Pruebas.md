@@ -42,6 +42,11 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] The Brass Sentinel wakes when the player reaches the Observatory, turns to the Void phase below half health and gives credit to everyone who fought
 
 - [ ] Boss phase transitions trigger at the right health thresholds
+- [ ] Kaleth's execution strike hits stunned targets far harder; Serath heals from the damage she deals; Vorath's rage raises his damage
+- [ ] The Codex Shard of a sin is given once per player, and only on the first defeat
+- [ ] The Citadel gate stays shut until both Kaleth and Serath fall
+- [ ] Each participant gets their own boss loot; nothing drops on the ground
+- [ ] The SoFE advancement tab follows the story (in game: Forge never grants advancements to the fake players of GameTests)
 - [ ] All 7 Archsins, the Brass Sentinel and Nahrazel (3 phases) can be defeated
 - [ ] All 10 Broken Oaths can be defeated
 - [ ] Envyris copies the player's actual class skills
