@@ -1,0 +1,9 @@
+{
+  "item": "sofe:vortex_dagger",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "sorceress"
+  ],
+  "min_item_level": 8
+}

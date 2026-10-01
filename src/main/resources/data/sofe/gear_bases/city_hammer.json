@@ -1,0 +1,8 @@
+{
+  "item": "sofe:city_hammer",
+  "slot": "weapon",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 1
+}

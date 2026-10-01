@@ -178,6 +178,13 @@ Design: [Pociones.md](Pociones.md).
 - [x] *(Extra)* Farms in Sulthari (fenced fields of wheat, carrots, potatoes and beetroots, and pens of cows, pigs, sheep and chickens); the plaza with a sadirvan, a star mosaic, flower beds and benches; the palace hall after its reference (gold capitals and banners on the columns, patterned rugs, divans and armchairs, plants, a tapestry behind the throne, a grand chandelier and a gold ring under the dome); no gap under the first row of house roofs; cinematic dialogue inside a taller lower black band
 - [x] *(Extra)* The palace hall rebuilt again: square columns of dark wood banded in gold up to the ceiling, the domes on solid rings (no gap between roof and drum), the main dome toward the door and a second golden dome over the throne on a dais of three steps, aetherium lamps on brass posts along the carpet and around the grounds; the Observatory with straight flights on solid supports, rugs, plants and lamps; grass between the houses; a lantern post at every plot
 
+## Extra — The arsenal, batch 1: melee weapons and shields
+
+- [x] 18 melee weapons (`TraitWeapon`), each SoFE gear that rolls affixes and drops by item level, with traits applied on hit (`WeaponTrait`, `WeaponTraitHandler`): reach (halberd, lance, trident, scythe, greatsword, hook-blade), sweep, stun, slam, bleeding (a new effect), beast-hunter, charge, plant-cutting, armor-piercing, flurry, frost, soul reaping, slow, pull, knock-up, Void and blood price
+- [x] 4 empire shields (`EmpireShield`) with a power when they block: slow (Sulthari), reflect 30% (Nordrath), heal (Observatory), weaken and wither (Void); raised model while blocking
+- [x] Dilara sells the brass weapons from Act I and the glacial ones from Act II; sprites drawn by `scripts/make_arsenal_sprites.py`
+- [x] Tests: `WeaponTraitTest` and `ArsenalGameTests` (gear bases, reach, slam, bleeding)
+
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).
 - [ ] Knight: Shield and Charge stances + 10 skills

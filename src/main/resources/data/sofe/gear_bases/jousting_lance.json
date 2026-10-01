@@ -1,0 +1,9 @@
+{
+  "item": "sofe:jousting_lance",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "king"
+  ],
+  "min_item_level": 2
+}

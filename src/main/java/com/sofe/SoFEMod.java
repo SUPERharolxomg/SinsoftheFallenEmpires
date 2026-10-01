@@ -108,6 +108,8 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(ProgressionHandler::onKill);
         MinecraftForge.EVENT_BUS.addListener(MobLevels::onJoin);
         MinecraftForge.EVENT_BUS.addListener(CharacterStats::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, com.sofe.gear.WeaponTraitHandler::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.WeaponTraitHandler::onBlock);
         MinecraftForge.EVENT_BUS.addListener(CharacterStats::onAttacked);
 
         modBus.addListener(StoryCapability::register);

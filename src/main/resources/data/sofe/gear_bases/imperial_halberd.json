@@ -1,0 +1,9 @@
+{
+  "item": "sofe:imperial_halberd",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "king"
+  ],
+  "min_item_level": 5
+}
