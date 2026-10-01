@@ -29,13 +29,14 @@ sins-of-fallen-empires/
 │   │   └── TitleScreenHandler.java         # ScreenEvent.Opening → replace TitleScreen
 │   ├── entity/
 │   │   ├── boss/
-│   │   │   ├── ArchsinEntity.java          # Abstract base for the seven Archsins
+│   │   │   ├── SoFEBossEntity.java         # Boss bar, phases, difficulty, sealed arena, reset, participants, personal loot
+│   │   │   ├── ArchsinEntity.java          # Abstract base for the seven Archsins (temptation, Codex Shard)
 │   │   │   ├── VorathEntity.java           # Wrath
 │   │   │   ├── LuxaraEntity.java           # Lust
 │   │   │   ├── ...                         # Morthis, Avarok, Gularth, Envyris, Prython
 │   │   │   ├── NahrazelEntity.java         # The First Fallen, 3 phases
 │   │   │   └── BrassSentinelEntity.java    # Act I boss (2 phases, difficulty scaling, reset)
-│   │   ├── oath/
+│   │   ├── oath/                           # (for now in boss/, next to SoFEBossEntity)
 │   │   │   ├── BrokenOathEntity.java       # Abstract base for the Ten Broken Oaths
 │   │   │   ├── KalethEntity.java           # Law I — The Burning Blade
 │   │   │   └── ...                         # Serath ... Solrath
@@ -151,7 +152,9 @@ sins-of-fallen-empires/
 │   │   │   ├── LockAccess.java             # Same answer on server and client (act, bypass)
 │   │   │   ├── RegionEnforcer.java         # Server check once per second + teleport events
 │   │   │   ├── SealVeilBlock.java          # Region border wall, per-player collision and tint
-│   │   │   └── SealVeilFeature.java        # Raises the Veil on border columns (biome modifier)
+│   │   │   ├── SealVeilFeature.java        # Raises the Veil on border columns (biome modifier), also at 1:8 in the Nether
+│   │   │   ├── SealedGateBlock.java        # Dungeon and arena doors with a condition
+│   │   │   └── BurningDeep.java            # Nether portals, travel and link rules
 │   │   ├── gate/
 │   │   │   ├── SealedGateBlock.java        # Doors with a condition
 │   │   │   ├── VoidGateBlock.java          # The only End portal, under the Observatory
@@ -161,7 +164,7 @@ sins-of-fallen-empires/
 │   │   │   ├── ProtectedZoneData.java      # World SavedData, copied once from structure_positions.json
 │   │   │   ├── StructurePositions.java     # data/sofe/structure_positions.json: spawn, structures, NPCs, Waystones
 │   │   │   └── ZoneProtectionHandler.java  # Break, place, explosions, pistons, fluids, griefing; spawn in the city
-│   │   ├── build/SultharisBuilder.java     # Structure Block templates, or blockouts until the builds exist
+│   │   ├── build/StructureBuilder.java     # Structure Block templates, or each empire's blockouts until the builds exist
 │   │   ├── StoryPlacements.java            # Buildings, NPCs, Waystones and the Vault, placed once per world
 │   │   ├── JourneyRules.java               # No villagers or traders; Peaceful becomes Easy
 │   │   ├── dimension/                      # inverted_throne, codex_interior, echo

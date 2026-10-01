@@ -113,25 +113,37 @@ Split into five parts, one pull request each.
 - [x] Add Sulthari-themed textures and models (brass, clockwork, aetherium): placeholders drawn by `scripts/make_sprint4_textures.py` until the final art
 
 ## Sprint 5 — Act II: The Northern Campaign (Weeks 9-10)
-- [ ] Implement ArchsinEntity abstract class
-- [ ] Create VorathEntity with 2-phase fight
-- [ ] Build Burning Citadel structure
-- [ ] `BrokenOathEntity` base and Broken Oaths Kaleth (Law I) and Serath (Law II)
-- [ ] Nordrath region biomes and fixed structure positions; Nordrath Forge and Arena dungeons
-- [ ] *(World)* Nordrath building blocks (runestone, dark timber) with corrupted variants
-- [ ] *(World)* Sealed Gates for dungeons and arena; protection for dungeons and arenas
-- [ ] Implement boss health bar GUI
-- [ ] Add loot tables for boss drops
-- [ ] *(Rules)* Act II traits for vanilla mobs (zombies with empire armor, poison spiders)
-- [ ] *(Rules)* Arena seal, boss reset after 30 s without participants, and re-entry to recover a corpse
-- [ ] *(World)* The Burning Deep: Nether portals locked until Vorath falls, 1:8 region locks, portal link rules
-- [ ] *(World)* Region title in the Nether: "Welcome to" the region the Nether position maps to
-- [ ] *(World)* Nether materials: Infernal Ember, Wailing Soul
-- [ ] *(Rules)* SoFE advancement tab (Act I and II branches)
-- [ ] Vorath's temptation dialogue (stronger for the Knight) and the "Thank you, Bearer" twist
-- [ ] *(Annex)* Add GeckoLib and use a placeholder animated model for Vorath
-- [ ] *(Annex)* Boss participant tracking (damage dealt or 30 s in the arena)
-- [ ] *(Annex)* Codex Shard given per player on Archsin defeat
+Split into five parts. The dungeons and the Citadel are blockouts until their hand-made builds exist (a template in `data/sofe/structures/nordrath/<piece>.nbt` replaces each one; see [Mundo.md](Mundo.md#w6-the-empires-built-from-scratch)).
+
+### Part 5.1 — Nordrath
+- [x] Nordrath region biomes and fixed structure positions; Nordrath Forge and Arena dungeons (tundra, ice fields and volcanic forges as biome zones saved with the world; the Forge, the Arena, the Citadel and the Caverns entrance in `structure_positions.json`, built when a player first comes within 192 blocks)
+- [x] *(World)* Nordrath building blocks (runestone, dark timber) with corrupted variants (runestone bricks with stairs, slab and wall, dark timber and planks, iron brazier; scorched runestone and burning timber)
+- [x] *(Rules)* Act II traits for vanilla mobs (zombies with empire armor, poison spiders)
+
+### Part 5.2 — Bosses: the common base
+- [x] Implement ArchsinEntity abstract class (on `SoFEBossEntity`, which the Brass Sentinel now uses too)
+- [x] `BrokenOathEntity` base
+- [x] *(Annex)* Boss participant tracking (damage dealt or 30 s in the arena)
+- [x] Implement boss health bar GUI (brass frame, boss color, a notch every 10%; vanilla bosses keep theirs)
+- [x] *(Rules)* Arena seal, boss reset after 30 s without participants, and re-entry to recover a corpse
+- [x] *(World)* Sealed Gates for dungeons and arena; protection for dungeons and arenas (conditions in `data/sofe/conditions/`, the message says what is missing)
+
+### Part 5.3 — The enemies of Act II
+- [x] Broken Oaths Kaleth (Law I: thrown fire blades, stunning slam, execution strike on stunned targets) and Serath (Law II: life steal, blood pools that heal her)
+- [x] Create VorathEntity with 2-phase fight (rage that grows with every wound; in phase 2 the ring of fire closes in)
+- [x] Build Burning Citadel structure (blockout)
+- [x] *(Annex)* Add GeckoLib and use a placeholder animated model for Vorath (idle, walk and attack)
+- [x] Vorath's temptation dialogue (stronger for the Knight) and the "Thank you, Bearer" twist; the Act II main quest
+
+### Part 5.4 — Rewards and progress
+- [x] Add loot tables for boss drops (each participant rolls for themselves; Relics come in Sprint 5.5)
+- [x] *(Annex)* Codex Shard given per player on Archsin defeat
+- [x] *(Rules)* SoFE advancement tab (Act I and II branches)
+
+### Part 5.5 — The Burning Deep
+- [x] *(World)* The Burning Deep: Nether portals locked until Vorath falls, 1:8 region locks, portal link rules (the Seal Veil also stands at the scaled borders)
+- [x] *(World)* Region title in the Nether: "Welcome to" the region the Nether position maps to
+- [x] *(World)* Nether materials: Infernal Ember (basalt deltas, magma cubes), Wailing Soul (soul sand valleys); Nether mobs are two levels above the region they lie under
 
 ## Sprint 5.5 — Loot and Economy (Weeks 11-12)
 Design: [Pociones.md](Pociones.md).

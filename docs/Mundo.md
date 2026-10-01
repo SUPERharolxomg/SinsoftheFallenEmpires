@@ -86,7 +86,9 @@ Regions only touch at their borders; the Seal Veil runs along every shared borde
 | Nether (Burning Deep) | Same as the overworld region it maps to, +2 |
 | End (Outer Void) | 27–30 |
 
-**Fixed locations (examples).** Sulthari city at (0, 0). Burning Citadel ~(0, −4,500). Enchanted Gardens ~(4,200, −1,000). Stagnant Marsh ~(3,500, 4,200). Golden Vaults ~(−4,000, 0). The Celestial Spire rises above Sulthari only in Act V. The region bounds are part of the `sofe:aetheris` world preset (`data/sofe/worldgen/world_preset/aetheris.json`, generated from `RegionMap.defaultLayout()`) and are **saved inside each world** when it is created, so a later change to the layout only affects new worlds. Structure positions live in `data/sofe/structure_positions.json` (spawn, story structures and their protected zones, NPCs and Waystones), so they can change without code; a journey copies its zones when it is created.
+**Biome zones.** Inside a region, round zones of other biomes give it variety; like the layout they are saved with the world. Nordrath: tundra, two ice fields to the west and east, and volcanic forges around the Burning Citadel and the Nordrath Forge.
+
+**Fixed locations (examples).** Sulthari city at (0, 0). Burning Citadel ~(0, −4,500), Nordrath Forge ~(−1,200, −3,000), Nordrath Arena ~(1,200, −3,000), Nordrath Caverns entrance ~(−600, −2,400). Enchanted Gardens ~(4,200, −1,000). Stagnant Marsh ~(3,500, 4,200). Golden Vaults ~(−4,000, 0). The Celestial Spire rises above Sulthari only in Act V. The region bounds are part of the `sofe:aetheris` world preset (`data/sofe/worldgen/world_preset/aetheris.json`, generated from `RegionMap.defaultLayout()`) and are **saved inside each world** when it is created, so a later change to the layout only affects new worlds. Structure positions live in `data/sofe/structure_positions.json` (spawn, story structures and their protected zones, NPCs and Waystones), so they can change without code; a journey copies its zones when it is created.
 
 ---
 

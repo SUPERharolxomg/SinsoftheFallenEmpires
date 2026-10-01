@@ -32,3 +32,6 @@ src/generated/**/.cache
 # os
 .DS_Store
 Thumbs.db
+
+# logs written by the data generator at the repository root
+/logs
