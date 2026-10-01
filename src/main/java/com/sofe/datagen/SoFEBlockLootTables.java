@@ -1,6 +1,7 @@
 package com.sofe.datagen;
 
 import com.sofe.registry.BlockRegistry;
+import com.sofe.registry.HerbRegistry;
 import com.sofe.registry.SoFEBlocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import com.sofe.registry.material.Material;
@@ -32,6 +33,21 @@ public class SoFEBlockLootTables extends BlockLootSubProvider {
                     dropSelf(block);
                 }
             }
+        }
+        // herbs: a ripe crop gives its produce and 0-3 extra seeds; a wild plant gives produce and maybe seeds
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            var ripe = net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition.hasBlockStateProperties(herb.crop().get())
+                    .setProperties(net.minecraft.advancements.critereon.StatePropertiesPredicate.Builder.properties()
+                            .hasProperty(net.minecraft.world.level.block.CropBlock.AGE, 7));
+            add(herb.crop().get(), createCropDrops(herb.crop().get(), herb.produce().get(), herb.seeds().get(), ripe));
+            add(herb.wild().get(), net.minecraft.world.level.storage.loot.LootTable.lootTable()
+                    .withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool()
+                            .add(net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(herb.produce().get())
+                                    .apply(net.minecraft.world.level.storage.loot.functions.SetItemCountFunction.setCount(
+                                            net.minecraft.world.level.storage.loot.providers.number.UniformGenerator.between(1, 2)))))
+                    .withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool()
+                            .add(net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(herb.seeds().get())
+                                    .when(net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition.randomChance(0.6f)))));
         }
         for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
             Block block = entry.block().get();

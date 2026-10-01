@@ -4,6 +4,7 @@ import com.sofe.SoFEMod;
 import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
+import com.sofe.registry.HerbRegistry;
 import com.sofe.registry.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -26,6 +27,11 @@ public class SoFEItemModelProvider extends ItemModelProvider {
             }
         }
         ItemRegistry.flatItems().forEach(item -> basicItem(item.get()));
+        basicItem(HerbRegistry.MOUNTAIN_SAGE.get());
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            basicItem(herb.seeds().get());
+            withExistingParent("wild_" + herb.id(), mcLoc("item/generated")).texture("layer0", modLoc("block/wild_" + herb.id()));
+        }
         ItemRegistry.handheld().forEach(item -> withExistingParent(item.getId().getPath(), mcLoc("item/handheld"))
                 .texture("layer0", modLoc("item/" + item.getId().getPath())));
         ItemRegistry.spawnEggs().forEach(egg -> withExistingParent(egg.getId().getPath(), mcLoc("item/template_spawn_egg")));

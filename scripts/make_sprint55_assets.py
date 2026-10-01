@@ -196,3 +196,41 @@ save(top, BLOCK, "reward_coffer_bottom")
 img = new(); ImageDraw.Draw(img).polygon([(8, 3), (12, 8), (8, 13), (4, 8)], outline=(120, 120, 120, 160)); save(img, SLOT, "talisman")
 img = new(); d = ImageDraw.Draw(img); d.rectangle([7, 2, 8, 4], fill=(120, 120, 120, 160)); d.ellipse([4, 4, 11, 13], outline=(120, 120, 120, 160)); save(img, SLOT, "potion_belt")
 print("sprint 5.5 assets written")
+
+
+# --- herbs: wild plants, 4 growth stages per crop, seeds and the sage leaves
+HERBS = {
+    "mountain_sage": ((120, 160, 120), (170, 150, 220)),     # grey-green leaves, lilac flowers
+    "pomegranate": ((70, 130, 50), (190, 30, 45)),           # leaves, red fruit
+    "desert_lotus": ((60, 150, 110), (245, 200, 230)),       # leaves, pale pink petals
+}
+
+
+def plant(leaf, flower, stage):
+    """A cross-model plant: taller with each stage, flowers or fruit on the last one."""
+    img = new(); d = ImageDraw.Draw(img)
+    height = [4, 7, 10, 13][stage]
+    for x in (4, 8, 11):
+        d.line([(x, 15), (x + (1 if x < 8 else -1), 15 - height)], fill=leaf + (255,))
+        d.point((x - 1, 15 - height // 2), fill=shade(leaf, 1.2))
+        d.point((x + 1, 14 - height // 2), fill=shade(leaf, 0.8))
+    if stage == 3:
+        for x, y in ((5, 15 - height), (8, 14 - height), (10, 16 - height)):
+            d.rectangle([x - 1, y, x, y + 1], fill=flower + (255,))
+    return img
+
+
+for herb, (leaf, flower) in HERBS.items():
+    for stage in range(4):
+        save(plant(leaf, flower, stage), BLOCK, f"{herb}_crop_stage{stage}")
+    save(plant(leaf, flower, 3), BLOCK, f"wild_{herb}")
+    seeds = new(); d = ImageDraw.Draw(seeds)
+    for x, y in ((5, 6), (9, 5), (7, 9), (10, 10), (4, 11)):
+        d.ellipse([x, y, x + 2, y + 2], fill=shade(flower, 0.6), outline=shade(leaf, 0.6))
+    save(seeds, ITEM, f"{herb}_seeds")
+sage = new(); d = ImageDraw.Draw(sage)
+for a in ((4, 12), (11, 12), (8, 3)):
+    d.line([(8, 14), a], fill=(130, 170, 130, 255), width=2)
+d.point((8, 3), fill=(170, 150, 220, 255))
+save(sage, ITEM, "mountain_sage")
+print("herb textures written")

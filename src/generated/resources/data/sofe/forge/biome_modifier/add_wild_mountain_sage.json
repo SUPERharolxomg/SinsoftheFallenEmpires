@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_sulthari",
+  "features": "sofe:wild_mountain_sage",
+  "step": "vegetal_decoration"
+}

@@ -21,6 +21,7 @@ public final class CreativeTabRegistry {
                 MaterialRegistry.allItems().forEach(output::accept);
                 SoFEBlocks.creativeItems().forEach(output::accept);
                 ItemRegistry.creativeItems().forEach(output::accept);
+                HerbRegistry.creativeItems().forEach(output::accept);
             })
             .build());
 

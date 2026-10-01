@@ -5,6 +5,7 @@ import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
 import com.sofe.gear.SoFETiers;
+import com.sofe.registry.HerbRegistry;
 import com.sofe.registry.SoFEBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -76,6 +77,11 @@ public class SoFEBlockTagsProvider extends BlockTagsProvider {
                 default -> {
                 }
             }
+        }
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            tag(BlockTags.CROPS).add(herb.crop().get());
+            tag(BlockTags.MINEABLE_WITH_HOE).add(herb.crop().get());
+            tag(BlockTags.SMALL_FLOWERS).add(herb.wild().get());
         }
         tag(BlockTags.DRAGON_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get(), SoFEBlocks.SEALED_GATE.get());
         tag(BlockTags.WITHER_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get(), SoFEBlocks.SEALED_GATE.get());
