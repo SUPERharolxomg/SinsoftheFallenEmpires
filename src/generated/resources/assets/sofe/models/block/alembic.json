@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/alembic_bottom",
+    "side": "sofe:block/alembic_side",
+    "top": "sofe:block/alembic_top"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_nordrath",
+  "features": "sofe:runestone",
+  "step": "underground_ores"
+}

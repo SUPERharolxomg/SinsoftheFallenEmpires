@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_sulthari",
+  "features": "sofe:sulthari_brass_ore",
+  "step": "underground_ores"
+}
