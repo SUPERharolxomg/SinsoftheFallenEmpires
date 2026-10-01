@@ -71,6 +71,7 @@ public final class ClassSelectionHandler {
             sync(player);
             CombatHandler.refresh(player);
             ProgressionHandler.onBearerChosen(player);
+            com.sofe.story.SoFEAdvancements.award(player, "story/root");
             QuestEngine.onBearerChosen(player);
         });
     }

@@ -136,15 +136,12 @@ public final class ZoneProtectionHandler {
         }
     }
 
-    /** The zones of a new journey come from structure_positions.json, once. */
+    /** The zones come from structure_positions.json; each is added once and never moved. */
     public static void onServerStarted(ServerStartedEvent event) {
         MinecraftServer server = event.getServer();
         if (!(server.overworld().getChunkSource().getGenerator().getBiomeSource() instanceof AetherisBiomeSource)) return;
-        ProtectedZoneData data = ProtectedZoneData.get(server);
-        if (!data.initialized()) {
-            data.initialize(StructurePositions.get().zones());
-            SoFEMod.LOGGER.info("Registered {} protected zones for this journey", data.zones().size());
-        }
+        int added = ProtectedZoneData.get(server).addMissing(StructurePositions.get().zones());
+        if (added > 0) SoFEMod.LOGGER.info("Registered {} new protected zones for this journey", added);
     }
 
     /** New players appear in the plaza of Sulthari, not somewhere in the region. */

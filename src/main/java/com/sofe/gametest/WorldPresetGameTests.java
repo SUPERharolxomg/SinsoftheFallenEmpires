@@ -40,7 +40,9 @@ public class WorldPresetGameTests {
 
         helper.assertTrue(aetheris.regionMap().regionAt(0, 0) == Region.SULTHARI, "origin is not Sulthari");
         assertBiome(helper, aetheris, 0, 0, SoFEBiomes.SULTHARI_DESERT);
-        assertBiome(helper, aetheris, 0, -4500, SoFEBiomes.NORDRATH_TUNDRA);
+        assertBiome(helper, aetheris, 0, -4500, SoFEBiomes.NORDRATH_VOLCANIC_FORGES); // the Burning Citadel
+        assertBiome(helper, aetheris, 0, -2000, SoFEBiomes.NORDRATH_TUNDRA);
+        assertBiome(helper, aetheris, -1800, -4200, SoFEBiomes.NORDRATH_ICE_FIELDS);
         assertBiome(helper, aetheris, 4200, -1000, SoFEBiomes.PARSIVAN_GARDENS);
         assertBiome(helper, aetheris, 3500, 4200, SoFEBiomes.KHEMET_VALLEY);
         assertBiome(helper, aetheris, -4000, 0, SoFEBiomes.AUREUM_HILLS);

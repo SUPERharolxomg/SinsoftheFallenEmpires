@@ -8,7 +8,7 @@ import com.sofe.entity.npc.StoryNpcEntity;
 import com.sofe.player.PlayerClass;
 import com.sofe.registry.EntityRegistry;
 import com.sofe.registry.SoFEBlocks;
-import com.sofe.world.build.SultharisBuilder;
+import com.sofe.world.build.StructureBuilder;
 import com.sofe.world.zone.StructurePositions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,9 +27,10 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Puts the people and fixed blocks of Sulthari in place the first time a journey starts: the
- * Council, the Bearers, the merchants, the Waystones and the Personal Vault of the bank, from
- * structure_positions.json. Each is placed once; the list of what was placed is saved in the world.
+ * Puts the story places, people and fixed blocks from structure_positions.json in the world: Sulthari
+ * (the Council, the Bearers, the merchants, the Waystones and the Personal Vault) when a journey starts,
+ * and each far-away place (Nordrath's dungeons, the Burning Citadel) when a player first comes close.
+ * Each is placed once; the list of what was placed is saved in the world.
  */
 public final class StoryPlacements extends SavedData {
     private static final String NAME = "sofe_story_placements";
@@ -39,11 +40,41 @@ public final class StoryPlacements extends SavedData {
         return server.overworld().getDataStorage().computeIfAbsent(StoryPlacements::load, StoryPlacements::new, NAME);
     }
 
+    /** Places are built when a player comes this close, so a new journey does not generate far-away land. */
+    public static final int BUILD_DISTANCE = 192;
+    /** Around the world spawn everything is placed when the journey starts (the city of Sulthari). */
+    public static final int START_DISTANCE = 400;
+    private static final int CHECK_TICKS = 100;
+
     public static void onServerStarted(ServerStartedEvent event) {
-        if (SoFEWorld.isJourney(event.getServer())) placeAll(event.getServer(), StructurePositions.get());
+        MinecraftServer server = event.getServer();
+        if (!SoFEWorld.isJourney(server)) return;
+        BlockPos spawn = server.overworld().getSharedSpawnPos();
+        placeNear(server, StructurePositions.get(), (x, z) -> near(spawn.getX(), spawn.getZ(), x, z, START_DISTANCE));
     }
 
+    /** Every few seconds: build what a player is now close to (Nordrath's dungeons, the Citadel...). */
+    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent event) {
+        if (event.phase != net.minecraftforge.event.TickEvent.Phase.END || event.getServer().getTickCount() % CHECK_TICKS != 0) return;
+        MinecraftServer server = event.getServer();
+        if (!SoFEWorld.isJourney(server)) return;
+        var players = server.overworld().players();
+        if (players.isEmpty()) return;
+        placeNear(server, StructurePositions.get(), (x, z) -> players.stream()
+                .anyMatch(p -> near(p.getBlockX(), p.getBlockZ(), x, z, BUILD_DISTANCE)));
+    }
+
+    private static boolean near(int ax, int az, int bx, int bz, int distance) {
+        long dx = ax - bx, dz = az - bz;
+        return dx * dx + dz * dz <= (long) distance * distance;
+    }
+
+    /** Places everything, wherever it is (used by GameTests and admin tools). */
     public static int placeAll(MinecraftServer server, StructurePositions.Layout layout) {
+        return placeNear(server, layout, (x, z) -> true);
+    }
+
+    public static int placeNear(MinecraftServer server, StructurePositions.Layout layout, java.util.function.BiPredicate<Integer, Integer> near) {
         StoryPlacements data = get(server);
         ServerLevel level = server.overworld();
         int count = 0;
@@ -53,13 +84,13 @@ public final class StoryPlacements extends SavedData {
                 .thenComparing(StructurePositions.Structure::id));
         for (StructurePositions.Structure structure : structures) {
             String key = "build:" + structure.id();
-            if (data.placed.contains(key)) continue;
-            if (SultharisBuilder.build(level, structure)) count++;
+            if (data.placed.contains(key) || !near.test(structure.x(), structure.z())) continue;
+            if (StructureBuilder.build(level, structure)) count++;
             data.placed.add(key);
         }
         for (StructurePositions.Npc npc : layout.npcs()) {
             String key = "npc:" + npc.npc();
-            if (data.placed.contains(key)) continue;
+            if (data.placed.contains(key) || !near.test(npc.x(), npc.z())) continue;
             if (spawnNpc(level, npc).isPresent()) {
                 data.placed.add(key);
                 count++;
@@ -67,18 +98,20 @@ public final class StoryPlacements extends SavedData {
         }
         for (var entry : layout.waystones().entrySet()) {
             String key = "waystone:" + entry.getKey();
-            if (data.placed.contains(key)) continue;
+            if (data.placed.contains(key) || !near.test(entry.getValue().getX(), entry.getValue().getZ())) continue;
             placeBlock(level, entry.getValue(), SoFEBlocks.WAYSTONE.get().defaultBlockState());
             data.placed.add(key);
             count++;
         }
         layout.structure("sofe:sulthari/bank").ifPresent(bank -> {
-            if (data.placed.add("vault:sofe:sulthari/bank")) {
+            if (near.test(bank.x(), bank.z()) && data.placed.add("vault:sofe:sulthari/bank")) {
                 placeBlock(level, new BlockPos(bank.x(), 0, bank.z()), SoFEBlocks.PERSONAL_VAULT.get().defaultBlockState());
             }
         });
-        if (count > 0) SoFEMod.LOGGER.info("Placed {} buildings, story NPCs and Waystones in Sulthari", count);
-        data.setDirty();
+        if (count > 0) {
+            SoFEMod.LOGGER.info("Placed {} story buildings, NPCs and Waystones", count);
+            data.setDirty();
+        }
         return count;
     }
 

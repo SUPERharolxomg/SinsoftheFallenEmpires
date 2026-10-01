@@ -39,6 +39,7 @@ public final class ClientSetup {
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::registerRenderers);
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::addLayers);
         MinecraftForge.EVENT_BUS.addListener(CombatHudOverlay::onRenderOverlay);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
         modBus.addListener(SoFEKeys::register);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(SoFEKeys::onClientTick);

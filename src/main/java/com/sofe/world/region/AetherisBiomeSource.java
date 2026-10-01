@@ -48,27 +48,47 @@ public class AetherisBiomeSource extends BiomeSource {
         ).apply(i, Wastes::new));
     }
 
+    /**
+     * A round area of another biome inside a region, like the volcanic forges of Nordrath. It never
+     * spills into a neighbouring region. Optional in the codec so older worlds keep their biomes.
+     */
+    public record Zone(Holder<Biome> biome, int x, int z, int radius) {
+        public static final Codec<Zone> CODEC = RecordCodecBuilder.create(i -> i.group(
+                Biome.CODEC.fieldOf("biome").forGetter(Zone::biome),
+                Codec.INT.fieldOf("x").forGetter(Zone::x),
+                Codec.INT.fieldOf("z").forGetter(Zone::z),
+                Codec.INT.fieldOf("radius").forGetter(Zone::radius)
+        ).apply(i, Zone::new));
+    }
+
     public static final Codec<AetherisBiomeSource> CODEC = RecordCodecBuilder.<AetherisBiomeSource>mapCodec(i -> i.group(
             BOUNDS_CODEC.listOf().fieldOf("regions").forGetter(s -> s.map.bounds()),
             Codec.unboundedMap(REGION_CODEC, Biome.CODEC).fieldOf("biomes").forGetter(s -> s.biomes),
-            Wastes.CODEC.optionalFieldOf("ashen_wastes").forGetter(s -> s.wastes)
+            Wastes.CODEC.optionalFieldOf("ashen_wastes").forGetter(s -> s.wastes),
+            Zone.CODEC.listOf().optionalFieldOf("zones", List.of()).forGetter(s -> s.zones)
     ).apply(i, AetherisBiomeSource::new)).flatXmap(AetherisBiomeSource::validate, DataResult::success).codec();
 
     private final RegionMap map;
     private final Map<Region, Holder<Biome>> biomes;
     private final Optional<Wastes> wastes;
     private final Optional<RegionBounds> sulthari;
+    private final List<Zone> zones;
 
     /** Unchecked constructor used by the codec; {@link #validate} runs right after it. */
-    private AetherisBiomeSource(List<RegionBounds> bounds, Map<Region, Holder<Biome>> biomes, Optional<Wastes> wastes) {
+    private AetherisBiomeSource(List<RegionBounds> bounds, Map<Region, Holder<Biome>> biomes, Optional<Wastes> wastes, List<Zone> zones) {
         this.map = new RegionMap(bounds);
         this.biomes = new EnumMap<>(biomes);
         this.wastes = wastes;
         this.sulthari = bounds.stream().filter(b -> b.region() == Region.SULTHARI).findFirst();
+        this.zones = List.copyOf(zones);
     }
 
     public AetherisBiomeSource(RegionMap map, Map<Region, Holder<Biome>> biomes, Optional<Wastes> wastes) {
-        this(map.bounds(), biomes, wastes);
+        this(map, biomes, wastes, List.of());
+    }
+
+    public AetherisBiomeSource(RegionMap map, Map<Region, Holder<Biome>> biomes, Optional<Wastes> wastes, List<Zone> zones) {
+        this(map.bounds(), biomes, wastes, zones);
         validate(this).getOrThrow(false, message -> {
             throw new IllegalArgumentException(message);
         });
@@ -94,13 +114,19 @@ public class AetherisBiomeSource extends BiomeSource {
 
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-        return Stream.concat(biomes.values().stream(), wastes.stream().map(Wastes::biome)).distinct();
+        return Stream.concat(Stream.concat(biomes.values().stream(), wastes.stream().map(Wastes::biome)),
+                zones.stream().map(Zone::biome)).distinct();
     }
 
     @Override
     public Holder<Biome> getNoiseBiome(int quartX, int quartY, int quartZ, Climate.Sampler sampler) {
         int x = QuartPos.toBlock(quartX), z = QuartPos.toBlock(quartZ);
         Region region = map.regionAt(x, z);
+        for (Zone zone : zones) {
+            if (BiomeZones.contains(zone.x(), zone.z(), zone.radius(), x, z) && map.regionAt(zone.x(), zone.z()) == region) {
+                return zone.biome();
+            }
+        }
         if (region == Region.SULTHARI && wastes.isPresent() && sulthari.isPresent()
                 && AshenWastes.contains(sulthari.get(), wastes.get().innerRadius(), x, z)) {
             return wastes.get().biome();

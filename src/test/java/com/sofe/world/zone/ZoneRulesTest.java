@@ -47,7 +47,9 @@ class ZoneRulesTest {
         assertFalse(city.contains(homestead.minX(), 70, homestead.minZ()), "the Homestead is outside the walls");
         assertFalse(layout.npcs().isEmpty());
         layout.npcs().forEach(npc -> assertTrue(city.contains(npc.x(), 70, npc.z()), npc.npc() + " should stand in the city"));
-        layout.waystones().values().forEach(w -> assertTrue(city.contains(w.getX(), 70, w.getZ())));
+        layout.waystones().forEach((id, w) -> {
+            if (id.startsWith("sofe:sulthari/")) assertTrue(city.contains(w.getX(), 70, w.getZ()), id + " should stand in the city");
+        });
         assertTrue(layout.structure("sofe:sulthari/bank").isPresent(), "the bank holds the Personal Vault");
     }
 }
