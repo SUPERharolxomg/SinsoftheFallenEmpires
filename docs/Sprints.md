@@ -168,6 +168,9 @@ Design: [Pociones.md](Pociones.md).
 - [x] *(Annex)* `sofe:owner` component and `BindPolicy` (Flask and Codex Shards soulbound: never dropped or sold, kept through death). Keeping them out of other players' chests and `PACT_ONLY` come with the Pact in Sprint 7.5
 - [x] *(Annex)* Reward Coffer with personal loot for Vorath and his Broken Oaths
 - [x] *(Annex)* Secondary materials for Act I–II: Dune Leather, Frostpelt, Runestone, Void Ash
+- [x] *(Extra)* Herbs that can be farmed: Mountain Sage (Sulthari), Pomegranate (Parsivan) and Desert Lotus (Khemet) grow wild in their region and as crops on farmland; Ferid sells their seeds
+- [x] *(Extra, art pass after the first playtest)* GeckoLib models with animations and glow masks for the Void Wretch, Void Stalker, Kaleth, Serath, the Brass Sentinel (with its Void phase) and Vorath (`scripts/make_mob_models.py`); hand-drawn 16×16 sprites for gear and Relics (`scripts/make_gear_sprites.py`); high-resolution dialogue bars split per empire with their portrait windows (`scripts/split_dialogue_bars.py`); a larger framed portrait and engraved text in the dialogue box; a smaller Observatory dome; NPCs placed inside buildings instead of on their roofs
+- [x] *(Extra)* Sulthari rebuilt after its concept art: banded terracotta walls on an escarpment with towers, gatehouses and banners; the palace with a golden dome, red domes, minarets and a great portal; a golden-domed Observatory; varied houses, bazaar stalls and trees (`world/build/Architecture.java`, a kit the other empires will reuse with the concepts in `art/concepts/city_*.png`); portraits drawn at their own resolution
 
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).
