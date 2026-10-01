@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "sofe:block/corrupted_nordrath_dark_timber_end",
+    "side": "sofe:block/corrupted_nordrath_dark_timber"
+  }
+}

@@ -43,8 +43,20 @@ public final class StructurePositions {
     public record Npc(String npc, String type, int x, int z, float yaw, String role) {
     }
 
-    public record Layout(int spawnX, int spawnZ, Map<String, Structure> structures, Map<String, BlockPos> waystones, List<Npc> npcs) {
-        public static final Layout EMPTY = new Layout(0, 0, Map.of(), Map.of(), List.of());
+    /**
+     * A Sealed Gate: its center, the condition it needs (data/sofe/conditions) and the lang key that
+     * says what is missing. The opening is 3 wide and 4 high; alongX means players cross it moving along X.
+     */
+    public record Gate(String id, int x, int z, String condition, String hint, boolean alongX) {
+    }
+
+    public record Layout(int spawnX, int spawnZ, Map<String, Structure> structures, Map<String, BlockPos> waystones, List<Npc> npcs,
+                         Map<String, Gate> gates) {
+        public static final Layout EMPTY = new Layout(0, 0, Map.of(), Map.of(), List.of(), Map.of());
+
+        public Layout(int spawnX, int spawnZ, Map<String, Structure> structures, Map<String, BlockPos> waystones, List<Npc> npcs) {
+            this(spawnX, spawnZ, structures, waystones, npcs, Map.of());
+        }
 
         public List<ProtectedZone> zones() {
             List<ProtectedZone> zones = new ArrayList<>();
@@ -99,7 +111,16 @@ public final class StructurePositions {
                         n.has("role") ? n.get("role").getAsString() : null));
             }
         }
-        return new Layout(spawn.get("x").getAsInt(), spawn.get("z").getAsInt(), Map.copyOf(structures), Map.copyOf(waystones), List.copyOf(npcs));
+        Map<String, Gate> gates = new java.util.TreeMap<>();
+        if (json.has("gates")) {
+            for (Map.Entry<String, JsonElement> e : json.getAsJsonObject("gates").entrySet()) {
+                JsonObject g = e.getValue().getAsJsonObject();
+                gates.put(e.getKey(), new Gate(e.getKey(), g.get("x").getAsInt(), g.get("z").getAsInt(), g.get("condition").getAsString(),
+                        g.get("hint").getAsString(), g.has("axis") && g.get("axis").getAsString().equals("x")));
+            }
+        }
+        return new Layout(spawn.get("x").getAsInt(), spawn.get("z").getAsInt(), Map.copyOf(structures), Map.copyOf(waystones),
+                List.copyOf(npcs), Map.copyOf(gates));
     }
 
     public static void onAddReloadListeners(AddReloadListenerEvent event) {

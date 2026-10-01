@@ -31,13 +31,23 @@ public class ProtectedZoneData extends SavedData {
         return initialized;
     }
 
-    /** Copies the zones once; later calls do nothing. */
-    public void initialize(List<ProtectedZone> fromLayout) {
-        if (initialized) return;
-        zones.clear();
-        zones.addAll(fromLayout);
-        initialized = true;
-        setDirty();
+    /**
+     * Adds the zones of the layout this world does not have yet (a new world, or structures added by a
+     * mod update). Zones already saved are never moved, so an update cannot shift an existing city.
+     */
+    public int addMissing(List<ProtectedZone> fromLayout) {
+        int added = 0;
+        for (ProtectedZone zone : fromLayout) {
+            if (zones.stream().noneMatch(z -> z.id().equals(zone.id()))) {
+                zones.add(zone);
+                added++;
+            }
+        }
+        if (added > 0 || !initialized) {
+            initialized = true;
+            setDirty();
+        }
+        return added;
     }
 
     /** Structures placed later (camps, dungeons) register their own zones here. */

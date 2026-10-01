@@ -35,6 +35,9 @@ public final class SoFEBiomes {
     public static final ResourceKey<Biome> KHEMET_VALLEY = key(Region.KHEMET, "khemet_valley");
     public static final ResourceKey<Biome> AUREUM_HILLS = key(Region.AUREUM, "aureum_hills");
     public static final ResourceKey<Biome> AETHERIS_OCEAN = key(Region.OCEAN, "aetheris_ocean");
+    /** Nordrath's zones (docs/Mundo.md, W1): glaciers with ice spikes, and the volcanic forges of Wrath. */
+    public static final ResourceKey<Biome> NORDRATH_ICE_FIELDS = ResourceKey.create(Registries.BIOME, SoFEMod.id("nordrath_ice_fields"));
+    public static final ResourceKey<Biome> NORDRATH_VOLCANIC_FORGES = ResourceKey.create(Registries.BIOME, SoFEMod.id("nordrath_volcanic_forges"));
     /** The corrupted wilderness around the city, in the outer ring of Sulthari (docs/Mundo.md, W1). */
     public static final ResourceKey<Biome> ASHEN_WASTES = ResourceKey.create(Registries.BIOME, SoFEMod.id("ashen_wastes"));
 
@@ -58,6 +61,33 @@ public final class SoFEBiomes {
         context.register(AUREUM_HILLS, OverworldBiomes.plains(features, carvers, false, false, false));
         context.register(AETHERIS_OCEAN, OverworldBiomes.ocean(features, carvers, false));
         context.register(ASHEN_WASTES, ashenWastes(OverworldBiomes.desert(features, carvers)));
+        context.register(NORDRATH_ICE_FIELDS, OverworldBiomes.plains(features, carvers, false, true, true));
+        context.register(NORDRATH_VOLCANIC_FORGES, volcanicForges(OverworldBiomes.plains(features, carvers, false, false, false)));
+    }
+
+    /** Black rock and embers under a red sky, where Vorath's fire comes up from below. */
+    private static Biome volcanicForges(Biome plains) {
+        MobSpawnSettings.Builder spawns = new MobSpawnSettings.Builder();
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.ZOMBIE, 80, 2, 4));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SKELETON, 80, 1, 3));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 60, 1, 2));
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.MAGMA_CUBE, 20, 1, 2));
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .temperature(1.6f)
+                .downfall(0.0f)
+                .specialEffects(new BiomeSpecialEffects.Builder()
+                        .fogColor(0x5A2A1E)
+                        .skyColor(0x6E3226)
+                        .waterColor(0x3A3A40)
+                        .waterFogColor(0x201A1A)
+                        .grassColorOverride(0x5E4A3A)
+                        .foliageColorOverride(0x4A3A2E)
+                        .ambientParticle(new AmbientParticleSettings(ParticleTypes.ASH, 0.03f))
+                        .build())
+                .mobSpawnSettings(spawns.build())
+                .generationSettings(plains.getGenerationSettings())
+                .build();
     }
 
     /** The desert's terrain features under a grey sky with falling ash; only hostile creatures live here. */

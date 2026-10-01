@@ -54,6 +54,32 @@
               "min_z": -1500,
               "region": "aureum"
             }
+          ],
+          "zones": [
+            {
+              "biome": "sofe:nordrath_volcanic_forges",
+              "radius": 560,
+              "x": 0,
+              "z": -4500
+            },
+            {
+              "biome": "sofe:nordrath_volcanic_forges",
+              "radius": 280,
+              "x": -1200,
+              "z": -3000
+            },
+            {
+              "biome": "sofe:nordrath_ice_fields",
+              "radius": 650,
+              "x": -1800,
+              "z": -4200
+            },
+            {
+              "biome": "sofe:nordrath_ice_fields",
+              "radius": 600,
+              "x": 1800,
+              "z": -4000
+            }
           ]
         },
         "settings": "sofe:aetheris"

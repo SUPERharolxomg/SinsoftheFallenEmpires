@@ -1,25 +1,18 @@
 package com.sofe.world.build;
 
-import com.sofe.SoFEMod;
 import com.sofe.registry.SoFEBlocks;
 import com.sofe.world.zone.StructurePositions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Optional;
 
 /**
- * Builds the story places of Sulthari (docs/Mundo.md, W6). Each structure of structure_positions.json
- * uses its hand-made template (data/sofe/structures/sulthari/&lt;piece&gt;.nbt, saved with Structure Blocks)
- * when it exists; until then a simple blockout made of the Sulthari building blocks stands in its
- * place, so the city is playable before the final builds.
+ * The blockouts of Sulthari (docs/Mundo.md, W6): simple versions of the city's story places, made of
+ * the Sulthari building blocks, that stand in until the hand-made templates exist ({@link StructureBuilder}).
+ * Also holds the small helpers the other empires' blockouts share.
  */
 public final class SultharisBuilder {
     private static final int CLEAR_ABOVE = 12, FOUNDATION = 12;
@@ -27,10 +20,8 @@ public final class SultharisBuilder {
     private SultharisBuilder() {
     }
 
-    /** Builds one structure; returns false when it has no template and no blockout. */
-    public static boolean build(ServerLevel level, StructurePositions.Structure structure) {
-        String piece = structure.id().substring(structure.id().indexOf(':') + 1);
-        if (placeTemplate(level, structure, piece)) return true;
+    /** The blockout of a Sulthari piece; false when the piece has none. */
+    static boolean blockout(ServerLevel level, StructurePositions.Structure structure, String piece) {
         int y = surfaceY(level, structure.x(), structure.z());
         switch (piece) {
             case "sulthari/city" -> cityWall(level, structure);
@@ -50,19 +41,6 @@ public final class SultharisBuilder {
         return true;
     }
 
-    /** A template saved with Structure Blocks, placed with its center on the structure's position. */
-    private static boolean placeTemplate(ServerLevel level, StructurePositions.Structure structure, String piece) {
-        ResourceLocation id = SoFEMod.id(piece);
-        Optional<StructureTemplate> template = level.getStructureManager().get(id);
-        if (template.isEmpty() || template.get().getSize().getX() == 0) return false;
-        var size = template.get().getSize();
-        int y = surfaceY(level, structure.x(), structure.z());
-        BlockPos corner = new BlockPos(structure.x() - size.getX() / 2, y, structure.z() - size.getZ() / 2);
-        template.get().placeInWorld(level, corner, corner, new StructurePlaceSettings(), level.getRandom(), Block.UPDATE_CLIENTS);
-        SoFEMod.LOGGER.info("Placed template {} at {}", id, corner);
-        return true;
-    }
-
     static int surfaceY(ServerLevel level, int x, int z) {
         level.getChunk(x >> 4, z >> 4);
         return level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
@@ -70,12 +48,12 @@ public final class SultharisBuilder {
 
     // --- blockouts
 
-    private static void set(ServerLevel level, int x, int y, int z, BlockState state) {
+    static void set(ServerLevel level, int x, int y, int z, BlockState state) {
         level.setBlock(new BlockPos(x, y, z), state, Block.UPDATE_CLIENTS);
     }
 
     /** A flat floor at height y: fills the ground below and clears the air above. */
-    private static void pad(ServerLevel level, int minX, int minZ, int maxX, int maxZ, int y, BlockState floor) {
+    static void pad(ServerLevel level, int minX, int minZ, int maxX, int maxZ, int y, BlockState floor) {
         BlockState fill = Blocks.SANDSTONE.defaultBlockState(), air = Blocks.AIR.defaultBlockState();
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
@@ -89,7 +67,7 @@ public final class SultharisBuilder {
         }
     }
 
-    private static int half(int size) {
+    static int half(int size) {
         return size / 2;
     }
 

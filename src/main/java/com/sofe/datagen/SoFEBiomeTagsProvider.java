@@ -11,6 +11,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -37,5 +38,9 @@ public class SoFEBiomeTagsProvider extends BiomeTagsProvider {
         });
         tag(IS_AETHERIS).add(SoFEBiomes.ASHEN_WASTES);
         tag(regionTag(Region.SULTHARI)).add(SoFEBiomes.ASHEN_WASTES);
+        for (var nordrath : List.of(SoFEBiomes.NORDRATH_ICE_FIELDS, SoFEBiomes.NORDRATH_VOLCANIC_FORGES)) {
+            tag(IS_AETHERIS).add(nordrath);
+            tag(regionTag(Region.NORDRATH)).add(nordrath);
+        }
     }
 }

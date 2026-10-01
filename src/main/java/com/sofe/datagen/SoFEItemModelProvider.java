@@ -25,7 +25,7 @@ public class SoFEItemModelProvider extends ItemModelProvider {
                 }
             }
         }
-        basicItem(ItemRegistry.RETURN_SCROLL.get());
+        ItemRegistry.flatItems().forEach(item -> basicItem(item.get()));
         ItemRegistry.spawnEggs().forEach(egg -> withExistingParent(egg.getId().getPath(), mcLoc("item/template_spawn_egg")));
     }
 }

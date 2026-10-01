@@ -14,8 +14,8 @@ public final class ClientPacketHandlers {
     private ClientPacketHandlers() {
     }
 
-    public static void showRegionTitle(Region region, com.sofe.world.lock.RegionStatus status) {
-        RegionTitleOverlay.show(region, status);
+    public static void showRegionTitle(Region region, com.sofe.world.lock.RegionStatus status, boolean deep) {
+        RegionTitleOverlay.show(region, status, deep);
     }
 
     public static void showDialogue(com.sofe.network.DialogueLinePacket line) {

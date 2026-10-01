@@ -140,6 +140,14 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(JourneyRules::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(JourneyRules::onServerTick);
         MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onServerTick);
+
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.BurningDeep::onPortalSpawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.BurningDeep::onTravel);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.BurningDeep::onDrops);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.region.RegionTitleHandler::onChangeDimension);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, com.sofe.mob.MobTraits::onJoin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onHurt);
         MinecraftForge.EVENT_BUS.addListener(ClassSelectionHandler::onStartTracking);
 
         if (FMLEnvironment.dist.isClient()) {

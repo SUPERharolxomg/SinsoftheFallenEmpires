@@ -29,8 +29,12 @@ public final class SoFEBlocks {
     /** How the data generators make the block state and model. */
     public enum Shape { CUBE, CUBE_SIDES, STAIRS, SLAB, WALL, PILLAR, HAND_MADE }
 
-    /** @param base for stairs, slabs and walls: the full block whose texture they use */
-    public record Entry(RegistryObject<Block> block, Shape shape, RegistryObject<Block> base, boolean inCreativeTab) {
+    /**
+     * @param base    for stairs, slabs and walls: the full block whose texture they use
+     * @param oreDrop for ores: the item they drop (Fortune applies, Silk Touch drops the ore); null otherwise
+     */
+    public record Entry(RegistryObject<Block> block, Shape shape, RegistryObject<Block> base, boolean inCreativeTab,
+                        Supplier<? extends net.minecraft.world.item.Item> oreDrop) {
     }
 
     // declared before the blocks: their static initializers add to these lists
@@ -76,6 +80,50 @@ public final class SoFEBlocks {
     public static final RegistryObject<Block> SULTHARI_AETHERIUM_LAMP = cube("sulthari_aetherium_lamp",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SEA_LANTERN).mapColor(MapColor.COLOR_CYAN).lightLevel(s -> 15)));
 
+    // --- Nordrath building set (docs/Mundo.md, W6): intact and corrupted
+    public static final RegistryObject<Block> NORDRATH_RUNESTONE_BRICKS = cube("nordrath_runestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).mapColor(MapColor.COLOR_GRAY)));
+    public static final RegistryObject<Block> NORDRATH_RUNESTONE_BRICK_STAIRS = register("nordrath_runestone_brick_stairs", Shape.STAIRS,
+            NORDRATH_RUNESTONE_BRICKS, true, () -> new StairBlock(() -> NORDRATH_RUNESTONE_BRICKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
+    public static final RegistryObject<Block> NORDRATH_RUNESTONE_BRICK_SLAB = register("nordrath_runestone_brick_slab", Shape.SLAB,
+            NORDRATH_RUNESTONE_BRICKS, true, () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
+    public static final RegistryObject<Block> NORDRATH_RUNESTONE_BRICK_WALL = register("nordrath_runestone_brick_wall", Shape.WALL,
+            NORDRATH_RUNESTONE_BRICKS, true, () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).forceSolidOn()));
+    public static final RegistryObject<Block> NORDRATH_DARK_TIMBER = register("nordrath_dark_timber", Shape.PILLAR, null, true,
+            () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LOG)));
+    public static final RegistryObject<Block> NORDRATH_DARK_PLANKS = cube("nordrath_dark_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistryObject<Block> NORDRATH_IRON_BRAZIER = cube("nordrath_iron_brazier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).lightLevel(s -> 15)));
+    public static final RegistryObject<Block> CORRUPTED_NORDRATH_RUNESTONE_BRICKS = cube("corrupted_nordrath_runestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICKS).mapColor(MapColor.COLOR_BLACK)));
+    public static final RegistryObject<Block> CORRUPTED_NORDRATH_DARK_TIMBER = register("corrupted_nordrath_dark_timber", Shape.PILLAR, null, true,
+            () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_STEM).lightLevel(s -> 6)));
+
+    // --- Sealed Gates (docs/Mundo.md, W2): dungeon and arena doors with their own condition
+    public static final RegistryObject<Block> SEALED_GATE = register("sealed_gate", Shape.HAND_MADE, null, false,
+            () -> new com.sofe.world.lock.SealedGateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE)
+                    .strength(-1.0f, 3_600_000.0f).noLootTable().lightLevel(s -> 7).sound(SoundType.AMETHYST)
+                    .pushReaction(PushReaction.BLOCK).isValidSpawn((state, level, pos, type) -> false)));
+
+    // --- the Burning Deep (docs/Anexos.md, A3)
+    public static final RegistryObject<Block> INFERNAL_EMBER_ORE = ore("infernal_ember_ore",
+            () -> new net.minecraft.world.level.block.DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_GOLD_ORE)
+                    .mapColor(MapColor.COLOR_ORANGE).lightLevel(s -> 5), net.minecraft.util.valueproviders.UniformInt.of(2, 5)),
+            ItemRegistry.INFERNAL_EMBER);
+    public static final RegistryObject<Block> WAILING_SOUL_ORE = ore("wailing_soul_ore",
+            () -> new net.minecraft.world.level.block.DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_QUARTZ_ORE)
+                    .mapColor(MapColor.COLOR_CYAN).lightLevel(s -> 3), net.minecraft.util.valueproviders.UniformInt.of(2, 5)),
+            ItemRegistry.WAILING_SOUL);
+
+    private static RegistryObject<Block> ore(String id, Supplier<Block> factory, Supplier<? extends net.minecraft.world.item.Item> drop) {
+        RegistryObject<Block> block = register(id, Shape.CUBE, null, true, factory);
+        Entry plain = ENTRIES.remove(ENTRIES.size() - 1);
+        ENTRIES.add(new Entry(plain.block(), plain.shape(), null, true, drop));
+        return block;
+    }
+
     private SoFEBlocks() {
     }
 
@@ -94,7 +142,7 @@ public final class SoFEBlocks {
     private static RegistryObject<Block> register(String id, Shape shape, RegistryObject<Block> base, boolean inCreativeTab, Supplier<Block> factory) {
         RegistryObject<Block> block = BlockRegistry.BLOCKS.register(id, factory);
         RegistryObject<Item> item = ItemRegistry.ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
-        ENTRIES.add(new Entry(block, shape, base, inCreativeTab));
+        ENTRIES.add(new Entry(block, shape, base, inCreativeTab, null));
         ITEMS.add(item);
         return block;
     }
