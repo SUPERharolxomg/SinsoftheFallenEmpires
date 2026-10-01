@@ -115,6 +115,13 @@
       "size_x": 16,
       "size_z": 16,
       "zone": "dungeon"
+    },
+    "sofe:nordrath/city": {
+      "x": 0,
+      "z": -2400,
+      "size_x": 400,
+      "size_z": 400,
+      "zone": "city"
     }
   },
   "waystones": {
@@ -141,6 +148,10 @@
     "sofe:nordrath/burning_citadel": {
       "x": 6,
       "z": -4444
+    },
+    "sofe:nordrath/city": {
+      "x": -5,
+      "z": -2374
     }
   },
   "npcs": [
