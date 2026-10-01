@@ -33,7 +33,20 @@ import java.util.List;
  * awake and obeying no one. Phase 1 is a brass golem; below half health the Void takes it and it
  * calls Void creatures. On Hard it also sends out a ring of gears.
  */
-public class BrassSentinelEntity extends SoFEBossEntity {
+public class BrassSentinelEntity extends SoFEBossEntity implements com.sofe.entity.SoFEAnimated {
+
+    private final software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache animationCache =
+            software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache() {
+        return animationCache;
+    }
+
+    @Override
+    public String modelName() {
+        return "brass_sentinel";
+    }
     public static final String BOSS_ID = "sofe:brass_sentinel";
     private static final int SUMMON_EVERY = 400;
     private static final int SHOCKWAVE_EVERY = 160;
