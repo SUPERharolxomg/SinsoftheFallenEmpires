@@ -2,6 +2,7 @@ package com.sofe.world.gen;
 
 import com.sofe.SoFEMod;
 import com.sofe.datagen.SoFEBiomeTagsProvider;
+import com.sofe.registry.HerbRegistry;
 import com.sofe.registry.SoFEBlocks;
 import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
@@ -85,7 +86,21 @@ public final class SoFEFeatures {
         return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, SoFEMod.id(name));
     }
 
+    public static ResourceKey<ConfiguredFeature<?, ?>> herbConfigured(HerbRegistry.Herb herb) {
+        return configuredKey("wild_" + herb.id());
+    }
+
+    public static ResourceKey<PlacedFeature> herbPlaced(HerbRegistry.Herb herb) {
+        return placedKey("wild_" + herb.id());
+    }
+
     public static void configured(BootstapContext<ConfiguredFeature<?, ?>> context) {
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            context.register(herbConfigured(herb), new ConfiguredFeature<>(Feature.RANDOM_PATCH,
+                    net.minecraft.data.worldgen.features.FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
+                            new net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration(
+                                    net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider.simple(herb.wild().get())))));
+        }
         var stone = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         var deepslate = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
         context.register(BRASS_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
@@ -106,6 +121,11 @@ public final class SoFEFeatures {
 
     public static void placed(BootstapContext<PlacedFeature> context) {
         var configured = context.lookup(Registries.CONFIGURED_FEATURE);
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            context.register(herbPlaced(herb), new PlacedFeature(configured.getOrThrow(herbConfigured(herb)), List.of(
+                    net.minecraft.world.level.levelgen.placement.RarityFilter.onAverageOnceEvery(12), InSquarePlacement.spread(),
+                    net.minecraft.data.worldgen.placement.PlacementUtils.HEIGHTMAP, BiomeFilter.biome())));
+        }
         // no placement modifiers: it runs once per chunk and walks the chunk's columns itself
         context.register(SEAL_VEIL_PLACED, new PlacedFeature(configured.getOrThrow(SEAL_VEIL_CONFIGURED), List.of()));
         context.register(BRASS_ORE_PLACED, new PlacedFeature(configured.getOrThrow(BRASS_ORE_CONFIGURED), List.of(
@@ -128,6 +148,11 @@ public final class SoFEFeatures {
     public static void biomeModifiers(BootstapContext<BiomeModifier> context) {
         var biomes = context.lookup(Registries.BIOME);
         var placed = context.lookup(Registries.PLACED_FEATURE);
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            context.register(modifierKey("add_wild_" + herb.id()), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                    biomes.getOrThrow(SoFEBiomeTagsProvider.regionTag(herb.region())),
+                    HolderSet.direct(placed.getOrThrow(herbPlaced(herb))), GenerationStep.Decoration.VEGETAL_DECORATION));
+        }
         context.register(ADD_SEAL_VEIL, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(SoFEBiomeTagsProvider.IS_AETHERIS), HolderSet.direct(placed.getOrThrow(SEAL_VEIL_PLACED)),
                 GenerationStep.Decoration.TOP_LAYER_MODIFICATION));

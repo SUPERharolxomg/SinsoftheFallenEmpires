@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_parsivan",
+  "features": "sofe:wild_pomegranate",
+  "step": "vegetal_decoration"
+}

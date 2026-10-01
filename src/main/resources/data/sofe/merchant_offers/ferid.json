@@ -18,15 +18,28 @@
       "stock": 16
     },
     {
+      "sell": "sofe:pomegranate_seeds",
+      "count": 2,
+      "price": 5,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:desert_lotus_seeds",
+      "count": 2,
+      "price": 6,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:mountain_sage_seeds",
+      "count": 2,
+      "price": 4,
+      "stock": 8
+    },
+    {
       "sell": "sofe:pomegranate",
       "count": 2,
       "price": 6,
-      "stock": 12
-    },
-    {
-      "sell": "sofe:desert_lotus",
-      "price": 8,
-      "stock": 10
+      "stock": 6
     }
   ],
   "buys": [
@@ -37,6 +50,10 @@
     {
       "item": "sofe:desert_lotus",
       "price": 2
+    },
+    {
+      "item": "sofe:mountain_sage",
+      "price": 1
     }
   ]
 }

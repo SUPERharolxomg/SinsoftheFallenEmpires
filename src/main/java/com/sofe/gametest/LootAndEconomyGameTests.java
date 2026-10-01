@@ -165,4 +165,16 @@ public class LootAndEconomyGameTests {
         helper.assertTrue(player.getPersistentData().contains(SoFEMod.MOD_ID + ":soulbound_kept"), "the Flask was not kept for the respawn");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void aRipeHerbGivesItsProduceAndSeeds(GameTestHelper helper) {
+        var herb = com.sofe.registry.HerbRegistry.SAGE;
+        helper.setBlock(new BlockPos(1, 0, 1), net.minecraft.world.level.block.Blocks.FARMLAND);
+        helper.setBlock(new BlockPos(1, 1, 1), herb.crop().get().defaultBlockState().setValue(net.minecraft.world.level.block.CropBlock.AGE, 7));
+        ServerPlayer farmer = bearer(helper, "sofe_test_farmer", new Vec3(2.5, 1, 1.5));
+        farmer.gameMode.destroyBlock(helper.absolutePos(new BlockPos(1, 1, 1)));
+        helper.assertItemEntityPresent(herb.produce().get(), new BlockPos(1, 1, 1), 2);
+        helper.assertItemEntityPresent(herb.seeds().get(), new BlockPos(1, 1, 1), 2);
+        helper.succeed();
+    }
 }
