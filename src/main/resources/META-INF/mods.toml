@@ -38,6 +38,22 @@ description='''${mod_description}'''
     ordering="AFTER"
     side="BOTH"
 
+# flags and decorations of the cities
+[[dependencies.${mod_id}]]
+    modId="supplementaries"
+    mandatory=true
+    versionRange="[1.20-3.1.43,)"
+    ordering="AFTER"
+    side="BOTH"
+
+# the drakkars and ships moored in the harbours
+[[dependencies.${mod_id}]]
+    modId="smallships"
+    mandatory=true
+    versionRange="[2.0.0-b1.4,)"
+    ordering="AFTER"
+    side="BOTH"
+
 # the furniture of the city interiors
 [[dependencies.${mod_id}]]
     modId="refurbished_furniture"

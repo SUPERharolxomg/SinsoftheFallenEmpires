@@ -1,0 +1,88 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_skald",
+  "lines": [
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.nordrath_skald.ask",
+      "answers": [
+        {
+          "text": "dialogue.sofe.nordrath_skald.topic.1",
+          "next": 1
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.topic.2",
+          "next": 2
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.topic.3",
+          "next": 3
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.topic.4",
+          "next": 4
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.nordrath_skald.tale.1",
+      "answers": [
+        {
+          "text": "dialogue.sofe.nordrath_skald.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.nordrath_skald.tale.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.nordrath_skald.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.nordrath_skald.tale.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.nordrath_skald.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.nordrath_skald.tale.4",
+      "answers": [
+        {
+          "text": "dialogue.sofe.nordrath_skald.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.nordrath_skald.bye",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -23,6 +23,10 @@ final class NordrathBuilder {
     static boolean blockout(ServerLevel level, StructurePositions.Structure s, String piece) {
         int y = SultharisBuilder.surfaceY(level, s.x(), s.z());
         switch (piece) {
+            case "nordrath/city" -> {
+                NordrathCity.build(level, s);
+                return true;
+            }
             case "nordrath/forge" -> forge(level, s, y);
             case "nordrath/arena" -> arena(level, s, y);
             case "nordrath/burning_citadel" -> citadel(level, s, y);

@@ -1,0 +1,10 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_brewer",
+  "lines": [
+    {
+      "speaker": "nordrath_brewer",
+      "text": "dialogue.sofe.nordrath_brewer.act1.1"
+    }
+  ]
+}

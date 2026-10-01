@@ -1,0 +1,15 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_hunter",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_hunter",
+      "text": "dialogue.sofe.nordrath_hunter.act3.1"
+    }
+  ]
+}

@@ -41,7 +41,7 @@ class ZoneRulesTest {
         StructurePositions.Layout layout = StructurePositions.parse(JsonParser.parseString(
                 Files.readString(Path.of("src/main/resources/data/sofe/structure_positions.json"))).getAsJsonObject());
         List<ProtectedZone> zones = layout.zones();
-        ProtectedZone city = zones.stream().filter(z -> z.kind() == ProtectedZone.Kind.CITY).findFirst().orElseThrow();
+        ProtectedZone city = zones.stream().filter(z -> z.kind() == ProtectedZone.Kind.CITY && z.id().equals("sofe:sulthari/city")).findFirst().orElseThrow();
         ProtectedZone homestead = zones.stream().filter(z -> z.kind() == ProtectedZone.Kind.HOMESTEAD).findFirst().orElseThrow();
         assertTrue(city.contains(layout.spawnX(), 70, layout.spawnZ()), "new players appear inside the city");
         assertFalse(city.contains(homestead.minX(), 70, homestead.minZ()), "the Homestead is outside the walls");

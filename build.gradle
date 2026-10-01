@@ -95,6 +95,11 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:refurbished-furniture-897116:${furniture_file}")
     runtimeOnly fg.deobf("curse.maven:framework-549225:${framework_file}")
 
+    // Flags, sconces and decorations (Supplementaries and its library Moonlight), and ships that sail (Small Ships)
+    runtimeOnly fg.deobf("curse.maven:supplementaries-412082:${supplementaries_file}")
+    runtimeOnly fg.deobf("curse.maven:moonlight-499980:${moonlight_file}")
+    runtimeOnly fg.deobf("curse.maven:small-ships-450659:${smallships_file}")
+
     // Unit tests for pure game logic (no Minecraft classes)
     testImplementation platform("org.junit:junit-bom:${junit_version}")
     testImplementation 'org.junit.jupiter:junit-jupiter'

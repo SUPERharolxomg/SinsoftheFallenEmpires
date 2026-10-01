@@ -1,0 +1,15 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_brewer",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_brewer",
+      "text": "dialogue.sofe.nordrath_brewer.act3.1"
+    }
+  ]
+}
