@@ -1,0 +1,18 @@
+{
+  "kind": "prefix",
+  "stat": "magic_damage",
+  "low": [
+    3,
+    5
+  ],
+  "high": [
+    30,
+    40
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "weapon",
+    "jewelry"
+  ],
+  "weight": 10
+}

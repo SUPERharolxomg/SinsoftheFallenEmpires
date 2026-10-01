@@ -1,0 +1,16 @@
+{
+  "type": "sofe:imperial_forge",
+  "blueprint": "sofe:brass_longsword",
+  "ingredients": [
+    {
+      "item": "sofe:sulthari_brass_ingot",
+      "count": 3
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  ],
+  "result": "sofe:brass_longsword",
+  "item_level": 2
+}

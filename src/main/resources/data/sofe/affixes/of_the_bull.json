@@ -1,0 +1,20 @@
+{
+  "kind": "suffix",
+  "stat": "strength",
+  "low": [
+    1,
+    2
+  ],
+  "high": [
+    18,
+    25
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "weapon",
+    "armor",
+    "jewelry",
+    "talisman"
+  ],
+  "weight": 10
+}

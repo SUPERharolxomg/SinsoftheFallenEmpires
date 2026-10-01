@@ -1,0 +1,8 @@
+{
+  "item": "sofe:brass_ankh_rod",
+  "slot": "weapon",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 1
+}

@@ -1,0 +1,14 @@
+{
+  "type": "sofe:alembic",
+  "ingredients": [
+    {
+      "item": "sofe:pomegranate",
+      "count": 2
+    },
+    {
+      "item": "sofe:brass_flask",
+      "count": 1
+    }
+  ],
+  "result": "sofe:minor_pomegranate_elixir"
+}
