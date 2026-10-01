@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "minecraft:basalt_deltas",
+  "features": "sofe:infernal_ember_ore",
+  "step": "underground_ores"
+}

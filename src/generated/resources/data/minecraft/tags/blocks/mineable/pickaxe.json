@@ -27,6 +27,14 @@
     "sofe:sulthari_brass_plating",
     "sofe:sulthari_brass_trim",
     "sofe:sulthari_glazed_tiles",
-    "sofe:sulthari_aetherium_lamp"
+    "sofe:sulthari_aetherium_lamp",
+    "sofe:nordrath_runestone_bricks",
+    "sofe:nordrath_runestone_brick_stairs",
+    "sofe:nordrath_runestone_brick_slab",
+    "sofe:nordrath_runestone_brick_wall",
+    "sofe:nordrath_iron_brazier",
+    "sofe:corrupted_nordrath_runestone_bricks",
+    "sofe:infernal_ember_ore",
+    "sofe:wailing_soul_ore"
   ]
 }
