@@ -62,6 +62,7 @@ public class SoFEMod {
 
         MaterialRegistry.init();
         SoFEBlocks.init();
+        com.sofe.registry.HerbRegistry.init();
         BlockRegistry.BLOCKS.register(modBus);
         ItemRegistry.ITEMS.register(modBus);
         EntityRegistry.ENTITIES.register(modBus);
@@ -126,6 +127,8 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(StructurePositions::onAddReloadListeners);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onCreateSpawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.command.SoFECommands::register);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onSpawnCheck);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onBreak);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onPlace);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onRightClickBlock);
