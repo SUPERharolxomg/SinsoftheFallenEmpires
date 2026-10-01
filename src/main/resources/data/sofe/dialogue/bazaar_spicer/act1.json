@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_spicer",
+  "lines": [
+    {
+      "speaker": "bazaar_spicer",
+      "text": "dialogue.sofe.bazaar_spicer.act1.1"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "suffix",
+  "stat": "crit_chance",
+  "low": [
+    1,
+    2
+  ],
+  "high": [
+    8,
+    10
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "weapon",
+    "jewelry",
+    "talisman"
+  ],
+  "weight": 10
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "BSB",
+    " S "
+  ],
+  "key": {
+    "B": {
+      "item": "sofe:sulthari_brass_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "sofe:brass_ankh_rod",
+    "count": 1
+  }
+}

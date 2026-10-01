@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_guard",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "citizen_guard",
+      "text": "dialogue.sofe.citizen_guard.act3.1"
+    }
+  ]
+}

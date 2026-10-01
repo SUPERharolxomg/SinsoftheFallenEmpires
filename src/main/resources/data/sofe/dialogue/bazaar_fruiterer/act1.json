@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_fruiterer",
+  "lines": [
+    {
+      "speaker": "bazaar_fruiterer",
+      "text": "dialogue.sofe.bazaar_fruiterer.act1.1"
+    }
+  ]
+}

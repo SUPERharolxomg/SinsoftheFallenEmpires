@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/imperial_forge_bottom",
+    "side": "sofe:block/imperial_forge_side",
+    "top": "sofe:block/imperial_forge_top"
+  }
+}

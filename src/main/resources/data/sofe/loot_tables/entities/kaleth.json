@@ -89,6 +89,65 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "sofe:roll_gear",
+              "min_rarity": "imperial"
+            }
+          ]
+        }
+      ],
+      "sofe_extra": true
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sofe:kaleth_blade",
+          "functions": [
+            {
+              "function": "sofe:make_relic",
+              "relic": "kaleth_blade"
+            }
+          ]
+        }
+      ],
+      "sofe_extra": true
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sofe:blueprint",
+          "functions": [
+            {
+              "function": "sofe:set_blueprint",
+              "blueprint": "sofe:glacial_iron_sword"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "sofe:blueprint",
+          "functions": [
+            {
+              "function": "sofe:set_blueprint",
+              "blueprint": "sofe:glacial_iron_greataxe"
+            }
+          ]
+        }
+      ],
+      "sofe_extra": true
     }
   ]
 }

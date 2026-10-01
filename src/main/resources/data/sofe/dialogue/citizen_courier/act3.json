@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_courier",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "citizen_courier",
+      "text": "dialogue.sofe.citizen_courier.act3.1"
+    }
+  ]
+}

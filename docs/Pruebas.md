@@ -83,6 +83,10 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 ## Gear, potions and economy
 
 - [ ] Rolled rarity matches configured odds (10,000 rolls, 2% margin)
+- [ ] A merchant validates price, Dinars and stock on the server; a soulbound item cannot be sold
+- [ ] The Imperial Forge needs the Blueprint and the ingredients, and always makes Tempered gear or better
+- [ ] An Archsin or Broken Oath leaves a Reward Coffer; each participant takes only their own share, once
+- [ ] Brass mines Glacial Iron and Star Lapis; stone does not
 - [ ] An equipped item with +Vitality raises maximum health, and taking it off removes the bonus
 - [ ] +1 to all Sorceress skills raises only learned skills, and never above rank 8
 - [ ] An item whose level or attribute requirement is not met gives nothing

@@ -50,6 +50,11 @@ public class KalethEntity extends BrokenOathEntity {
         super(type, level);
     }
 
+    @Override
+    public String modelName() {
+        return "kaleth";
+    }
+
     public static AttributeSupplier.Builder attributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 220.0)

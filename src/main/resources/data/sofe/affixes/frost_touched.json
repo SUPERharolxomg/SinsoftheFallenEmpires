@@ -1,0 +1,20 @@
+{
+  "kind": "prefix",
+  "stat": "skill_ranks",
+  "low": [
+    1,
+    1
+  ],
+  "high": [
+    2,
+    3
+  ],
+  "min_rarity": "imperial",
+  "slots": [
+    "weapon",
+    "jewelry"
+  ],
+  "weight": 5,
+  "parameter": "frost_lance",
+  "class": "sorceress"
+}

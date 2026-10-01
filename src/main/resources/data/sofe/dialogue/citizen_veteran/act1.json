@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_veteran",
+  "lines": [
+    {
+      "speaker": "citizen_veteran",
+      "text": "dialogue.sofe.citizen_veteran.act1.1"
+    }
+  ]
+}

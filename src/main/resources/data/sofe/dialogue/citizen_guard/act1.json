@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_guard",
+  "lines": [
+    {
+      "speaker": "citizen_guard",
+      "text": "dialogue.sofe.citizen_guard.act1.1"
+    },
+    {
+      "speaker": "citizen_guard",
+      "text": "dialogue.sofe.citizen_guard.act1.2"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "item": "sofe:glacial_iron_staff",
+  "slot": "weapon",
+  "classes": [
+    "sorceress",
+    "necromancer"
+  ],
+  "min_item_level": 5
+}

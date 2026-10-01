@@ -5,6 +5,7 @@ import com.sofe.registry.material.Material;
 import com.sofe.registry.material.MaterialForm;
 import com.sofe.registry.material.MaterialRegistry;
 import net.minecraft.data.PackOutput;
+import com.sofe.registry.HerbRegistry;
 import com.sofe.registry.SoFEBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -31,6 +32,17 @@ public class SoFEBlockStateProvider extends BlockStateProvider {
                     simpleBlockWithItem(block, cubeAll(block));
                 }
             }
+        }
+        for (HerbRegistry.Herb herb : HerbRegistry.all()) {
+            String wild = "wild_" + herb.id();
+            simpleBlock(herb.wild().get(), models().cross(wild, modLoc("block/" + wild)).renderType("cutout"));
+            // 8 growth ages drawn with 4 textures: ages 0-1, 2-3, 4-5 and 6-7
+            getVariantBuilder(herb.crop().get()).forAllStates(state -> {
+                int stage = state.getValue(net.minecraft.world.level.block.CropBlock.AGE) / 2;
+                String name = herb.id() + "_crop_stage" + stage;
+                return net.minecraftforge.client.model.generators.ConfiguredModel.builder()
+                        .modelFile(models().crop(name, modLoc("block/" + name)).renderType("cutout")).build();
+            });
         }
         for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
             Block block = entry.block().get();

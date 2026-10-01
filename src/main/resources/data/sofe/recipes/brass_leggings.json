@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "B B",
+    "B B"
+  ],
+  "key": {
+    "B": {
+      "item": "sofe:sulthari_brass_ingot"
+    }
+  },
+  "result": {
+    "item": "sofe:brass_leggings",
+    "count": 1
+  }
+}

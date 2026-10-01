@@ -1,0 +1,8 @@
+{
+  "size": 4,
+  "order": 210,
+  "icon": "sofe:slot/potion_belt",
+  "validators": [
+    "curios:tag"
+  ]
+}

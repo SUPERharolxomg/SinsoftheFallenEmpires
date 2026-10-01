@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "sofe:item/glacial_iron_greataxe"
+  }
+}

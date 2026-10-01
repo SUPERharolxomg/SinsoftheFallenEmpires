@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_khemet",
+  "features": "sofe:wild_desert_lotus",
+  "step": "vegetal_decoration"
+}

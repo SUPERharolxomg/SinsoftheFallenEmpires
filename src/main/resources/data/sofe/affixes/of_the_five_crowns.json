@@ -1,0 +1,18 @@
+{
+  "kind": "suffix",
+  "stat": "all_attributes",
+  "low": [
+    1,
+    1
+  ],
+  "high": [
+    6,
+    8
+  ],
+  "min_rarity": "imperial",
+  "slots": [
+    "armor",
+    "jewelry"
+  ],
+  "weight": 4
+}

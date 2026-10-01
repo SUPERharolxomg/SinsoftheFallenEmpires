@@ -1,0 +1,47 @@
+{
+  "role": "smith",
+  "offers": [
+    {
+      "sell": "sofe:brass_scimitar",
+      "price": 40,
+      "stock": 3
+    },
+    {
+      "sell": "sofe:brass_longsword",
+      "price": 40,
+      "stock": 3
+    },
+    {
+      "sell": "sofe:brass_chestplate",
+      "price": 55,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:brass_pickaxe",
+      "price": 30,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:glacial_iron_sword",
+      "price": 180,
+      "min_act": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:glacial_iron_pickaxe",
+      "price": 120,
+      "min_act": 2,
+      "stock": 1
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:sulthari_brass_ingot",
+      "price": 3
+    },
+    {
+      "item": "sofe:glacial_iron_ingot",
+      "price": 6
+    }
+  ]
+}

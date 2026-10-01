@@ -1,0 +1,54 @@
+{
+  "role": "alchemist",
+  "offers": [
+    {
+      "sell": "sofe:mountain_sage",
+      "price": 3,
+      "stock": 10,
+      "count": 2
+    },
+    {
+      "sell": "sofe:pomegranate",
+      "price": 4,
+      "stock": 10,
+      "count": 2
+    },
+    {
+      "sell": "sofe:desert_lotus",
+      "price": 5,
+      "stock": 6
+    },
+    {
+      "sell": "sofe:mountain_sage_seeds",
+      "price": 4,
+      "stock": 8,
+      "count": 2
+    },
+    {
+      "sell": "minecraft:glass_bottle",
+      "price": 2,
+      "stock": 16,
+      "count": 4
+    },
+    {
+      "sell": "minecraft:sugar",
+      "price": 2,
+      "stock": 16,
+      "count": 4
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:mountain_sage",
+      "price": 1
+    },
+    {
+      "item": "sofe:pomegranate",
+      "price": 1
+    },
+    {
+      "item": "sofe:desert_lotus",
+      "price": 2
+    }
+  ]
+}

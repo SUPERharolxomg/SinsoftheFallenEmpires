@@ -78,6 +78,7 @@ public final class SoFEConfig {
         public final ForgeConfigSpec.BooleanValue opsBypass;
         public final ForgeConfigSpec.BooleanValue protectZones;
         public final ForgeConfigSpec.BooleanValue corpseSystem;
+        public final ForgeConfigSpec.ConfigValue<String> relicBinding;
 
         private Server(ForgeConfigSpec.Builder builder) {
             builder.push("bearers");
@@ -102,6 +103,13 @@ public final class SoFEConfig {
                             "Turn off when the server uses another grave or corpse mod.")
                     .translation("config.sofe.corpse_system")
                     .define("corpseSystem", true);
+            builder.pop();
+            builder.push("items");
+            relicBinding = builder
+                    .comment("Who may hold Relics and Imperial Legacy pieces: free (anyone), pact_only (Sprint 7.5) or soulbound.",
+                            "Story items (the Bearer's Flask, Codex Shards) are always soulbound.")
+                    .translation("config.sofe.relic_binding")
+                    .define("relicBinding", "free");
             builder.pop();
         }
     }

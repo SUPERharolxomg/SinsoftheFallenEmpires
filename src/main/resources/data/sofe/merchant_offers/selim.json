@@ -1,0 +1,10 @@
+{
+  "role": "money_changer",
+  "offers": [],
+  "buys": [
+    {
+      "item": "minecraft:emerald",
+      "price": 10
+    }
+  ]
+}

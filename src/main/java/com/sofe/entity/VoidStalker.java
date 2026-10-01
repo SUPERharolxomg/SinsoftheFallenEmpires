@@ -16,6 +16,11 @@ public class VoidStalker extends VoidCreature {
         this.xpReward = 5;
     }
 
+    @Override
+    public String modelName() {
+        return "void_stalker";
+    }
+
     public static AttributeSupplier.Builder attributes() {
         return baseAttributes()
                 .add(Attributes.MAX_HEALTH, 14.0)

@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_fruiterer",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "bazaar_fruiterer",
+      "text": "dialogue.sofe.bazaar_fruiterer.act2.1"
+    }
+  ]
+}

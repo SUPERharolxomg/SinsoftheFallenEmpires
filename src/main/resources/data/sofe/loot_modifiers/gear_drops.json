@@ -1,0 +1,14 @@
+{
+  "type": "sofe:gear_drops",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    }
+  ],
+  "gear_chance": 0.08,
+  "dinars_chance": 0.6,
+  "dinars": [
+    1,
+    4
+  ]
+}

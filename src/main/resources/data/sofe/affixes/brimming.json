@@ -1,0 +1,19 @@
+{
+  "kind": "prefix",
+  "stat": "max_resource",
+  "low": [
+    5,
+    7
+  ],
+  "high": [
+    40,
+    50
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "weapon",
+    "armor",
+    "jewelry"
+  ],
+  "weight": 10
+}

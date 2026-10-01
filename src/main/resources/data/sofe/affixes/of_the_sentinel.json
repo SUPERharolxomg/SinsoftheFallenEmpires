@@ -1,0 +1,18 @@
+{
+  "kind": "suffix",
+  "stat": "armor",
+  "low": [
+    1,
+    2
+  ],
+  "high": [
+    8,
+    10
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "armor",
+    "jewelry"
+  ],
+  "weight": 10
+}

@@ -1,0 +1,59 @@
+{
+  "role": "alchemist",
+  "offers": [
+    {
+      "sell": "sofe:minor_pomegranate_elixir",
+      "price": 15,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:bearers_tonic",
+      "price": 25,
+      "stock": 6
+    },
+    {
+      "sell": "sofe:brass_flask",
+      "count": 2,
+      "price": 4,
+      "stock": 16
+    },
+    {
+      "sell": "sofe:pomegranate_seeds",
+      "count": 2,
+      "price": 5,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:desert_lotus_seeds",
+      "count": 2,
+      "price": 6,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:mountain_sage_seeds",
+      "count": 2,
+      "price": 4,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:pomegranate",
+      "count": 2,
+      "price": 6,
+      "stock": 6
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:pomegranate",
+      "price": 1
+    },
+    {
+      "item": "sofe:desert_lotus",
+      "price": 2
+    },
+    {
+      "item": "sofe:mountain_sage",
+      "price": 1
+    }
+  ]
+}
