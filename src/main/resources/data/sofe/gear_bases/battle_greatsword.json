@@ -1,0 +1,8 @@
+{
+  "item": "sofe:battle_greatsword",
+  "slot": "weapon",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 7
+}

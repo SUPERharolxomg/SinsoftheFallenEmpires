@@ -1,0 +1,9 @@
+{
+  "item": "sofe:gravity_hammer",
+  "slot": "weapon",
+  "classes": [
+    "sorceress",
+    "knight"
+  ],
+  "min_item_level": 7
+}

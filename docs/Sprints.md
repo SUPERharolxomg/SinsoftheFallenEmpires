@@ -193,6 +193,12 @@ Design: [Pociones.md](Pociones.md).
 - [x] The market hall gets doors in the middle of every side; the market no longer cuts the towers beside it (their ladders stay whole); six pens (cows, pigs, sheep, chickens, goats) and six fields (wheat, carrots, potatoes, beetroots) on grass, placed before the houses; a wide lava flow down the eastern flank of the volcano
 - [x] Skarnhold enlarged (terraces out to 140 blocks, about 34 longhouses round the volcano); the flights beside the market placed where no tower stands; the curtain wall also runs up the volcano's flank where it reaches the rim
 - [x] The combat HUD moved to the bottom right, larger, in a brass frame, with values inside the bars and short key names inside the slots
+## Extra — The arsenal, batch 1: melee weapons and shields
+
+- [x] 18 melee weapons (`TraitWeapon`), each SoFE gear that rolls affixes and drops by item level, with traits applied on hit (`WeaponTrait`, `WeaponTraitHandler`): reach (halberd, lance, trident, scythe, greatsword, hook-blade), sweep, stun, slam, bleeding (a new effect), beast-hunter, charge, plant-cutting, armor-piercing, flurry, frost, soul reaping, slow, pull, knock-up, Void and blood price
+- [x] 4 empire shields (`EmpireShield`) with a power when they block: slow (Sulthari), reflect 30% (Nordrath), heal (Observatory), weaken and wither (Void); raised model while blocking
+- [x] Dilara sells the brass weapons from Act I and the glacial ones from Act II; sprites drawn by `scripts/make_arsenal_sprites.py`
+- [x] Tests: `WeaponTraitTest` and `ArsenalGameTests` (gear bases, reach, slam, bleeding)
 
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).

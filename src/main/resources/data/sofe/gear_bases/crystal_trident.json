@@ -1,0 +1,8 @@
+{
+  "item": "sofe:crystal_trident",
+  "slot": "weapon",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 5
+}
