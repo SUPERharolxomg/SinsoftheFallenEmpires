@@ -37,3 +37,11 @@ description='''${mod_description}'''
     versionRange="[5.4,)"
     ordering="AFTER"
     side="BOTH"
+
+# the furniture of the city interiors
+[[dependencies.${mod_id}]]
+    modId="refurbished_furniture"
+    mandatory=true
+    versionRange="[1.0.20,)"
+    ordering="AFTER"
+    side="BOTH"
