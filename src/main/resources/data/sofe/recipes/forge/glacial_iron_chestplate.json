@@ -1,0 +1,16 @@
+{
+  "type": "sofe:imperial_forge",
+  "blueprint": "sofe:glacial_iron_chestplate",
+  "ingredients": [
+    {
+      "item": "sofe:glacial_iron_ingot",
+      "count": 8
+    },
+    {
+      "item": "sofe:frostpelt",
+      "count": 2
+    }
+  ],
+  "result": "sofe:glacial_iron_chestplate",
+  "item_level": 6
+}

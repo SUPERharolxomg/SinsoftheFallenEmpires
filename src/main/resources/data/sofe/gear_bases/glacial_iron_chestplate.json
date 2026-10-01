@@ -1,0 +1,10 @@
+{
+  "item": "sofe:glacial_iron_chestplate",
+  "slot": "armor",
+  "classes": [],
+  "min_item_level": 5,
+  "requires": {
+    "attribute": "strength",
+    "value": 20
+  }
+}

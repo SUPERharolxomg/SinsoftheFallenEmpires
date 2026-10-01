@@ -1,0 +1,8 @@
+{
+  "size": 6,
+  "order": 200,
+  "icon": "sofe:slot/talisman",
+  "validators": [
+    "curios:tag"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "item": "sofe:vorath_wrath",
+  "item_level": 12,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 10
+    },
+    {
+      "stat": "fire_damage",
+      "value": 8
+    },
+    {
+      "stat": "crit_damage",
+      "value": 25
+    }
+  ]
+}

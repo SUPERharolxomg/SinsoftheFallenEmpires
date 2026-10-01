@@ -1,0 +1,19 @@
+{
+  "kind": "prefix",
+  "stat": "max_health",
+  "low": [
+    2,
+    3
+  ],
+  "high": [
+    15,
+    20
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "armor",
+    "jewelry",
+    "talisman"
+  ],
+  "weight": 10
+}

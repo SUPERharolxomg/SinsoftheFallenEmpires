@@ -1,0 +1,18 @@
+{
+  "type": "sofe:alembic",
+  "ingredients": [
+    {
+      "item": "sofe:desert_lotus",
+      "count": 1
+    },
+    {
+      "item": "sofe:star_lapis_powder",
+      "count": 1
+    },
+    {
+      "item": "sofe:brass_flask",
+      "count": 1
+    }
+  ],
+  "result": "sofe:bearers_tonic"
+}

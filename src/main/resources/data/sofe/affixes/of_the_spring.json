@@ -1,0 +1,18 @@
+{
+  "kind": "suffix",
+  "stat": "resource_regen",
+  "low": [
+    5,
+    8
+  ],
+  "high": [
+    30,
+    40
+  ],
+  "min_rarity": "tempered",
+  "slots": [
+    "armor",
+    "jewelry"
+  ],
+  "weight": 10
+}

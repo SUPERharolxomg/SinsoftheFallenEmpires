@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RR",
+    "RR"
+  ],
+  "key": {
+    "R": {
+      "item": "sofe:runestone"
+    }
+  },
+  "result": {
+    "item": "sofe:nordrath_runestone_bricks",
+    "count": 4
+  }
+}
