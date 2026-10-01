@@ -1,0 +1,8 @@
+{
+  "item": "sofe:phlegm_mace",
+  "slot": "weapon",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 2
+}

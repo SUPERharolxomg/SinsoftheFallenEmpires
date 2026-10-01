@@ -32,6 +32,118 @@
       "price": 120,
       "min_act": 2,
       "stock": 1
+    },
+    {
+      "sell": "sofe:imperial_halberd",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:city_hammer",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:war_hammer",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:serrated_dagger",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:hunting_knife",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:jousting_lance",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:explorer_machete",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:war_mace",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:chain_sword",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:crystal_trident",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:shadow_scythe",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:battle_greatsword",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:phlegm_mace",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:double_flail",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:hook_blade",
+      "price": 45,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:gravity_hammer",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:vortex_dagger",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:obsidian_ritual_dagger",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:sulthari_shield",
+      "price": 60,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:nordrath_shield",
+      "price": 150,
+      "stock": 1,
+      "min_act": 2
     }
   ],
   "buys": [

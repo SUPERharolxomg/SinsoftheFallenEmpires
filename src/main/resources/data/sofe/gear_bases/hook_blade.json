@@ -1,0 +1,8 @@
+{
+  "item": "sofe:hook_blade",
+  "slot": "weapon",
+  "classes": [
+    "thief"
+  ],
+  "min_item_level": 2
+}

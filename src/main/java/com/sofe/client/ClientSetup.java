@@ -42,6 +42,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
         modBus.addListener(SoFEKeys::register);
+        modBus.addListener(ClientSetup::registerItemProperties);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(SoFEKeys::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onLoggingOut);
@@ -71,5 +72,12 @@ public final class ClientSetup {
         ClientLockData.clear();
         ClientBearers.clear();
         ClientEconomyData.clear();
+    }
+
+    /** The empire shields switch to their raised model while blocking, as the vanilla shield does. */
+    private static void registerItemProperties(net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) {
+        event.enqueueWork(() -> com.sofe.registry.ItemRegistry.shields().forEach(shield ->
+                net.minecraft.client.renderer.item.ItemProperties.register(shield.get(), net.minecraft.resources.ResourceLocation.withDefaultNamespace("blocking"),
+                        (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1f : 0f)));
     }
 }

@@ -1,0 +1,8 @@
+{
+  "item": "sofe:serrated_dagger",
+  "slot": "weapon",
+  "classes": [
+    "thief"
+  ],
+  "min_item_level": 1
+}

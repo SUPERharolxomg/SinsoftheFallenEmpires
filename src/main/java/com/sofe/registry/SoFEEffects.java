@@ -25,6 +25,19 @@ public final class SoFEEffects {
         }
     });
 
+    /** Bleeding, from the arsenal's serrated blades: one damage every second, ignoring armor. */
+    public static final RegistryObject<MobEffect> BLEEDING = EFFECTS.register("bleeding", () -> new MobEffect(MobEffectCategory.HARMFUL, 0x8A0B0B) {
+        @Override
+        public void applyEffectTick(LivingEntity entity, int amplifier) {
+            entity.hurt(entity.damageSources().magic(), amplifier + 1);
+        }
+
+        @Override
+        public boolean isDurationEffectTick(int duration, int amplifier) {
+            return duration % 20 == 0;
+        }
+    });
+
     private SoFEEffects() {
     }
 }

@@ -1,0 +1,9 @@
+{
+  "item": "sofe:hunting_knife",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "king"
+  ],
+  "min_item_level": 1
+}

@@ -1,0 +1,9 @@
+{
+  "item": "sofe:war_mace",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "necromancer"
+  ],
+  "min_item_level": 5
+}
