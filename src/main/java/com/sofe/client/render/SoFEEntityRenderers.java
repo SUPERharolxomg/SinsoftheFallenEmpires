@@ -61,6 +61,9 @@ public final class SoFEEntityRenderers {
         event.registerEntityRenderer(EntityRegistry.MERCHANT.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BEARER_CORPSE.get(), CorpseRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BRASS_SENTINEL.get(), SentinelRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.KALETH.get(), ctx -> new OathRenderer<>(ctx, "kaleth", 1.2f));
+        event.registerEntityRenderer(EntityRegistry.SERATH.get(), ctx -> new OathRenderer<>(ctx, "serath", 1.15f));
+        event.registerEntityRenderer(EntityRegistry.VORATH.get(), VorathRenderer::new);
     }
 
     /** The Bearer outfit over every player's own skin (docs/Clases.md, "How the player looks"). */
@@ -222,6 +225,38 @@ public final class SoFEEntityRenderers {
                 pose.popPose();
             }
             super.render(corpse, yaw, partialTick, pose, buffers, light);
+        }
+    }
+
+    // --- The Broken Oaths: placeholder humanoids until their GeckoLib models
+
+    static class OathRenderer<T extends com.sofe.entity.boss.BrokenOathEntity> extends HumanoidMobRenderer<T, HumanoidModel<T>> {
+        private final ResourceLocation texture;
+        private final float scale;
+
+        OathRenderer(EntityRendererProvider.Context ctx, String name, float scale) {
+            super(ctx, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE)), 0.6f * scale);
+            this.texture = SoFEMod.id("textures/entity/" + name + ".png");
+            this.scale = scale;
+        }
+
+        @Override
+        protected void scale(T entity, PoseStack pose, float partialTick) {
+            pose.scale(scale, scale, scale);
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(T entity) {
+            return texture;
+        }
+    }
+
+    // --- Vorath: the first GeckoLib model (placeholder until the Blockbench one, docs/Anexos.md A2)
+
+    static class VorathRenderer extends software.bernie.geckolib.renderer.GeoEntityRenderer<com.sofe.entity.boss.VorathEntity> {
+        VorathRenderer(EntityRendererProvider.Context ctx) {
+            super(ctx, new software.bernie.geckolib.model.DefaultedEntityGeoModel<>(SoFEMod.id("vorath"), true));
+            this.shadowRadius = 1.2f;
         }
     }
 

@@ -22,14 +22,16 @@ public final class RegionTitleOverlay {
 
     private static Region region;
     private static RegionStatus status = RegionStatus.NONE;
+    private static boolean deep;
     private static long shownAt;
 
     private RegionTitleOverlay() {
     }
 
-    public static void show(Region newRegion, RegionStatus newStatus) {
+    public static void show(Region newRegion, RegionStatus newStatus, boolean inDeep) {
         region = newRegion;
         status = newStatus;
+        deep = inDeep;
         shownAt = System.currentTimeMillis();
     }
 
@@ -48,7 +50,7 @@ public final class RegionTitleOverlay {
 
         Font font = gui.getFont();
         int top = height / 5;
-        Component welcome = Component.translatable("gui.sofe.region_title.welcome");
+        Component welcome = Component.translatable(deep ? "gui.sofe.region_title.welcome_deep" : "gui.sofe.region_title.welcome");
         graphics.drawCenteredString(font, welcome, width / 2, top, (a << 24) | PARCHMENT);
 
         Component name = Component.translatable(region.translationKey());

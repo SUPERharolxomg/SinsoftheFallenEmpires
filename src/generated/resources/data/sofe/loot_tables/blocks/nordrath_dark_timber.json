@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sofe:nordrath_dark_timber"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "sofe:blocks/nordrath_dark_timber"
+}

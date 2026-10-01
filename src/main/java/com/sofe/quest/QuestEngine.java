@@ -157,6 +157,7 @@ public final class QuestEngine {
             }
         } else if (effect instanceof QuestEffect.AdvanceAct e) {
             if (story.advanceTo(e.act())) {
+                com.sofe.story.SoFEAdvancements.award(player, "story/act" + story.act());
                 player.sendSystemMessage(Component.translatable("message.sofe.act_begins",
                         Component.translatable("act.sofe." + story.act())).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
                 player.level().playSound(null, player.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 1f, 0.8f);
@@ -216,6 +217,7 @@ public final class QuestEngine {
     /** Called by boss entities on every participant when they fall. */
     public static void bossDefeated(ServerPlayer player, String bossId) {
         StoryCapability.get(player).ifPresent(story -> story.defeat(bossId));
+        com.sofe.story.SoFEAdvancements.award(player, com.sofe.story.SoFEAdvancements.bossPath(bossId));
         event(player, new QuestEvent.BossDefeated(bossId));
         sync(player);
     }

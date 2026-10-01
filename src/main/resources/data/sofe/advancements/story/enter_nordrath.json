@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:nordrath_runestone_bricks"
+    },
+    "title": {
+      "translate": "advancement.sofe.enter_nordrath"
+    },
+    "description": {
+      "translate": "advancement.sofe.enter_nordrath.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/act2"
+}

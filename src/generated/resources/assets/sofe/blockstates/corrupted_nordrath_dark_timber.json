@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "sofe:block/corrupted_nordrath_dark_timber_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "sofe:block/corrupted_nordrath_dark_timber"
+    },
+    "axis=z": {
+      "model": "sofe:block/corrupted_nordrath_dark_timber_horizontal",
+      "x": 90
+    }
+  }
+}

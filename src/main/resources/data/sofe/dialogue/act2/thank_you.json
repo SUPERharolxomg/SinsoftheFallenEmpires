@@ -1,0 +1,30 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act2.thank_you.1"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act2.thank_you.2"
+    },
+    {
+      "speaker": "unknown_voice",
+      "text": "dialogue.sofe.act2.thank_you.3",
+      "effects": [
+        {
+          "type": "play_sound",
+          "sound": "minecraft:ambient.cave",
+          "volume": 1.0,
+          "pitch": 0.5
+        }
+      ]
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act2.thank_you.4"
+    }
+  ]
+}

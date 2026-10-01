@@ -6,6 +6,9 @@ import com.sofe.entity.VoidCreature;
 import com.sofe.entity.VoidStalker;
 import com.sofe.entity.VoidWretch;
 import com.sofe.entity.boss.BrassSentinelEntity;
+import com.sofe.entity.boss.KalethEntity;
+import com.sofe.entity.boss.SerathEntity;
+import com.sofe.entity.boss.VorathEntity;
 import com.sofe.entity.npc.BearerNpcEntity;
 import com.sofe.entity.npc.MerchantNpcEntity;
 import com.sofe.entity.npc.StoryNpcEntity;
@@ -43,6 +46,16 @@ public final class EntityRegistry {
             () -> EntityType.Builder.of(BrassSentinelEntity::new, MobCategory.MONSTER).sized(1.4f, 2.9f).fireImmune()
                     .clientTrackingRange(10).build("brass_sentinel"));
 
+    public static final RegistryObject<EntityType<KalethEntity>> KALETH = ENTITIES.register("kaleth",
+            () -> EntityType.Builder.of(KalethEntity::new, MobCategory.MONSTER).sized(0.8f, 2.4f).fireImmune()
+                    .clientTrackingRange(10).build("kaleth"));
+    public static final RegistryObject<EntityType<SerathEntity>> SERATH = ENTITIES.register("serath",
+            () -> EntityType.Builder.of(SerathEntity::new, MobCategory.MONSTER).sized(0.7f, 2.3f).fireImmune()
+                    .clientTrackingRange(10).build("serath"));
+    public static final RegistryObject<EntityType<VorathEntity>> VORATH = ENTITIES.register("vorath",
+            () -> EntityType.Builder.of(VorathEntity::new, MobCategory.MONSTER).sized(1.6f, 3.6f).fireImmune()
+                    .clientTrackingRange(12).build("vorath"));
+
     private EntityRegistry() {
     }
 
@@ -53,6 +66,9 @@ public final class EntityRegistry {
         event.put(BEARER_NPC.get(), StoryNpcEntity.attributes().build());
         event.put(MERCHANT.get(), StoryNpcEntity.attributes().build());
         event.put(BRASS_SENTINEL.get(), BrassSentinelEntity.attributes().build());
+        event.put(KALETH.get(), KalethEntity.attributes().build());
+        event.put(SERATH.get(), SerathEntity.attributes().build());
+        event.put(VORATH.get(), VorathEntity.attributes().build());
     }
 
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {

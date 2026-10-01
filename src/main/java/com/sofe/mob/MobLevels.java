@@ -30,6 +30,8 @@ import java.util.UUID;
 public final class MobLevels {
     private static final String TAG_LEVEL = SoFEMod.MOD_ID + ":level";
     private static final double NEAREST_PLAYER_RANGE = 64;
+    /** Mobs of the Burning Deep are this many levels above the region they lie under. */
+    public static final int DEEP_BONUS = 2;
     private static final UUID HEALTH_ID = UUID.fromString("5c1f5f0e-2d8a-4c55-9c0a-7a1b3e9d0a01");
     private static final UUID DAMAGE_ID = UUID.fromString("5c1f5f0e-2d8a-4c55-9c0a-7a1b3e9d0a02");
     private static final UUID ARMOR_ID = UUID.fromString("5c1f5f0e-2d8a-4c55-9c0a-7a1b3e9d0a03");
@@ -45,7 +47,9 @@ public final class MobLevels {
     public static void onJoin(EntityJoinLevelEvent event) {
         if (event.loadedFromDisk() || !(event.getLevel() instanceof ServerLevel level)) return;
         if (!(event.getEntity() instanceof Mob mob) || !(mob instanceof Enemy) || levelOf(mob).isPresent()) return;
-        if (level.dimension() != Level.OVERWORLD) return; // the Nether and the End get levels with their sprints
+        // the Burning Deep uses the region above it at 1:8, two levels higher (docs/Mundo.md, W1); the End comes later
+        if (level.dimension() != Level.OVERWORLD && level.dimension() != Level.NETHER) return;
+        boolean deep = level.dimension() == Level.NETHER;
         var map = SoFEWorld.regionMap(level.getServer());
         if (map.isEmpty()) return; // free mode: vanilla mobs stay vanilla
 
@@ -53,10 +57,12 @@ public final class MobLevels {
         var key = ForgeRegistries.ENTITY_TYPES.getKey(mob.getType());
         if (key != null && rules.excludedMods().contains(key.getNamespace())) return;
 
-        Region region = map.get().regionAt(mob.getBlockX(), mob.getBlockZ());
+        int scale = deep ? 8 : 1;
+        Region region = map.get().regionAt(mob.getBlockX() * scale, mob.getBlockZ() * scale);
         Player nearest = level.getNearestPlayer(mob, NEAREST_PLAYER_RANGE);
         int act = nearest != null ? StoryAct.of(nearest) : 0;
         int mobLevel = rules.levelFor(region, act, new java.util.Random(level.getRandom().nextLong()));
+        if (deep) mobLevel = Math.min(30, mobLevel + DEEP_BONUS);
         apply(mob, mobLevel, rules);
     }
 

@@ -1,0 +1,72 @@
+{
+  "type": "main",
+  "act": 2,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach_region",
+        "region": "nordrath"
+      },
+      "target": {
+        "x": 0,
+        "z": -1600
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act2/the_north_burns"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:kaleth"
+      },
+      "target": {
+        "x": -1200,
+        "z": -3022
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:serath"
+      },
+      "target": {
+        "x": 1200,
+        "z": -3000
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:vorath"
+      },
+      "target": {
+        "x": 0,
+        "z": -4500
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act2/citadel"
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2500
+    },
+    {
+      "type": "open_dialogue",
+      "dialogue": "sofe:act2/thank_you"
+    },
+    {
+      "type": "advance_act",
+      "act": 3
+    }
+  ]
+}

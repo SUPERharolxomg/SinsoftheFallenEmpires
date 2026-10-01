@@ -1,0 +1,13 @@
+{
+  "type": "all_of",
+  "conditions": [
+    {
+      "type": "boss_defeated",
+      "boss": "sofe:kaleth"
+    },
+    {
+      "type": "boss_defeated",
+      "boss": "sofe:serath"
+    }
+  ]
+}

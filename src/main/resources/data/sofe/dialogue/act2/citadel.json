@@ -1,0 +1,14 @@
+{
+  "style": "nordrath",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act2.citadel.1"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act2.citadel.2"
+    }
+  ]
+}

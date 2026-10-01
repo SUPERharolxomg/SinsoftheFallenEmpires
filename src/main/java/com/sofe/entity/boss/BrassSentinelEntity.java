@@ -1,26 +1,18 @@
 package com.sofe.entity.boss;
 
-import com.sofe.SoFEMod;
-import com.sofe.mob.BossDifficulty;
-import com.sofe.quest.QuestEngine;
 import com.sofe.registry.EntityRegistry;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -32,39 +24,23 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.List;
 
 /**
  * The Brass Sentinel, boss of Act I (README, Act I): the clockwork guardian of the Great Observatory,
  * awake and obeying no one. Phase 1 is a brass golem; below half health the Void takes it and it
- * calls Void creatures. Every player who hurt it or stayed close gets the credit.
+ * calls Void creatures. On Hard it also sends out a ring of gears.
  */
-public class BrassSentinelEntity extends Monster {
+public class BrassSentinelEntity extends SoFEBossEntity {
     public static final String BOSS_ID = "sofe:brass_sentinel";
-    private static final UUID DIFFICULTY_ID = UUID.fromString("7d0a3c2e-5b6f-4f7e-9a1d-2c3b4e5f6a71");
-    private static final double ARENA_RADIUS = 32;
-    private static final int RESET_AFTER_TICKS = 600; // 30 s with nobody left in the fight
     private static final int SUMMON_EVERY = 400;
     private static final int SHOCKWAVE_EVERY = 160;
 
-    private final ServerBossEvent bossBar = new ServerBossEvent(Component.translatable("npc.sofe.brass_sentinel"),
-            BossEvent.BossBarColor.YELLOW, BossEvent.BossBarOverlay.NOTCHED_10);
-    private final Set<UUID> participants = new HashSet<>();
-    /** The last player object seen for each participant, for players the server list does not have (fake players). */
-    private final java.util.Map<UUID, ServerPlayer> lastSeen = new java.util.HashMap<>();
-    private boolean voidPhase;
-    private int emptyTicks;
-
     public BrassSentinelEntity(EntityType<? extends Monster> type, Level level) {
-        super(type, level);
+        super(type, level, BossEvent.BossBarColor.YELLOW);
         this.xpReward = 120;
-        setPersistenceRequired();
     }
 
     public static AttributeSupplier.Builder attributes() {
@@ -78,6 +54,11 @@ public class BrassSentinelEntity extends Monster {
     }
 
     @Override
+    public String bossId() {
+        return BOSS_ID;
+    }
+
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0, true));
@@ -87,81 +68,34 @@ public class BrassSentinelEntity extends Monster {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
-    /** Health and damage follow the difficulty (Easy −25%, Hard +25%). */
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, SpawnGroupData data, CompoundTag tag) {
-        applyDifficulty(level.getLevel().getDifficulty());
-        return super.finalizeSpawn(level, difficulty, reason, data, tag);
-    }
-
-    public void applyDifficulty(net.minecraft.world.Difficulty difficulty) {
-        double bonus = BossDifficulty.multiplier(difficulty) - 1;
-        for (var attribute : new net.minecraft.world.entity.ai.attributes.Attribute[]{Attributes.MAX_HEALTH, Attributes.ATTACK_DAMAGE}) {
-            var instance = getAttribute(attribute);
-            if (instance == null) continue;
-            instance.removeModifier(DIFFICULTY_ID);
-            if (bonus != 0) instance.addPermanentModifier(new AttributeModifier(DIFFICULTY_ID, "SoFE boss difficulty", bonus, AttributeModifier.Operation.MULTIPLY_TOTAL));
-        }
-        setHealth(getMaxHealth());
-    }
-
     @Override
     public void aiStep() {
         super.aiStep();
-        if (level().isClientSide()) {
-            if (voidPhaseClient()) {
-                level().addParticle(ParticleTypes.REVERSE_PORTAL, getRandomX(0.8), getRandomY(), getRandomZ(0.8), 0, 0.05, 0);
-            }
+        if (level().isClientSide() && getHealth() < getMaxHealth() / 2) {
+            level().addParticle(ParticleTypes.REVERSE_PORTAL, getRandomX(0.8), getRandomY(), getRandomZ(0.8), 0, 0.05, 0);
         }
-    }
-
-    private boolean voidPhaseClient() {
-        return getHealth() < getMaxHealth() / 2;
     }
 
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        bossBar.setProgress(getHealth() / getMaxHealth());
-        ServerLevel level = (ServerLevel) level();
+    protected void onPhase(int newPhase, ServerLevel level, List<ServerPlayer> fighters) {
+        level.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 0.6f, 1.4f);
+        fighters.forEach(p -> p.displayClientMessage(Component.translatable("message.sofe.brass_sentinel.void_phase"), true));
+        var speed = getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null) speed.setBaseValue(0.3);
+        summonVoid(level);
+    }
 
-        // everyone close by takes part (and sees the boss bar)
-        AABB arena = getBoundingBox().inflate(ARENA_RADIUS);
-        var nearby = level.getEntitiesOfClass(ServerPlayer.class, arena, p -> p.isAlive() && !p.isSpectator());
-        nearby.forEach(p -> {
-            participants.add(p.getUUID());
-            lastSeen.put(p.getUUID(), p);
-            bossBar.addPlayer(p);
-        });
-        for (ServerPlayer p : Set.copyOf(bossBar.getPlayers())) {
-            if (!nearby.contains(p)) bossBar.removePlayer(p);
-        }
+    @Override
+    protected void fightTick(ServerLevel level, List<ServerPlayer> fighters) {
+        if (phase() < 2) return;
+        if (this.tickCount % SUMMON_EVERY == 0) summonVoid(level);
+        if (hardMechanics() && this.tickCount % SHOCKWAVE_EVERY == 0) shockwave(level, fighters);
+    }
 
-        // nobody left: after 30 s the Sentinel resets (docs/Jugabilidad.md, "Boss fights")
-        if (nearby.isEmpty() && getHealth() < getMaxHealth()) {
-            if (++emptyTicks >= RESET_AFTER_TICKS) {
-                setHealth(getMaxHealth());
-                participants.clear();
-                lastSeen.clear();
-                voidPhase = false;
-                emptyTicks = 0;
-                setTarget(null);
-            }
-        } else {
-            emptyTicks = 0;
-        }
-
-        if (!voidPhase && getHealth() < getMaxHealth() / 2) {
-            voidPhase = true;
-            bossBar.setColor(BossEvent.BossBarColor.PURPLE);
-            level.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 0.6f, 1.4f);
-            nearby.forEach(p -> p.displayClientMessage(Component.translatable("message.sofe.brass_sentinel.void_phase"), true));
-            var speed = getAttribute(Attributes.MOVEMENT_SPEED);
-            if (speed != null) speed.setBaseValue(0.3);
-            summonVoid(level);
-        }
-        if (voidPhase && this.tickCount % SUMMON_EVERY == 0) summonVoid(level);
-        if (voidPhase && BossDifficulty.extraMechanics(level.getDifficulty()) && this.tickCount % SHOCKWAVE_EVERY == 0) shockwave(level, nearby);
+    @Override
+    protected void onReset() {
+        var speed = getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null) speed.setBaseValue(0.24);
     }
 
     private void summonVoid(ServerLevel level) {
@@ -178,7 +112,7 @@ public class BrassSentinelEntity extends Monster {
     }
 
     /** Hard only: a ring of gears that knocks everyone back. */
-    private void shockwave(ServerLevel level, java.util.List<ServerPlayer> players) {
+    private void shockwave(ServerLevel level, List<ServerPlayer> players) {
         level.playSound(null, blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1f, 0.5f);
         level.sendParticles(ParticleTypes.CRIT, getX(), getY() + 0.5, getZ(), 80, 4, 0.2, 4, 0.2);
         for (ServerPlayer p : players) {
@@ -188,48 +122,6 @@ public class BrassSentinelEntity extends Monster {
             p.hurtMarked = true;
             p.hurt(damageSources().mobAttack(this), 4f);
         }
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() instanceof ServerPlayer player) {
-            participants.add(player.getUUID());
-            lastSeen.put(player.getUUID(), player);
-        }
-        return super.hurt(source, amount);
-    }
-
-    @Override
-    public void die(DamageSource source) {
-        super.die(source);
-        if (level() instanceof ServerLevel level) {
-            for (UUID id : participants) {
-                ServerPlayer player = level.getServer().getPlayerList().getPlayer(id); // after a respawn this is the new player
-                if (player == null) player = lastSeen.get(id);
-                if (player != null) QuestEngine.bossDefeated(player, BOSS_ID);
-            }
-            SoFEMod.LOGGER.info("The Brass Sentinel fell; {} participant(s) credited", participants.size());
-        }
-    }
-
-    public Set<UUID> participants() {
-        return Set.copyOf(participants);
-    }
-
-    @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
-        super.stopSeenByPlayer(player);
-        bossBar.removePlayer(player);
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double distance) {
-        return false;
-    }
-
-    @Override
-    public boolean canChangeDimensions() {
-        return false;
     }
 
     @Override
@@ -252,18 +144,5 @@ public class BrassSentinelEntity extends Monster {
         boolean hit = super.doHurtTarget(target);
         if (hit) target.setDeltaMovement(target.getDeltaMovement().add(0, 0.4, 0));
         return hit;
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("void_phase", voidPhase);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        voidPhase = tag.getBoolean("void_phase");
-        if (hasCustomName()) bossBar.setName(getDisplayName());
     }
 }

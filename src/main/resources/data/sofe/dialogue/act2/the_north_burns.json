@@ -1,0 +1,18 @@
+{
+  "style": "nordrath",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act2.north.1"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act2.north.2"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act2.north.3"
+    }
+  ]
+}

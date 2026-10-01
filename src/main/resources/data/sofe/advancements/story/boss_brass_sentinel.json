@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:sulthari_brass_ingot"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_brass_sentinel"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_brass_sentinel.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/root"
+}

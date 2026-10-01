@@ -36,7 +36,9 @@ public class SoFEBlockLootTables extends BlockLootSubProvider {
         for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
             Block block = entry.block().get();
             if (block.getLootTable().equals(BuiltInLootTables.EMPTY)) continue; // the Seal Veil drops nothing
-            if (entry.shape() == SoFEBlocks.Shape.SLAB) {
+            if (entry.oreDrop() != null) {
+                add(block, createOreDrop(block, entry.oreDrop().get()));
+            } else if (entry.shape() == SoFEBlocks.Shape.SLAB) {
                 add(block, createSlabItemTable(block));
             } else {
                 dropSelf(block);
