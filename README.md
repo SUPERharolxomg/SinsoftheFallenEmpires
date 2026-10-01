@@ -23,6 +23,7 @@ A Minecraft mod with a skill-based class system, an original dark fantasy story 
 - Gradle (build system)
 - JSON (configuration, loot tables, recipes, skill values)
 - GeckoLib (animated bosses) and Curios (extra equipment slots)
+- MrCrayfish's Furniture Mod: Refurbished (MIT) and its library Framework, for the furniture of city interiors
 - Optional: JourneyMap and Xaero's Minimap / World Map integration
 - Git + GitHub, GitHub Actions (CI/CD)
 
