@@ -60,9 +60,15 @@ public final class LockAccess {
         return StoryAct.of(player);
     }
 
-    /** Whether the Seal Veil at this column lets the player through. */
+    /** Whether the Seal Veil at this column lets the player through (Nether columns count 8 times). */
     public static boolean canPassVeil(Player player, int x, int z) {
         if (bypasses(player)) return true;
-        return map(player).map(m -> RegionLocks.veilPassable(m, x, z, act(player))).orElse(true);
+        int scale = scale(player.level());
+        return map(player).map(m -> RegionLocks.veilPassable(m, x, z, act(player), scale)).orElse(true);
+    }
+
+    /** How a dimension's columns map to the overworld's regions: 8 in the Nether, 1 elsewhere. */
+    public static int scale(net.minecraft.world.level.Level level) {
+        return level.dimension() == net.minecraft.world.level.Level.NETHER ? 8 : 1;
     }
 }

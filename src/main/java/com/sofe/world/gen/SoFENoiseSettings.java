@@ -44,12 +44,29 @@ public final class SoFENoiseSettings {
                                 SurfaceRules.state(Blocks.COARSE_DIRT.defaultBlockState()))),
                         SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(Blocks.SANDSTONE.defaultBlockState())))));
 
+        // Nordrath ice fields: snow over packed ice; volcanic forges: blackstone, basalt and magma
+        SurfaceRules.RuleSource ice = SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(SoFEBiomes.NORDRATH_ICE_FIELDS),
+                SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), SurfaceRules.sequence(
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(Blocks.SNOW_BLOCK.defaultBlockState())),
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(Blocks.PACKED_ICE.defaultBlockState())))));
+        SurfaceRules.RuleSource volcanic = SurfaceRules.ifTrue(
+                SurfaceRules.isBiome(SoFEBiomes.NORDRATH_VOLCANIC_FORGES),
+                SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), SurfaceRules.sequence(
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(
+                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, 0.3),
+                                        SurfaceRules.state(Blocks.MAGMA_BLOCK.defaultBlockState())),
+                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.GRAVEL, 0.0),
+                                        SurfaceRules.state(Blocks.BASALT.defaultBlockState())),
+                                SurfaceRules.state(Blocks.BLACKSTONE.defaultBlockState()))),
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(Blocks.BLACKSTONE.defaultBlockState())))));
+
         context.register(AETHERIS, new NoiseGeneratorSettings(
                 vanilla.noiseSettings(),
                 vanilla.defaultBlock(),
                 vanilla.defaultFluid(),
                 vanilla.noiseRouter(),
-                SurfaceRules.sequence(desert, wastes, vanilla.surfaceRule()),
+                SurfaceRules.sequence(desert, wastes, ice, volcanic, vanilla.surfaceRule()),
                 vanilla.spawnTarget(),
                 vanilla.seaLevel(),
                 vanilla.disableMobGeneration(),

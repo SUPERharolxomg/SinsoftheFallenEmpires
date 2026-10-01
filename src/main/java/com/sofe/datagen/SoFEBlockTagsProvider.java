@@ -57,8 +57,11 @@ public class SoFEBlockTagsProvider extends BlockTagsProvider {
         }
         for (SoFEBlocks.Entry entry : SoFEBlocks.entries()) {
             Block block = entry.block().get();
-            if (block == SoFEBlocks.SEAL_VEIL.get()) continue; // unbreakable
-            tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+            if (block == SoFEBlocks.SEAL_VEIL.get() || block == SoFEBlocks.SEALED_GATE.get()) continue; // unbreakable
+            boolean wood = block == SoFEBlocks.NORDRATH_DARK_TIMBER.get() || block == SoFEBlocks.NORDRATH_DARK_PLANKS.get()
+                    || block == SoFEBlocks.CORRUPTED_NORDRATH_DARK_TIMBER.get();
+            tag(wood ? BlockTags.MINEABLE_WITH_AXE : BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+            if (entry.oreDrop() != null) tag(BlockTags.NEEDS_IRON_TOOL).add(block);
             switch (entry.shape()) {
                 case STAIRS -> tag(BlockTags.STAIRS).add(block);
                 case SLAB -> tag(BlockTags.SLABS).add(block);
@@ -67,7 +70,7 @@ public class SoFEBlockTagsProvider extends BlockTagsProvider {
                 }
             }
         }
-        tag(BlockTags.DRAGON_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get());
-        tag(BlockTags.WITHER_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get());
+        tag(BlockTags.DRAGON_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get(), SoFEBlocks.SEALED_GATE.get());
+        tag(BlockTags.WITHER_IMMUNE).add(SoFEBlocks.SEAL_VEIL.get(), SoFEBlocks.SEALED_GATE.get());
     }
 }

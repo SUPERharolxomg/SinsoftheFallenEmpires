@@ -6,7 +6,7 @@ import com.sofe.entity.npc.StoryNpcEntity;
 import com.sofe.registry.EntityRegistry;
 import com.sofe.registry.SoFEBlocks;
 import com.sofe.world.StoryPlacements;
-import com.sofe.world.build.SultharisBuilder;
+import com.sofe.world.build.StructureBuilder;
 import com.sofe.world.gen.SoFEBiomes;
 import com.sofe.world.gen.SoFEWorldPresets;
 import com.sofe.world.region.AetherisBiomeSource;
@@ -62,17 +62,18 @@ public class JourneyWorldGameTests {
         BlockPos base = helper.absolutePos(new BlockPos(8, 1, 8));
         var level = helper.getLevel();
         var bank = new StructurePositions.Structure("sofe:sulthari/bank", base.getX(), base.getZ(), 9, 9, -64, 319, null);
-        helper.assertTrue(SultharisBuilder.build(level, bank), "the bank has no blockout");
-        helper.assertFalse(SultharisBuilder.build(level, new StructurePositions.Structure("sofe:nowhere/unknown", base.getX(), base.getZ(), 4, 4, -64, 319, null)),
+        helper.assertTrue(StructureBuilder.build(level, bank), "the bank has no blockout");
+        helper.assertFalse(StructureBuilder.build(level, new StructurePositions.Structure("sofe:nowhere/unknown", base.getX(), base.getZ(), 4, 4, -64, 319, null)),
                 "an unknown structure should not be built");
 
-        String tag = "gt" + Math.abs(base.asLong() % 100000);
+        // the GameTest world is kept between runs, so every run uses names of its own
+        String tag = "gt" + Long.toHexString(System.nanoTime());
         StructurePositions.Layout layout = new StructurePositions.Layout(base.getX(), base.getZ(), Map.of(),
                 Map.of("sofe:test/" + tag, new BlockPos(base.getX() + 6, 0, base.getZ())),
-                List.of(new StructurePositions.Npc("ozhan", "story", base.getX() - 6, base.getZ(), 0, null)));
+                List.of(new StructurePositions.Npc("test_" + tag, "story", base.getX() - 6, base.getZ(), 0, null)));
         StoryPlacements.placeAll(level.getServer(), layout);
-        var npcs = level.getEntitiesOfClass(StoryNpcEntity.class, new AABB(base).inflate(16, 400, 16), n -> "ozhan".equals(n.npcId()));
-        helper.assertFalse(npcs.isEmpty(), "Ozhan was not placed");
+        var npcs = level.getEntitiesOfClass(StoryNpcEntity.class, new AABB(base).inflate(16, 400, 16), n -> ("test_" + tag).equals(n.npcId()));
+        helper.assertFalse(npcs.isEmpty(), "the NPC was not placed");
         // placed on the surface of that column, wherever the ground is
         boolean waystone = false;
         for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight() && !waystone; y++) {

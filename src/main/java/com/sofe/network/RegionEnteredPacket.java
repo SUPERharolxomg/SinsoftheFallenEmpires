@@ -9,19 +9,20 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-/** Server → client: the player just entered a region, show its title and its lock status. */
-public record RegionEnteredPacket(Region region, RegionStatus status) {
+/** Server → client: the player just entered a region (or the Burning Deep beneath it), show its title and lock status. */
+public record RegionEnteredPacket(Region region, RegionStatus status, boolean deep) {
 
     public void encode(FriendlyByteBuf buf) {
         buf.writeEnum(region);
         buf.writeEnum(status);
+        buf.writeBoolean(deep);
     }
 
     public static RegionEnteredPacket decode(FriendlyByteBuf buf) {
-        return new RegionEnteredPacket(buf.readEnum(Region.class), buf.readEnum(RegionStatus.class));
+        return new RegionEnteredPacket(buf.readEnum(Region.class), buf.readEnum(RegionStatus.class), buf.readBoolean());
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> com.sofe.client.ClientPacketHandlers.showRegionTitle(region, status));
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> com.sofe.client.ClientPacketHandlers.showRegionTitle(region, status, deep));
     }
 }

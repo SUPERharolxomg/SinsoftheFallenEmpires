@@ -127,7 +127,7 @@ public final class RegionEnforcer {
         BlockPos feet = player.blockPosition();
         for (BlockPos pos : BlockPos.betweenClosed(feet.offset(-1, 0, -1), feet.offset(1, 1, 1))) {
             if (!player.level().getBlockState(pos).is(SoFEBlocks.SEAL_VEIL.get())) continue;
-            Optional<Region> sealed = RegionLocks.sealedBehind(map.get(), pos.getX(), pos.getZ(), LockAccess.act(player));
+            Optional<Region> sealed = RegionLocks.sealedBehind(map.get(), pos.getX(), pos.getZ(), LockAccess.act(player), LockAccess.scale(player.level()));
             if (sealed.isPresent()) {
                 player.displayClientMessage(sealedMessage(sealed.get()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 LAST_VEIL_MESSAGE.put(player.getUUID(), now);

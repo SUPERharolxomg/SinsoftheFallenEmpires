@@ -43,31 +43,51 @@ public final class RegionLocks {
      * north side. Borders with the ocean have no Veil (the coast limit handles those).
      */
     public static boolean isVeilColumn(RegionMap map, int x, int z) {
-        return otherSide(map, x, z).isPresent();
+        return isVeilColumn(map, x, z, 1);
+    }
+
+    /**
+     * The same in a dimension that maps to the overworld at a scale (8 in the Nether, docs/Mundo.md W5):
+     * the column (x, z) stands for the overworld column (x * scale, z * scale).
+     */
+    public static boolean isVeilColumn(RegionMap map, int x, int z, int scale) {
+        return otherSide(map, x, z, scale).isPresent();
     }
 
     /** The region on the other side of the Veil at this column. */
     public static Optional<Region> otherSide(RegionMap map, int x, int z) {
-        Region here = map.regionAt(x, z);
+        return otherSide(map, x, z, 1);
+    }
+
+    public static Optional<Region> otherSide(RegionMap map, int x, int z, int scale) {
+        Region here = map.regionAt(x * scale, z * scale);
         if (here == Region.OCEAN) return Optional.empty();
-        Region west = map.regionAt(x - 1, z);
+        Region west = map.regionAt((x - 1) * scale, z * scale);
         if (west != here && west != Region.OCEAN) return Optional.of(west);
-        Region north = map.regionAt(x, z - 1);
+        Region north = map.regionAt(x * scale, (z - 1) * scale);
         if (north != here && north != Region.OCEAN) return Optional.of(north);
         return Optional.empty();
     }
 
     /** The Veil lets a player through when both regions it separates are open for them. */
     public static boolean veilPassable(RegionMap map, int x, int z, int act) {
-        Optional<Region> other = otherSide(map, x, z);
-        return other.isEmpty() || (isOpen(map.regionAt(x, z), act) && isOpen(other.get(), act));
+        return veilPassable(map, x, z, act, 1);
+    }
+
+    public static boolean veilPassable(RegionMap map, int x, int z, int act, int scale) {
+        Optional<Region> other = otherSide(map, x, z, scale);
+        return other.isEmpty() || (isOpen(map.regionAt(x * scale, z * scale), act) && isOpen(other.get(), act));
     }
 
     /** The sealed region behind a Veil column, for the "The seal of ... holds" message. */
     public static Optional<Region> sealedBehind(RegionMap map, int x, int z, int act) {
-        Region here = map.regionAt(x, z);
+        return sealedBehind(map, x, z, act, 1);
+    }
+
+    public static Optional<Region> sealedBehind(RegionMap map, int x, int z, int act, int scale) {
+        Region here = map.regionAt(x * scale, z * scale);
         if (!isOpen(here, act)) return Optional.of(here);
-        return otherSide(map, x, z).filter(r -> !isOpen(r, act));
+        return otherSide(map, x, z, scale).filter(r -> !isOpen(r, act));
     }
 
     private static long distanceSquared(RegionBounds b, int x, int z) {
