@@ -34,8 +34,9 @@ final class Architecture {
     /**
      * A dome of radius r standing on height y: an ellipsoid shell (a little less tall than wide) with
      * 8 ribs, a ring at its foot and a finial on top. Inside stays hollow so the hall below sees it.
+     * Returns the height of its crown (the block under the finial).
      */
-    static void dome(ServerLevel level, int cx, int y, int cz, int r, BlockState shell, BlockState rib, BlockState finial) {
+    static int dome(ServerLevel level, int cx, int y, int cz, int r, BlockState shell, BlockState rib, BlockState finial) {
         int height = Math.max(2, Math.round(r * 0.95f));
         for (int dy = 0; dy <= height; dy++) {
             double radius = radiusAt(r, height, dy), above = radiusAt(r, height, dy + 1);
@@ -57,6 +58,42 @@ final class Architecture {
         }
         set(level, cx, y + height + 1, cz, rib);
         set(level, cx, y + height + 2, cz, finial);
+        return y + height;
+    }
+
+    /**
+     * A chandelier: five lanterns in a cross, each hanging on its own chain from height top, the one
+     * in the middle lowest, at height bottom. Light enough for a hall, and light to look at.
+     */
+    static void chandelier(ServerLevel level, int x, int top, int bottom, int z) {
+        BlockState chain = Blocks.CHAIN.defaultBlockState();
+        BlockState lantern = Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true);
+        for (int y = top; y > bottom; y--) set(level, x, y, z, chain);
+        set(level, x, bottom, z, lantern);
+        for (Direction d : Direction.Plane.HORIZONTAL) {
+            int ax = x + d.getStepX() * 2, az = z + d.getStepZ() * 2;
+            for (int y = top; y > bottom + 1; y--) set(level, ax, y, az, chain);
+            set(level, ax, bottom + 1, az, lantern);
+        }
+    }
+
+    /**
+     * A grand chandelier for a dome: a ring of lanterns on chains around a central one, with a gold
+     * crown at the top of the chains.
+     */
+    static void grandChandelier(ServerLevel level, int x, int top, int bottom, int z, int radius) {
+        BlockState chain = Blocks.CHAIN.defaultBlockState();
+        BlockState lantern = Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true);
+        for (int y = top; y > bottom; y--) set(level, x, y, z, chain);
+        set(level, x, bottom, z, lantern);
+        int ringTop = Math.max(bottom + 3, top - 4);
+        for (int deg = 0; deg < 360; deg += 45) {
+            int rx = x + (int) Math.round(radius * Math.cos(Math.toRadians(deg)));
+            int rz = z + (int) Math.round(radius * Math.sin(Math.toRadians(deg)));
+            for (int y = top; y > bottom + 2; y--) set(level, rx, y, rz, chain);
+            set(level, rx, bottom + 2, rz, lantern);
+            if (deg % 90 == 0) set(level, (x + rx) / 2 + (rx > x ? 0 : 0), ringTop, (z + rz) / 2, Blocks.GOLD_BLOCK.defaultBlockState());
+        }
     }
 
     private static double radiusAt(int r, int height, int dy) {
@@ -193,13 +230,29 @@ final class Architecture {
             set(level, door[2], y + 2, door[3] - 1, style.awning());
             set(level, door[2], y + 2, door[3] + 1, style.awning());
         }
-        set(level, (minX + maxX) / 2, y + height - 1, (minZ + maxZ) / 2, Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true));
+        BlockState hanging = Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true);
+        set(level, (minX + maxX) / 2, y + height - 1, (minZ + maxZ) / 2, hanging);
+        set(level, minX + 1, y + height - 1, maxZ - 1, hanging);
+        set(level, maxX - 1, y + height - 1, minZ + 1, hanging);
+        if (doorSide.getAxis() == Direction.Axis.Z) {
+            set(level, door[2] - 1, y + 1, door[3], hanging);
+            set(level, door[2] + 1, y + 1, door[3], hanging);
+        } else {
+            set(level, door[2], y + 1, door[3] - 1, hanging);
+            set(level, door[2], y + 1, door[3] + 1, hanging);
+        }
         if (style.gable()) gableRoof(level, minX, minZ, maxX, maxZ, y + height, style);
         else flatRoof(level, minX, minZ, maxX, maxZ, y + height, style);
     }
 
     /** A gabled roof along the longer side, overhanging by one block, with walled gable ends. */
     static void gableRoof(ServerLevel level, int minX, int minZ, int maxX, int maxZ, int y, HouseStyle style) {
+        // the wall plate: one row of frame on top of the walls, so no gap opens under the first row of the roof
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                if (x == minX || x == maxX || z == minZ || z == maxZ) set(level, x, y, z, style.frame());
+            }
+        }
         boolean alongX = maxX - minX >= maxZ - minZ;
         int lo = alongX ? minZ - 1 : minX - 1, hi = alongX ? maxZ + 1 : maxX + 1;
         int from = alongX ? minX - 1 : minZ - 1, to = alongX ? maxX + 1 : maxZ + 1;
