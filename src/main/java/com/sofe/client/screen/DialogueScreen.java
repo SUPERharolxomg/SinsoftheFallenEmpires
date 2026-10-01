@@ -107,7 +107,7 @@ public class DialogueScreen extends Screen {
     }
 
     private int boxTop() {
-        int bottomMargin = line.cinematic() ? this.height / 10 + 4 : 6;
+        int bottomMargin = line.cinematic() ? 10 : 6; // in a cinematic the box sits inside the lower black band
         return this.height - bottomMargin - boxHeight();
     }
 
@@ -270,12 +270,14 @@ public class DialogueScreen extends Screen {
 
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        if (line.cinematic()) {
-            int bar = this.height / 10;
-            g.fill(0, 0, this.width, bar, 0xFF000000);
-            g.fill(0, this.height - bar, this.width, this.height, 0xFF000000);
-        }
         layout();
+        if (line.cinematic()) {
+            // letterbox: the lower band is tall enough to hold the whole box, portrait and name included
+            int[] frame = portraitCard();
+            int lower = Math.min(frame[1] - frame[2] / 8, boxTop() - 14) - 8;
+            g.fill(0, 0, this.width, this.height / 8, 0xFF000000);
+            g.fill(0, lower, this.width, this.height, 0xFF000000);
+        }
         int l = boxLeft(), t = boxTop(), w = boxWidth(), h = boxHeight();
         int[] card = portraitCard();
 
@@ -340,21 +342,27 @@ public class DialogueScreen extends Screen {
             if (DialogueArt.exists(emblem)) blitWhole(g, emblem, x, y, size);
             return;
         }
+        Minecraft mc = Minecraft.getInstance();
         if ("player".equals(line.speaker())) {
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.player == null) return;
-            // a bust: the head and most of the torso fit in the frame (the model is 1.8 blocks tall)
-            int scale = Math.round(size / 1.3f);
-            int feet = y + Math.round(size * 0.08f) + Math.round(scale * 1.8f);
-            g.enableScissor(x, y, x + size, y + size);
-            InventoryScreen.renderEntityInInventoryFollowsMouse(g, x + size / 2, feet, scale, -18f, -6f, mc.player);
-            g.disableScissor();
-        } else if (!"narrator".equals(line.speaker())) {
-            ResourceLocation portrait = SoFEMod.id("textures/gui/portrait/" + line.speaker() + ".png");
-            if (DialogueArt.exists(portrait)) {
-                blitWhole(g, portrait, x, y, size);
-            }
+            if (mc.player != null) bust(g, mc.player, x, y, size);
+            return;
         }
+        ResourceLocation portrait = SoFEMod.id("textures/gui/portrait/" + line.speaker() + ".png");
+        if (DialogueArt.exists(portrait)) {
+            blitWhole(g, portrait, x, y, size);
+        } else if (mc.level != null && line.npcEntity() >= 0
+                && mc.level.getEntity(line.npcEntity()) instanceof net.minecraft.world.entity.LivingEntity npc) {
+            bust(g, npc, x, y, size); // citizens and merchants without a painted portrait are drawn live
+        }
+    }
+
+    /** A bust of a living model: the head and most of the torso fit in the frame (models are 1.8 blocks tall). */
+    private static void bust(GuiGraphics g, net.minecraft.world.entity.LivingEntity entity, int x, int y, int size) {
+        int scale = Math.round(size / 1.3f);
+        int feet = y + Math.round(size * 0.08f) + Math.round(scale * 1.8f);
+        g.enableScissor(x, y, x + size, y + size);
+        InventoryScreen.renderEntityInInventoryFollowsMouse(g, x + size / 2, feet, scale, -18f, -6f, entity);
+        g.disableScissor();
     }
 
     /** A whole texture drawn into a size by size square, whatever its resolution. */
