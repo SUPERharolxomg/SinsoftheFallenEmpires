@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_clockmaker",
+  "lines": [
+    {
+      "speaker": "citizen_clockmaker",
+      "text": "dialogue.sofe.citizen_clockmaker.act1.1"
+    },
+    {
+      "speaker": "citizen_clockmaker",
+      "text": "dialogue.sofe.citizen_clockmaker.act1.2"
+    }
+  ]
+}

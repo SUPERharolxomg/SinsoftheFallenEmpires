@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_tea_seller",
+  "lines": [
+    {
+      "speaker": "citizen_tea_seller",
+      "text": "dialogue.sofe.citizen_tea_seller.act1.1"
+    }
+  ]
+}

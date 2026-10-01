@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_spicer",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "bazaar_spicer",
+      "text": "dialogue.sofe.bazaar_spicer.act2.1"
+    }
+  ]
+}

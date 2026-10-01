@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_lampwright",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "bazaar_lampwright",
+      "text": "dialogue.sofe.bazaar_lampwright.act2.1"
+    }
+  ]
+}

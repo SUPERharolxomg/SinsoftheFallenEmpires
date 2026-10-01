@@ -6,15 +6,12 @@ import com.sofe.SoFEMod;
 import com.sofe.client.ClientBearers;
 import com.sofe.config.SoFEConfig;
 import com.sofe.entity.BearerCorpseEntity;
-import com.sofe.entity.VoidCreature;
-import com.sofe.entity.VoidStalker;
 import com.sofe.entity.boss.BrassSentinelEntity;
 import com.sofe.entity.npc.BearerNpcEntity;
 import com.sofe.entity.npc.StoryNpcEntity;
 import com.sofe.player.PlayerClass;
 import com.sofe.registry.EntityRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.multiplayer.PlayerInfo;
@@ -26,7 +23,6 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -40,30 +36,28 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Renderers for the Sprint 4 entities. Placeholders until the Blockbench/GeckoLib models of
- * docs/Anexos.md (A2): SoFE textures for the Void creatures and the Sentinel, and vanilla default
- * skins (read from the game, not copied) for NPCs that have no skin of their own yet.
+ * Renderers for the SoFE entities: GeckoLib models for the Void creatures and the bosses
+ * (scripts/make_mob_models.py), and player models for NPCs, with vanilla default skins (read from
+ * the game, not copied) for NPCs that have no skin of their own yet.
  */
 public final class SoFEEntityRenderers {
 
     private SoFEEntityRenderers() {
     }
 
-    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(BrassSentinelModel.LAYER, BrassSentinelModel::createLayer);
-    }
-
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityRegistry.VOID_WRETCH.get(), ctx -> new VoidRenderer<>(ctx, "wretch", 1.0f));
-        event.registerEntityRenderer(EntityRegistry.VOID_STALKER.get(), ctx -> new VoidRenderer<VoidStalker>(ctx, "stalker", 0.85f));
+        event.registerEntityRenderer(EntityRegistry.VOID_WRETCH.get(), ctx -> new GeoMobRenderer<>(ctx, "void_wretch", 0.5f));
+        event.registerEntityRenderer(EntityRegistry.VOID_STALKER.get(), ctx -> new GeoMobRenderer<>(ctx, "void_stalker", 0.5f));
         event.registerEntityRenderer(EntityRegistry.STORY_NPC.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BEARER_NPC.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.MERCHANT.get(), NpcRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.CITIZEN.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BEARER_CORPSE.get(), CorpseRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.BRASS_SENTINEL.get(), SentinelRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.KALETH.get(), ctx -> new OathRenderer<>(ctx, "kaleth", 1.2f));
-        event.registerEntityRenderer(EntityRegistry.SERATH.get(), ctx -> new OathRenderer<>(ctx, "serath", 1.15f));
-        event.registerEntityRenderer(EntityRegistry.VORATH.get(), VorathRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BRASS_SENTINEL.get(), ctx -> new GeoMobRenderer<BrassSentinelEntity>(ctx,
+                new SentinelModel(), 1.0f));
+        event.registerEntityRenderer(EntityRegistry.KALETH.get(), ctx -> new GeoMobRenderer<>(ctx, "kaleth", 0.7f));
+        event.registerEntityRenderer(EntityRegistry.SERATH.get(), ctx -> new GeoMobRenderer<>(ctx, "serath", 0.6f));
+        event.registerEntityRenderer(EntityRegistry.VORATH.get(), ctx -> new GeoMobRenderer<>(ctx, "vorath", 1.2f));
     }
 
     /** The Bearer outfit over every player's own skin (docs/Clases.md, "How the player looks"). */
@@ -78,26 +72,32 @@ public final class SoFEEntityRenderers {
         return SoFEMod.id("textures/entity/outfit/" + playerClass.id() + ".png");
     }
 
-    // --- Void creatures
+    // --- GeckoLib mobs (scripts/make_mob_models.py): model, animations, texture and glow mask by name
 
-    static class VoidRenderer<T extends VoidCreature> extends HumanoidMobRenderer<T, HumanoidModel<T>> {
-        private final ResourceLocation texture;
-        private final float scale;
+    static class GeoMobRenderer<T extends net.minecraft.world.entity.LivingEntity & software.bernie.geckolib.core.animatable.GeoAnimatable>
+            extends software.bernie.geckolib.renderer.GeoEntityRenderer<T> {
+        GeoMobRenderer(EntityRendererProvider.Context ctx, String model, float shadow) {
+            this(ctx, new software.bernie.geckolib.model.DefaultedEntityGeoModel<>(SoFEMod.id(model), true), shadow);
+        }
 
-        VoidRenderer(EntityRendererProvider.Context ctx, String name, float scale) {
-            super(ctx, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE)), 0.5f * scale);
-            this.texture = SoFEMod.id("textures/entity/void/" + name + ".png");
-            this.scale = scale;
+        GeoMobRenderer(EntityRendererProvider.Context ctx, software.bernie.geckolib.model.GeoModel<T> model, float shadow) {
+            super(ctx, model);
+            this.shadowRadius = shadow;
+            addRenderLayer(new software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer<>(this));
+        }
+    }
+
+    /** The Sentinel's metal is corrupted by the Void below half health. */
+    static class SentinelModel extends software.bernie.geckolib.model.DefaultedEntityGeoModel<BrassSentinelEntity> {
+        private static final ResourceLocation VOID_TEXTURE = SoFEMod.id("textures/entity/brass_sentinel_void.png");
+
+        SentinelModel() {
+            super(SoFEMod.id("brass_sentinel"), true);
         }
 
         @Override
-        protected void scale(T entity, PoseStack pose, float partialTick) {
-            pose.scale(scale, scale, scale);
-        }
-
-        @Override
-        public ResourceLocation getTextureLocation(T entity) {
-            return texture;
+        public ResourceLocation getTextureResource(BrassSentinelEntity entity) {
+            return entity.getHealth() < entity.getMaxHealth() / 2 ? VOID_TEXTURE : super.getTextureResource(entity);
         }
     }
 
@@ -108,7 +108,12 @@ public final class SoFEEntityRenderers {
             Map.entry("ozhan", "noor"), Map.entry("council_elder", "ari"), Map.entry("azhar", "kai"),
             Map.entry("cassian", "steve"), Map.entry("ankhareth", "efe"), Map.entry("shirin", "alex"),
             Map.entry("rurik", "zuri"), Map.entry("ferid", "makena"), Map.entry("dilara", "sunny"),
-            Map.entry("yusuf", "steve"), Map.entry("selim", "ari"));
+            Map.entry("yusuf", "steve"), Map.entry("selim", "ari"),
+            Map.entry("citizen_baker", "sunny"), Map.entry("citizen_water_carrier", "kai"), Map.entry("citizen_scholar", "noor"),
+            Map.entry("citizen_guard", "zuri"), Map.entry("citizen_weaver", "makena"), Map.entry("citizen_pilgrim", "efe"),
+            Map.entry("citizen_widow", "alex"), Map.entry("citizen_clockmaker", "ari"), Map.entry("citizen_storyteller", "steve"),
+            Map.entry("citizen_child", "kai"), Map.entry("bazaar_spicer", "noor"), Map.entry("bazaar_weaver", "sunny"),
+            Map.entry("bazaar_fruiterer", "efe"), Map.entry("bazaar_lampwright", "zuri"));
 
     static class NpcRenderer extends HumanoidMobRenderer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
         NpcRenderer(EntityRendererProvider.Context ctx) {
@@ -225,54 +230,6 @@ public final class SoFEEntityRenderers {
                 pose.popPose();
             }
             super.render(corpse, yaw, partialTick, pose, buffers, light);
-        }
-    }
-
-    // --- The Broken Oaths: placeholder humanoids until their GeckoLib models
-
-    static class OathRenderer<T extends com.sofe.entity.boss.BrokenOathEntity> extends HumanoidMobRenderer<T, HumanoidModel<T>> {
-        private final ResourceLocation texture;
-        private final float scale;
-
-        OathRenderer(EntityRendererProvider.Context ctx, String name, float scale) {
-            super(ctx, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE)), 0.6f * scale);
-            this.texture = SoFEMod.id("textures/entity/" + name + ".png");
-            this.scale = scale;
-        }
-
-        @Override
-        protected void scale(T entity, PoseStack pose, float partialTick) {
-            pose.scale(scale, scale, scale);
-        }
-
-        @Override
-        public ResourceLocation getTextureLocation(T entity) {
-            return texture;
-        }
-    }
-
-    // --- Vorath: the first GeckoLib model (placeholder until the Blockbench one, docs/Anexos.md A2)
-
-    static class VorathRenderer extends software.bernie.geckolib.renderer.GeoEntityRenderer<com.sofe.entity.boss.VorathEntity> {
-        VorathRenderer(EntityRendererProvider.Context ctx) {
-            super(ctx, new software.bernie.geckolib.model.DefaultedEntityGeoModel<>(SoFEMod.id("vorath"), true));
-            this.shadowRadius = 1.2f;
-        }
-    }
-
-    // --- The Brass Sentinel
-
-    static class SentinelRenderer extends MobRenderer<BrassSentinelEntity, BrassSentinelModel> {
-        private static final ResourceLocation TEXTURE = SoFEMod.id("textures/entity/brass_sentinel.png");
-        private static final ResourceLocation VOID_TEXTURE = SoFEMod.id("textures/entity/brass_sentinel_void.png");
-
-        SentinelRenderer(EntityRendererProvider.Context ctx) {
-            super(ctx, new BrassSentinelModel(ctx.bakeLayer(BrassSentinelModel.LAYER)), 1.0f);
-        }
-
-        @Override
-        public ResourceLocation getTextureLocation(BrassSentinelEntity entity) {
-            return entity.getHealth() < entity.getMaxHealth() / 2 ? VOID_TEXTURE : TEXTURE;
         }
     }
 }

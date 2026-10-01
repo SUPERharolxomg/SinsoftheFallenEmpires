@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_courier",
+  "lines": [
+    {
+      "speaker": "citizen_courier",
+      "text": "dialogue.sofe.citizen_courier.act1.1"
+    }
+  ]
+}
