@@ -272,6 +272,7 @@ public abstract class SoFEBossEntity extends Monster {
             QuestEngine.bossDefeated(player, bossId());
             givePersonalLoot(level, player, source);
             onCredited(player, first);
+            com.sofe.economy.EconomyHandler.refillFlask(player); // an elite fell: the Flask refills
         }
         SoFEMod.LOGGER.info("{} fell; {} participant(s) credited", bossId(), participants.size());
     }
@@ -280,7 +281,15 @@ public abstract class SoFEBossEntity extends Monster {
     protected void onCredited(ServerPlayer player, boolean firstTime) {
     }
 
-    /** Each participant rolls the boss's loot table for themselves, straight into their inventory. */
+    /**
+     * Archsins and Broken Oaths leave a Reward Coffer in the arena with each participant's share
+     * (docs/Anexos.md, A6); other bosses put the loot straight into the inventory.
+     */
+    protected boolean usesRewardCoffer() {
+        return false;
+    }
+
+    /** Each participant rolls the boss's loot table for themselves. */
     private void givePersonalLoot(ServerLevel level, ServerPlayer player, DamageSource source) {
         ResourceLocation tableId = getLootTable();
         LootTable table = level.getServer().getLootData().getLootTable(tableId);
@@ -292,7 +301,17 @@ public abstract class SoFEBossEntity extends Monster {
                 .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .withLuck(player.getLuck())
                 .create(LootContextParamSets.ENTITY);
-        for (ItemStack stack : table.getRandomItems(params)) {
+        List<ItemStack> loot = table.getRandomItems(params);
+        if (usesRewardCoffer()) {
+            BlockPos at = arenaCenterPos();
+            while (!level.getBlockState(at).isAir() && !level.getBlockState(at).is(com.sofe.registry.SoFEBlocks.REWARD_COFFER.get())
+                    && at.getY() < level.getMaxBuildHeight() - 1) {
+                at = at.above();
+            }
+            RewardCoffer.store(level, at, player.getUUID(), loot);
+            return;
+        }
+        for (ItemStack stack : loot) {
             if (!player.getInventory().add(stack)) player.drop(stack, false);
         }
     }

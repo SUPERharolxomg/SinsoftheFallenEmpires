@@ -42,7 +42,14 @@ public class MaterialGameTests {
     public static void generatedTagsAreLoaded(GameTestHelper helper) {
         BlockState glacialOre = MaterialRegistry.block(Material.GLACIAL_IRON, MaterialForm.ORE).defaultBlockState();
         helper.assertTrue(glacialOre.is(BlockTags.MINEABLE_WITH_PICKAXE), "glacial iron ore is not mineable with a pickaxe");
-        helper.assertTrue(glacialOre.is(BlockTags.NEEDS_IRON_TOOL), "glacial iron ore should need an iron pickaxe");
+        helper.assertTrue(glacialOre.is(com.sofe.gear.SoFETiers.NEEDS_BRASS_TOOL), "glacial iron ore should need a brass pickaxe or better");
+        // the empire tool chain (docs/Mundo.md, W4): stone cannot, brass and iron can
+        helper.assertFalse(net.minecraftforge.common.TierSortingRegistry.isCorrectTierForDrops(net.minecraft.world.item.Tiers.STONE, glacialOre),
+                "a stone pickaxe mined Glacial Iron");
+        helper.assertTrue(net.minecraftforge.common.TierSortingRegistry.isCorrectTierForDrops(com.sofe.gear.SoFETiers.BRASS, glacialOre),
+                "a brass pickaxe could not mine Glacial Iron");
+        helper.assertTrue(net.minecraftforge.common.TierSortingRegistry.isCorrectTierForDrops(net.minecraft.world.item.Tiers.IRON, glacialOre),
+                "an iron pickaxe could not mine Glacial Iron");
         helper.assertTrue(glacialOre.is(Tags.Blocks.ORES), "glacial iron ore is not in forge:ores");
 
         ItemStack ingot = new ItemStack(MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT));

@@ -111,7 +111,7 @@ public final class ProgressionHandler {
             SoFENetwork.sendTo(player, new SyncProgressPacket(p.level(), p.xp(),
                     ProgressionRulesManager.leveling().xpToNext(p.level()), p.skillPoints(), p.attributePoints(),
                     p.skills().ranks(), p.skills().slots().stream().map(s -> s == null ? "" : s).toList(),
-                    p.attributes().addedPoints(), derived));
+                    p.attributes().addedPoints(), derived, com.sofe.gear.PlayerGear.bonuses(player).attributes()));
         });
     }
 }

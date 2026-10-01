@@ -33,4 +33,9 @@ public abstract class ArchsinEntity extends SoFEBossEntity {
         player.sendSystemMessage(Component.translatable("message.sofe.codex_shard", Component.translatable(sin().translationKey()))
                 .withStyle(ChatFormatting.LIGHT_PURPLE));
     }
+
+    @Override
+    protected boolean usesRewardCoffer() {
+        return true;
+    }
 }

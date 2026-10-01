@@ -35,7 +35,10 @@ public final class RegionTitleHandler {
                         .ifPresent(region -> {
                             SoFENetwork.sendTo(player, new RegionEnteredPacket(region, com.sofe.story.StoryCapability.get(player)
                                     .map(story -> com.sofe.world.lock.RegionStatus.of(region, story)).orElse(com.sofe.world.lock.RegionStatus.NONE), deep));
-                            if (!deep) QuestEngine.event(player, new QuestEvent.EnteredRegion(region.id()));
+                            if (!deep) {
+                                QuestEngine.event(player, new QuestEvent.EnteredRegion(region.id()));
+                                com.sofe.economy.EconomyHandler.onEnteredRegion(player, region);
+                            }
                             com.sofe.story.SoFEAdvancements.award(player, deep ? "story/burning_deep" : "story/enter_" + region.id());
                         }));
     }

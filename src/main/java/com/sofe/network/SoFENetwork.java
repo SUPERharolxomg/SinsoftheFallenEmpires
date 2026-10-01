@@ -13,7 +13,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
  * bump it whenever a packet's format changes.
  */
 public final class SoFENetwork {
-    private static final String PROTOCOL = "3"; // 3: story sync, dialogue and quest tracking
+    private static final String PROTOCOL = "4"; // 4: economy, merchants, stations and gear sync
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             SoFEMod.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
@@ -84,6 +84,18 @@ public final class SoFENetwork {
                 .decoder(BearerOfPacket::decode)
                 .consumerMainThread(BearerOfPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(SyncEconomyPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SyncEconomyPacket::encode).decoder(SyncEconomyPacket::decode).consumerMainThread(SyncEconomyPacket::handle).add();
+        CHANNEL.messageBuilder(OpenMerchantPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(OpenMerchantPacket::encode).decoder(OpenMerchantPacket::decode).consumerMainThread(OpenMerchantPacket::handle).add();
+        CHANNEL.messageBuilder(MerchantActionPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(MerchantActionPacket::encode).decoder(MerchantActionPacket::decode).consumerMainThread(MerchantActionPacket::handle).add();
+        CHANNEL.messageBuilder(StationPackets.Open.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(StationPackets.Open::encode).decoder(StationPackets.Open::decode).consumerMainThread(StationPackets.Open::handle).add();
+        CHANNEL.messageBuilder(StationPackets.Make.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(StationPackets.Make::encode).decoder(StationPackets.Make::decode).consumerMainThread(StationPackets.Make::handle).add();
+        CHANNEL.messageBuilder(StationPackets.Drink.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(StationPackets.Drink::encode).decoder(StationPackets.Drink::decode).consumerMainThread(StationPackets.Drink::handle).add();
         CHANNEL.messageBuilder(TrackQuestPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(TrackQuestPacket::encode)
                 .decoder(TrackQuestPacket::decode)

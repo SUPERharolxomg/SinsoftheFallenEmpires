@@ -19,6 +19,8 @@ public final class SoFEKeys {
     private static final String CATEGORY = "key.categories.sofe";
 
     public static final KeyMapping[] SKILLS = new KeyMapping[6];
+    /** The potion belt: Left Alt + 7, 8, 9 and 0 (docs/Jugabilidad.md, G4). */
+    public static final KeyMapping[] BELT = new KeyMapping[4];
     public static final KeyMapping FLASK = new KeyMapping("key.sofe.flask", KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY);
     public static final KeyMapping SKILL_TREE = new KeyMapping("key.sofe.skill_tree", KeyConflictContext.IN_GAME,
@@ -33,6 +35,8 @@ public final class SoFEKeys {
             SKILLS[i] = combatKey("key.sofe.skill_" + (i + 1), GLFW.GLFW_KEY_1 + i);
         }
         SKILLS[5] = combatKey("key.sofe.ultimate", GLFW.GLFW_KEY_6);
+        int[] beltKeys = {GLFW.GLFW_KEY_7, GLFW.GLFW_KEY_8, GLFW.GLFW_KEY_9, GLFW.GLFW_KEY_0};
+        for (int i = 0; i < BELT.length; i++) BELT[i] = combatKey("key.sofe.belt_" + (i + 1), beltKeys[i]);
     }
 
     private SoFEKeys() {
@@ -46,7 +50,8 @@ public final class SoFEKeys {
         for (KeyMapping key : SKILLS) {
             event.register(key);
         }
-        event.register(FLASK); // the Bearer's Flask arrives in Sprint 5.5; the key is reserved now
+        event.register(FLASK);
+        for (KeyMapping key : BELT) event.register(key);
         event.register(SKILL_TREE);
         event.register(CHARACTER);
         event.register(JOURNAL);
@@ -75,20 +80,31 @@ public final class SoFEKeys {
         }
 
         for (int slot = 0; slot < SKILLS.length; slot++) {
-            boolean pressed = false;
-            while (SKILLS[slot].consumeClick()) {
-                pressed = true;
-            }
-            if (pressed) {
-                SoFENetwork.sendToServer(new CastSkillPacket(slot));
-                for (KeyMapping hotbar : minecraft.options.keyHotbarSlots) {
-                    if (hotbar.getKey().equals(SKILLS[slot].getKey())) {
-                        while (hotbar.consumeClick()) {
-                            // discard: this press belonged to the Combat Bar
-                        }
+            if (pressed(SKILLS[slot], minecraft)) SoFENetwork.sendToServer(new CastSkillPacket(slot));
+        }
+        for (int slot = 0; slot < BELT.length; slot++) {
+            if (pressed(BELT[slot], minecraft)) SoFENetwork.sendToServer(new com.sofe.network.StationPackets.Drink(slot));
+        }
+        while (FLASK.consumeClick()) {
+            SoFENetwork.sendToServer(new com.sofe.network.StationPackets.Drink(com.sofe.network.StationPackets.Drink.FLASK));
+        }
+    }
+
+    /** Whether a Combat Bar key was pressed; the same press on a vanilla hotbar key is swallowed. */
+    private static boolean pressed(KeyMapping key, Minecraft minecraft) {
+        boolean pressed = false;
+        while (key.consumeClick()) {
+            pressed = true;
+        }
+        if (pressed) {
+            for (KeyMapping hotbar : minecraft.options.keyHotbarSlots) {
+                if (hotbar.getKey().equals(key.getKey())) {
+                    while (hotbar.consumeClick()) {
+                        // discard: this press belonged to the Combat Bar
                     }
                 }
             }
         }
+        return pressed;
     }
 }

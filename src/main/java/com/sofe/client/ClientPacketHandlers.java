@@ -33,6 +33,20 @@ public final class ClientPacketHandlers {
         Minecraft.getInstance().setScreen(new com.sofe.client.screen.WaystoneScreen(entries));
     }
 
+    /** A merchant screen, or a refresh of the one already open for the same merchant. */
+    public static void openMerchant(com.sofe.network.OpenMerchantPacket packet) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof com.sofe.client.screen.MerchantScreen open && open.npc().equals(packet.npc())) {
+            open.update(packet);
+        } else {
+            minecraft.setScreen(new com.sofe.client.screen.MerchantScreen(packet));
+        }
+    }
+
+    public static void openStation(com.sofe.crafting.StationRecipe.Kind kind) {
+        Minecraft.getInstance().setScreen(new com.sofe.client.screen.StationScreen(kind));
+    }
+
     public static void openClassSelect() {
         if (ClientClassData.get().isEmpty()) {
             Minecraft.getInstance().setScreen(new ClassSelectScreen());
