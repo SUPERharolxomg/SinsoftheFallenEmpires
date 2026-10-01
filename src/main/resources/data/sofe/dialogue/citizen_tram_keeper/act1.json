@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_tram_keeper",
+  "lines": [
+    {
+      "speaker": "citizen_tram_keeper",
+      "text": "dialogue.sofe.citizen_tram_keeper.act1.1"
+    },
+    {
+      "speaker": "citizen_tram_keeper",
+      "text": "dialogue.sofe.citizen_tram_keeper.act1.2"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_storyteller",
+  "lines": [
+    {
+      "speaker": "citizen_storyteller",
+      "text": "dialogue.sofe.citizen_storyteller.ask",
+      "answers": [
+        {
+          "text": "dialogue.sofe.citizen_storyteller.topic.1",
+          "next": 1
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.topic.2",
+          "next": 2
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.topic.3",
+          "next": 3
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.topic.4",
+          "next": 4
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "citizen_storyteller",
+      "text": "dialogue.sofe.citizen_storyteller.tale.1",
+      "answers": [
+        {
+          "text": "dialogue.sofe.citizen_storyteller.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "citizen_storyteller",
+      "text": "dialogue.sofe.citizen_storyteller.tale.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.citizen_storyteller.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "citizen_storyteller",
+      "text": "dialogue.sofe.citizen_storyteller.tale.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.citizen_storyteller.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.bye",
+          "next": -1
+        }
+      ]
+    },
+    {
+      "speaker": "citizen_storyteller",
+      "text": "dialogue.sofe.citizen_storyteller.tale.4",
+      "answers": [
+        {
+          "text": "dialogue.sofe.citizen_storyteller.more",
+          "next": 0
+        },
+        {
+          "text": "dialogue.sofe.citizen_storyteller.bye",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

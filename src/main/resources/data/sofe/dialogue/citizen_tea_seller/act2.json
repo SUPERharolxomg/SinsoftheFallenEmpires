@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_tea_seller",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "citizen_tea_seller",
+      "text": "dialogue.sofe.citizen_tea_seller.act2.1"
+    }
+  ]
+}

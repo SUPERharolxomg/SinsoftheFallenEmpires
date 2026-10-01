@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_lampwright",
+  "lines": [
+    {
+      "speaker": "bazaar_lampwright",
+      "text": "dialogue.sofe.bazaar_lampwright.act1.1"
+    }
+  ]
+}

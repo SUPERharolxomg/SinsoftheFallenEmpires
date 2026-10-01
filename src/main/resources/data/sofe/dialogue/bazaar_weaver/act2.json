@@ -1,0 +1,15 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_weaver",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "bazaar_weaver",
+      "text": "dialogue.sofe.bazaar_weaver.act2.1"
+    }
+  ]
+}

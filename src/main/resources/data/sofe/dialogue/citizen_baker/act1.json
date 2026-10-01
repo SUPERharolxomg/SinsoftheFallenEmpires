@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_baker",
+  "lines": [
+    {
+      "speaker": "citizen_baker",
+      "text": "dialogue.sofe.citizen_baker.act1.1"
+    },
+    {
+      "speaker": "citizen_baker",
+      "text": "dialogue.sofe.citizen_baker.act1.2"
+    }
+  ]
+}

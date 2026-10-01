@@ -1,0 +1,19 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_baker",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "citizen_baker",
+      "text": "dialogue.sofe.citizen_baker.act2.1"
+    },
+    {
+      "speaker": "citizen_baker",
+      "text": "dialogue.sofe.citizen_baker.act2.2"
+    }
+  ]
+}
