@@ -35,6 +35,10 @@
     "sofe:nordrath_iron_brazier",
     "sofe:corrupted_nordrath_runestone_bricks",
     "sofe:infernal_ember_ore",
-    "sofe:wailing_soul_ore"
+    "sofe:wailing_soul_ore",
+    "sofe:runestone",
+    "sofe:imperial_forge",
+    "sofe:alembic",
+    "sofe:reward_coffer"
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/reward_coffer_bottom",
+    "side": "sofe:block/reward_coffer_side",
+    "top": "sofe:block/reward_coffer_top"
+  }
+}
