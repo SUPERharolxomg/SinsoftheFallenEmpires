@@ -1,6 +1,12 @@
 {
   "item": "sofe:brass_chestplate",
   "slot": "armor",
-  "classes": [],
-  "min_item_level": 1
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 1,
+  "requires": {
+    "attribute": "strength",
+    "value": 9
+  }
 }

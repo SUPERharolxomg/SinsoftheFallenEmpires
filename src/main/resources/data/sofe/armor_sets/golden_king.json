@@ -1,0 +1,20 @@
+{
+  "bonuses": [
+    {
+      "type": "absorption",
+      "every": 400
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:luck",
+      "amplifier": 0,
+      "when": "always"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:hero_of_the_village",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "item": "sofe:caravan_treads",
+  "item_level": 4,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 3,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "dodge",
+      "value": 4
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 15
+    }
+  ]
+}

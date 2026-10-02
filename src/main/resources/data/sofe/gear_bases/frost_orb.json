@@ -1,0 +1,8 @@
+{
+  "item": "sofe:frost_orb",
+  "slot": "weapon",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 6
+}

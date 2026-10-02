@@ -1,0 +1,12 @@
+{
+  "item": "sofe:mummy_lord_leggings",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 10,
+  "requires": {
+    "attribute": "strength",
+    "value": 18
+  }
+}

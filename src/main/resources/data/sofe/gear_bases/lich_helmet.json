@@ -1,0 +1,8 @@
+{
+  "item": "sofe:lich_helmet",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 13
+}

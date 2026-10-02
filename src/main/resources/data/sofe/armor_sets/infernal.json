@@ -1,0 +1,9 @@
+{
+  "bonuses": [
+    {
+      "type": "answer",
+      "action": "ignite",
+      "value": 4
+    }
+  ]
+}

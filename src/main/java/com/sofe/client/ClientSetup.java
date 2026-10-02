@@ -41,6 +41,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
+        if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
         modBus.addListener(SoFEKeys::register);
         modBus.addListener(ClientSetup::registerItemProperties);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
@@ -79,5 +80,31 @@ public final class ClientSetup {
         event.enqueueWork(() -> com.sofe.registry.ItemRegistry.shields().forEach(shield ->
                 net.minecraft.client.renderer.item.ItemProperties.register(shield.get(), net.minecraft.resources.ResourceLocation.withDefaultNamespace("blocking"),
                         (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1f : 0f)));
+        event.enqueueWork(ClientSetup::rangedProperties);
+    }
+
+    /** The bows and crossbows of batch 3 pull back as the vanilla ones do; each bow by its own draw time. */
+    private static void rangedProperties() {
+        var pull = net.minecraft.resources.ResourceLocation.withDefaultNamespace("pull");
+        var pulling = net.minecraft.resources.ResourceLocation.withDefaultNamespace("pulling");
+        for (var bow : com.sofe.registry.ItemRegistry.bows()) {
+            int draw = ((com.sofe.gear.ranged.RangedItems.SoFEBow) bow.get()).drawTicks();
+            net.minecraft.client.renderer.item.ItemProperties.register(bow.get(), pull, (stack, level, entity, seed) ->
+                    entity == null || entity.getUseItem() != stack ? 0f : (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / (float) draw);
+            net.minecraft.client.renderer.item.ItemProperties.register(bow.get(), pulling, (stack, level, entity, seed) ->
+                    entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1f : 0f);
+        }
+        for (var crossbow : com.sofe.registry.ItemRegistry.crossbows()) {
+            net.minecraft.client.renderer.item.ItemProperties.register(crossbow.get(), pull, (stack, level, entity, seed) ->
+                    entity == null || net.minecraft.world.item.CrossbowItem.isCharged(stack) ? 0f
+                            : (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / (float) net.minecraft.world.item.CrossbowItem.getChargeDuration(stack));
+            net.minecraft.client.renderer.item.ItemProperties.register(crossbow.get(), pulling, (stack, level, entity, seed) ->
+                    entity != null && entity.isUsingItem() && entity.getUseItem() == stack && !net.minecraft.world.item.CrossbowItem.isCharged(stack) ? 1f : 0f);
+            net.minecraft.client.renderer.item.ItemProperties.register(crossbow.get(), net.minecraft.resources.ResourceLocation.withDefaultNamespace("charged"),
+                    (stack, level, entity, seed) -> net.minecraft.world.item.CrossbowItem.isCharged(stack) ? 1f : 0f);
+            net.minecraft.client.renderer.item.ItemProperties.register(crossbow.get(), net.minecraft.resources.ResourceLocation.withDefaultNamespace("firework"),
+                    (stack, level, entity, seed) -> net.minecraft.world.item.CrossbowItem.isCharged(stack)
+                            && net.minecraft.world.item.CrossbowItem.containsChargedProjectile(stack, net.minecraft.world.item.Items.FIREWORK_ROCKET) ? 1f : 0f);
+        }
     }
 }

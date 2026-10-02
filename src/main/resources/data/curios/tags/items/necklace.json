@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "sofe:brass_amulet"
+    "sofe:brass_amulet",
+    "sofe:turquoise_necklace",
+    "sofe:bone_necklace",
+    "sofe:scarab_amulet",
+    "sofe:laurel_torc",
+    "sofe:aetherium_pendant",
+    "sofe:eye_of_the_false_prophet",
+    "sofe:serpent_coil",
+    "sofe:broken_pact_sigil"
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "item": "sofe:seax",
+  "slot": "weapon",
+  "classes": [
+    "thief"
+  ],
+  "min_item_level": 6
+}

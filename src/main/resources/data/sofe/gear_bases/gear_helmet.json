@@ -1,0 +1,8 @@
+{
+  "item": "sofe:gear_helmet",
+  "slot": "armor",
+  "classes": [
+    "thief"
+  ],
+  "min_item_level": 4
+}

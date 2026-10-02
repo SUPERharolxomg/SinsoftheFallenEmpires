@@ -31,7 +31,12 @@ public final class WeaponTraitHandler {
         if (splashing || !(event.getSource().getEntity() instanceof Player player)) return;
         if (event.getSource().getDirectEntity() != player || !(player.getMainHandItem().getItem() instanceof TraitWeapon weapon)) return;
         LivingEntity target = event.getEntity();
+        if (!com.sofe.gear.ranged.ClassBound.allows(player, weapon.requiredClass())) { // a class weapon in the wrong hands
+            event.setAmount(Math.min(event.getAmount(), 1.0f));
+            return;
+        }
         float amount = event.getAmount();
+        if (weapon.has(WeaponTrait.HOLY) && target.getMobType() == net.minecraft.world.entity.MobType.UNDEAD) amount *= 1.5f;
         if (weapon.has(WeaponTrait.PIERCE)) amount = WeaponTrait.pierce(amount, target.getArmorValue());
         if (weapon.has(WeaponTrait.BEAST) && target instanceof Animal) amount *= WeaponTrait.BEAST_MULTIPLIER;
         if (weapon.has(WeaponTrait.CHARGE) && (player.isSprinting() || player.isPassenger())) {
@@ -64,6 +69,10 @@ public final class WeaponTraitHandler {
             target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze() + 60, target.getTicksFrozen() + 80));
             particles(target, ParticleTypes.SNOWFLAKE, 10);
         }
+        if (weapon.has(WeaponTrait.BURN)) target.setSecondsOnFire(4);
+        if (weapon.has(WeaponTrait.HOLY)) player.heal(0.5f);
+        if (weapon.has(WeaponTrait.POISON)) target.addEffect(new MobEffectInstance(MobEffects.POISON, 80, 0), player);
+        if (weapon.has(WeaponTrait.WEAKEN)) target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 80, 0), player);
         if (weapon.has(WeaponTrait.BLEED)) target.addEffect(new MobEffectInstance(SoFEEffects.BLEEDING.get(), 80, 0), player);
         if (weapon.has(WeaponTrait.LIFE_STEAL)) player.heal(Math.min(amount, target.getHealth()) * WeaponTrait.LIFE_STEAL_FRACTION);
         if (weapon.has(WeaponTrait.PULL)) {

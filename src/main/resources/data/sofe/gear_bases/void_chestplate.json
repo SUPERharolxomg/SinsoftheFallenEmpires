@@ -1,0 +1,12 @@
+{
+  "item": "sofe:void_chestplate",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 11,
+  "requires": {
+    "attribute": "strength",
+    "value": 19
+  }
+}

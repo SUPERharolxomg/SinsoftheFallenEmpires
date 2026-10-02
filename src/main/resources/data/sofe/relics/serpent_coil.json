@@ -1,0 +1,21 @@
+{
+  "item": "sofe:serpent_coil",
+  "item_level": 5,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 4,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "life_steal",
+      "value": 3
+    },
+    {
+      "stat": "crit_chance",
+      "value": 3
+    }
+  ]
+}

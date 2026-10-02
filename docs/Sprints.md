@@ -200,6 +200,109 @@ Design: [Pociones.md](Pociones.md).
 - [x] Dilara sells the brass weapons from Act I and the glacial ones from Act II; sprites drawn by `scripts/make_arsenal_sprites.py`
 - [x] Tests: `WeaponTraitTest` and `ArsenalGameTests` (gear bases, reach, slam, bleeding)
 
+## Extra — The arsenal, batch 2, and the art pass
+
+- [x] Nine armor sets of four pieces (Scout, Bronze, Gearwork, Observatory, Emerald, Cobalt, Solari, Chronomancer, Void), SoFE gear that rolls affixes, with a bonus for the full set (`ArmorSets`); icons and worn layers drawn by `scripts/make_armor_sets.py`
+- [x] Art pass (`scripts/make_art_pass.py`): ingots, nuggets, raw metal, gems, shards and powders with the shapes players know; ores as stone with clusters; storage blocks; round potion flasks; the Imperial Forge and the iron brazier as 3D models (the brazier a burning bowl on legs, with flames)
+- [x] The empire shields drawn with the vanilla shield's model and pose (`EmpireShieldRenderer`)
+- [x] Weapons at 32x32 (`scripts/upscale_weapons.py`, Scale2x and a light pass), long and heavy ones held larger
+- [x] Five creative tabs: weapons and armor, ores and materials, blocks, potions and items, creatures
+
+## Extra — The arsenal, batch 2b: more armor and weapons
+
+- [x] Every armor set redrawn on a vanilla armor shape (iron, chainmail, gold, diamond, netherite or leather) recolored to its palette, with a vanilla trim pattern in the set's trim color, gems and an icon ornament (plume, horns, crest, sun, jackal ears and so on). `scripts/make_armor_sets.py` reads the vanilla textures from the Minecraft jar in the Gradle cache
+- [x] The brass and glacial iron pickaxes drawn on the vanilla pickaxe
+- [x] Seven new armor sets (28 pieces), all with a full-set bonus:
+
+  | Set | Empire | Bonus |
+  |---|---|---|
+  | Berserker | Nordrath | Strength II below half health |
+  | Seafarer | Nordrath | Water breathing; Dolphin's Grace in water |
+  | Scarab | Khemet | Poison and wither are cleansed |
+  | Embalmer | Khemet | Regeneration while crouching |
+  | Legion | Aureum | Knocks back melee attackers |
+  | Order of the Scale | Aureum | Reflects 25% of melee damage |
+  | Infernal | Relic | Sets melee attackers on fire |
+
+  The Legion, Scale and Infernal bonuses answer blows (`ArmorSets.onHurt`).
+- [x] Thirteen new melee weapons: Bearded Axe, Seax, Frost Spear (Nordrath); Khopesh, Scarab Sickle, Jackal Glaive, Was Sceptre (Khemet); Gladius, Legion Pilum, Justicar's Maul, Blade of the Scale (Aureum); Ember Blade and Infernal Greataxe (Infernal relics)
+- [x] Two new weapon traits: Burning (sets the target on fire) and Withering curse (Weakness)
+- [x] Dilara sells chestplates of the new sets and some of the new weapons, unlocked by act
+- [ ] Batch 3: ranged and arcane weapons (bows, crossbows, firearms, spell staves, tomes and gadgets), with their projectiles
+
+## Extra — Uniques, jewelry and the gambler
+
+- [x] Droppable Relics ("uniques"): a Relic definition can be `droppable`, with a `slot` and a `min_level`. 2% of the gear an enemy drops is a unique of its level instead (`GearLoot.GearDrops`). Uniques that drop at random or come out of a gamble are not bound
+- [x] Nineteen uniques with their own sprites and effects (`RelicEffects`):
+
+  | Kind | Uniques |
+  |---|---|
+  | Weapons | Dunesunder, The Widow's Kiss, Skaldbreaker, Rimetooth, Judgement of the Jackal, Stormcaller, Greed's Chain |
+  | Armor | Crown of the Five Sultans, Mantle of the White Wolf, Treads of the Caravan Master, Wrappings of the Undying, Helm of the Blind Judge, Heart of the Furnace |
+  | Jewelry | Eye of the False Prophet, Ring of the Last Caravan, Soulkeeper, Band of the Frozen Throne, Coil of the Serpent, Sigil of the Broken Pact |
+
+- [x] Ten new random jewelry bases (five rings, five necklaces and amulets) in the Curios ring and necklace slots, drawn by `scripts/make_jewelry.py`
+- [x] The gambler, after Diablo II's Gheed: Kasim the Veiled in the Sulthari bazaar and Hrafna Bone-Dice in the Skarnhold market sell veiled weapons, armor and jewels (`VeiledItem`, `Gamble`). The veil is lifted at the counter:
+
+  | Outcome | Chance |
+  |---|---|
+  | Swindle (a handful of Void ash) | 8% |
+  | Common | 47% |
+  | Tempered | 28% |
+  | Imperial | 14% |
+  | A unique | 3% (6% for jewels) |
+
+## Extra — 3D armor, ten sets per class
+
+- [x] Every SoFE armor is worn as a GeckoLib 3D model (`ModeledArmor`, `SoFEArmorRenderer`), as in Armor of the Ages:
+  - `scripts/armor_catalog.py` holds all 50 class sets and the 6 unique pieces.
+  - `scripts/armor_lib.py` holds the parts (horns, crests, wizard and witch hats, hoods, skulls, lich crowns, plague masks, nemes, jackal heads, turbans, crowns, keffiyehs, tricorns, wolf and lion pelts, pauldrons, robes, capes) and the painter.
+  - `scripts/make_armor_models.py` writes the models and textures. It also draws every inventory icon from the model itself, so an icon always shows what is worn.
+- [x] Ten sets per class:
+
+  | Class | Sets |
+  |---|---|
+  | Knight | Bronze, Sentinel, Glacial Iron, Cobalt, Warlord, Solari, Dragonknight, Legion, Order of the Scale, Infernal |
+  | Necromancer | Gravewarden, Plaguebearer, Soulreaver, Bonelord, Embalmer, Scarab, Mummy Lord, Void, Anubis, Lich |
+  | Sorceress | Witch, Enchantress, Frost Witch, Observatory, Emerald, Pyromancer, Chronomancer, Tempest, Archmage, Astral Sage |
+  | Thief | Scout, Huntsman, Gearwork, Seafarer, Berserker, Shadow, Wolf Raider, Frost Stalker, Corsair, Nightblade |
+  | King | Brass, Desert Emir, Royal Guard, Peacock, Vizier, Mirage, Sultan, Lion King, Pharaoh, Golden King |
+
+- [x] Heavy sets ask for Strength, as in Diablo (10 + 2 × level). Medium sets ask for less (8 + level), and robes and leathers ask for nothing. `scripts/make_armor_data.py` writes the materials, items, names, gear bases and bonuses
+- [x] Full-set bonuses are data (`data/sofe/armor_sets/<set>.json`, read by `ArmorSets`):
+  - effects (always, or below half health, crouching, in water, by night or day, when falling);
+  - cleansing;
+  - heals and absorption on a timer;
+  - answers to melee blows (knockback, reflect, ignite, slow, poison, wither, weakness);
+  - on-kill heals and effects;
+  - immunity to freezing;
+  - enemies revealed through walls.
+- [x] `ArmorShots`: `./gradlew runClient -PshotSets=a,b` opens `run/saves/shots`, dresses the player in each set, screenshots it from the front and the back into `run/screenshots`, and quits
+- [x] Axes and hammers redrawn at 32x32 from shapes (`scripts/make_heavy_weapons.py`). Great axes have one wide crescent and a back spike
+
+## Extra — The arsenal, batch 3: tools, thrown, ranged, arcane and class items
+
+- [x] New tool tiers: Star Lapis, Solar Gold, Orichalcum and Aetherium (`SoFETiers`). Their pickaxes are drawn on the vanilla pickaxe; mining hammers break a 3x3 face (`Tools.MiningHammer`); the Gearwork Drill digs stone and earth (`Tools.Drill`)
+- [x] Thrown weapons (`ThrownWeapon`): javelins of brass, glacial iron and aetherium (the aetherium one returns); throwing knives of brass, glacial iron and venom
+- [x] Ranged (`RangedItems`):
+  - five bows, drawn on the vanilla bow, each with its own draw time, damage and element;
+  - three crossbows, one of them a repeater that looses three bolts;
+  - three firearms that fire Brass Cartridges: pistol, musket and blunderbuss.
+- [x] Arcane: five staves that cast bolts, a draining beam or lightning (`SpellBolt`); five tomes that burst round the reader; three bombs (clockwork, smoke, fire)
+- [x] Class items, as in Diablo II (`ClassBound`: only their Bearer uses them; anyone else strikes for 1 and cannot cast):
+
+  | Class | Items |
+  |---|---|
+  | Knight | Oathblade, Aureum Warmace, Lance of the Scale (holy) |
+  | Necromancer | Bone Wand, Soul Wand, Reaper's Sickle |
+  | Sorceress | Ember, Frost and Storm Orbs |
+  | Thief | Shadow and Viper Claws, Throwing Stars |
+  | King | Royal Scepter (a decree that strengthens allies), Sultan's Saber, Royal Flintlock |
+
+- [x] Elements (`Spell`): fire, frost, storm, Void, souls, bone, arcane, holy, poison and bleeding, shared by bolts, arrows and thrown weapons
+- [x] `scripts/arsenal3_catalog.py` holds the items. `make_arsenal3_data.py` writes the registry, lang, gear bases, recipes and bow and crossbow models; `make_arsenal3_sprites.py` draws them
+- [x] The gambler of Sulthari renamed Kasim the Veiled; Zahir the Wanderer stays the travelling caravan of Sprint 7
+
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).
 - [ ] Knight: Shield and Charge stances + 10 skills

@@ -1,0 +1,8 @@
+{
+  "item": "sofe:soul_wand",
+  "slot": "weapon",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 7
+}

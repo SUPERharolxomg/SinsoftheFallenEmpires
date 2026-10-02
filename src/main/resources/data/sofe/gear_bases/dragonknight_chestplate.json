@@ -1,0 +1,12 @@
+{
+  "item": "sofe:dragonknight_chestplate",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 10,
+  "requires": {
+    "attribute": "strength",
+    "value": 30
+  }
+}

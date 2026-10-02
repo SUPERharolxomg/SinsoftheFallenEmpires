@@ -1,0 +1,8 @@
+{
+  "item": "sofe:mirage_helmet",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 8
+}

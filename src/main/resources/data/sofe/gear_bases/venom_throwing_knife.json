@@ -1,0 +1,8 @@
+{
+  "item": "sofe:venom_throwing_knife",
+  "slot": "weapon",
+  "classes": [
+    "thief"
+  ],
+  "min_item_level": 4
+}

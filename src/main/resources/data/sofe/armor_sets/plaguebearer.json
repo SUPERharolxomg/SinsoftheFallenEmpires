@@ -1,0 +1,9 @@
+{
+  "bonuses": [
+    {
+      "type": "answer",
+      "action": "poison",
+      "value": 0
+    }
+  ]
+}

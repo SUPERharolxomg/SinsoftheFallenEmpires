@@ -1,0 +1,9 @@
+{
+  "item": "sofe:scale_blade",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "king"
+  ],
+  "min_item_level": 12
+}

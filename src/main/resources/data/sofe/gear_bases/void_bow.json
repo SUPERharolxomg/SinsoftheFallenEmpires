@@ -1,0 +1,9 @@
+{
+  "item": "sofe:void_bow",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "necromancer"
+  ],
+  "min_item_level": 12
+}

@@ -1,0 +1,14 @@
+{
+  "bonuses": [
+    {
+      "type": "on_kill",
+      "effect": "minecraft:speed",
+      "amplifier": 1,
+      "duration": 100
+    },
+    {
+      "type": "on_kill",
+      "heal": 1.0
+    }
+  ]
+}

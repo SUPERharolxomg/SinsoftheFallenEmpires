@@ -1,0 +1,21 @@
+{
+  "item": "sofe:soulkeeper_ring",
+  "item_level": 8,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 7,
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 6
+    },
+    {
+      "stat": "life_steal",
+      "value": 3
+    },
+    {
+      "stat": "max_resource",
+      "value": 15
+    }
+  ]
+}

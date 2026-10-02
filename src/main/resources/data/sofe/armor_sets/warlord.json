@@ -1,0 +1,22 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:resistance",
+      "amplifier": 0,
+      "when": "always"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:strength",
+      "amplifier": 0,
+      "when": "always"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:slowness",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

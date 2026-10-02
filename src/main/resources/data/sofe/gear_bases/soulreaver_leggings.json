@@ -1,0 +1,12 @@
+{
+  "item": "sofe:soulreaver_leggings",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 7,
+  "requires": {
+    "attribute": "strength",
+    "value": 15
+  }
+}

@@ -109,7 +109,16 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(MobLevels::onJoin);
         MinecraftForge.EVENT_BUS.addListener(CharacterStats::onHurt);
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, com.sofe.gear.WeaponTraitHandler::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ranged.RangedHandler::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ranged.RangedHandler::onEntityJoin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.Tools::onBlockBreak);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.WeaponTraitHandler::onBlock);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ArmorSets::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ArmorSets::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.RelicEffects::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.RelicEffects::onKill);
+        // last, so the Wrappings of the Undying see the damage after every reduction
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, com.sofe.gear.RelicEffects::onHurt);
         MinecraftForge.EVENT_BUS.addListener(CharacterStats::onAttacked);
 
         modBus.addListener(StoryCapability::register);
@@ -163,6 +172,8 @@ public class SoFEMod {
 
         // Sprint 5.5: gear, economy, stations, potions
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.GearDataManager::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ArmorSets::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ArmorSets::onKill);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.MerchantService::onAddReloadListeners);
         modBus.addListener(com.sofe.economy.EconomyCapability::register);
         MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, com.sofe.economy.EconomyCapability::attach);

@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "kasim",
+  "lines": [
+    {
+      "speaker": "kasim",
+      "text": "dialogue.sofe.kasim.act1.1"
+    }
+  ]
+}

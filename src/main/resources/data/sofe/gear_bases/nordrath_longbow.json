@@ -1,0 +1,9 @@
+{
+  "item": "sofe:nordrath_longbow",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "knight"
+  ],
+  "min_item_level": 6
+}

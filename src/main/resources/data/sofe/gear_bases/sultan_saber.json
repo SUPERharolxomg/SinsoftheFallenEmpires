@@ -1,0 +1,8 @@
+{
+  "item": "sofe:sultan_saber",
+  "slot": "weapon",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 7
+}

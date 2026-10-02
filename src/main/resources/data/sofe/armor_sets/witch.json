@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "cleanse",
+      "effects": [
+        "minecraft:poison"
+      ]
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:luck",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

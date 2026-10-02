@@ -1,0 +1,8 @@
+{
+  "item": "sofe:tome_of_embers",
+  "slot": "weapon",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 5
+}

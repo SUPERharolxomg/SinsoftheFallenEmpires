@@ -1,0 +1,8 @@
+{
+  "item": "sofe:desert_emir_helmet",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 3
+}

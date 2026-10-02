@@ -1,0 +1,18 @@
+{
+  "bonuses": [
+    {
+      "type": "unfreeze"
+    },
+    {
+      "type": "answer",
+      "action": "slow",
+      "value": 0
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:speed",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

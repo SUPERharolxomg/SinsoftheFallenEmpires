@@ -1,0 +1,11 @@
+{
+  "bonuses": [
+    {
+      "type": "cleanse",
+      "effects": [
+        "minecraft:poison",
+        "minecraft:wither"
+      ]
+    }
+  ]
+}

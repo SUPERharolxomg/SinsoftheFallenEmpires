@@ -1,0 +1,12 @@
+{
+  "item": "sofe:solari_helmet",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 9,
+  "requires": {
+    "attribute": "strength",
+    "value": 28
+  }
+}

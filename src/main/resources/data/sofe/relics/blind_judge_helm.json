@@ -1,0 +1,21 @@
+{
+  "item": "sofe:blind_judge_helm",
+  "item_level": 12,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 11,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 8
+    },
+    {
+      "stat": "armor",
+      "value": 6
+    },
+    {
+      "stat": "storm_resistance",
+      "value": 15
+    }
+  ]
+}

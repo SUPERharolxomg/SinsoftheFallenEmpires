@@ -1,0 +1,9 @@
+{
+  "item": "sofe:was_sceptre",
+  "slot": "weapon",
+  "classes": [
+    "necromancer",
+    "sorceress"
+  ],
+  "min_item_level": 10
+}

@@ -42,6 +42,12 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            // ./gradlew runClient -PshotSets=solari,berserker opens the world run/saves/shots, dresses the player
+            // in each armor set and screenshots it, then quits (ArmorShots)
+            if (project.hasProperty('shotSets')) {
+                property 'sofe.armorShots', project.property('shotSets')
+                args '--quickPlaySingleplayer', 'shots'
+            }
         }
 
         server {

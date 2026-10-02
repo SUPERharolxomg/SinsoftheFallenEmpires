@@ -1739,5 +1739,7 @@ final class NordrathCity {
         int market = fz + RING[2] + 12;
         StoryPlacements.spawnNpc(level, new StructurePositions.Npc("nordrath_furrier", "merchant", fx - 8, market + 2, 180, "quartermaster"));
         StoryPlacements.spawnNpc(level, new StructurePositions.Npc("nordrath_runesmith", "merchant", fx + 8, market + 2, 180, "smith"));
+        // Hrafna and her bone dice at the far stall: the gambler of the clans
+        StoryPlacements.spawnNpc(level, new StructurePositions.Npc("nordrath_gambler", "merchant", fx + 14, market + 9, 180, "gambler"));
     }
 }

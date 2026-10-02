@@ -1,0 +1,9 @@
+{
+  "item": "sofe:tome_of_the_gale",
+  "slot": "weapon",
+  "classes": [
+    "sorceress",
+    "thief"
+  ],
+  "min_item_level": 6
+}

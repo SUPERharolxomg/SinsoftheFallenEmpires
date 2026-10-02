@@ -1,0 +1,9 @@
+{
+  "bonuses": [
+    {
+      "type": "answer",
+      "action": "reflect",
+      "value": 0.25
+    }
+  ]
+}

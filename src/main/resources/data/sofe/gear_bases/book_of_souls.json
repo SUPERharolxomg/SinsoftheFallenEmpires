@@ -1,0 +1,8 @@
+{
+  "item": "sofe:book_of_souls",
+  "slot": "weapon",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 9
+}

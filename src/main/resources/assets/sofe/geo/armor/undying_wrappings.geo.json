@@ -1,0 +1,163 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.sofe.armor.undying_wrappings",
+    "texture_width": 128,
+    "texture_height": 32,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "armorHead",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorBody",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorRightArm",
+     "pivot": [
+      -5,
+      22,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorLeftArm",
+     "pivot": [
+      5,
+      22,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorRightLeg",
+     "pivot": [
+      -1.9,
+      12,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -3.9,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        12,
+        4
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "inflate": 0.6
+      },
+      {
+       "origin": [
+        -3.4,
+        5,
+        -3.2
+       ],
+       "size": [
+        3,
+        3,
+        1
+       ],
+       "uv": [
+        32,
+        0
+       ],
+       "inflate": 0.1
+      }
+     ]
+    },
+    {
+     "name": "armorLeftLeg",
+     "pivot": [
+      1.9,
+      12,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -0.1,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        12,
+        4
+       ],
+       "uv": [
+        16,
+        0
+       ],
+       "inflate": 0.6
+      },
+      {
+       "origin": [
+        0.4,
+        5,
+        -3.2
+       ],
+       "size": [
+        3,
+        3,
+        1
+       ],
+       "uv": [
+        40,
+        0
+       ],
+       "inflate": 0.1
+      }
+     ]
+    },
+    {
+     "name": "armorRightBoot",
+     "pivot": [
+      -1.9,
+      12,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorLeftBoot",
+     "pivot": [
+      1.9,
+      12,
+      0
+     ],
+     "cubes": []
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+  "item": "sofe:witch_helmet",
+  "slot": "armor",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 2
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/glacial_crossbow",
+  "textures": {
+    "layer0": "sofe:item/glacial_crossbow_pulling_0"
+  }
+}

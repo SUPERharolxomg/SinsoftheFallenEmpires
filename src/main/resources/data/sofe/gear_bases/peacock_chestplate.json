@@ -1,0 +1,8 @@
+{
+  "item": "sofe:peacock_chestplate",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 5
+}

@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "cleanse",
+      "effects": [
+        "minecraft:wither"
+      ]
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:regeneration",
+      "amplifier": 0,
+      "when": "low_health"
+    }
+  ]
+}

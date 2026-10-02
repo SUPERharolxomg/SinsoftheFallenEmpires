@@ -1,0 +1,9 @@
+{
+  "item": "sofe:justicar_maul",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "king"
+  ],
+  "min_item_level": 12
+}

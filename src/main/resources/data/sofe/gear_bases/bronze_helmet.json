@@ -1,0 +1,12 @@
+{
+  "item": "sofe:bronze_helmet",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 2,
+  "requires": {
+    "attribute": "strength",
+    "value": 14
+  }
+}

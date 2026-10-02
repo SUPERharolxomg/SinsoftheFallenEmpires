@@ -1,0 +1,21 @@
+{
+  "item": "sofe:dunesunder",
+  "item_level": 4,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 3,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "physical_damage",
+      "value": 10
+    },
+    {
+      "stat": "crit_chance",
+      "value": 3
+    }
+  ]
+}

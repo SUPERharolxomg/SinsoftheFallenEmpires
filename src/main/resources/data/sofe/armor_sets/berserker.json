@@ -1,0 +1,10 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:strength",
+      "amplifier": 1,
+      "when": "low_health"
+    }
+  ]
+}

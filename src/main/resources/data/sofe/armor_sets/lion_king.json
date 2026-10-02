@@ -1,0 +1,15 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:strength",
+      "amplifier": 0,
+      "when": "low_health"
+    },
+    {
+      "type": "answer",
+      "action": "knockback",
+      "value": 0.6
+    }
+  ]
+}

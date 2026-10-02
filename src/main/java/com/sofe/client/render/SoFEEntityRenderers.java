@@ -47,6 +47,9 @@ public final class SoFEEntityRenderers {
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegistry.VOID_WRETCH.get(), ctx -> new GeoMobRenderer<>(ctx, "void_wretch", 0.5f));
+        event.registerEntityRenderer(EntityRegistry.THROWN_WEAPON.get(), ThrownWeaponRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SPELL_BOLT.get(), ctx -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(ctx, 1.0f, true));
+        event.registerEntityRenderer(EntityRegistry.BOMB.get(), ctx -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(ctx, 0.9f, false));
         event.registerEntityRenderer(EntityRegistry.VOID_STALKER.get(), ctx -> new GeoMobRenderer<>(ctx, "void_stalker", 0.5f));
         event.registerEntityRenderer(EntityRegistry.STORY_NPC.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BEARER_NPC.get(), NpcRenderer::new);
@@ -118,7 +121,8 @@ public final class SoFEEntityRenderers {
             Map.entry("nordrath_shieldmaiden", "alex"), Map.entry("nordrath_fisher", "steve"), Map.entry("nordrath_widow", "sunny"),
             Map.entry("nordrath_apprentice", "kai"), Map.entry("nordrath_hunter", "makena"), Map.entry("nordrath_elder", "noor"),
             Map.entry("nordrath_child", "efe"), Map.entry("nordrath_brewer", "zuri"), Map.entry("nordrath_raider", "ari"),
-            Map.entry("nordrath_skald", "steve"), Map.entry("nordrath_furrier", "alex"), Map.entry("nordrath_runesmith", "zuri"));
+            Map.entry("nordrath_skald", "steve"), Map.entry("nordrath_furrier", "alex"), Map.entry("nordrath_runesmith", "zuri"),
+            Map.entry("kasim", "efe"), Map.entry("nordrath_gambler", "makena"));
 
     static class NpcRenderer extends HumanoidMobRenderer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
         NpcRenderer(EntityRendererProvider.Context ctx) {

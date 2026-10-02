@@ -1,0 +1,9 @@
+{
+  "bonuses": [
+    {
+      "type": "heal",
+      "every": 100,
+      "amount": 1.0
+    }
+  ]
+}

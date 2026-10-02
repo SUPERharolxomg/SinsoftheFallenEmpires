@@ -1,0 +1,9 @@
+{
+  "item": "sofe:jackal_glaive",
+  "slot": "weapon",
+  "classes": [
+    "necromancer",
+    "knight"
+  ],
+  "min_item_level": 10
+}

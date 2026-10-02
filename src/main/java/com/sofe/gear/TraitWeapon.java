@@ -25,11 +25,23 @@ public class TraitWeapon extends GearItems.Sword {
     private static final UUID REACH_ID = UUID.fromString("5b2d9a61-7e3c-4f1a-9b84-2c6e1d0f7a35");
     private final Set<WeaponTrait> traits;
     private final double reach;
+    private final String requiredClass;
 
     public TraitWeapon(Tier tier, int damage, float speed, double reach, Set<WeaponTrait> traits, Properties properties) {
+        this(tier, damage, speed, reach, traits, null, properties);
+    }
+
+    /** A class weapon (Diablo II style): only the Bearer of that class strikes with it in full. */
+    public TraitWeapon(Tier tier, int damage, float speed, double reach, Set<WeaponTrait> traits, String requiredClass, Properties properties) {
         super(tier, damage, speed, properties);
         this.traits = traits.isEmpty() ? EnumSet.noneOf(WeaponTrait.class) : EnumSet.copyOf(traits);
         this.reach = reach;
+        this.requiredClass = requiredClass;
+    }
+
+    /** The class this weapon belongs to, or null when anyone can wield it. */
+    public String requiredClass() {
+        return requiredClass;
     }
 
     public Set<WeaponTrait> traits() {
@@ -71,5 +83,6 @@ public class TraitWeapon extends GearItems.Sword {
             if (trait == WeaponTrait.REACH) continue; // the reach shows as an attribute
             tooltip.add(Component.translatable(trait.translationKey()).withStyle(ChatFormatting.DARK_AQUA));
         }
+        com.sofe.gear.ranged.ClassBound.tooltip(tooltip, requiredClass);
     }
 }

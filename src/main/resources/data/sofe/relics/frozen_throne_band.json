@@ -1,0 +1,21 @@
+{
+  "item": "sofe:frozen_throne_band",
+  "item_level": 7,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 6,
+  "affixes": [
+    {
+      "stat": "frost_damage",
+      "value": 4
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 20
+    },
+    {
+      "stat": "armor",
+      "value": 3
+    }
+  ]
+}

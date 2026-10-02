@@ -1,0 +1,21 @@
+{
+  "item": "sofe:furnace_heart",
+  "item_level": 13,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 12,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 10
+    },
+    {
+      "stat": "fire_damage",
+      "value": 6
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 40
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:fire_resistance",
+      "amplifier": 0,
+      "when": "day"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:speed",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

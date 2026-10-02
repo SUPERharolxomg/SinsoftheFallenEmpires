@@ -190,6 +190,11 @@ public final class MerchantService {
         switch (result) {
             case BOUGHT -> {
                 ItemStack stack = stackOf(offer);
+                if (stack.getItem() instanceof com.sofe.gear.VeiledItem veiled) {
+                    // the gambler lifts the veil at the counter; the outcome has its own message
+                    for (int i = 0; i < stack.getCount(); i++) give(player, com.sofe.gear.VeiledItem.unveil(player, veiled.slot()));
+                    return;
+                }
                 Component name = stack.getHoverName();
                 give(player, stack);
                 player.displayClientMessage(Component.translatable("message.sofe.trade.bought", name).withStyle(ChatFormatting.GOLD), true);

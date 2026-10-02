@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:dolphins_grace",
+      "amplifier": 0,
+      "when": "water"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:luck",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

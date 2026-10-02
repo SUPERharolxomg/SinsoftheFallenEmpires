@@ -32,7 +32,11 @@ public class SoFEItemModelProvider extends ItemModelProvider {
             basicItem(herb.seeds().get());
             withExistingParent("wild_" + herb.id(), mcLoc("item/generated")).texture("layer0", modLoc("block/wild_" + herb.id()));
         }
-        ItemRegistry.handheld().forEach(item -> withExistingParent(item.getId().getPath(), mcLoc("item/handheld"))
+        var large = ItemRegistry.large();
+        ItemRegistry.handheld().forEach(item -> withExistingParent(item.getId().getPath(),
+                large.contains(item) ? modLoc("item/handheld_large") : mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + item.getId().getPath())));
+        ItemRegistry.guns().forEach(item -> withExistingParent(item.getId().getPath(), modLoc("item/handheld_gun"))
                 .texture("layer0", modLoc("item/" + item.getId().getPath())));
         ItemRegistry.spawnEggs().forEach(egg -> withExistingParent(egg.getId().getPath(), mcLoc("item/template_spawn_egg")));
     }

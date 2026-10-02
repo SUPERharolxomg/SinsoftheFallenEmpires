@@ -1,0 +1,17 @@
+{
+  "item": "sofe:eye_of_the_false_prophet",
+  "item_level": 9,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 8,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 5
+    },
+    {
+      "stat": "crit_damage",
+      "value": 20
+    }
+  ]
+}

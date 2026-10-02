@@ -1,0 +1,8 @@
+{
+  "item": "sofe:embalmer_leggings",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 9
+}

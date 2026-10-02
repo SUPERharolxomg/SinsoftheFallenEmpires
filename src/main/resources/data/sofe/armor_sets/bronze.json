@@ -1,0 +1,8 @@
+{
+  "bonuses": [
+    {
+      "type": "absorption",
+      "every": 600
+    }
+  ]
+}

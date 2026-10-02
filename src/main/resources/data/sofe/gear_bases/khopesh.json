@@ -1,0 +1,9 @@
+{
+  "item": "sofe:khopesh",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "necromancer"
+  ],
+  "min_item_level": 9
+}

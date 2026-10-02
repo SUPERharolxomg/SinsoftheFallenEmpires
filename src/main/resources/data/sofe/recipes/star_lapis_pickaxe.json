@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "G": {
+      "item": "sofe:star_lapis"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "sofe:star_lapis_pickaxe",
+    "count": 1
+  }
+}

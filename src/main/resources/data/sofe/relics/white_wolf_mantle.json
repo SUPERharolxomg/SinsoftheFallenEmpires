@@ -1,0 +1,21 @@
+{
+  "item": "sofe:white_wolf_mantle",
+  "item_level": 7,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 6,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 25
+    },
+    {
+      "stat": "max_health",
+      "value": 8
+    }
+  ]
+}

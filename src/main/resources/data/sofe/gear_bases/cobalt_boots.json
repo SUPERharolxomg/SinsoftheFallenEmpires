@@ -1,0 +1,12 @@
+{
+  "item": "sofe:cobalt_boots",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 7,
+  "requires": {
+    "attribute": "strength",
+    "value": 24
+  }
+}

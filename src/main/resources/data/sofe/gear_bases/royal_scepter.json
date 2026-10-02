@@ -1,0 +1,8 @@
+{
+  "item": "sofe:royal_scepter",
+  "slot": "weapon",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 3
+}

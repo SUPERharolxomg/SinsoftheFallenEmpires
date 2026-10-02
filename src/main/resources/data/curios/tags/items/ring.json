@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "sofe:brass_ring"
+    "sofe:brass_ring",
+    "sofe:silver_ring",
+    "sofe:glacial_ring",
+    "sofe:star_lapis_ring",
+    "sofe:solar_gold_ring",
+    "sofe:orichalcum_band",
+    "sofe:ring_of_the_last_caravan",
+    "sofe:soulkeeper_ring",
+    "sofe:frozen_throne_band"
   ]
 }

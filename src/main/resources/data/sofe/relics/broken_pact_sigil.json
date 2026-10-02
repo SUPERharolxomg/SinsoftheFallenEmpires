@@ -1,0 +1,21 @@
+{
+  "item": "sofe:broken_pact_sigil",
+  "item_level": 11,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 10,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 6
+    },
+    {
+      "stat": "intellect",
+      "value": 6
+    },
+    {
+      "stat": "cooldown_reduction",
+      "value": 8
+    }
+  ]
+}

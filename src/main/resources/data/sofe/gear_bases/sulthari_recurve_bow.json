@@ -1,0 +1,9 @@
+{
+  "item": "sofe:sulthari_recurve_bow",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "king"
+  ],
+  "min_item_level": 2
+}

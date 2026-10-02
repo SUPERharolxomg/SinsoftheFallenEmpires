@@ -29,6 +29,7 @@ public final class LootGenerator {
     private final double findBonus;
     private final Rarity minRarity;
     private final GearSlot slot;
+    private final Rarity fixedRarity;
 
     private LootGenerator(Builder b) {
         this.bases = List.copyOf(b.bases);
@@ -39,6 +40,7 @@ public final class LootGenerator {
         this.findBonus = b.findBonus;
         this.minRarity = b.minRarity;
         this.slot = b.slot;
+        this.fixedRarity = b.fixedRarity;
     }
 
     public static Builder builder(List<GearBase> bases, List<Affix> affixes) {
@@ -54,6 +56,7 @@ public final class LootGenerator {
         private double findBonus;
         private Rarity minRarity = Rarity.COMMON;
         private GearSlot slot;
+        private Rarity fixedRarity;
 
         private Builder(List<GearBase> bases, List<Affix> affixes) {
             this.bases = bases;
@@ -93,6 +96,12 @@ public final class LootGenerator {
             return this;
         }
 
+        /** Exactly this rarity, as a gamble decides it beforehand (one of the random rarities). */
+        public Builder rarity(Rarity exactly) {
+            this.fixedRarity = exactly;
+            return this;
+        }
+
         public LootGenerator build() {
             return new LootGenerator(this);
         }
@@ -101,7 +110,7 @@ public final class LootGenerator {
     public Optional<Generated> generate(RandomGenerator random) {
         Optional<GearBase> base = pickBase(random);
         if (base.isEmpty()) return Optional.empty();
-        Rarity rarity = rollRarity(random);
+        Rarity rarity = fixedRarity != null ? fixedRarity : rollRarity(random);
         GearData gear = GearData.common(itemLevel);
         if (base.get().requiredAttribute() != null) gear = gear.withRequirement(base.get().requiredAttribute(), base.get().requiredValue());
         List<GearData.Roll> rolls = rollAffixes(random, rarity, base.get());

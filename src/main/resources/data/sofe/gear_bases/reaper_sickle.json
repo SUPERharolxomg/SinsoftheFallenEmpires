@@ -1,0 +1,8 @@
+{
+  "item": "sofe:reaper_sickle",
+  "slot": "weapon",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 10
+}

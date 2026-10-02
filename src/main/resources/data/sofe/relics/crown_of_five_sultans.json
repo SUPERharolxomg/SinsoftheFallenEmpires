@@ -1,0 +1,21 @@
+{
+  "item": "sofe:crown_of_five_sultans",
+  "item_level": 8,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 6,
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 10
+    },
+    {
+      "stat": "all_attributes",
+      "value": 2
+    },
+    {
+      "stat": "armor",
+      "value": 4
+    }
+  ]
+}

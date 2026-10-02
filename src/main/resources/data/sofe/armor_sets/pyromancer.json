@@ -1,0 +1,15 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:fire_resistance",
+      "amplifier": 0,
+      "when": "always"
+    },
+    {
+      "type": "answer",
+      "action": "ignite",
+      "value": 3
+    }
+  ]
+}

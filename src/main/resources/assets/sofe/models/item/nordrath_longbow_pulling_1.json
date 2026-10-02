@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/nordrath_longbow",
+  "textures": {
+    "layer0": "sofe:item/nordrath_longbow_pulling_1"
+  }
+}

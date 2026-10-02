@@ -175,6 +175,8 @@ public final class GearLoot {
      * Bosses have their own tables and are left out.
      */
     public static class GearDrops extends LootModifier {
+        /** Of the gear an enemy drops, how much is one of the droppable Relics of its level instead (a "unique"). */
+        public static final double RELIC_CHANCE = 0.02;
         public static final Codec<GearDrops> CODEC = RecordCodecBuilder.create(i -> codecStart(i).and(i.group(
                 Codec.DOUBLE.fieldOf("gear_chance").forGetter(m -> m.gearChance),
                 Codec.DOUBLE.fieldOf("dinars_chance").forGetter(m -> m.dinarsChance),
@@ -200,7 +202,13 @@ public final class GearLoot {
             var key = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
             double chance = gearChance * (key != null && key.getNamespace().equals(SoFEMod.MOD_ID) ? 1 : 0.5);
             if (context.getRandom().nextDouble() < chance) {
-                GearMaker.roll(GearMaker.builder(player, itemLevel(context, player)).build(), context.getRandom()).ifPresent(loot::add);
+                int level = itemLevel(context, player);
+                Optional<ItemStack> unique = context.getRandom().nextDouble() < RELIC_CHANCE
+                        ? com.sofe.gear.Gamble.pickRelic(com.sofe.gear.GearDataManager.droppableRelics(), null, level - com.sofe.gear.Gamble.RELIC_LEVEL_MARGIN,
+                                GearMaker.random(context.getRandom())).flatMap(r -> GearMaker.relic(r.id(), null))
+                        : Optional.empty();
+                if (unique.isPresent()) loot.add(unique.get());
+                else GearMaker.roll(GearMaker.builder(player, level).build(), context.getRandom()).ifPresent(loot::add);
             }
             if (context.getRandom().nextDouble() < dinarsChance) {
                 int amount = dinarsMin + context.getRandom().nextInt(Math.max(1, dinarsMax - dinarsMin + 1));

@@ -1,0 +1,21 @@
+{
+  "item": "sofe:undying_wrappings",
+  "item_level": 10,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 9,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 10
+    },
+    {
+      "stat": "will",
+      "value": 6
+    },
+    {
+      "stat": "void_resistance",
+      "value": 20
+    }
+  ]
+}

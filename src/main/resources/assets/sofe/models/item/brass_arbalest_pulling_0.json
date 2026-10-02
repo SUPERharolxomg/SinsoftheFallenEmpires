@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/brass_arbalest",
+  "textures": {
+    "layer0": "sofe:item/brass_arbalest_pulling_0"
+  }
+}

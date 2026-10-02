@@ -12,7 +12,9 @@ public enum MerchantRole {
     ALCHEMIST("ferid"),
     SMITH("dilara"),
     QUARTERMASTER("yusuf"),
-    MONEY_CHANGER("selim");
+    MONEY_CHANGER("selim"),
+    /** Sells veiled gear: a gamble (Gamble). */
+    GAMBLER("kasim");
 
     private final String defaultNpc;
 

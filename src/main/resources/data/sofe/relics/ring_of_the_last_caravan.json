@@ -1,0 +1,21 @@
+{
+  "item": "sofe:ring_of_the_last_caravan",
+  "item_level": 3,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 2,
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 5
+    },
+    {
+      "stat": "vitality",
+      "value": 4
+    },
+    {
+      "stat": "max_resource",
+      "value": 10
+    }
+  ]
+}

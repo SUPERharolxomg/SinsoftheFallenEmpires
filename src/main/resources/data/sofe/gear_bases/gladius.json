@@ -1,0 +1,9 @@
+{
+  "item": "sofe:gladius",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "king"
+  ],
+  "min_item_level": 11
+}

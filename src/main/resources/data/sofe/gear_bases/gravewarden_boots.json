@@ -1,0 +1,8 @@
+{
+  "item": "sofe:gravewarden_boots",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 3
+}

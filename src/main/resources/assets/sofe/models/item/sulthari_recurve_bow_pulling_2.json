@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/sulthari_recurve_bow",
+  "textures": {
+    "layer0": "sofe:item/sulthari_recurve_bow_pulling_2"
+  }
+}
