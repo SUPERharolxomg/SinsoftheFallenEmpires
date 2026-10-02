@@ -1,0 +1,12 @@
+{
+  "item": "sofe:pharaoh_boots",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 12,
+  "requires": {
+    "attribute": "strength",
+    "value": 20
+  }
+}

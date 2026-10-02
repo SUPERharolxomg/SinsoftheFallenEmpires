@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/handheld_large",
+  "textures": {
+    "layer0": "sofe:item/brass_javelin"
+  }
+}

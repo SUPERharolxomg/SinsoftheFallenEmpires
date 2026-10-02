@@ -70,6 +70,15 @@ public final class GearItems {
         }
 
         @Override
+        public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level level, java.util.List<Component> tooltip,
+                                    net.minecraft.world.item.TooltipFlag flag) {
+            super.appendHoverText(stack, level, tooltip, flag);
+            if (getMaterial() instanceof SoFETiers.Armor set && ArmorSets.bonusKey(set) != null) {
+                tooltip.add(Component.translatable(ArmorSets.bonusKey(set)).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+            }
+        }
+
+        @Override
         public Component getName(ItemStack stack) {
             return SoFEGear.name(stack, super.getName(stack));
         }

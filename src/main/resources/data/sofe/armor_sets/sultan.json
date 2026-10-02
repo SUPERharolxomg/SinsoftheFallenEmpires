@@ -1,0 +1,14 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:hero_of_the_village",
+      "amplifier": 0,
+      "when": "always"
+    },
+    {
+      "type": "absorption",
+      "every": 600
+    }
+  ]
+}

@@ -1,6 +1,12 @@
 {
   "item": "sofe:glacial_iron_helmet",
   "slot": "armor",
-  "classes": [],
-  "min_item_level": 5
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 5,
+  "requires": {
+    "attribute": "strength",
+    "value": 20
+  }
 }

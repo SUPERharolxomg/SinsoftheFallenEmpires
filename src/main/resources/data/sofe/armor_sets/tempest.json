@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:speed",
+      "amplifier": 1,
+      "when": "always"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:jump_boost",
+      "amplifier": 1,
+      "when": "always"
+    }
+  ]
+}

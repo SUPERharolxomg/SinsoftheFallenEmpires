@@ -1,0 +1,9 @@
+{
+  "bonuses": [
+    {
+      "type": "answer",
+      "action": "knockback",
+      "value": 0.8
+    }
+  ]
+}

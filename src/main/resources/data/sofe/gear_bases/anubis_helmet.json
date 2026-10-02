@@ -1,0 +1,12 @@
+{
+  "item": "sofe:anubis_helmet",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 12,
+  "requires": {
+    "attribute": "strength",
+    "value": 20
+  }
+}

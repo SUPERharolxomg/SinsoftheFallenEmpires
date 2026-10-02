@@ -1,0 +1,12 @@
+{
+  "item": "sofe:legion_chestplate",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 11,
+  "requires": {
+    "attribute": "strength",
+    "value": 32
+  }
+}

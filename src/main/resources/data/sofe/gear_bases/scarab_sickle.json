@@ -1,0 +1,9 @@
+{
+  "item": "sofe:scarab_sickle",
+  "slot": "weapon",
+  "classes": [
+    "necromancer",
+    "thief"
+  ],
+  "min_item_level": 9
+}

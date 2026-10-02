@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:slow_falling",
+      "amplifier": 0,
+      "when": "falling"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:regeneration",
+      "amplifier": 0,
+      "when": "crouching"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "item": "sofe:brass_pistol",
+  "slot": "weapon",
+  "classes": [
+    "king",
+    "thief"
+  ],
+  "min_item_level": 4
+}

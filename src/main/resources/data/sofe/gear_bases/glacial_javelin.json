@@ -1,0 +1,9 @@
+{
+  "item": "sofe:glacial_javelin",
+  "slot": "weapon",
+  "classes": [
+    "knight",
+    "thief"
+  ],
+  "min_item_level": 6
+}

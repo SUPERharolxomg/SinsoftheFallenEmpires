@@ -1,0 +1,9 @@
+{
+  "item": "sofe:gearwork_musket",
+  "slot": "weapon",
+  "classes": [
+    "king",
+    "knight"
+  ],
+  "min_item_level": 8
+}

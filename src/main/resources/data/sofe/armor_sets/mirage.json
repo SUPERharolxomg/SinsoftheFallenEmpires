@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:invisibility",
+      "amplifier": 0,
+      "when": "low_health"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:speed",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

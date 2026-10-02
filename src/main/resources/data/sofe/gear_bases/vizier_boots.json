@@ -1,0 +1,8 @@
+{
+  "item": "sofe:vizier_boots",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 6
+}

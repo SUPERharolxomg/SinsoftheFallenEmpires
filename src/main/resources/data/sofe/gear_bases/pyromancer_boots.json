@@ -1,0 +1,8 @@
+{
+  "item": "sofe:pyromancer_boots",
+  "slot": "armor",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 8
+}

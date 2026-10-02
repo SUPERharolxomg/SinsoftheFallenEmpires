@@ -1,0 +1,8 @@
+{
+  "item": "sofe:plaguebearer_boots",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 6
+}

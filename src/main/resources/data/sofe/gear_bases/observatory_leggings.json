@@ -1,0 +1,8 @@
+{
+  "item": "sofe:observatory_leggings",
+  "slot": "armor",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 6
+}

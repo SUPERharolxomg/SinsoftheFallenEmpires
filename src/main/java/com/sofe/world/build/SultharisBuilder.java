@@ -719,8 +719,8 @@ public final class SultharisBuilder {
         }
         // the bazaar's own merchants, each behind a stall (Ferid and Yusuf have their places from the layout)
         String[][] merchants = {{"bazaar_spicer", "alchemist"}, {"bazaar_weaver", "quartermaster"},
-                {"bazaar_fruiterer", "quartermaster"}, {"bazaar_lampwright", "smith"}};
-        int[][] spots = {{minX + 4, minZ + 12}, {minX + 20, minZ + 30}, {minX + 52, minZ + 12}, {minX + 28, minZ + 39}};
+                {"bazaar_fruiterer", "quartermaster"}, {"bazaar_lampwright", "smith"}, {"kasim", "gambler"}};
+        int[][] spots = {{minX + 4, minZ + 12}, {minX + 20, minZ + 30}, {minX + 52, minZ + 12}, {minX + 28, minZ + 39}, {minX + 44, minZ + 30}};
         for (int m = 0; m < merchants.length; m++) {
             citizen(level, merchants[m][0], "merchant", merchants[m][1], spots[m][0] + 2, spots[m][1] + 2, 180);
         }

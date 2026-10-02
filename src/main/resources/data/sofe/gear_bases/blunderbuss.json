@@ -1,0 +1,9 @@
+{
+  "item": "sofe:blunderbuss",
+  "slot": "weapon",
+  "classes": [
+    "king",
+    "thief"
+  ],
+  "min_item_level": 6
+}

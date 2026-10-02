@@ -1,0 +1,12 @@
+{
+  "item": "sofe:scale_boots",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 12,
+  "requires": {
+    "attribute": "strength",
+    "value": 34
+  }
+}

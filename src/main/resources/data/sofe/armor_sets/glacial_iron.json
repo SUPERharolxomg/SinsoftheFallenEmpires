@@ -1,0 +1,12 @@
+{
+  "bonuses": [
+    {
+      "type": "answer",
+      "action": "slow",
+      "value": 0
+    },
+    {
+      "type": "unfreeze"
+    }
+  ]
+}

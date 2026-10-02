@@ -1,0 +1,21 @@
+{
+  "item": "sofe:jackals_judgement",
+  "item_level": 10,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 9,
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 8
+    },
+    {
+      "stat": "magic_damage",
+      "value": 12
+    },
+    {
+      "stat": "life_steal",
+      "value": 4
+    }
+  ]
+}

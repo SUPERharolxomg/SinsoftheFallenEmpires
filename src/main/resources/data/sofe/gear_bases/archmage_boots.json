@@ -1,0 +1,8 @@
+{
+  "item": "sofe:archmage_boots",
+  "slot": "armor",
+  "classes": [
+    "sorceress"
+  ],
+  "min_item_level": 12
+}

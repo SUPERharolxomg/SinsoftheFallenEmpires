@@ -40,6 +40,17 @@ public final class EntityRegistry {
     public static final RegistryObject<EntityType<MerchantNpcEntity>> MERCHANT = ENTITIES.register("merchant",
             () -> EntityType.Builder.of(MerchantNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("merchant"));
 
+    // the arsenal, batch 3: what is thrown and cast
+    public static final RegistryObject<EntityType<com.sofe.entity.projectile.ThrownWeapon>> THROWN_WEAPON = ENTITIES.register("thrown_weapon",
+            () -> EntityType.Builder.<com.sofe.entity.projectile.ThrownWeapon>of(com.sofe.entity.projectile.ThrownWeapon::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).build("thrown_weapon"));
+    public static final RegistryObject<EntityType<com.sofe.entity.projectile.SpellBolt>> SPELL_BOLT = ENTITIES.register("spell_bolt",
+            () -> EntityType.Builder.<com.sofe.entity.projectile.SpellBolt>of(com.sofe.entity.projectile.SpellBolt::new, MobCategory.MISC)
+                    .sized(0.3f, 0.3f).clientTrackingRange(6).updateInterval(2).build("spell_bolt"));
+    public static final RegistryObject<EntityType<com.sofe.entity.projectile.Bomb>> BOMB = ENTITIES.register("bomb",
+            () -> EntityType.Builder.<com.sofe.entity.projectile.Bomb>of(com.sofe.entity.projectile.Bomb::new, MobCategory.MISC)
+                    .sized(0.3f, 0.3f).clientTrackingRange(4).updateInterval(10).build("bomb"));
+
     public static final RegistryObject<EntityType<BearerCorpseEntity>> BEARER_CORPSE = ENTITIES.register("bearer_corpse",
             () -> EntityType.Builder.<BearerCorpseEntity>of(BearerCorpseEntity::new, MobCategory.MISC).sized(1.8f, 0.5f)
                     .fireImmune().clientTrackingRange(16).build("bearer_corpse"));

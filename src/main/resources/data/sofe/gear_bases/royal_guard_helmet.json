@@ -1,0 +1,12 @@
+{
+  "item": "sofe:royal_guard_helmet",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 4,
+  "requires": {
+    "attribute": "strength",
+    "value": 12
+  }
+}

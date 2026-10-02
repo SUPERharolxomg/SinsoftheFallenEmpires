@@ -41,7 +41,15 @@ public enum WeaponTrait {
     /** Void damage that withers the target. */
     VOID,
     /** Costs the wielder health, deals far more. */
-    SACRIFICE;
+    SACRIFICE,
+    /** Sets the target on fire. */
+    BURN,
+    /** Weakens the target's blows for a while. */
+    WEAKEN,
+    /** Holy: half again against the undead, and each blow heals the wielder a little. */
+    HOLY,
+    /** Poisons the target. */
+    POISON;
 
     public static final float SWEEP_FRACTION = 0.5f, SWEEP_RADIUS = 2.5f;
     public static final float SLAM_FRACTION = 0.6f, SLAM_RADIUS = 3.0f;

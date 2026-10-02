@@ -1,0 +1,8 @@
+{
+  "item": "sofe:aureum_warmace",
+  "slot": "weapon",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 9
+}

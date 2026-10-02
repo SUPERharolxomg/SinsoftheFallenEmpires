@@ -1,0 +1,12 @@
+{
+  "item": "sofe:infernal_chestplate",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 13,
+  "requires": {
+    "attribute": "strength",
+    "value": 36
+  }
+}

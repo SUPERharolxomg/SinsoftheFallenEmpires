@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GBG",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "G": {
+      "item": "sofe:sulthari_brass_ingot"
+    },
+    "B": {
+      "item": "sofe:sulthari_brass_block"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "sofe:brass_mining_hammer",
+    "count": 1
+  }
+}

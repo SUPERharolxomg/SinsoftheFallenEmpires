@@ -141,6 +141,7 @@ public final class CharacterStats {
                 return amount * (1 + 0.03f * missingHearts);
             }
             default -> {
+                return com.sofe.gear.RelicEffects.onHit(player, relic.get(), target, amount);
             }
         }
         return amount;

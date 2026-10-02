@@ -1,0 +1,18 @@
+{
+  "bonuses": [
+    {
+      "type": "cleanse",
+      "effects": [
+        "minecraft:hunger",
+        "minecraft:weakness",
+        "minecraft:slowness"
+      ]
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:regeneration",
+      "amplifier": 0,
+      "when": "low_health"
+    }
+  ]
+}

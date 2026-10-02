@@ -1,0 +1,9 @@
+{
+  "item": "sofe:void_staff",
+  "slot": "weapon",
+  "classes": [
+    "sorceress",
+    "necromancer"
+  ],
+  "min_item_level": 11
+}

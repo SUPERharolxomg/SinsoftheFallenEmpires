@@ -1,0 +1,12 @@
+{
+  "item": "sofe:golden_king_helmet",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 13,
+  "requires": {
+    "attribute": "strength",
+    "value": 21
+  }
+}

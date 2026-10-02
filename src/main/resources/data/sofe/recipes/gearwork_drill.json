@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " GL",
+    "GRG",
+    "BG "
+  ],
+  "key": {
+    "G": {
+      "item": "sofe:sulthari_brass_ingot"
+    },
+    "L": {
+      "item": "sofe:star_lapis"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "B": {
+      "item": "sofe:sulthari_brass_block"
+    }
+  },
+  "result": {
+    "item": "sofe:gearwork_drill",
+    "count": 1
+  }
+}

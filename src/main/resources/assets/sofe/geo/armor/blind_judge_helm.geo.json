@@ -1,0 +1,226 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.sofe.armor.blind_judge_helm",
+    "texture_width": 128,
+    "texture_height": 32,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "armorHead",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        24,
+        -4
+       ],
+       "size": [
+        8,
+        8,
+        8
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "inflate": 1.1
+      },
+      {
+       "origin": [
+        -4.5,
+        32,
+        -4.5
+       ],
+       "size": [
+        9,
+        1,
+        9
+       ],
+       "uv": [
+        32,
+        0
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -0.5,
+        24.5,
+        -5.6
+       ],
+       "size": [
+        1,
+        7,
+        1
+       ],
+       "uv": [
+        68,
+        0
+       ],
+       "inflate": 0.05
+      },
+      {
+       "origin": [
+        -4,
+        35.5,
+        -4
+       ],
+       "size": [
+        8,
+        1,
+        1
+       ],
+       "uv": [
+        0,
+        16
+       ]
+      },
+      {
+       "origin": [
+        -4,
+        35.5,
+        3
+       ],
+       "size": [
+        8,
+        1,
+        1
+       ],
+       "uv": [
+        18,
+        16
+       ]
+      },
+      {
+       "origin": [
+        -4,
+        35.5,
+        -3
+       ],
+       "size": [
+        1,
+        1,
+        6
+       ],
+       "uv": [
+        72,
+        0
+       ]
+      },
+      {
+       "origin": [
+        3,
+        35.5,
+        -3
+       ],
+       "size": [
+        1,
+        1,
+        6
+       ],
+       "uv": [
+        86,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -4.2,
+        28,
+        -5.6
+       ],
+       "size": [
+        8,
+        2,
+        1
+       ],
+       "uv": [
+        100,
+        0
+       ],
+       "inflate": 0.1
+      }
+     ]
+    },
+    {
+     "name": "armorBody",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorRightArm",
+     "pivot": [
+      -5,
+      22,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorLeftArm",
+     "pivot": [
+      5,
+      22,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorRightLeg",
+     "pivot": [
+      -1.9,
+      12,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorLeftLeg",
+     "pivot": [
+      1.9,
+      12,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorRightBoot",
+     "pivot": [
+      -1.9,
+      12,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "armorLeftBoot",
+     "pivot": [
+      1.9,
+      12,
+      0
+     ],
+     "cubes": []
+    }
+   ]
+  }
+ ]
+}

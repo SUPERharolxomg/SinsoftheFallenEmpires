@@ -1,0 +1,20 @@
+{
+  "role": "gambler",
+  "offers": [
+    {
+      "sell": "sofe:veiled_weapon",
+      "price": 60,
+      "stock": 5
+    },
+    {
+      "sell": "sofe:veiled_armor",
+      "price": 50,
+      "stock": 5
+    },
+    {
+      "sell": "sofe:veiled_jewelry",
+      "price": 90,
+      "stock": 3
+    }
+  ]
+}

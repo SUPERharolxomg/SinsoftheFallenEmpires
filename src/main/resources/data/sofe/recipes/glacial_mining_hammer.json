@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GBG",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "G": {
+      "item": "sofe:glacial_iron_ingot"
+    },
+    "B": {
+      "item": "sofe:glacial_iron_block"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "sofe:glacial_mining_hammer",
+    "count": 1
+  }
+}

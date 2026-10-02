@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:regeneration",
+      "amplifier": 0,
+      "when": "low_health"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:fire_resistance",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

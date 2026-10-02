@@ -296,6 +296,229 @@ WEAPONS = {
     "gravity_hammer": gravity_hammer, "vortex_dagger": vortex_dagger, "obsidian_ritual_dagger": obsidian_ritual_dagger,
 }
 
+
+# ---------------------------------------------------------------- batch 2b: Nordrath, Khemet, Aureum and the Infernal relics
+BRONZE = {"d": (96, 50, 20), "m": (164, 96, 44), "l": (214, 146, 78), "h": (246, 206, 150)}
+EMBER = {"d": (90, 14, 8), "m": (190, 50, 20), "l": (250, 120, 40), "h": (255, 220, 120)}
+ROYAL = {"d": (20, 30, 90), "m": (40, 64, 160), "l": (80, 110, 220), "h": (170, 190, 255)}
+MARBLE = {"d": (150, 150, 160), "m": (210, 210, 216), "l": (238, 238, 242), "h": (255, 255, 255)}
+GEM_FIRE, GEM_BLUE = (255, 200, 60), (90, 140, 255)
+
+
+def bearded_axe(s):
+    s.shaft(2, 14, 9, 7, WOOD, wrap=LEATHER)
+    s.stamp(["...hh..",
+             "..hllm.",
+             ".hlmmmd",
+             "hlmmmd.",
+             "lmmd...",
+             "lmd....",
+             ".d....."], 7, 1, STEEL)
+
+
+def seax(s):
+    blade(s, 6, 9, 6, STEEL, 3)
+    guard(s, 5, 10, DARK_STEEL, 1)
+    grip(s, 5, 10, WOOD, 2, BRASS)
+
+
+def frost_spear(s):
+    s.shaft(1, 14, 9, 6, DARK_WOOD, wrap=CHAIN)
+    s.stamp(["....hh",
+             "...hlm",
+             "..hlmd",
+             ".lmmd.",
+             "lmdd..",
+             ".d...."], 9, 0, ICE)
+
+
+def khopesh(s):
+    grip(s, 5, 11, LEATHER, 2, GOLD)
+    guard(s, 5, 11, GOLD, 1)
+    for i in range(4):
+        s.put(6 + i, 10 - i, BRONZE["l"])
+        s.put(7 + i, 10 - i, BRONZE["d"])
+    s.stamp(["..hhll.",
+             ".hlmmmd",
+             "hl...md",
+             "l....md",
+             "......d"], 8, 1, BRONZE)
+
+
+def scarab_sickle(s):
+    s.shaft(3, 13, 7, 9, WOOD, wrap=GOLD)
+    s.stamp([".hhll...",
+             "hl..mm..",
+             "l....md.",
+             "......d.",
+             "......d."], 6, 2, GOLD)
+    s.put(8, 8, GEM_TURQ)
+    s.put(9, 7, GEM_TURQ)
+
+
+def jackal_glaive(s):
+    s.shaft(1, 14, 9, 6, OBSIDIAN, wrap=GOLD)
+    s.stamp(["....hl",
+             "...hlm",
+             "..hlmd",
+             ".hlmd.",
+             "lmmd..",
+             "dd...."], 9, 0, GOLD)
+    s.put(9, 6, GEM_TURQ)
+
+
+def was_sceptre(s):
+    s.shaft(2, 14, 10, 6, GOLD, wrap=BRONZE)
+    s.stamp(["...hh",
+             "..hlt",
+             ".hlmd",
+             "lmd..",
+             "md..."], 10, 1, GOLD, {"t": GEM_TURQ})
+    s.put(1, 15, GOLD["d"])
+    s.put(3, 15, GOLD["d"])
+
+
+def gladius(s):
+    blade(s, 6, 9, 6, STEEL, 3)
+    guard(s, 5, 10, GOLD, 2, GEM_RED)
+    grip(s, 5, 10, BONE, 2, GOLD)
+
+
+def legion_pilum(s):
+    s.shaft(1, 14, 7, 8, WOOD, wrap=ROYAL)
+    for i in range(6):
+        s.put(8 + i, 7 - i, STEEL["l"] if i % 2 else STEEL["m"])
+        s.put(8 + i, 8 - i, STEEL["d"])
+    s.stamp([".h",
+             "hl",
+             "ld"], 13, 0, STEEL)
+
+
+def justicar_maul(s):
+    s.shaft(2, 14, 9, 7, DARK_WOOD, wrap=GOLD)
+    s.stamp([".hllll.",
+             "hlmmmmd",
+             "gggggg.",
+             "lmmmmmd",
+             "lmmmmmd",
+             ".dddd.."], 7, 1, MARBLE, {"g": GOLD["l"]})
+
+
+def scale_blade(s):
+    blade(s, 5, 10, 8, STEEL, 3)
+    for i in range(1, 7, 2):
+        s.put(6 + i, 10 - i, GOLD["l"])
+    guard(s, 4, 11, GOLD, 3, GEM_BLUE)
+    grip(s, 4, 11, ROYAL, 2, GOLD)
+
+
+def ember_blade(s):
+    blade(s, 5, 10, 8, EMBER, 2, glow=GEM_FIRE)
+    guard(s, 4, 11, OBSIDIAN, 2, GEM_FIRE)
+    grip(s, 4, 11, OBSIDIAN, 2, EMBER)
+
+
+def infernal_greataxe(s):
+    s.shaft(2, 14, 9, 7, OBSIDIAN, wrap=EMBER)
+    s.stamp(["hll...hl",
+             "lmmd.lmd",
+             "lmmmdmmd",
+             "lmmd.lmd",
+             "dd....dd"], 6, 1, EMBER)
+    s.put(9, 3, GEM_FIRE)
+
+
+WEAPONS.update({
+    "bearded_axe": bearded_axe, "seax": seax, "frost_spear": frost_spear, "khopesh": khopesh, "scarab_sickle": scarab_sickle,
+    "jackal_glaive": jackal_glaive, "was_sceptre": was_sceptre, "gladius": gladius, "legion_pilum": legion_pilum,
+    "justicar_maul": justicar_maul, "scale_blade": scale_blade, "ember_blade": ember_blade, "infernal_greataxe": infernal_greataxe,
+})
+
+
+# ---------------------------------------------------------------- droppable Relics (uniques)
+SAND = {"d": (150, 110, 50), "m": (214, 176, 96), "l": (240, 214, 150), "h": (255, 244, 210)}
+STORM = {"d": (40, 60, 110), "m": (90, 130, 200), "l": (170, 210, 255), "h": (240, 250, 255)}
+GEM_GREEN, GEM_YELLOW = (90, 230, 80), (255, 240, 90)
+
+
+def dunesunder(s):
+    for i in range(7):
+        s.put(5 + i, 9 - i, GOLD["l"] if i % 2 else GOLD["h"])
+        s.put(6 + i, 9 - i, GOLD["m"])
+        s.put(6 + i, 10 - i, GOLD["d"])
+    s.stamp(["hl", "md"], 12, 1, GOLD)
+    for p in ((8, 4), (10, 3), (13, 5)):
+        s.put(p[0], p[1], SAND["l"])
+    guard(s, 4, 11, BRASS, 2, GEM_TURQ)
+    grip(s, 4, 11, LEATHER, 2, GOLD)
+
+
+def widows_kiss(s):
+    blade(s, 6, 9, 6, DARK_STEEL, 2, glow=GEM_GREEN)
+    guard(s, 5, 10, OBSIDIAN, 2, GEM_GREEN)
+    grip(s, 5, 10, OBSIDIAN, 2, DARK_STEEL)
+
+
+def skaldbreaker(s):
+    s.shaft(2, 14, 9, 7, DARK_WOOD, wrap=RED)
+    s.stamp(["hll...hl",
+             "lmmd.lmd",
+             "lmmmdmmd",
+             "lmmd.lmd",
+             "dd....dd"], 6, 1, STEEL)
+    s.put(9, 3, GEM_RED)
+    s.put(10, 3, BONE["l"])
+
+
+def rimetooth(s):
+    s.shaft(1, 14, 8, 7, ICE, wrap=STEEL)
+    s.stamp([".....h",
+             "....hl",
+             "...hlm",
+             "..hlmd",
+             ".hlmd.",
+             "llmd..",
+             ".dd..."], 8, 0, ICE)
+    s.put(7, 8, BONE["h"])
+    s.put(9, 8, BONE["h"])
+
+
+def jackals_judgement(s):
+    s.shaft(1, 14, 9, 6, OBSIDIAN, wrap=GOLD)
+    s.stamp(["...hlll",
+             "..hlmmd",
+             ".hlmd..",
+             "hlmd...",
+             "lmd....",
+             "dd....."], 8, 0, GOLD)
+    s.put(10, 4, GEM_TURQ)
+    s.put(8, 7, OBSIDIAN["h"])
+    s.put(10, 7, OBSIDIAN["h"])
+
+
+def stormcaller(s):
+    s.shaft(2, 14, 9, 7, DARK_WOOD, wrap=STORM)
+    s.stamp([".hllll.",
+             "hlmmmmd",
+             "lmyymmd",
+             "lmmyymd",
+             "lmmmmmd",
+             ".dddd.."], 7, 1, STORM, {"y": GEM_YELLOW})
+
+
+def greeds_chain(s):
+    s.shaft(2, 14, 6, 10, GOLD, wrap=RED)
+    for p in ((7, 9), (8, 8), (9, 7), (10, 6), (11, 5)):
+        s.put(p[0], p[1], GOLD["l"])
+    s.stamp([".hl.", "hmmd", "lmmd", ".dd."], 11, 1, GOLD)
+    for p in ((12, 0), (15, 3), (10, 2), (14, 5)):
+        s.put(p[0], p[1], GOLD["h"])
+    s.put(12, 2, GEM_RED)
+
+
+WEAPONS.update({"dunesunder": dunesunder, "widows_kiss": widows_kiss, "skaldbreaker": skaldbreaker, "rimetooth": rimetooth,
+                "jackals_judgement": jackals_judgement, "stormcaller": stormcaller, "greeds_chain": greeds_chain})
+
 # ---------------------------------------------------------------- shields: a heater shape, a rim and an emblem
 HEATER = ["..rrrrrrrrrrrr..",
           ".rffffffffffffr.",

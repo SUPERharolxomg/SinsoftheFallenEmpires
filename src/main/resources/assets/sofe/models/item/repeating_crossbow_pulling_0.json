@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/repeating_crossbow",
+  "textures": {
+    "layer0": "sofe:item/repeating_crossbow_pulling_0"
+  }
+}

@@ -94,8 +94,8 @@ public final class SoFEBlocks {
             () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LOG)));
     public static final RegistryObject<Block> NORDRATH_DARK_PLANKS = cube("nordrath_dark_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
-    public static final RegistryObject<Block> NORDRATH_IRON_BRAZIER = cube("nordrath_iron_brazier",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).lightLevel(s -> 15)));
+    public static final RegistryObject<Block> NORDRATH_IRON_BRAZIER = register("nordrath_iron_brazier", Shape.HAND_MADE, null, true,
+            () -> new com.sofe.block.Brazier(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).lightLevel(s -> 15).noOcclusion()));
     public static final RegistryObject<Block> CORRUPTED_NORDRATH_RUNESTONE_BRICKS = cube("corrupted_nordrath_runestone_bricks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICKS).mapColor(MapColor.COLOR_BLACK)));
     public static final RegistryObject<Block> CORRUPTED_NORDRATH_DARK_TIMBER = register("corrupted_nordrath_dark_timber", Shape.PILLAR, null, true,
@@ -120,9 +120,9 @@ public final class SoFEBlocks {
     // --- Sprint 5.5: crafting stations, the Reward Coffer and Runestone
     public static final RegistryObject<Block> RUNESTONE = cube("runestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_LIGHT_GRAY)));
-    public static final RegistryObject<Block> IMPERIAL_FORGE = register("imperial_forge", Shape.CUBE_SIDES, null, true,
+    public static final RegistryObject<Block> IMPERIAL_FORGE = register("imperial_forge", Shape.HAND_MADE, null, true,
             () -> new com.sofe.crafting.StationBlock(com.sofe.crafting.StationRecipe.Kind.IMPERIAL_FORGE,
-                    BlockBehaviour.Properties.copy(Blocks.ANVIL).sound(SoundType.ANVIL).lightLevel(s -> 6)));
+                    BlockBehaviour.Properties.copy(Blocks.ANVIL).sound(SoundType.ANVIL).lightLevel(s -> 11).noOcclusion()));
     public static final RegistryObject<Block> ALEMBIC = register("alembic", Shape.CUBE_SIDES, null, true,
             () -> new com.sofe.crafting.StationBlock(com.sofe.crafting.StationRecipe.Kind.ALEMBIC,
                     BlockBehaviour.Properties.copy(Blocks.BREWING_STAND).strength(2.0f).noOcclusion()));

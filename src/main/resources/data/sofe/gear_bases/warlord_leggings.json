@@ -1,0 +1,12 @@
+{
+  "item": "sofe:warlord_leggings",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 8,
+  "requires": {
+    "attribute": "strength",
+    "value": 26
+  }
+}

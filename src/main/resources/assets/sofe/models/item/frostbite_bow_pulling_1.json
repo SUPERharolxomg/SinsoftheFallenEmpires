@@ -1,0 +1,6 @@
+{
+  "parent": "sofe:item/frostbite_bow",
+  "textures": {
+    "layer0": "sofe:item/frostbite_bow_pulling_1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:invisibility",
+      "amplifier": 0,
+      "when": "crouching"
+    }
+  ]
+}

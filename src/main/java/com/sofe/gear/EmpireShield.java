@@ -47,6 +47,17 @@ public class EmpireShield extends ShieldItem {
         tooltip.add(Component.translatable(power.translationKey()).withStyle(ChatFormatting.DARK_AQUA));
     }
 
+    /** Drawn with the vanilla shield's model and the empire's texture. */
+    @Override
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
+        consumer.accept(new net.minecraftforge.client.extensions.common.IClientItemExtensions() {
+            @Override
+            public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return com.sofe.client.render.EmpireShieldRenderer.INSTANCE;
+            }
+        });
+    }
+
     /** The empire shields are named, not "Shield": ShieldItem would add the banner colour to the name. */
     @Override
     public String getDescriptionId(ItemStack stack) {

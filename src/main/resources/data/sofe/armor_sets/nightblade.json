@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "on_kill",
+      "effect": "minecraft:invisibility",
+      "amplifier": 0,
+      "duration": 60
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:strength",
+      "amplifier": 0,
+      "when": "night"
+    }
+  ]
+}

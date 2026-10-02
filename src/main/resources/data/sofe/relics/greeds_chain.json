@@ -1,0 +1,21 @@
+{
+  "item": "sofe:greeds_chain",
+  "item_level": 9,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 8,
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 8
+    },
+    {
+      "stat": "physical_damage",
+      "value": 12
+    },
+    {
+      "stat": "crit_chance",
+      "value": 4
+    }
+  ]
+}

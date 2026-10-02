@@ -1,0 +1,21 @@
+{
+  "item": "sofe:stormcaller",
+  "item_level": 12,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 11,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 10
+    },
+    {
+      "stat": "storm_damage",
+      "value": 6
+    },
+    {
+      "stat": "storm_resistance",
+      "value": 20
+    }
+  ]
+}

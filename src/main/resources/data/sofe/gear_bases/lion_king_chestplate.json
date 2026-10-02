@@ -1,0 +1,12 @@
+{
+  "item": "sofe:lion_king_chestplate",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 11,
+  "requires": {
+    "attribute": "strength",
+    "value": 19
+  }
+}

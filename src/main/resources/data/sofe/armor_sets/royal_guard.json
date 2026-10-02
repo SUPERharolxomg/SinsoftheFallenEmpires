@@ -1,0 +1,16 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:resistance",
+      "amplifier": 0,
+      "when": "low_health"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:hero_of_the_village",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

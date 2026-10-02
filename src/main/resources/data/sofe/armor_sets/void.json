@@ -1,0 +1,10 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:strength",
+      "amplifier": 0,
+      "when": "always"
+    }
+  ]
+}

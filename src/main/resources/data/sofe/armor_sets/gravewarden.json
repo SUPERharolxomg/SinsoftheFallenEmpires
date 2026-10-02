@@ -1,0 +1,8 @@
+{
+  "bonuses": [
+    {
+      "type": "on_kill",
+      "heal": 2.0
+    }
+  ]
+}

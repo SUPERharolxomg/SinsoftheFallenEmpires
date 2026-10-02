@@ -1,0 +1,9 @@
+{
+  "item": "sofe:frostbite_bow",
+  "slot": "weapon",
+  "classes": [
+    "thief",
+    "sorceress"
+  ],
+  "min_item_level": 7
+}

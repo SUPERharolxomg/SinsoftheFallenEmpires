@@ -1,0 +1,21 @@
+{
+  "item": "sofe:rimetooth",
+  "item_level": 7,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 6,
+  "affixes": [
+    {
+      "stat": "frost_damage",
+      "value": 5
+    },
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 15
+    }
+  ]
+}

@@ -35,3 +35,6 @@ Thumbs.db
 
 # logs written by the data generator at the repository root
 /logs
+
+# python
+__pycache__/
