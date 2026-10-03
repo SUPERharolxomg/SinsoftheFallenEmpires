@@ -48,6 +48,11 @@ public final class SoFEEntityRenderers {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegistry.VOID_WRETCH.get(), ctx -> new GeoMobRenderer<>(ctx, "void_wretch", 0.5f));
         event.registerEntityRenderer(EntityRegistry.THROWN_WEAPON.get(), ThrownWeaponRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SUMMONED_ALLY.get(), SummonRenderers.Ally::new);
+        event.registerEntityRenderer(EntityRegistry.BRONZE_CANNON.get(), SummonRenderers.Cannon::new);
+        event.registerEntityRenderer(EntityRegistry.CLAY_GOLEM.get(), SummonRenderers.Golem::new);
+        event.registerEntityRenderer(EntityRegistry.EMBALMED_DEAD.get(), SummonRenderers.Embalmed::new);
+        event.registerEntityRenderer(EntityRegistry.COMPANION.get(), CompanionRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SPELL_BOLT.get(), ctx -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(ctx, 1.0f, true));
         event.registerEntityRenderer(EntityRegistry.BOMB.get(), ctx -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(ctx, 0.9f, false));
         event.registerEntityRenderer(EntityRegistry.VOID_STALKER.get(), ctx -> new GeoMobRenderer<>(ctx, "void_stalker", 0.5f));
@@ -123,6 +128,29 @@ public final class SoFEEntityRenderers {
             Map.entry("nordrath_child", "efe"), Map.entry("nordrath_brewer", "zuri"), Map.entry("nordrath_raider", "ari"),
             Map.entry("nordrath_skald", "steve"), Map.entry("nordrath_furrier", "alex"), Map.entry("nordrath_runesmith", "zuri"),
             Map.entry("kasim", "efe"), Map.entry("nordrath_gambler", "makena"));
+
+    /** The skin of an NPC id: its own when the mod or a resource pack has one, else a default skin. */
+    public static ResourceLocation skinFor(String id) {
+        ResourceLocation own = SoFEMod.id("textures/entity/npc/" + id + ".png");
+        if (Minecraft.getInstance().getResourceManager().getResource(own).isPresent()) return own;
+        return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/player/wide/" + DEFAULT_SKINS.getOrDefault(id, "steve") + ".png");
+    }
+
+    /** A companion looks like its hero as an NPC in Sulthari, with what it carries in hand. */
+    static class CompanionRenderer extends net.minecraft.client.renderer.entity.HumanoidMobRenderer<com.sofe.companion.CompanionEntity,
+            PlayerModel<com.sofe.companion.CompanionEntity>> {
+        CompanionRenderer(EntityRendererProvider.Context ctx) {
+            super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
+            addLayer(new net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer<>(this,
+                    new net.minecraft.client.model.HumanoidModel<>(ctx.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
+                    new net.minecraft.client.model.HumanoidModel<>(ctx.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(com.sofe.companion.CompanionEntity companion) {
+            return skinFor(companion.bearer().npcId());
+        }
+    }
 
     static class NpcRenderer extends HumanoidMobRenderer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
         NpcRenderer(EntityRendererProvider.Context ctx) {
