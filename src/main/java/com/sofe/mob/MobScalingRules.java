@@ -14,8 +14,9 @@ import java.util.random.RandomGenerator;
 
 /**
  * How strong a mob is (docs/Jugabilidad.md, "Difficulty rises with each act"), from
- * data/sofe/mob_scaling.json. Its level is the higher of a roll in its region's range and the
- * act floor of the nearest player; each level above 1 adds health, damage and armor.
+ * data/sofe/mob_scaling.json. Its level is the highest of a roll in its region's range, the act floor
+ * of the nearest player and that player's own level (a boss: the strongest player near, plus one);
+ * each level above 1 adds health, damage and armor.
  */
 public record MobScalingRules(Map<Region, int[]> regionLevels, List<Integer> actFloors,
                               double healthPerLevel, double damagePerLevel, double armorPerLevel,
@@ -36,13 +37,13 @@ public record MobScalingRules(Map<Region, int[]> regionLevels, List<Integer> act
 
     public static MobScalingRules defaults() {
         Map<Region, int[]> levels = new EnumMap<>(Region.class);
-        levels.put(Region.SULTHARI, new int[]{1, 5});
-        levels.put(Region.NORDRATH, new int[]{5, 12});
-        levels.put(Region.PARSIVAN, new int[]{12, 16});
-        levels.put(Region.KHEMET, new int[]{16, 20});
-        levels.put(Region.AUREUM, new int[]{20, 27});
-        levels.put(Region.OCEAN, new int[]{1, 5});
-        return new MobScalingRules(levels, List.of(1, 5, 12, 20, 27), 0.08, 0.06, 0.3, Set.of(), 30);
+        levels.put(Region.SULTHARI, new int[]{1, 20});
+        levels.put(Region.NORDRATH, new int[]{20, 40});
+        levels.put(Region.PARSIVAN, new int[]{40, 60});
+        levels.put(Region.KHEMET, new int[]{40, 60});
+        levels.put(Region.AUREUM, new int[]{60, 80});
+        levels.put(Region.OCEAN, new int[]{1, 20});
+        return new MobScalingRules(levels, List.of(1, 20, 40, 60, 80), 0.05, 0.035, 0.15, Set.of(), 100);
     }
 
     /** The act floor for a player in act 1-5; acts outside that range are clamped. */
@@ -60,6 +61,19 @@ public record MobScalingRules(Map<Region, int[]> regionLevels, List<Integer> act
         int rolled = range[0] + random.nextInt(range[1] - range[0] + 1);
         int floor = nearestPlayerAct > 0 ? actFloor(nearestPlayerAct) : 1;
         return Math.min(maxLevel, Math.max(rolled, floor));
+    }
+
+    /**
+     * A mob that follows the Bearer: the region's level (raised to the act floor) is only the least it can be;
+     * near a stronger Bearer it matches them, a little under or over, and a boss stands one level above.
+     *
+     * @param playerLevel the level of the Bearer it follows (the strongest near, for a boss), or 0 when none is near
+     */
+    public int levelFor(Region region, int nearestPlayerAct, int playerLevel, boolean boss, RandomGenerator random) {
+        int base = levelFor(region, nearestPlayerAct, random);
+        if (playerLevel <= 0) return base;
+        int follow = boss ? playerLevel + 1 : playerLevel - 2 + random.nextInt(4);
+        return Math.max(1, Math.min(maxLevel, Math.max(base, follow)));
     }
 
     /** Health multiplier: level 1 is x1, each level above adds healthPerLevel. */
