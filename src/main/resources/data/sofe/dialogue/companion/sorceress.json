@@ -1,0 +1,41 @@
+{
+  "style": "sulthari",
+  "lines": [
+    {
+      "speaker": "shirin",
+      "text": "companion.sofe.sorceress.greet",
+      "answers": [
+        {
+          "text": "dialogue.sofe.order.follow",
+          "next": -1,
+          "effects": [
+            {
+              "type": "companion_order",
+              "order": "follow"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.order.stay",
+          "next": -1,
+          "effects": [
+            {
+              "type": "companion_order",
+              "order": "stay"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.order.dismiss",
+          "next": -1,
+          "effects": [
+            {
+              "type": "companion_order",
+              "order": "dismiss"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

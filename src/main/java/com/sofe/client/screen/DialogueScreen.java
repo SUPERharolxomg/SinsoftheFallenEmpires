@@ -353,6 +353,10 @@ public class DialogueScreen extends Screen {
         } else if (mc.level != null && line.npcEntity() >= 0
                 && mc.level.getEntity(line.npcEntity()) instanceof net.minecraft.world.entity.LivingEntity npc) {
             bust(g, npc, x, y, size); // citizens and merchants without a painted portrait are drawn live
+        } else {
+            // no painted portrait and nobody standing near (a quest opened the conversation): the placeholder
+            ResourceLocation placeholder = SoFEMod.id("textures/gui/portrait/placeholder/" + line.speaker() + ".png");
+            if (DialogueArt.exists(placeholder)) blitWhole(g, placeholder, x, y, size);
         }
     }
 

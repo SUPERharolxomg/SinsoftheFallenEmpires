@@ -1,0 +1,45 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_widow",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/ankhareth_act1",
+        "step": 2
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/ankhareth_act1",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "citizen_widow",
+      "text": "dialogue.sofe.q.ankhareth_act1.done.1"
+    },
+    {
+      "speaker": "citizen_widow",
+      "text": "dialogue.sofe.q.ankhareth_act1.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.ankhareth_act1.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:bearer/ankhareth_act1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

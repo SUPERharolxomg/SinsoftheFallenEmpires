@@ -40,6 +40,18 @@ public sealed interface QuestEffect {
     record Particles(String particle, int count) implements QuestEffect {
     }
 
+    /** Gives a Relic (a unique), bound to the player: a quest's reward. */
+    record GiveRelic(String relic) implements QuestEffect {
+    }
+
+    /** Hires a Bearer as the player's companion (UC-22). */
+    record HireCompanion(String bearer) implements QuestEffect {
+    }
+
+    /** An order to the player's companion: follow, stay or dismiss. */
+    record CompanionOrder(String order) implements QuestEffect {
+    }
+
     /** Opens the Bearer selection for a player who has not chosen yet (end of the festival intro). */
     record OpenClassSelect() implements QuestEffect {
     }

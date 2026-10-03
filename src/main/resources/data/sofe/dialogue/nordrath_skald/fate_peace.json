@@ -1,0 +1,16 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_skald",
+  "priority": 5,
+  "requires": {
+    "type": "fate_is",
+    "region": "nordrath",
+    "fate": "peace"
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.nordrath_skald.fate.peace"
+    }
+  ]
+}

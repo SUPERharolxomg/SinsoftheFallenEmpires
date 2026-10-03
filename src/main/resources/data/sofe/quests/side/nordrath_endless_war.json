@@ -1,0 +1,48 @@
+{
+  "type": "side",
+  "act": 2,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 1200,
+        "z": -3000,
+        "radius": 24
+      },
+      "target": {
+        "x": 1200,
+        "z": -3000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "minecraft:zombie",
+        "count": 8
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "minecraft:zombie",
+          "count": 8,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 1200
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  }
+}

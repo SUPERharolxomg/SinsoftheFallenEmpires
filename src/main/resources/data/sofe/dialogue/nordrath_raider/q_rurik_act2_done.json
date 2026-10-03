@@ -1,0 +1,45 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_raider",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/rurik_act2",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/rurik_act2",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_raider",
+      "text": "dialogue.sofe.q.rurik_act2.done.1"
+    },
+    {
+      "speaker": "nordrath_raider",
+      "text": "dialogue.sofe.q.rurik_act2.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.rurik_act2.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:bearer/rurik_act2"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

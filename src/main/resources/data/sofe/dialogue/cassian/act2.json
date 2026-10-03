@@ -1,0 +1,35 @@
+{
+  "style": "nordrath",
+  "npc": "cassian",
+  "priority": 2,
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  },
+  "lines": [
+    {
+      "speaker": "cassian",
+      "text": "dialogue.sofe.cassian.act2"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.cassian.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "knight"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}
