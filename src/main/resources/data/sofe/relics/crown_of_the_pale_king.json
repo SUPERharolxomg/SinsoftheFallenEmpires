@@ -1,0 +1,26 @@
+{
+  "item": "sofe:crown_of_the_pale_king",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 98,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "necromancer"
+    },
+    {
+      "stat": "max_resource",
+      "value": 32
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "resource",
+      "per_s": 1
+    }
+  ]
+}

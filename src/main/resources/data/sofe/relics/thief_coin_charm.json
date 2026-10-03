@@ -1,0 +1,22 @@
+{
+  "item": "sofe:thief_coin_charm",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 15,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 2
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 1,
+      "chance": 0.08
+    }
+  ]
+}

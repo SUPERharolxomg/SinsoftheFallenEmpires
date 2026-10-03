@@ -1,0 +1,25 @@
+{
+  "item": "sofe:caravan_breaker",
+  "item_level": 13,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 11,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 4
+    },
+    {
+      "stat": "physical_damage",
+      "value": 10
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "stun",
+      "chance": 0.1,
+      "s": 1
+    }
+  ]
+}

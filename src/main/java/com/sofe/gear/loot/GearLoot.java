@@ -204,7 +204,8 @@ public final class GearLoot {
             if (context.getRandom().nextDouble() < chance) {
                 int level = itemLevel(context, player);
                 Optional<ItemStack> unique = context.getRandom().nextDouble() < RELIC_CHANCE
-                        ? com.sofe.gear.Gamble.pickRelic(com.sofe.gear.GearDataManager.droppableRelics(), null, level - com.sofe.gear.Gamble.RELIC_LEVEL_MARGIN,
+                        ? com.sofe.gear.Gamble.pickRelic(com.sofe.gear.GearDataManager.droppableRelicsFor(
+                                player == null ? null : com.sofe.skill.ClassState.classOf(player).map(com.sofe.player.PlayerClass::id).orElse(null)), null, level - com.sofe.gear.Gamble.RELIC_LEVEL_MARGIN,
                                 GearMaker.random(context.getRandom())).flatMap(r -> GearMaker.relic(r.id(), null))
                         : Optional.empty();
                 if (unique.isPresent()) loot.add(unique.get());

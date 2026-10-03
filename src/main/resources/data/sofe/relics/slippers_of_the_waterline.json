@@ -1,0 +1,27 @@
+{
+  "item": "sofe:slippers_of_the_waterline",
+  "item_level": 27,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 25,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 4
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "water_mirror"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:dolphins_grace",
+      "when": "water"
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
   "item": "sofe:dunesunder",
-  "item_level": 4,
+  "item_level": 16,
   "droppable": true,
   "slot": "weapon",
-  "min_level": 3,
+  "min_level": 14,
   "affixes": [
     {
       "stat": "agility",

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:ribcage_of_the_lich",
+  "item_level": 87,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 85,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 12
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "rite_of_passage"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "wither",
+      "s": 3
+    }
+  ]
+}

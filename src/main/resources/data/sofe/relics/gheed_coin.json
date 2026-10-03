@@ -1,0 +1,21 @@
+{
+  "item": "sofe:gheed_coin",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 28,
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 1,
+      "chance": 0.15
+    }
+  ]
+}

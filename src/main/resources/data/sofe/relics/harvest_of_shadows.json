@@ -1,0 +1,29 @@
+{
+  "item": "sofe:harvest_of_shadows",
+  "item_level": 63,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 61,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 9
+    },
+    {
+      "stat": "life_steal",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "wither",
+      "s": 3
+    },
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 2
+    }
+  ]
+}

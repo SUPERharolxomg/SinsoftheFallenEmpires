@@ -1,0 +1,14 @@
+{
+  "item": "sofe:storm_glass_charm",
+  "item_level": 23,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 21,
+  "affixes": [
+    {
+      "stat": "storm_resistance",
+      "value": 9
+    }
+  ],
+  "effects": []
+}

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:steps_of_the_comet",
+  "item_level": 83,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 81,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 8
+    },
+    {
+      "stat": "cooldown_reduction",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed",
+      "amp": 1
+    }
+  ]
+}

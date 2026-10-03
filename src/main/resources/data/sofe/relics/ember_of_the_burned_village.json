@@ -1,0 +1,26 @@
+{
+  "item": "sofe:ember_of_the_burned_village",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 98,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "thief"
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 39
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "ignite",
+      "s": 3
+    }
+  ]
+}

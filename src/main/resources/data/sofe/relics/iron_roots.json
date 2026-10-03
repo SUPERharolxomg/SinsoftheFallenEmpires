@@ -1,0 +1,25 @@
+{
+  "item": "sofe:iron_roots",
+  "item_level": 77,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 75,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 10
+    },
+    {
+      "stat": "armor",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:resistance"
+    }
+  ]
+}

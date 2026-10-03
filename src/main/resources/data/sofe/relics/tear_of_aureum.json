@@ -1,0 +1,26 @@
+{
+  "item": "sofe:tear_of_aureum",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 98,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "knight"
+    },
+    {
+      "stat": "all_attributes",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "cheat_death",
+      "cooldown_s": 240
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "item": "sofe:knight_shield_charm",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 15,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "armor",
+      "value": 3
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "reduce",
+      "frac": 0.03
+    }
+  ]
+}

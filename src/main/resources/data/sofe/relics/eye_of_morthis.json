@@ -1,0 +1,26 @@
+{
+  "item": "sofe:eye_of_morthis",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 98,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "necromancer"
+    },
+    {
+      "stat": "will",
+      "value": 13
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "reveal",
+      "radius": 18
+    }
+  ]
+}

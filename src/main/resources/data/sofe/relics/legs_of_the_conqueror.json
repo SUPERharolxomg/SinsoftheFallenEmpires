@@ -1,0 +1,25 @@
+{
+  "item": "sofe:legs_of_the_conqueror",
+  "item_level": 73,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 71,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 10
+    },
+    {
+      "stat": "armor",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "knockback",
+      "v": 0.6
+    }
+  ]
+}

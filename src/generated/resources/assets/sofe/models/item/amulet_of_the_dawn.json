@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sofe:item/amulet_of_the_dawn"
+  }
+}

@@ -21,7 +21,7 @@ public record Affix(String id, Kind kind, GearStat stat, String parameter, doubl
 
     public enum Kind { PREFIX, SUFFIX }
 
-    public static final int MAX_ITEM_LEVEL = 30;
+    public static final int MAX_ITEM_LEVEL = 100;
 
     /** The lowest and highest roll at an item level. */
     public double[] range(int itemLevel) {

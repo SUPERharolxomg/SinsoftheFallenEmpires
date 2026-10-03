@@ -1,0 +1,20 @@
+{
+  "item": "sofe:king_grand_charm",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 98,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "king"
+    },
+    {
+      "stat": "charisma",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:crown_of_azhar",
+  "item_level": 80,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 78,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "king"
+    },
+    {
+      "stat": "all_attributes",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "absorption",
+      "every_s": 20
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:leggings_of_the_storm_court",
+  "item_level": 70,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 68,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 9
+    },
+    {
+      "stat": "storm_resistance",
+      "value": 25
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "slow",
+      "s": 2,
+      "lvl": 1
+    }
+  ]
+}

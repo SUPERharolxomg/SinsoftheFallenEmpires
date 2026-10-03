@@ -1,0 +1,27 @@
+{
+  "item": "sofe:ring_of_bound_souls",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 18,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 5
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "clay_warden"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "souls",
+      "n": 1,
+      "chance": 0.15
+    }
+  ]
+}

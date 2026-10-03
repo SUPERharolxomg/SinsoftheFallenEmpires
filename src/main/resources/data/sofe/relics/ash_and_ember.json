@@ -1,0 +1,32 @@
+{
+  "item": "sofe:ash_and_ember",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 15,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "double_edge"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "ignite",
+      "s": 2
+    },
+    {
+      "on": "hit",
+      "do": "marks",
+      "n": 1,
+      "chance": 0.25
+    }
+  ]
+}

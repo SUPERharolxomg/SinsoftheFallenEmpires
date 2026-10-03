@@ -1,0 +1,20 @@
+{
+  "item": "sofe:compass_of_the_codex",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 38,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 2
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "reveal",
+      "radius": 10
+    }
+  ]
+}

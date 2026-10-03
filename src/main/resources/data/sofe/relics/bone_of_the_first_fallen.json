@@ -1,0 +1,24 @@
+{
+  "item": "sofe:bone_of_the_first_fallen",
+  "item_level": 70,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 68,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 5
+    },
+    {
+      "stat": "life_steal",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 2
+    }
+  ]
+}

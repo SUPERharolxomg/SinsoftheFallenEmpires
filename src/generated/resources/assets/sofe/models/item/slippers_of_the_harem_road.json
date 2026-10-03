@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sofe:item/slippers_of_the_harem_road"
+  }
+}

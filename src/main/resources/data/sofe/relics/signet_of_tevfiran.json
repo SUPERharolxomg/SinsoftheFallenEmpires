@@ -1,0 +1,26 @@
+{
+  "item": "sofe:signet_of_tevfiran",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 18,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 5
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "janissary_guard"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "resource",
+      "amount": 5
+    }
+  ]
+}

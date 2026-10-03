@@ -100,6 +100,12 @@ public final class GearItems {
             this.slot = slot;
         }
 
+        /** Relics and Legacy pieces shimmer, in the hand and on the Bearer who wears them. */
+        @Override
+        public boolean isFoil(ItemStack stack) {
+            return GearNbt.read(stack).map(g -> g.rarity() == Rarity.RELIC || g.rarity() == Rarity.LEGACY).orElse(false) || super.isFoil(stack);
+        }
+
         @Override
         public GearSlot gearSlot() {
             return slot;

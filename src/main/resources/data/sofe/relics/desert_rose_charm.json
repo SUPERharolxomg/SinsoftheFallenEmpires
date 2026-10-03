@@ -1,0 +1,14 @@
+{
+  "item": "sofe:desert_rose_charm",
+  "item_level": 10,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 8,
+  "affixes": [
+    {
+      "stat": "fire_resistance",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

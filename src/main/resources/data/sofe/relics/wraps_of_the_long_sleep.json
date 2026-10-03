@@ -1,0 +1,28 @@
+{
+  "item": "sofe:wraps_of_the_long_sleep",
+  "item_level": 43,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 41,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "void_resistance",
+      "value": 20
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "cleanse",
+      "effects": [
+        "minecraft:slowness",
+        "minecraft:weakness"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "item": "sofe:serpent_eye_ring",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 28,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "crit_chance",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "poison",
+      "s": 2
+    }
+  ]
+}

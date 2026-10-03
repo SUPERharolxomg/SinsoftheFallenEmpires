@@ -1,0 +1,26 @@
+{
+  "item": "sofe:ring_of_the_grand_vizier",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 58,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "king"
+    },
+    {
+      "stat": "cooldown_reduction",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "reveal",
+      "radius": 12
+    }
+  ]
+}

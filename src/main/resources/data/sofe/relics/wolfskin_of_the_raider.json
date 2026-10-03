@@ -1,0 +1,30 @@
+{
+  "item": "sofe:wolfskin_of_the_raider",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 98,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 16
+    },
+    {
+      "stat": "max_health",
+      "value": 13
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 2
+    },
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed"
+    }
+  ]
+}

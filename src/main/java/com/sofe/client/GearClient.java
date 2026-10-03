@@ -56,6 +56,12 @@ public final class GearClient {
             }
             if (gear.relic() != null) {
                 lines.add(at++, Component.translatable("item.sofe." + gear.relic() + ".effect").withStyle(Style.EMPTY.withColor(RELIC_GOLD).withItalic(true)));
+                String cls = UniqueClasses.of(gear.relic()); // the relic data lives on the server; the client has this table
+                if (cls != null) {
+                    boolean mine = ClientClassData.get().map(c -> c.id().equals(cls)).orElse(false);
+                    lines.add(at++, Component.translatable("gear.sofe.class_only", Component.translatable("class.sofe." + cls))
+                            .withStyle(mine ? ChatFormatting.GOLD : ChatFormatting.RED));
+                }
             }
             int level = ClientProgressData.get().map(SyncProgressPacket::level).orElse(1);
             lines.add(at++, Component.translatable("gear.sofe.tooltip.requires_level", gear.requiredLevel())

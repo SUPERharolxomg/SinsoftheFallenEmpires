@@ -1,0 +1,26 @@
+{
+  "item": "sofe:helm_of_the_last_knight",
+  "item_level": 27,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 25,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "shield_wall"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "reduce",
+      "frac": 0.06
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "item": "sofe:traveler_charm",
+  "item_level": 13,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 11,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 3
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed"
+    }
+  ]
+}

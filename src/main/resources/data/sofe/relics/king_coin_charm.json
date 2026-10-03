@@ -1,0 +1,15 @@
+{
+  "item": "sofe:king_coin_charm",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 15,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 2
+    }
+  ],
+  "effects": []
+}

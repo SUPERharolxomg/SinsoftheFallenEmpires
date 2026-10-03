@@ -1,0 +1,22 @@
+{
+  "item": "sofe:necro_scarab_charm",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 15,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 3
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "souls",
+      "n": 1,
+      "chance": 0.05
+    }
+  ]
+}

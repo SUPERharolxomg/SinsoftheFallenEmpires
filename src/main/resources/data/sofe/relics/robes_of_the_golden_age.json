@@ -1,0 +1,28 @@
+{
+  "item": "sofe:robes_of_the_golden_age",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 98,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 18
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "crown_of_the_five_lands"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "aura",
+      "damage": 1,
+      "radius": 4,
+      "kind": "holy"
+    }
+  ]
+}
