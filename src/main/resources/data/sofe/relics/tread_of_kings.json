@@ -1,0 +1,26 @@
+{
+  "item": "sofe:tread_of_kings",
+  "item_level": 83,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 81,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 9
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "voice_of_the_throne"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:jump_boost"
+    }
+  ]
+}

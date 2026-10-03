@@ -1,0 +1,26 @@
+{
+  "item": "sofe:silks_of_parsivan",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 28,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "dodge",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:slow_falling",
+      "when": "always"
+    }
+  ]
+}

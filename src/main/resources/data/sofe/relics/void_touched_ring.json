@@ -1,0 +1,24 @@
+{
+  "item": "sofe:void_touched_ring",
+  "item_level": 77,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 75,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 4
+    },
+    {
+      "stat": "void_resistance",
+      "value": 20
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "wither",
+      "s": 2
+    }
+  ]
+}

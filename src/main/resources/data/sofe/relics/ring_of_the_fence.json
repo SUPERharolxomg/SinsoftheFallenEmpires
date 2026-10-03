@@ -1,0 +1,27 @@
+{
+  "item": "sofe:ring_of_the_fence",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 18,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "light_fingers"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 1,
+      "chance": 0.25
+    }
+  ]
+}

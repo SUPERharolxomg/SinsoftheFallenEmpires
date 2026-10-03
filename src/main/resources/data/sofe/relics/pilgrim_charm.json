@@ -1,0 +1,21 @@
+{
+  "item": "sofe:pilgrim_charm",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 35,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "heal",
+      "every_s": 8,
+      "amount": 1
+    }
+  ]
+}

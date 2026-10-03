@@ -1,0 +1,30 @@
+{
+  "item": "sofe:thoth_reed",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 35,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "threshold_touch"
+    },
+    {
+      "stat": "magic_damage",
+      "value": 12
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "lifesteal",
+      "frac": 0.08
+    }
+  ]
+}

@@ -133,6 +133,7 @@ public class ArsenalGameTests {
     @GameTest(template = "empty")
     public static void theCaravanMastersTreadsQuickenTheirWearer(GameTestHelper helper) {
         ServerPlayer player = wielder(helper, "sofe_test_treads", ItemRegistry.BRASS_SCIMITAR.get());
+        com.sofe.progression.ProgressionCapability.get(player).orElseThrow().load(100, 0, 0, 0, true); // a unique asks its full level
         ItemStack treads = com.sofe.gear.GearMaker.relic("caravan_treads", null).orElseThrow();
         player.setItemSlot(EquipmentSlot.FEET, treads);
         com.sofe.gear.PlayerGear.invalidate(player);

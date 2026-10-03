@@ -1,0 +1,20 @@
+{
+  "item": "sofe:knight_banner_charm",
+  "item_level": 43,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 41,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "banner_cry"
+    },
+    {
+      "stat": "strength",
+      "value": 4
+    }
+  ],
+  "effects": []
+}

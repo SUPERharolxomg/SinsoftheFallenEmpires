@@ -1,0 +1,20 @@
+{
+  "item": "sofe:sorc_storm_charm",
+  "item_level": 57,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 55,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "wandering_spark"
+    },
+    {
+      "stat": "storm_damage",
+      "value": 3
+    }
+  ],
+  "effects": []
+}

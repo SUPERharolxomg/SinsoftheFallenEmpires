@@ -20,7 +20,8 @@ import java.util.List;
  * A development tool, off unless the JVM is started with -Dsofe.armorShots=set1,set2,... (the "armorShots"
  * run): once in a world it dresses the player in each armor set in turn and takes a screenshot of it from
  * the front, the side and the back (third person), then closes the game. Screenshots land in
- * run/screenshots/armor_&lt;set&gt;_&lt;view&gt;.png, so the 3D armor can be checked without playing.
+ * run/screenshots/armor_&lt;set&gt;_&lt;view&gt;.png, so the 3D armor can be checked without playing. The name
+ * "jewelry" puts a necklace, two rings and six charms in the Curios slots instead, of every rarity.
  */
 public final class ArmorShots {
     private static final String[] PIECES = {"helmet", "chestplate", "leggings", "boots"};
@@ -43,6 +44,8 @@ public final class ArmorShots {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.getSingleplayerServer() == null) return;
+        mc.options.pauseOnLostFocus = false; // the window may be behind others while it runs
+        if (mc.screen instanceof net.minecraft.client.gui.screens.PauseScreen) mc.setScreen(null);
         if (sets == null) {
             sets = new ArrayList<>(Arrays.asList(System.getProperty("sofe.armorShots").split(",")));
             mc.options.hideGui = true;
@@ -88,9 +91,32 @@ public final class ArmorShots {
                 Item piece = ForgeRegistries.ITEMS.getValue(com.sofe.SoFEMod.id(name + "_" + PIECES[i]));
                 p.setItemSlot(SLOTS[i], piece == null || piece == Items.AIR ? ItemStack.EMPTY : new ItemStack(piece));
             }
+            jewelry(p, name.equals("jewelry"));
             Item unique = ForgeRegistries.ITEMS.getValue(com.sofe.SoFEMod.id(name));
             if (unique != null && unique != Items.AIR && unique instanceof net.minecraft.world.item.ArmorItem armor) {
                 p.setItemSlot(armor.getEquipmentSlot(), new ItemStack(unique));
+            }
+        });
+    }
+
+    /** The jewelry showcase: Relics, an Imperial ring and plain charms in the Curios slots (or empty slots). */
+    private static void jewelry(ServerPlayer p, boolean wear) {
+        String[][] worn = {{"necklace", "eye_of_the_false_prophet"}, {"ring", "soulkeeper_ring", "silver_ring"},
+                {"talisman", "knight_grand_charm", "sorc_ember_charm", "small_talisman", "large_talisman", "thief_key_charm", "necro_ankh_charm"}};
+        top.theillusivec4.curios.api.CuriosApi.getCuriosInventory(p).ifPresent(curios -> {
+            for (String[] slot : worn) {
+                curios.getStacksHandler(slot[0]).ifPresent(handler -> {
+                    for (int i = 0; i < handler.getSlots(); i++) {
+                        ItemStack stack = ItemStack.EMPTY;
+                        if (wear && i + 1 < slot.length) {
+                            String id = "sofe:" + slot[i + 1];
+                            stack = com.sofe.gear.GearMaker.relic(id, p)
+                                    .or(() -> com.sofe.gear.GearMaker.rollItem(id, 40, com.sofe.gear.Rarity.IMPERIAL, p, p.getRandom()))
+                                    .orElseGet(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.tryParse(id))));
+                        }
+                        handler.getStacks().setStackInSlot(i, stack);
+                    }
+                });
             }
         });
     }

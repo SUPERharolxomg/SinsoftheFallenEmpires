@@ -1,0 +1,37 @@
+{
+  "item": "sofe:anvil_of_aureum",
+  "item_level": 67,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 65,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 12
+    },
+    {
+      "stat": "armor",
+      "value": 6
+    },
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "knight"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "stun",
+      "chance": 0.2,
+      "s": 1.5
+    },
+    {
+      "on": "hit",
+      "do": "chain",
+      "targets": 2,
+      "frac": 0.4
+    }
+  ]
+}

@@ -416,6 +416,229 @@ public final class ItemRegistry {
             CLOCKWORK_BOMB, SMOKE_BOMB, FIRE_BOMB, THROWING_STARS, ROYAL_FLINTLOCK);
     // </generated-arsenal3>
 
+    // <generated-uniques> by scripts/make_uniques.py from scripts/uniques_catalog.py
+    public static final RegistryObject<Item> SUNDER_OF_THE_ORDER = ITEMS.register("sunder_of_the_order",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 3, -2.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP, com.sofe.gear.WeaponTrait.HOLY), "knight", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> VERDICT_OF_CASSIAN = ITEMS.register("verdict_of_cassian",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP), "knight", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> BROKEN_BANNER_LANCE = ITEMS.register("broken_banner_lance",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.SOLAR_GOLD, 7, -3.1f, 2.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.CHARGE), "knight", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ANVIL_OF_AUREUM = ITEMS.register("anvil_of_aureum",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 8, -3.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.STUN, com.sofe.gear.WeaponTrait.SLAM), "knight", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> OATHKEEPER = ITEMS.register("oathkeeper",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 9, -3.0f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), "knight", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> WRATH_UNBOUND = ITEMS.register("wrath_unbound",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 9, -3.1f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP), "knight", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> HELM_OF_THE_LAST_KNIGHT = armor("helm_of_the_last_knight", SoFETiers.Armor.HELM_OF_THE_LAST_KNIGHT, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> CROWN_OF_THE_SCALE = armor("crown_of_the_scale", SoFETiers.Armor.CROWN_OF_THE_SCALE, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> BULWARK_CUIRASS = armor("bulwark_cuirass", SoFETiers.Armor.BULWARK_CUIRASS, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> HEART_OF_THE_LEGION = armor("heart_of_the_legion", SoFETiers.Armor.HEART_OF_THE_LEGION, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> GREAVES_OF_THE_VIGIL = armor("greaves_of_the_vigil", SoFETiers.Armor.GREAVES_OF_THE_VIGIL, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> LEGS_OF_THE_UNYIELDING = armor("legs_of_the_unyielding", SoFETiers.Armor.LEGS_OF_THE_UNYIELDING, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> MARCH_OF_THE_PALADIN = armor("march_of_the_paladin", SoFETiers.Armor.MARCH_OF_THE_PALADIN, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> IRON_ROOTS = armor("iron_roots", SoFETiers.Armor.IRON_ROOTS, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> SIGNET_OF_THE_ORDER = trinket("signet_of_the_order", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> BAND_OF_UNBROKEN_OATHS = trinket("band_of_unbroken_oaths", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> MEDAL_OF_THE_SCALE = trinket("medal_of_the_scale", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> TEAR_OF_AUREUM = trinket("tear_of_aureum", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> KNIGHT_SHIELD_CHARM = trinket("knight_shield_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> KNIGHT_BANNER_CHARM = trinket("knight_banner_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> KNIGHT_WRATH_CHARM = trinket("knight_wrath_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> KNIGHT_GRAND_CHARM = trinket("knight_grand_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> WAND_OF_THE_FERRYMAN = ITEMS.register("wand_of_the_ferryman",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.BONE, CastMode.BOLT, 6, 14, "necromancer", new Item.Properties().durability(640).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> THOTH_REED = ITEMS.register("thoth_reed",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.SOUL, CastMode.BEAM, 8, 20, "necromancer", new Item.Properties().durability(1040).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> STAFF_OF_THE_NINE_GATES = ITEMS.register("staff_of_the_nine_gates",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.SOUL, CastMode.BEAM, 10, 30, "necromancer", new Item.Properties().durability(1440).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> SICKLE_OF_MORTHIS = ITEMS.register("sickle_of_morthis",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 7, -2.2f, 0.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.LIFE_STEAL), "necromancer", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> KHOPESH_OF_THE_EMBALMER = ITEMS.register("khopesh_of_the_embalmer",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.5f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.BLEED, com.sofe.gear.WeaponTrait.SWEEP), "necromancer", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ANUBETS_JUDGEMENT = ITEMS.register("anubets_judgement",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 11, -3.0f, 1.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH), "necromancer", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> MASK_OF_THE_FERRYMAN = armor("mask_of_the_ferryman", SoFETiers.Armor.MASK_OF_THE_FERRYMAN, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> CROWN_OF_THE_PALE_KING = armor("crown_of_the_pale_king", SoFETiers.Armor.CROWN_OF_THE_PALE_KING, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> SHROUD_OF_KHEMET = armor("shroud_of_khemet", SoFETiers.Armor.SHROUD_OF_KHEMET, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> RIBCAGE_OF_THE_LICH = armor("ribcage_of_the_lich", SoFETiers.Armor.RIBCAGE_OF_THE_LICH, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> WRAPS_OF_THE_LONG_SLEEP = armor("wraps_of_the_long_sleep", SoFETiers.Armor.WRAPS_OF_THE_LONG_SLEEP, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> GRAVE_DUST_TROUSERS = armor("grave_dust_trousers", SoFETiers.Armor.GRAVE_DUST_TROUSERS, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> SANDALS_OF_THE_THRESHOLD = armor("sandals_of_the_threshold", SoFETiers.Armor.SANDALS_OF_THE_THRESHOLD, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> TREADS_OF_THE_UNDERWORLD = armor("treads_of_the_underworld", SoFETiers.Armor.TREADS_OF_THE_UNDERWORLD, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> RING_OF_BOUND_SOULS = trinket("ring_of_bound_souls", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> SEAL_OF_THE_HOUSE_OF_THRESHOLDS = trinket("seal_of_the_house_of_thresholds", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> HEART_SCARAB = trinket("heart_scarab", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> EYE_OF_MORTHIS = trinket("eye_of_morthis", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> NECRO_SCARAB_CHARM = trinket("necro_scarab_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> NECRO_ANKH_CHARM = trinket("necro_ankh_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> NECRO_JAR_CHARM = trinket("necro_jar_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> NECRO_GRAND_CHARM = trinket("necro_grand_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> LALEH_LANTERN = ITEMS.register("laleh_lantern",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.EMBER, CastMode.BOLT, 7, 12, "sorceress", new Item.Properties().durability(700).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> TEAR_OF_THE_MOON = ITEMS.register("tear_of_the_moon",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.FROST, CastMode.BOLT, 8, 12, "sorceress", new Item.Properties().durability(960).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ASTROLABE_OF_SHIRIN = ITEMS.register("astrolabe_of_shirin",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.STORM, CastMode.LIGHTNING, 10, 36, "sorceress", new Item.Properties().durability(1360).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> PEN_OF_THE_POET_KING = ITEMS.register("pen_of_the_poet_king",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.EMBER, CastMode.BOLT, 11, 20, "sorceress", new Item.Properties().durability(1640).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> STAFF_OF_WINTER_GARDENS = ITEMS.register("staff_of_winter_gardens",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.FROST, CastMode.BOLT, 13, 20, "sorceress", new Item.Properties().durability(1900).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> SKYFALL = ITEMS.register("skyfall",
+            () -> new com.sofe.gear.ranged.RangedItems.SpellCaster(Spell.STORM, CastMode.LIGHTNING, 15, 50, "sorceress", new Item.Properties().durability(2300).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> VEIL_OF_LALEH = armor("veil_of_laleh", SoFETiers.Armor.VEIL_OF_LALEH, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> HAT_OF_THE_CIRCLE = armor("hat_of_the_circle", SoFETiers.Armor.HAT_OF_THE_CIRCLE, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> ROBE_OF_WRITTEN_STARS = armor("robe_of_written_stars", SoFETiers.Armor.ROBE_OF_WRITTEN_STARS, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> MANTLE_OF_THE_ECLIPSE = armor("mantle_of_the_eclipse", SoFETiers.Armor.MANTLE_OF_THE_ECLIPSE, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> SILKS_OF_PARSIVAN = armor("silks_of_parsivan", SoFETiers.Armor.SILKS_OF_PARSIVAN, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> LEGGINGS_OF_THE_STORM_COURT = armor("leggings_of_the_storm_court", SoFETiers.Armor.LEGGINGS_OF_THE_STORM_COURT, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> SLIPPERS_OF_THE_WATERLINE = armor("slippers_of_the_waterline", SoFETiers.Armor.SLIPPERS_OF_THE_WATERLINE, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> STEPS_OF_THE_COMET = armor("steps_of_the_comet", SoFETiers.Armor.STEPS_OF_THE_COMET, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> RING_OF_THREE_RUNES = trinket("ring_of_three_runes", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> BAND_OF_THE_CONSTELLATION = trinket("band_of_the_constellation", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> STAR_OF_PARSIVAN = trinket("star_of_parsivan", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> LALEHS_LOCKET = trinket("lalehs_locket", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> SORC_EMBER_CHARM = trinket("sorc_ember_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> SORC_FROST_CHARM = trinket("sorc_frost_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> SORC_STORM_CHARM = trinket("sorc_storm_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> SORC_GRAND_CHARM = trinket("sorc_grand_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> ASH_AND_EMBER = ITEMS.register("ash_and_ember",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 3, -1.8f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.MULTI_HIT), "thief", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> FANGS_OF_FENRATH = ITEMS.register("fangs_of_fenrath",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.SOLAR_GOLD, 5, -1.8f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.MULTI_HIT, com.sofe.gear.WeaponTrait.POISON), "thief", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> SMUGGLERS_SEAX = ITEMS.register("smugglers_seax",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -1.8f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.BLEED), "thief", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> LAST_BREATH = ITEMS.register("last_breath",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.SOLAR_GOLD, 6, -1.5f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.BLEED), "thief", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> FJORD_WOLF_HOOK = ITEMS.register("fjord_wolf_hook",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 7, -2.2f, 0.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.PULL), "thief", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> GREED_INCARNATE = ITEMS.register("greed_incarnate",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 9, -2.0f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.PLANTS), "thief", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> HOOD_OF_ASH = armor("hood_of_ash", SoFETiers.Armor.HOOD_OF_ASH, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> MASK_OF_THE_HEIST = armor("mask_of_the_heist", SoFETiers.Armor.MASK_OF_THE_HEIST, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> JERKIN_OF_MANY_POCKETS = armor("jerkin_of_many_pockets", SoFETiers.Armor.JERKIN_OF_MANY_POCKETS, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> WOLFSKIN_OF_THE_RAIDER = armor("wolfskin_of_the_raider", SoFETiers.Armor.WOLFSKIN_OF_THE_RAIDER, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> BREECHES_OF_THE_CUTPURSE = armor("breeches_of_the_cutpurse", SoFETiers.Armor.BREECHES_OF_THE_CUTPURSE, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> SHADOWSTEP_LEGWRAPS = armor("shadowstep_legwraps", SoFETiers.Armor.SHADOWSTEP_LEGWRAPS, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> BOOTS_OF_THE_FJORD_RUNNER = armor("boots_of_the_fjord_runner", SoFETiers.Armor.BOOTS_OF_THE_FJORD_RUNNER, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> SILENT_SOLES = armor("silent_soles", SoFETiers.Armor.SILENT_SOLES, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> RING_OF_THE_FENCE = trinket("ring_of_the_fence", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> KNOT_OF_THE_GRIMSSON_CLAN = trinket("knot_of_the_grimsson_clan", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> WOLF_TOOTH_NECKLACE = trinket("wolf_tooth_necklace", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> EMBER_OF_THE_BURNED_VILLAGE = trinket("ember_of_the_burned_village", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> THIEF_COIN_CHARM = trinket("thief_coin_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> THIEF_KEY_CHARM = trinket("thief_key_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> THIEF_FANG_CHARM = trinket("thief_fang_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> THIEF_GRAND_CHARM = trinket("thief_grand_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> SCEPTER_OF_THE_FIRST_SULTAN = ITEMS.register("scepter_of_the_first_sultan",
+            () -> new com.sofe.gear.ranged.RangedItems.Tome(TomeKind.DECREE, 0, 500, "king", new Item.Properties().durability(200).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> AZHAR_CRESCENT = ITEMS.register("azhar_crescent",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.3f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP, com.sofe.gear.WeaponTrait.BLEED), "king", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> VOICE_OF_THE_CANNON = ITEMS.register("voice_of_the_cannon",
+            () -> new com.sofe.gear.ranged.RangedItems.Firearm(16, 1, 0.3f, 30, "king", new Item.Properties().durability(600).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> JANISSARY_OATH = ITEMS.register("janissary_oath",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 4, -2.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP), "king", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> MUSKET_OF_THE_SIEGE = ITEMS.register("musket_of_the_siege",
+            () -> new com.sofe.gear.ranged.RangedItems.Firearm(19, 1, 0.2f, 45, "king", new Item.Properties().durability(600).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> HALBERD_OF_FIVE_LANDS = ITEMS.register("halberd_of_five_lands",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 11, -3.0f, 1.5, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), "king", new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> TURBAN_OF_THE_PEACOCK_THRONE = armor("turban_of_the_peacock_throne", SoFETiers.Armor.TURBAN_OF_THE_PEACOCK_THRONE, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> CROWN_OF_AZHAR = armor("crown_of_azhar", SoFETiers.Armor.CROWN_OF_AZHAR, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> KAFTAN_OF_THE_DIVAN = armor("kaftan_of_the_divan", SoFETiers.Armor.KAFTAN_OF_THE_DIVAN, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> ROBES_OF_THE_GOLDEN_AGE = armor("robes_of_the_golden_age", SoFETiers.Armor.ROBES_OF_THE_GOLDEN_AGE, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> TROUSERS_OF_THE_VIZIER = armor("trousers_of_the_vizier", SoFETiers.Armor.TROUSERS_OF_THE_VIZIER, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> LEGS_OF_THE_CONQUEROR = armor("legs_of_the_conqueror", SoFETiers.Armor.LEGS_OF_THE_CONQUEROR, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> SLIPPERS_OF_THE_HAREM_ROAD = armor("slippers_of_the_harem_road", SoFETiers.Armor.SLIPPERS_OF_THE_HAREM_ROAD, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> TREAD_OF_KINGS = armor("tread_of_kings", SoFETiers.Armor.TREAD_OF_KINGS, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> SIGNET_OF_TEVFIRAN = trinket("signet_of_tevfiran", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> RING_OF_THE_GRAND_VIZIER = trinket("ring_of_the_grand_vizier", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> CRESCENT_OF_SULTHARI = trinket("crescent_of_sulthari", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> HEART_OF_THE_THRONE = trinket("heart_of_the_throne", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> KING_COIN_CHARM = trinket("king_coin_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> KING_DECREE_CHARM = trinket("king_decree_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> KING_CANNON_CHARM = trinket("king_cannon_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> KING_GRAND_CHARM = trinket("king_grand_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> VOID_SHARD_CHARM = trinket("void_shard_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> DESERT_ROSE_CHARM = trinket("desert_rose_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> FROST_TOOTH_CHARM = trinket("frost_tooth_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> STORM_GLASS_CHARM = trinket("storm_glass_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> LUCKY_FEATHER_CHARM = trinket("lucky_feather_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> TRAVELER_CHARM = trinket("traveler_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> GHEED_COIN = trinket("gheed_coin", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> LANTERN_CHARM = trinket("lantern_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> BLOODSTONE_CHARM = trinket("bloodstone_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> HOURGLASS_CHARM = trinket("hourglass_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> COMPASS_OF_THE_CODEX = trinket("compass_of_the_codex", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> EMBER_HEART_CHARM = trinket("ember_heart_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> FROSTBOUND_CHARM = trinket("frostbound_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> THUNDER_IDOL_CHARM = trinket("thunder_idol_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> PILGRIM_CHARM = trinket("pilgrim_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> ANNIHILUS = trinket("annihilus", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> TORCH_OF_THE_BEARERS = trinket("torch_of_the_bearers", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> SEAL_OF_THE_EIGHTH_LOCK = trinket("seal_of_the_eighth_lock", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> CODEX_PAGE_CHARM = trinket("codex_page_charm", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> VORATH_CINDER = trinket("vorath_cinder", GearSlot.TALISMAN);
+    public static final RegistryObject<Item> RING_OF_THE_CARAVANSERAI = trinket("ring_of_the_caravanserai", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> SERPENT_EYE_RING = trinket("serpent_eye_ring", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> FROST_WYRM_BAND = trinket("frost_wyrm_band", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> VOID_TOUCHED_RING = trinket("void_touched_ring", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> AMULET_OF_THE_DAWN = trinket("amulet_of_the_dawn", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> TIDECALLER_PENDANT = trinket("tidecaller_pendant", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> BONE_OF_THE_FIRST_FALLEN = trinket("bone_of_the_first_fallen", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> PRYTHONS_MIRROR = trinket("prythons_mirror", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> CARAVAN_BREAKER = ITEMS.register("caravan_breaker",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.BRASS, 4, -3.3f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SLAM), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> JUNGLE_OF_GLASS = ITEMS.register("jungle_of_glass",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 3, -2.0f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.PLANTS), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> TIDE_OF_TEETH = ITEMS.register("tide_of_teeth",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.GLACIAL_IRON, 6, -2.9f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.FROST), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> CHAINMASTER = ITEMS.register("chainmaster",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.SOLAR_GOLD, 5, -2.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.MULTI_HIT), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> HARVEST_OF_SHADOWS = ITEMS.register("harvest_of_shadows",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 8, -3.0f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> FLAIL_OF_THE_PENITENT = ITEMS.register("flail_of_the_penitent",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 9, -2.9f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.MULTI_HIT), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ECHO_OF_KALETH = ITEMS.register("echo_of_kaleth",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 9, -2.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> HELM_OF_THE_WANDERER = armor("helm_of_the_wanderer", SoFETiers.Armor.HELM_OF_THE_WANDERER, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> ECLIPSE_PLATE = armor("eclipse_plate", SoFETiers.Armor.ECLIPSE_PLATE, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> SANDSTRIDERS = armor("sandstriders", SoFETiers.Armor.SANDSTRIDERS, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> LEGS_OF_THE_SEVENTH_SIN = armor("legs_of_the_seventh_sin", SoFETiers.Armor.LEGS_OF_THE_SEVENTH_SIN, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> GRAND_TALISMAN = trinket("grand_talisman", GearSlot.TALISMAN);
+    private static final List<RegistryObject<Item>> U_HANDHELD = List.of(
+            SUNDER_OF_THE_ORDER, VERDICT_OF_CASSIAN, WRATH_UNBOUND, WAND_OF_THE_FERRYMAN, THOTH_REED, SICKLE_OF_MORTHIS,
+            KHOPESH_OF_THE_EMBALMER, LALEH_LANTERN, TEAR_OF_THE_MOON, ASTROLABE_OF_SHIRIN, ASH_AND_EMBER, FANGS_OF_FENRATH,
+            SMUGGLERS_SEAX, LAST_BREATH, FJORD_WOLF_HOOK, GREED_INCARNATE, SCEPTER_OF_THE_FIRST_SULTAN, AZHAR_CRESCENT,
+            JANISSARY_OATH, JUNGLE_OF_GLASS, CHAINMASTER, ECHO_OF_KALETH);
+    private static final List<RegistryObject<Item>> U_LARGE = List.of(
+            BROKEN_BANNER_LANCE, ANVIL_OF_AUREUM, OATHKEEPER, STAFF_OF_THE_NINE_GATES, ANUBETS_JUDGEMENT, PEN_OF_THE_POET_KING,
+            STAFF_OF_WINTER_GARDENS, SKYFALL, HALBERD_OF_FIVE_LANDS, CARAVAN_BREAKER, TIDE_OF_TEETH, HARVEST_OF_SHADOWS,
+            FLAIL_OF_THE_PENITENT);
+    private static final List<RegistryObject<Item>> U_GUN = List.of(
+            VOICE_OF_THE_CANNON, MUSKET_OF_THE_SIEGE);
+    private static final List<RegistryObject<Item>> U_ARMOR = List.of(
+            HELM_OF_THE_LAST_KNIGHT, CROWN_OF_THE_SCALE, BULWARK_CUIRASS, HEART_OF_THE_LEGION, GREAVES_OF_THE_VIGIL, LEGS_OF_THE_UNYIELDING,
+            MARCH_OF_THE_PALADIN, IRON_ROOTS, MASK_OF_THE_FERRYMAN, CROWN_OF_THE_PALE_KING, SHROUD_OF_KHEMET, RIBCAGE_OF_THE_LICH,
+            WRAPS_OF_THE_LONG_SLEEP, GRAVE_DUST_TROUSERS, SANDALS_OF_THE_THRESHOLD, TREADS_OF_THE_UNDERWORLD, VEIL_OF_LALEH, HAT_OF_THE_CIRCLE,
+            ROBE_OF_WRITTEN_STARS, MANTLE_OF_THE_ECLIPSE, SILKS_OF_PARSIVAN, LEGGINGS_OF_THE_STORM_COURT, SLIPPERS_OF_THE_WATERLINE, STEPS_OF_THE_COMET,
+            HOOD_OF_ASH, MASK_OF_THE_HEIST, JERKIN_OF_MANY_POCKETS, WOLFSKIN_OF_THE_RAIDER, BREECHES_OF_THE_CUTPURSE, SHADOWSTEP_LEGWRAPS,
+            BOOTS_OF_THE_FJORD_RUNNER, SILENT_SOLES, TURBAN_OF_THE_PEACOCK_THRONE, CROWN_OF_AZHAR, KAFTAN_OF_THE_DIVAN, ROBES_OF_THE_GOLDEN_AGE,
+            TROUSERS_OF_THE_VIZIER, LEGS_OF_THE_CONQUEROR, SLIPPERS_OF_THE_HAREM_ROAD, TREAD_OF_KINGS, HELM_OF_THE_WANDERER, ECLIPSE_PLATE,
+            SANDSTRIDERS, LEGS_OF_THE_SEVENTH_SIN);
+    private static final List<RegistryObject<Item>> U_FLAT = List.of(
+            SIGNET_OF_THE_ORDER, BAND_OF_UNBROKEN_OATHS, MEDAL_OF_THE_SCALE, TEAR_OF_AUREUM, KNIGHT_SHIELD_CHARM, KNIGHT_BANNER_CHARM,
+            KNIGHT_WRATH_CHARM, KNIGHT_GRAND_CHARM, RING_OF_BOUND_SOULS, SEAL_OF_THE_HOUSE_OF_THRESHOLDS, HEART_SCARAB, EYE_OF_MORTHIS,
+            NECRO_SCARAB_CHARM, NECRO_ANKH_CHARM, NECRO_JAR_CHARM, NECRO_GRAND_CHARM, RING_OF_THREE_RUNES, BAND_OF_THE_CONSTELLATION,
+            STAR_OF_PARSIVAN, LALEHS_LOCKET, SORC_EMBER_CHARM, SORC_FROST_CHARM, SORC_STORM_CHARM, SORC_GRAND_CHARM,
+            RING_OF_THE_FENCE, KNOT_OF_THE_GRIMSSON_CLAN, WOLF_TOOTH_NECKLACE, EMBER_OF_THE_BURNED_VILLAGE, THIEF_COIN_CHARM, THIEF_KEY_CHARM,
+            THIEF_FANG_CHARM, THIEF_GRAND_CHARM, SIGNET_OF_TEVFIRAN, RING_OF_THE_GRAND_VIZIER, CRESCENT_OF_SULTHARI, HEART_OF_THE_THRONE,
+            KING_COIN_CHARM, KING_DECREE_CHARM, KING_CANNON_CHARM, KING_GRAND_CHARM, VOID_SHARD_CHARM, DESERT_ROSE_CHARM,
+            FROST_TOOTH_CHARM, STORM_GLASS_CHARM, LUCKY_FEATHER_CHARM, TRAVELER_CHARM, GHEED_COIN, LANTERN_CHARM,
+            BLOODSTONE_CHARM, HOURGLASS_CHARM, COMPASS_OF_THE_CODEX, EMBER_HEART_CHARM, FROSTBOUND_CHARM, THUNDER_IDOL_CHARM,
+            PILGRIM_CHARM, ANNIHILUS, TORCH_OF_THE_BEARERS, SEAL_OF_THE_EIGHTH_LOCK, CODEX_PAGE_CHARM, VORATH_CINDER,
+            RING_OF_THE_CARAVANSERAI, SERPENT_EYE_RING, FROST_WYRM_BAND, VOID_TOUCHED_RING, AMULET_OF_THE_DAWN, TIDECALLER_PENDANT,
+            BONE_OF_THE_FIRST_FALLEN, PRYTHONS_MIRROR, GRAND_TALISMAN);
+    // </generated-uniques>
+
     // <generated-armor> by scripts/make_armor_data.py from scripts/armor_catalog.py: the class sets
     public static final RegistryObject<Item> SENTINEL_HELMET = armor("sentinel_helmet", SoFETiers.Armor.SENTINEL, ArmorItem.Type.HELMET);
     public static final RegistryObject<Item> SENTINEL_CHESTPLATE = armor("sentinel_chestplate", SoFETiers.Armor.SENTINEL, ArmorItem.Type.CHESTPLATE);
@@ -574,6 +797,10 @@ public final class ItemRegistry {
             PHARAOH_HELMET, PHARAOH_CHESTPLATE, PHARAOH_LEGGINGS, PHARAOH_BOOTS, GOLDEN_KING_HELMET, GOLDEN_KING_CHESTPLATE, GOLDEN_KING_LEGGINGS, GOLDEN_KING_BOOTS);
     // </generated-armor>
 
+    // Sprint 6: the coins of the Royal Treasury, and the shape the Bronze Cannon is drawn with (neither in a tab)
+    public static final RegistryObject<Item> ROYAL_COIN = ITEMS.register("royal_coin", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BRONZE_CANNON_MODEL = ITEMS.register("bronze_cannon_model", () -> new Item(new Item.Properties()));
+
     // --- trade, crafting and alchemy
     public static final RegistryObject<Item> BLUEPRINT = ITEMS.register("blueprint", () -> new BlueprintItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> BRASS_FLASK = ITEMS.register("brass_flask", () -> new Item(new Item.Properties().stacksTo(16)));
@@ -629,6 +856,8 @@ public final class ItemRegistry {
                 BEARDED_AXE, SEAX, FROST_SPEAR, KHOPESH, SCARAB_SICKLE, JACKAL_GLAIVE, WAS_SCEPTRE, GLADIUS, LEGION_PILUM, JUSTICAR_MAUL, SCALE_BLADE, EMBER_BLADE, INFERNAL_GREATAXE,
                 DUNESUNDER, WIDOWS_KISS, SKALDBREAKER, RIMETOOTH, JACKALS_JUDGEMENT, STORMCALLER, GREEDS_CHAIN));
         all.addAll(A3_HANDHELD);
+        all.addAll(U_HANDHELD);
+        all.addAll(U_LARGE);
         return all;
     }
 
@@ -638,12 +867,15 @@ public final class ItemRegistry {
                 WAR_HAMMER, JOUSTING_LANCE, WAR_MACE, CRYSTAL_TRIDENT, SHADOW_SCYTHE, BATTLE_GREATSWORD, PHLEGM_MACE, DOUBLE_FLAIL,
                 GRAVITY_HAMMER, FROST_SPEAR, JACKAL_GLAIVE, WAS_SCEPTRE, LEGION_PILUM, JUSTICAR_MAUL, INFERNAL_GREATAXE, SKALDBREAKER, RIMETOOTH, JACKALS_JUDGEMENT, STORMCALLER, GREEDS_CHAIN));
         all.addAll(A3_LARGE);
+        all.addAll(U_LARGE);
         return all;
     }
 
     /** Firearms and the drill: held barrel forward (item/handheld_gun). */
     public static List<RegistryObject<Item>> guns() {
-        return A3_GUNS;
+        List<RegistryObject<Item>> all = new ArrayList<>(A3_GUNS);
+        all.addAll(U_GUN);
+        return all;
     }
 
     /** Bows, with their pull models (hand-written, not datagen's). */
@@ -664,6 +896,7 @@ public final class ItemRegistry {
     /** Every armor piece: the set pieces by class and level, then the unique ones. */
     public static List<RegistryObject<Item>> armorPieces() {
         List<RegistryObject<Item>> all = new ArrayList<>(SET_PIECES);
+        all.addAll(U_ARMOR);
         all.addAll(List.of(CROWN_OF_FIVE_SULTANS, WHITE_WOLF_MANTLE, CARAVAN_TREADS, UNDYING_WRAPPINGS, BLIND_JUDGE_HELM, FURNACE_HEART));
         return all;
     }
@@ -678,6 +911,8 @@ public final class ItemRegistry {
         for (RegistryObject<Item> i : List.of(BRASS_AMULET, BRASS_RING, SMALL_TALISMAN, LARGE_TALISMAN)) items.add(i.get());
         jewelry().forEach(i -> items.add(i.get()));
         A3_TAB_EXTRA.forEach(i -> items.add(i.get()));
+        U_GUN.forEach(i -> items.add(i.get()));
+        U_FLAT.forEach(i -> items.add(i.get()));
         return items;
     }
 
@@ -729,6 +964,8 @@ public final class ItemRegistry {
         flat.addAll(jewelry());
         flat.addAll(veiled());
         flat.addAll(A3_FLAT);
+        flat.addAll(U_FLAT);
+        flat.add(ROYAL_COIN);
         return flat;
     }
 }

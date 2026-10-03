@@ -1,0 +1,26 @@
+{
+  "item": "sofe:star_of_parsivan",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 35,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "arcane_poetry"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "resource",
+      "per_s": 0.5
+    }
+  ]
+}

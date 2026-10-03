@@ -1,0 +1,38 @@
+{
+  "item": "sofe:staff_of_winter_gardens",
+  "item_level": 80,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 78,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 13
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "water_mirror"
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 25
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "slow",
+      "s": 3,
+      "lvl": 2
+    },
+    {
+      "on": "worn",
+      "do": "aura",
+      "damage": 1,
+      "radius": 4,
+      "kind": "frost"
+    }
+  ]
+}

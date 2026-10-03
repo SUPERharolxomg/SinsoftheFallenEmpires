@@ -1,9 +1,9 @@
 {
   "item": "sofe:broken_pact_sigil",
-  "item_level": 11,
+  "item_level": 74,
   "droppable": true,
   "slot": "jewelry",
-  "min_level": 10,
+  "min_level": 72,
   "affixes": [
     {
       "stat": "strength",

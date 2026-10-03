@@ -1,9 +1,9 @@
 {
   "item": "sofe:undying_wrappings",
-  "item_level": 10,
+  "item_level": 60,
   "droppable": true,
   "slot": "armor",
-  "min_level": 9,
+  "min_level": 58,
   "affixes": [
     {
       "stat": "vitality",

@@ -1,0 +1,23 @@
+{
+  "item": "sofe:frostbound_charm",
+  "item_level": 50,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 48,
+  "affixes": [
+    {
+      "stat": "frost_damage",
+      "value": 3
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 10
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "unfreeze"
+    }
+  ]
+}

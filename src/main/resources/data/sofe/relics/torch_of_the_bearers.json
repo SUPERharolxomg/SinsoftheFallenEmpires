@@ -1,0 +1,18 @@
+{
+  "item": "sofe:torch_of_the_bearers",
+  "item_level": 87,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 85,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 6
+    },
+    {
+      "stat": "void_resistance",
+      "value": 15
+    }
+  ],
+  "effects": []
+}

@@ -1,0 +1,27 @@
+{
+  "item": "sofe:skyfall",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 98,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "sorceress"
+    },
+    {
+      "stat": "magic_damage",
+      "value": 29
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "lightning",
+      "chance": 0.15,
+      "mult": 1.8
+    }
+  ]
+}

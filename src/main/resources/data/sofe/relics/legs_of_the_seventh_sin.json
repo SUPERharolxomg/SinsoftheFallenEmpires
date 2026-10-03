@@ -1,0 +1,25 @@
+{
+  "item": "sofe:legs_of_the_seventh_sin",
+  "item_level": 90,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 88,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 6
+    },
+    {
+      "stat": "crit_damage",
+      "value": 15
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:strength",
+      "when": "low_health"
+    }
+  ]
+}

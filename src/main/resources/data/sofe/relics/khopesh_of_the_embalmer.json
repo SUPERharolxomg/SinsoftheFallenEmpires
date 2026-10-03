@@ -1,0 +1,33 @@
+{
+  "item": "sofe:khopesh_of_the_embalmer",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 28,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 7
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "burial_wraps"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "slow",
+      "s": 2,
+      "lvl": 1
+    },
+    {
+      "on": "hit",
+      "do": "soul",
+      "n": 1,
+      "chance": 0.1
+    }
+  ]
+}

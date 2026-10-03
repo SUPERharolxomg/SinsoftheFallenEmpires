@@ -4,9 +4,9 @@
   "classes": [
     "necromancer"
   ],
-  "min_item_level": 10,
+  "min_item_level": 60,
   "requires": {
     "attribute": "strength",
-    "value": 18
+    "value": 55
   }
 }

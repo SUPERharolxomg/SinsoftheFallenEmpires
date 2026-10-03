@@ -1,0 +1,20 @@
+{
+  "item": "sofe:necro_grand_charm",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 98,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "necromancer"
+    },
+    {
+      "stat": "will",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

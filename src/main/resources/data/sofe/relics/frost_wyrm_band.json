@@ -1,0 +1,25 @@
+{
+  "item": "sofe:frost_wyrm_band",
+  "item_level": 47,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 45,
+  "affixes": [
+    {
+      "stat": "frost_resistance",
+      "value": 20
+    },
+    {
+      "stat": "frost_damage",
+      "value": 3
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "slow",
+      "s": 2,
+      "lvl": 1
+    }
+  ]
+}

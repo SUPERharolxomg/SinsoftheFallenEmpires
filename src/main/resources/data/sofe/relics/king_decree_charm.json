@@ -1,0 +1,20 @@
+{
+  "item": "sofe:king_decree_charm",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 38,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "siege_decree"
+    },
+    {
+      "stat": "charisma",
+      "value": 3
+    }
+  ],
+  "effects": []
+}

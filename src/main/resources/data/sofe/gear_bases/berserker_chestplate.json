@@ -4,9 +4,9 @@
   "classes": [
     "thief"
   ],
-  "min_item_level": 6,
+  "min_item_level": 30,
   "requires": {
     "attribute": "strength",
-    "value": 14
+    "value": 32
   }
 }

@@ -1,0 +1,25 @@
+{
+  "item": "sofe:ring_of_the_caravanserai",
+  "item_level": 13,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 11,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 4
+    },
+    {
+      "stat": "charisma",
+      "value": 3
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "heal",
+      "every_s": 10,
+      "amount": 1
+    }
+  ]
+}

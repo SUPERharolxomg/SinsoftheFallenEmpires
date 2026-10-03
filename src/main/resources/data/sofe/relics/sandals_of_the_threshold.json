@@ -1,0 +1,26 @@
+{
+  "item": "sofe:sandals_of_the_threshold",
+  "item_level": 27,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 25,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "max_resource",
+      "value": 10
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed",
+      "when": "night"
+    }
+  ]
+}

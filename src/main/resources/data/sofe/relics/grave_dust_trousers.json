@@ -1,0 +1,27 @@
+{
+  "item": "sofe:grave_dust_trousers",
+  "item_level": 73,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 71,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 9
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "raise_the_embalmed"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "souls",
+      "n": 1,
+      "chance": 0.2
+    }
+  ]
+}

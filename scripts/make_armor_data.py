@@ -43,21 +43,22 @@ def existing_materials():
 def stats(s):
     """Protection, toughness and the rest from the level and the weight."""
     lvl, w = s["level"], s["weight"]
-    tier = 0 if lvl <= 3 else 1 if lvl <= 7 else 2 if lvl <= 10 else 3
-    base = [[2, 5, 6, 2], [3, 5, 7, 3], [3, 6, 8, 3], [3, 7, 9, 3]][tier]
+    # one tier per act: Sulthari to 20, Nordrath to 40, Parsivan and Khemet to 60, Aureum to 80, the end to 100
+    tier = 0 if lvl <= 20 else 1 if lvl <= 40 else 2 if lvl <= 60 else 3 if lvl <= 80 else 4
+    base = [[2, 5, 6, 2], [3, 5, 7, 3], [3, 6, 8, 3], [3, 7, 9, 3], [4, 8, 10, 4]][tier]
     cut = {"heavy": 0, "medium": 1, "light": 2}[w]
     prot = [max(1, v - cut) for v in base]
-    tough = {"heavy": min(3.0, 0.25 * lvl), "medium": round(0.12 * lvl, 2), "light": 0.0}[w]
-    kb = 0.1 if w == "heavy" and lvl >= 8 else 0.0
+    tough = {"heavy": round(min(4.0, 0.04 * lvl), 2), "medium": round(0.02 * lvl, 2), "light": 0.0}[w]
+    kb = 0.1 if w == "heavy" and lvl >= 50 else 0.0
     ench = {"heavy": 10, "medium": 14, "light": 18}[w]
-    return 10 + lvl * 2 + (4 if w == "heavy" else 0), prot, ench, tough, kb
+    return 10 + round(0.35 * lvl) + (4 if w == "heavy" else 0), prot, ench, tough, kb
 
 
 def requirement(s):
     if s["weight"] == "heavy":
-        return {"attribute": "strength", "value": 10 + 2 * s["level"]}
+        return {"attribute": "strength", "value": 12 + round(1.5 * s["level"])}
     if s["weight"] == "medium":
-        return {"attribute": "strength", "value": 8 + s["level"]}
+        return {"attribute": "strength", "value": 10 + round(0.75 * s["level"])}
     return None
 
 

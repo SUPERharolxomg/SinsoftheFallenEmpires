@@ -1,0 +1,33 @@
+{
+  "item": "sofe:staff_of_the_nine_gates",
+  "item_level": 57,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 55,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 10
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "the_great_judgment"
+    },
+    {
+      "stat": "max_resource",
+      "value": 20
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "raise",
+      "s": 12,
+      "health": 18,
+      "damage": 4,
+      "chance": 0.25
+    }
+  ]
+}

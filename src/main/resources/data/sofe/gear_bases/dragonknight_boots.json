@@ -4,9 +4,9 @@
   "classes": [
     "knight"
   ],
-  "min_item_level": 10,
+  "min_item_level": 60,
   "requires": {
     "attribute": "strength",
-    "value": 30
+    "value": 102
   }
 }

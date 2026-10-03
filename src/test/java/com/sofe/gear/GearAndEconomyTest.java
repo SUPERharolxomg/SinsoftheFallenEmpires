@@ -73,7 +73,7 @@ class GearAndEconomyTest {
         List<GearBase> bases = realBases();
         Random random = new Random(7);
         for (int i = 0; i < 500; i++) {
-            var gen = LootGenerator.builder(bases, affixes).itemLevel(1 + i % 30).playerClass("knight").build().generate(random).orElseThrow();
+            var gen = LootGenerator.builder(bases, affixes).itemLevel(1 + i % 100).playerClass("knight").build().generate(random).orElseThrow();
             GearData gear = gen.gear();
             int n = gear.affixes().size();
             assertTrue(n <= gear.rarity().maxAffixes(), gear.rarity() + " rolled " + n + " affixes");
@@ -118,7 +118,7 @@ class GearAndEconomyTest {
         GearBonuses strong = GearBonuses.of(List.of(axe, ring), 9, a -> 30);
         assertEquals(7, strong.attribute(CharacterAttribute.STRENGTH));
         assertEquals(2, strong.attribute(CharacterAttribute.VITALITY));
-        assertTrue(GearBonuses.of(List.of(axe), 6, a -> 99).isEmpty(), "level 6 is below item level 10 − 3");
+        assertTrue(GearBonuses.of(List.of(axe), 4, a -> 99).isEmpty(), "level 4 is below item level 10 − 5");
         assertEquals(2, strong.bonusRanks("shield_bash", "knight"));
         assertEquals(7, GearBonuses.effectiveRank(5, 2));
         assertEquals(8, GearBonuses.effectiveRank(5, 9), "gear ranks stop at 8");

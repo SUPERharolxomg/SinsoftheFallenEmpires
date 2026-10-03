@@ -1,0 +1,26 @@
+{
+  "item": "sofe:greaves_of_the_vigil",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 38,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 20
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:resistance",
+      "when": "crouching"
+    }
+  ]
+}

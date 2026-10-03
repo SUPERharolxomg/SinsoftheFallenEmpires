@@ -1,0 +1,18 @@
+{
+  "item": "sofe:thunder_idol_charm",
+  "item_level": 53,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 51,
+  "affixes": [
+    {
+      "stat": "storm_damage",
+      "value": 3
+    },
+    {
+      "stat": "storm_resistance",
+      "value": 10
+    }
+  ],
+  "effects": []
+}

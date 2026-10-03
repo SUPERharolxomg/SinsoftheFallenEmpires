@@ -1,0 +1,27 @@
+{
+  "item": "sofe:mask_of_the_heist",
+  "item_level": 77,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 75,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "thief"
+    },
+    {
+      "stat": "crit_chance",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:invisibility",
+      "when": "crouching"
+    }
+  ]
+}

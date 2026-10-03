@@ -1,0 +1,29 @@
+{
+  "item": "sofe:jungle_of_glass",
+  "item_level": 27,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 25,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "crit_chance",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "bleed",
+      "s": 3
+    },
+    {
+      "on": "hit",
+      "do": "vs_beast",
+      "mult": 1.5
+    }
+  ]
+}

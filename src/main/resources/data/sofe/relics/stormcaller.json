@@ -1,9 +1,9 @@
 {
   "item": "sofe:stormcaller",
-  "item_level": 12,
+  "item_level": 84,
   "droppable": true,
   "slot": "weapon",
-  "min_level": 11,
+  "min_level": 82,
   "affixes": [
     {
       "stat": "strength",

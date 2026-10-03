@@ -1,0 +1,35 @@
+{
+  "item": "sofe:oathkeeper",
+  "item_level": 80,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 78,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 14
+    },
+    {
+      "stat": "max_health",
+      "value": 10
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "last_one_standing"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "lifesteal",
+      "frac": 0.08
+    },
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 3
+    }
+  ]
+}

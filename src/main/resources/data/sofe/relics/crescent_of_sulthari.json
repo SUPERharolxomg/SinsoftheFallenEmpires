@@ -1,0 +1,27 @@
+{
+  "item": "sofe:crescent_of_sulthari",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 38,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "imperial_lineage"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "heal",
+      "every_s": 5,
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "item": "sofe:voice_of_the_cannon",
+  "item_level": 53,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 51,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 10
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "bronze_cannon"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "knockup",
+      "chance": 0.15,
+      "v": 0.4
+    }
+  ]
+}
