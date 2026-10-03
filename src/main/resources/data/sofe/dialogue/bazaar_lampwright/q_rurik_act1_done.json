@@ -1,0 +1,45 @@
+{
+  "style": "sulthari",
+  "npc": "bazaar_lampwright",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/rurik_act1",
+        "step": 2
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/rurik_act1",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "bazaar_lampwright",
+      "text": "dialogue.sofe.q.rurik_act1.done.1"
+    },
+    {
+      "speaker": "bazaar_lampwright",
+      "text": "dialogue.sofe.q.rurik_act1.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.rurik_act1.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:bearer/rurik_act1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

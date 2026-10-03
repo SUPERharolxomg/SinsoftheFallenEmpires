@@ -1,0 +1,45 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_runesmith",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/nordrath_cold_forge",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/nordrath_cold_forge",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_runesmith",
+      "text": "dialogue.sofe.q.nordrath_cold_forge.done.1"
+    },
+    {
+      "speaker": "nordrath_runesmith",
+      "text": "dialogue.sofe.q.nordrath_cold_forge.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.nordrath_cold_forge.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/nordrath_cold_forge"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_skald",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/nordrath_endless_war",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/nordrath_endless_war",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.q.nordrath_endless_war.choice.1"
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.q.nordrath_endless_war.choice.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.nordrath_endless_war.answer.peace",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "nordrath",
+              "fate": "peace"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/nordrath_endless_war"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.nordrath_endless_war.answer.war",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "nordrath",
+              "fate": "war"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/nordrath_endless_war"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.q.nordrath_endless_war.reply.peace",
+      "condition": {
+        "type": "fate_is",
+        "region": "nordrath",
+        "fate": "peace"
+      }
+    },
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.q.nordrath_endless_war.reply.war",
+      "condition": {
+        "type": "fate_is",
+        "region": "nordrath",
+        "fate": "war"
+      }
+    }
+  ]
+}

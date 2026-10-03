@@ -1,0 +1,29 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_hunter",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/azhar_act2",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/azhar_act2",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_hunter",
+      "text": "dialogue.sofe.q.azhar_act2.reminder"
+    }
+  ]
+}
