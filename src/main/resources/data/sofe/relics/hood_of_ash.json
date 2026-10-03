@@ -1,0 +1,26 @@
+{
+  "item": "sofe:hood_of_ash",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 18,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "smoke_step"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:night_vision"
+    }
+  ]
+}

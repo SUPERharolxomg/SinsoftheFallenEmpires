@@ -1,0 +1,30 @@
+{
+  "item": "sofe:tidecaller_pendant",
+  "item_level": 43,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 41,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 6
+    },
+    {
+      "stat": "dodge",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:water_breathing"
+    },
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:dolphins_grace",
+      "when": "water"
+    }
+  ]
+}

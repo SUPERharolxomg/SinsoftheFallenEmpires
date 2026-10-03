@@ -1,0 +1,61 @@
+{
+  "type": "bearer",
+  "act": 2,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 1200,
+        "z": -3000,
+        "radius": 24
+      },
+      "target": {
+        "x": 1200,
+        "z": -3000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:void_*",
+        "count": 6
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:void_stalker",
+          "count": 6,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 1500
+    },
+    {
+      "type": "give_relic",
+      "relic": "sunder_of_the_order"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "knight"
+      },
+      {
+        "type": "act_reached",
+        "act": 2
+      }
+    ]
+  }
+}

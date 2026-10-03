@@ -1,0 +1,26 @@
+{
+  "item": "sofe:signet_of_the_order",
+  "item_level": 23,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 21,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 5
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "banner_cry"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "resource",
+      "amount": 8
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "item": "sofe:fangs_of_fenrath",
+  "item_level": 43,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 41,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 9
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "cutthroat"
+    },
+    {
+      "stat": "crit_chance",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "bleed",
+      "s": 4
+    },
+    {
+      "on": "hit",
+      "do": "poison",
+      "s": 3
+    }
+  ]
+}

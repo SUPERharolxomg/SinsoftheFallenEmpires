@@ -1,0 +1,25 @@
+{
+  "item": "sofe:legs_of_the_unyielding",
+  "item_level": 83,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 81,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "armor",
+      "value": 6
+    },
+    {
+      "stat": "strength",
+      "value": 8
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "reduce",
+      "frac": 0.1
+    }
+  ]
+}

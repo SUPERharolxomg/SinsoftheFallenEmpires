@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sofe:item/seal_of_the_eighth_lock"
+  }
+}

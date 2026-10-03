@@ -51,6 +51,23 @@ public final class EntityRegistry {
             () -> EntityType.Builder.<com.sofe.entity.projectile.Bomb>of(com.sofe.entity.projectile.Bomb::new, MobCategory.MISC)
                     .sized(0.3f, 0.3f).clientTrackingRange(4).updateInterval(10).build("bomb"));
 
+    // Sprint 6: what the Bearers summon
+    public static final RegistryObject<EntityType<com.sofe.entity.summon.SummonedAlly>> SUMMONED_ALLY = ENTITIES.register("summoned_ally",
+            () -> EntityType.Builder.<com.sofe.entity.summon.SummonedAlly>of(com.sofe.entity.summon.SummonedAlly::new, MobCategory.MISC)
+                    .sized(0.6f, 1.95f).clientTrackingRange(10).build("summoned_ally"));
+    public static final RegistryObject<EntityType<com.sofe.entity.summon.ClayGolem>> CLAY_GOLEM = ENTITIES.register("clay_golem",
+            () -> EntityType.Builder.<com.sofe.entity.summon.ClayGolem>of(com.sofe.entity.summon.ClayGolem::new, MobCategory.MISC)
+                    .sized(1.1f, 2.1f).clientTrackingRange(10).build("clay_golem"));
+    public static final RegistryObject<EntityType<com.sofe.entity.summon.EmbalmedDead>> EMBALMED_DEAD = ENTITIES.register("embalmed_dead",
+            () -> EntityType.Builder.<com.sofe.entity.summon.EmbalmedDead>of(com.sofe.entity.summon.EmbalmedDead::new, MobCategory.MISC)
+                    .sized(0.6f, 1.95f).clientTrackingRange(8).build("embalmed_dead"));
+    public static final RegistryObject<EntityType<com.sofe.companion.CompanionEntity>> COMPANION = ENTITIES.register("companion",
+            () -> EntityType.Builder.<com.sofe.companion.CompanionEntity>of(com.sofe.companion.CompanionEntity::new, MobCategory.MISC)
+                    .sized(0.6f, 1.8f).clientTrackingRange(10).build("companion"));
+    public static final RegistryObject<EntityType<com.sofe.entity.summon.BronzeCannon>> BRONZE_CANNON = ENTITIES.register("bronze_cannon",
+            () -> EntityType.Builder.<com.sofe.entity.summon.BronzeCannon>of(com.sofe.entity.summon.BronzeCannon::new, MobCategory.MISC)
+                    .sized(1.2f, 1.0f).clientTrackingRange(10).build("bronze_cannon"));
+
     public static final RegistryObject<EntityType<BearerCorpseEntity>> BEARER_CORPSE = ENTITIES.register("bearer_corpse",
             () -> EntityType.Builder.<BearerCorpseEntity>of(BearerCorpseEntity::new, MobCategory.MISC).sized(1.8f, 0.5f)
                     .fireImmune().clientTrackingRange(16).build("bearer_corpse"));
@@ -83,6 +100,11 @@ public final class EntityRegistry {
         event.put(KALETH.get(), KalethEntity.attributes().build());
         event.put(SERATH.get(), SerathEntity.attributes().build());
         event.put(VORATH.get(), VorathEntity.attributes().build());
+        event.put(SUMMONED_ALLY.get(), com.sofe.entity.summon.SummonedAlly.createAttributes().build());
+        event.put(BRONZE_CANNON.get(), com.sofe.entity.summon.BronzeCannon.createAttributes().build());
+        event.put(CLAY_GOLEM.get(), net.minecraft.world.entity.animal.IronGolem.createAttributes().build());
+        event.put(EMBALMED_DEAD.get(), net.minecraft.world.entity.monster.Zombie.createAttributes().build());
+        event.put(COMPANION.get(), com.sofe.companion.CompanionEntity.createAttributes().build());
     }
 
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {

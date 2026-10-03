@@ -1,0 +1,26 @@
+{
+  "item": "sofe:shadowstep_legwraps",
+  "item_level": 70,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 68,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 10
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "thousand_cuts"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:jump_boost"
+    }
+  ]
+}

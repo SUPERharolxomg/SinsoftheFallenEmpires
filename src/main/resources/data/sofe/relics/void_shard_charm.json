@@ -1,0 +1,14 @@
+{
+  "item": "sofe:void_shard_charm",
+  "item_level": 13,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 11,
+  "affixes": [
+    {
+      "stat": "void_resistance",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

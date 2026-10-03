@@ -1,0 +1,49 @@
+{
+  "type": "bearer",
+  "act": 1,
+  "steps": [
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:void_*",
+        "count": 6
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:void_wretch",
+          "count": 6,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 400
+    },
+    {
+      "type": "give_relic",
+      "relic": "thief_coin_charm"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "thief"
+      },
+      {
+        "type": "act_reached",
+        "act": 1
+      }
+    ]
+  }
+}

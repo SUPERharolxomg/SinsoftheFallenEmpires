@@ -1,0 +1,26 @@
+{
+  "item": "sofe:crown_of_the_scale",
+  "item_level": 73,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 71,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "knight"
+    },
+    {
+      "stat": "all_attributes",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "absorption",
+      "every_s": 25
+    }
+  ]
+}

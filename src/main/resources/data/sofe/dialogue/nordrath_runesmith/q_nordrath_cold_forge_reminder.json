@@ -1,0 +1,29 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_runesmith",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/nordrath_cold_forge",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/nordrath_cold_forge",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_runesmith",
+      "text": "dialogue.sofe.q.nordrath_cold_forge.reminder"
+    }
+  ]
+}

@@ -176,6 +176,15 @@ public final class QuestEngine {
             if (type instanceof net.minecraft.core.particles.SimpleParticleType simple) {
                 player.serverLevel().sendParticles(simple, player.getX(), player.getY() + 1, player.getZ(), e.count(), 0.6, 1.0, 0.6, 0.05);
             }
+        } else if (effect instanceof QuestEffect.GiveRelic e) {
+            com.sofe.gear.GearMaker.relic(e.relic(), player).ifPresentOrElse(stack -> {
+                if (!player.getInventory().add(stack)) player.drop(stack, false);
+                player.sendSystemMessage(Component.translatable("message.sofe.relic_received", stack.getHoverName()).withStyle(ChatFormatting.GOLD));
+            }, () -> SoFEMod.LOGGER.warn("Unknown relic {} in a quest effect", e.relic()));
+        } else if (effect instanceof QuestEffect.HireCompanion e) {
+            com.sofe.player.PlayerClass.byId(e.bearer()).ifPresent(c -> com.sofe.companion.Companions.hire(player, c));
+        } else if (effect instanceof QuestEffect.CompanionOrder e) {
+            com.sofe.companion.Companions.order(player, e.order());
         } else if (effect instanceof QuestEffect.OpenClassSelect) {
             ClassSelectionHandler.openIfNeeded(player);
         } else if (effect instanceof QuestEffect.GiveItem e) {

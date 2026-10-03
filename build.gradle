@@ -48,6 +48,13 @@ minecraft {
                 property 'sofe.armorShots', project.property('shotSets')
                 args '--quickPlaySingleplayer', 'shots'
             }
+            // ./gradlew runClient -PskillShots=all (or skill ids): casts each skill on zombies, screenshots it,
+            // writes run/skillshots.log, then quits (SkillShots)
+            if (project.hasProperty('skillShots')) {
+                property 'sofe.skillShots', project.property('skillShots')
+                if (project.hasProperty('companion')) property 'sofe.companion', project.property('companion')
+                args '--quickPlaySingleplayer', 'shots'
+            }
         }
 
         server {

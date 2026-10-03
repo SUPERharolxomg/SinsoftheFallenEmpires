@@ -1,0 +1,25 @@
+{
+  "item": "sofe:boots_of_the_fjord_runner",
+  "item_level": 23,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 21,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed"
+    },
+    {
+      "on": "worn",
+      "do": "unfreeze"
+    }
+  ]
+}

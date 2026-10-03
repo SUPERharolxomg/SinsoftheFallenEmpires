@@ -59,7 +59,8 @@ public class VeiledItem extends Item {
         if (outcome == Gamble.Outcome.SWINDLE) {
             result = new ItemStack(ItemRegistry.VOID_ASH.get(), 1 + player.getRandom().nextInt(3));
         } else if (outcome == Gamble.Outcome.RELIC) {
-            Optional<GearDataManager.Relic> relic = Gamble.pickRelic(GearDataManager.droppableRelics(), slot, itemLevel, random);
+            Optional<GearDataManager.Relic> relic = Gamble.pickRelic(GearDataManager.droppableRelicsFor(
+                    com.sofe.skill.ClassState.classOf(player).map(com.sofe.player.PlayerClass::id).orElse(null)), slot, itemLevel, random);
             // a unique out of a veil is not bound: it can be traded like any other find
             result = relic.flatMap(r -> GearMaker.relic(r.id(), null)).orElse(ItemStack.EMPTY);
             if (result.isEmpty()) outcome = Gamble.Outcome.IMPERIAL;

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:lalehs_locket",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 98,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "sorceress"
+    },
+    {
+      "stat": "all_attributes",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "cheat_death",
+      "cooldown_s": 300
+    }
+  ]
+}

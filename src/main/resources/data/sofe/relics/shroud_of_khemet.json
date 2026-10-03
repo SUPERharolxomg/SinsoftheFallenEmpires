@@ -1,0 +1,26 @@
+{
+  "item": "sofe:shroud_of_khemet",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 35,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "canopic_jars"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 2
+    }
+  ]
+}

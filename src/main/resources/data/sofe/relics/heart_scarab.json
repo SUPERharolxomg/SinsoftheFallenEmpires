@@ -1,0 +1,26 @@
+{
+  "item": "sofe:heart_scarab",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 38,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "scarab_plague"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "cheat_death",
+      "cooldown_s": 300
+    }
+  ]
+}

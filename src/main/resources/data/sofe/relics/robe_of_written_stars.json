@@ -1,0 +1,26 @@
+{
+  "item": "sofe:robe_of_written_stars",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 38,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 9
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "starfall"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "resource",
+      "amount": 6
+    }
+  ]
+}

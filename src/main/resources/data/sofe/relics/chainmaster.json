@@ -1,0 +1,25 @@
+{
+  "item": "sofe:chainmaster",
+  "item_level": 50,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 48,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 8
+    },
+    {
+      "stat": "physical_damage",
+      "value": 14
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "chain",
+      "targets": 2,
+      "frac": 0.35
+    }
+  ]
+}

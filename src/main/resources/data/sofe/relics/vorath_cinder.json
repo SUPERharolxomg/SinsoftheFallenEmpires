@@ -1,0 +1,24 @@
+{
+  "item": "sofe:vorath_cinder",
+  "item_level": 67,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 65,
+  "affixes": [
+    {
+      "stat": "physical_damage",
+      "value": 10
+    },
+    {
+      "stat": "fire_damage",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "ignite",
+      "s": 2
+    }
+  ]
+}

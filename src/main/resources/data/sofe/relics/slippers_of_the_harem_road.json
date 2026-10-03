@@ -1,0 +1,25 @@
+{
+  "item": "sofe:slippers_of_the_harem_road",
+  "item_level": 27,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 25,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 5
+    },
+    {
+      "stat": "charisma",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed"
+    }
+  ]
+}

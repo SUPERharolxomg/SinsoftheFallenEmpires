@@ -1,0 +1,20 @@
+{
+  "item": "sofe:thief_key_charm",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 38,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "light_fingers"
+    },
+    {
+      "stat": "dodge",
+      "value": 2
+    }
+  ],
+  "effects": []
+}

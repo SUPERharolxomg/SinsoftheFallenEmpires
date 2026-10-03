@@ -1,0 +1,31 @@
+{
+  "item": "sofe:anubets_judgement",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 98,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "necromancer"
+    },
+    {
+      "stat": "magic_damage",
+      "value": 26
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "execute",
+      "below": 0.2
+    },
+    {
+      "on": "kill",
+      "do": "souls",
+      "n": 1
+    }
+  ]
+}

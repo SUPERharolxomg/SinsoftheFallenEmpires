@@ -1,0 +1,20 @@
+{
+  "item": "sofe:thief_grand_charm",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 98,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "thief"
+    },
+    {
+      "stat": "agility",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

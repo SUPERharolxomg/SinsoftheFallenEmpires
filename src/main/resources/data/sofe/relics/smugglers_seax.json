@@ -1,0 +1,26 @@
+{
+  "item": "sofe:smugglers_seax",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 28,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 7
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "light_fingers"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 2
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "item": "sofe:prythons_mirror",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 98,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 10
+    },
+    {
+      "stat": "crit_damage",
+      "value": 26
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "thorns",
+      "frac": 0.2
+    }
+  ]
+}

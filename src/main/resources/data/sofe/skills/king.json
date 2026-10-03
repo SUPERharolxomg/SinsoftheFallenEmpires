@@ -6,49 +6,132 @@
   },
   "skills": {
     "scepter_slash": {
-      "cooldown_s": 1
+      "cooldown_s": 1,
+      "damage": 5,
+      "authority": 6,
+      "range": 3.5
     },
     "decree_of_steadfastness": {
       "cost": 20,
       "cooldown_s": 10,
-      "armor_bonus": 0.2
+      "radius": 5,
+      "duration_s": 10
     },
     "janissary_guard": {
       "cost": 30,
       "cooldown_s": 20,
       "soldiers": 2,
-      "duration_s": 30
+      "duration_s": 30,
+      "health": 24,
+      "guard_damage": 6
     },
     "siege_decree": {
       "cost": 35,
       "cooldown_s": 18,
-      "damage_taken_bonus": 0.15
+      "radius": 5,
+      "duration_s": 8,
+      "range": 16
     },
     "command": {
       "cost": 25,
       "cooldown_s": 12,
-      "damage_bonus": 0.3
+      "duration_s": 8,
+      "range": 24
     },
     "royal_treasury": {
       "cost": 30,
-      "cooldown_s": 15
+      "cooldown_s": 15,
+      "coins": 5,
+      "heal": 4
     },
     "imperial_lineage": {
-      "regen_per_second": 0.01
+      "radius": 8,
+      "regen_percent": 0.01
     },
     "bronze_cannon": {
       "cost": 50,
       "cooldown_s": 30,
-      "shots": 5
+      "shots": 5,
+      "damage": 10
     },
     "voice_of_the_throne": {
-      "duration_bonus": 0.5
+      "radius_multiplier": 2,
+      "duration_multiplier": 1.5,
+      "per_rank": {
+        "radius_multiplier": 0,
+        "duration_multiplier": 0
+      }
     },
     "crown_of_the_five_lands": {
       "cost": 100,
       "cooldown_s": 180,
       "duration_s": 12,
-      "soldiers": 6
+      "radius": 8
+    },
+    "royal_edge": {
+      "damage_bonus": 0.12
+    },
+    "tribute": {
+      "authority_add": 1.5
+    },
+    "sweeping_scepter": {
+      "sweep": 0.3
+    },
+    "rally_the_court": {
+      "speed_s": 2
+    },
+    "marked_for_death": {
+      "duration_s_add": 1
+    },
+    "sultans_wrath": {
+      "damage_bonus": 0.1,
+      "range_add": 0.5
+    },
+    "authority_of_the_crown": {
+      "authority_per_kill": 2
+    },
+    "order_of_execution": {
+      "damage_bonus": 0.05
+    },
+    "iron_decree": {
+      "regen": 1
+    },
+    "unbreaking_walls": {
+      "duration_s_add": 1,
+      "radius_add": 0.5
+    },
+    "heavy_shot": {
+      "damage_bonus": 0.12,
+      "shots_add": 0.5
+    },
+    "grapeshot": {
+      "pellets": 1
+    },
+    "brass_armor": {
+      "health_add": 4
+    },
+    "scimitar_drill": {
+      "guard_damage_add": 1
+    },
+    "veteran_guard": {
+      "duration_s_add": 5
+    },
+    "golden_rain": {
+      "coins_add": 1,
+      "heal_bonus": 0.1
+    },
+    "standing_army": {
+      "soldiers_add": 0.3
+    },
+    "war_chest": {
+      "strength_s": 2
+    },
+    "aetherium_guard": {
+      "resistance": 1
+    },
+    "royal_mint": {
+      "cooldown_cut": 0.08,
+      "cost_cut": 0.06
     }
   }
 }

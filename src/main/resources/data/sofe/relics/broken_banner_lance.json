@@ -1,0 +1,36 @@
+{
+  "item": "sofe:broken_banner_lance",
+  "item_level": 53,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 51,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 10
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "legionary_charge"
+    },
+    {
+      "stat": "physical_damage",
+      "value": 18
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "knockup",
+      "chance": 0.2,
+      "v": 0.6
+    },
+    {
+      "on": "hit",
+      "do": "bleed",
+      "s": 3
+    }
+  ]
+}

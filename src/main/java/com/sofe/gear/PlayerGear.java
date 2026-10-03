@@ -54,6 +54,11 @@ public final class PlayerGear {
         return stacks;
     }
 
+    /** One stat of everything the player wears (for tests and tooltips). */
+    public static double get(Player player, GearStat stat) {
+        return bonuses(player).get(stat);
+    }
+
     public static GearBonuses bonuses(Player player) {
         return CACHE.computeIfAbsent(player.getUUID(), id -> compute(player));
     }
@@ -77,7 +82,10 @@ public final class PlayerGear {
 
     private static GearBonuses compute(Player player) {
         List<GearData> gear = new ArrayList<>();
-        for (ItemStack stack : equipped(player)) GearNbt.read(stack).ifPresent(gear::add);
+        String cls = com.sofe.skill.ClassState.classOf(player).map(com.sofe.player.PlayerClass::id).orElse(null);
+        for (ItemStack stack : equipped(player)) {
+            GearNbt.read(stack).filter(g -> g.relic() == null || GearDataManager.relic(g.relic()).map(r -> r.suits(cls)).orElse(true)).ifPresent(gear::add);
+        }
         if (gear.isEmpty()) return GearBonuses.NONE;
         return GearBonuses.of(gear, level(player), a -> baseAttribute(player, a));
     }

@@ -1,0 +1,30 @@
+{
+  "item": "sofe:flail_of_the_penitent",
+  "item_level": 77,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 75,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 11
+    },
+    {
+      "stat": "max_health",
+      "value": 10
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "vs_monster",
+      "mult": 1.25
+    },
+    {
+      "on": "hit",
+      "do": "stun",
+      "chance": 0.12,
+      "s": 1
+    }
+  ]
+}

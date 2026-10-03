@@ -1,18 +1,42 @@
 {
   "regions": {
-    "sulthari": [1, 5],
-    "nordrath": [5, 12],
-    "parsivan": [12, 16],
-    "khemet": [16, 20],
-    "aureum": [20, 27],
-    "ocean": [1, 5]
+    "sulthari": [
+      1,
+      20
+    ],
+    "nordrath": [
+      20,
+      40
+    ],
+    "parsivan": [
+      40,
+      60
+    ],
+    "khemet": [
+      40,
+      60
+    ],
+    "aureum": [
+      60,
+      80
+    ],
+    "ocean": [
+      1,
+      20
+    ]
   },
-  "act_floors": [1, 5, 12, 20, 27],
+  "act_floors": [
+    1,
+    20,
+    40,
+    60,
+    80
+  ],
   "per_level": {
-    "health": 0.08,
-    "damage": 0.06,
-    "armor": 0.3
+    "health": 0.05,
+    "damage": 0.035,
+    "armor": 0.15
   },
-  "max_level": 30,
+  "max_level": 100,
   "excluded_mods": []
 }

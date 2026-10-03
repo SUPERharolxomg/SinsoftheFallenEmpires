@@ -1,0 +1,52 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_widow",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/shirin_act2",
+          "step": 1
+        }
+      },
+      {
+        "type": "class_is",
+        "class": "sorceress"
+      },
+      {
+        "type": "act_reached",
+        "act": 2
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_widow",
+      "text": "dialogue.sofe.q.shirin_act2.offer.1"
+    },
+    {
+      "speaker": "nordrath_widow",
+      "text": "dialogue.sofe.q.shirin_act2.offer.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.shirin_act2.accept",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:bearer/shirin_act2"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.shirin_act2.later",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

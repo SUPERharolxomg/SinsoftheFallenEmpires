@@ -101,4 +101,18 @@ class SkillBookTest {
             assertTrue(parent.level() < s.level(), s.id() + " must come from an earlier row");
         }
     }
+
+    @Test
+    void aLearnedActiveCanBeMovedToAnySlotAndSwapsWithWhatWasThere() {
+        SkillBook book = new SkillBook();
+        book.learn(skill("ember_verse"), PlayerClass.SORCERESS, 1, 3);
+        book.learn(skill("frost_lance"), PlayerClass.SORCERESS, 1, 3);
+        assertTrue(book.assign(skill("frost_lance"), 0));
+        assertEquals("frost_lance", book.slot(0).orElseThrow());
+        assertEquals("ember_verse", book.slot(1).orElseThrow(), "the skill that was in slot 1 moved to the freed slot");
+        assertTrue(book.assign(skill("ember_verse"), 4));
+        assertEquals("ember_verse", book.slot(4).orElseThrow());
+        assertFalse(book.assign(skill("wandering_spark"), 2), "an unlearned skill cannot be placed");
+        assertFalse(book.assign(skill("ember_verse"), SkillBook.ULTIMATE_SLOT), "the ultimate slot is the ultimate's");
+    }
 }

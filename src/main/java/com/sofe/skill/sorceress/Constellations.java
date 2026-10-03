@@ -28,7 +28,12 @@ public final class Constellations {
     public static void trigger(ServerPlayer player, Constellation constellation, List<Rune> runes, Vec3 at, ClassSkillData data) {
         SkillStats stats = data.constellation(constellation.id()).orElse(new SkillStats(0, 0, java.util.Map.of()));
         ServerLevel level = player.serverLevel();
-        float damage = (float) stats.param("damage", 3);
+        // Arcane Poetry: three different runes write a stronger verse
+        double poetry = runes.stream().distinct().count() == runes.size()
+                ? com.sofe.skill.ClassState.passive(player, "arcane_poetry").map(p -> p.param("damage_bonus", 0.2)).orElse(0.0) : 0;
+        float damage = (float) (stats.param("damage", 3) * (1 + poetry));
+        // Sky Map: a completed constellation gives Mana back
+        com.sofe.skill.ClassState.passive(player, "sky_map").ifPresent(p -> com.sofe.skill.ClassMechanics.gain(player, (float) p.param("mana_refund", 20)));
         double radius = stats.param("radius", 3);
         List<LivingEntity> targets = SkillTargeting.around(player, at, radius);
 

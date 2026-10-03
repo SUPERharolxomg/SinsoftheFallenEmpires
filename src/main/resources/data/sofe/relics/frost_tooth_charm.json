@@ -1,0 +1,14 @@
+{
+  "item": "sofe:frost_tooth_charm",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 18,
+  "affixes": [
+    {
+      "stat": "frost_resistance",
+      "value": 9
+    }
+  ],
+  "effects": []
+}

@@ -176,26 +176,29 @@ Players cannot place chests inside Sulthari (it is a protected zone), and loot a
 
 **Decided.** Every hostile mob in a journey (SoFE enemies, vanilla zombies, skeletons, spiders, creepers, endermen... and hostile mobs from other mods) gets a **level** when it spawns, and the level sets how strong it is.
 
-**Its level** is the higher of two values:
+**Its level** is the highest of three values:
 
-1. **The region's level range** ([Mundo.md](Mundo.md#w1-one-world-with-a-fixed-map)): a mob in Nordrath is level 5–12, one in Aureum 20–27.
-2. **The act floor** of the nearest player: once a player advances an act, mobs around them never spawn below it, even in regions from earlier acts. Coming back to Sulthari in Act IV means level 20 mobs, not level 1.
+1. **The region's level range** ([Mundo.md](Mundo.md#w1-one-world-with-a-fixed-map)): Sulthari 1–20, Nordrath 20–40, Parsivan and Khemet 40–60, Aureum 60–80.
+2. **The act floor** of the nearest player: once a player advances an act, mobs around them never spawn below it, even in regions from earlier acts. Coming back to Sulthari in Act IV means level 60 mobs, not level 1.
+3. **The Bearer's own level**: mobs match the nearest Bearer, from two levels under to one over. A boss stands one level above the strongest Bearer near it. A level-40 Bearer always meets level 38–41 enemies.
 
-| Act | Act floor |
-|-----|-----------|
-| I | 1 |
-| II | 5 |
-| III | 12 |
-| IV | 20 |
-| V | 27 |
+**The level cap is 100, twenty levels per act.** A Bearer cannot grow past the cap of their act; the next act opens the next twenty levels.
+
+| Act | Act floor | Level cap |
+|-----|-----------|-----------|
+| I | 1 | 20 |
+| II | 20 | 40 |
+| III | 40 | 60 |
+| IV | 60 | 80 |
+| V | 80 | 100 |
 
 **What a level does**, for every level above 1 (values in `data/sofe/mob_scaling.json`):
 
-| Stat | Per level | At level 30 |
-|------|-----------|-------------|
-| Health | +8% | ×3.3 |
-| Damage | +6% | ×2.7 |
-| Armor | +0.3 | +8.7 |
+| Stat | Per level | At level 100 |
+|------|-----------|--------------|
+| Health | +5% | ×5.95 |
+| Damage | +3.5% | ×4.47 |
+| Armor | +0.15 | +14.85 |
 
 The vanilla difficulty (Easy, Normal, Hard) still applies on top.
 
@@ -273,7 +276,7 @@ A player who joins a server after the Night of the Eclipse has already happened 
 
 - The world stays open: every region is unlocked for that player and the landscape keeps healing.
 - **Echo fights can be repeated** for Oath Gems, materials and Dinars. A Relic already owned does not drop again (one per player).
-- **Ascended difficulty** (post-1.0): enemies scale beyond level 30 and gear gets one more affix.
+- **Ascended difficulty** (post-1.0): gear gets one more affix at the top levels.
 - The **Eighth Lock** is only teased (the sequel hook); no playable content for it in 1.0.
 
 ---

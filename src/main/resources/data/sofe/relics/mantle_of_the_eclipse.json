@@ -1,0 +1,27 @@
+{
+  "item": "sofe:mantle_of_the_eclipse",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 98,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 18
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "written_eclipse"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "slow",
+      "s": 3,
+      "lvl": 1
+    }
+  ]
+}

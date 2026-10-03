@@ -1,0 +1,27 @@
+{
+  "item": "sofe:wolf_tooth_necklace",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 38,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "scavengers_instinct"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "effect",
+      "effect": "minecraft:speed",
+      "s": 4
+    }
+  ]
+}

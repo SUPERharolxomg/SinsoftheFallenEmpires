@@ -1,0 +1,31 @@
+{
+  "item": "sofe:astrolabe_of_shirin",
+  "item_level": 53,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 51,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 10
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "wandering_spark"
+    },
+    {
+      "stat": "cooldown_reduction",
+      "value": 8
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "chain",
+      "targets": 2,
+      "frac": 0.5
+    }
+  ]
+}

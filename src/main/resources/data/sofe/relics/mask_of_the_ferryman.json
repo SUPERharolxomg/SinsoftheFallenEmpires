@@ -1,0 +1,26 @@
+{
+  "item": "sofe:mask_of_the_ferryman",
+  "item_level": 23,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 21,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "clay_warden"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "reveal",
+      "radius": 12
+    }
+  ]
+}

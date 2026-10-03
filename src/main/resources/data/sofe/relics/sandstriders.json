@@ -1,0 +1,25 @@
+{
+  "item": "sofe:sandstriders",
+  "item_level": 33,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 31,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 15
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed",
+      "when": "day"
+    }
+  ]
+}

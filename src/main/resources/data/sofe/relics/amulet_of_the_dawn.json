@@ -1,0 +1,25 @@
+{
+  "item": "sofe:amulet_of_the_dawn",
+  "item_level": 23,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 21,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 6
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 12
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:regeneration",
+      "when": "day"
+    }
+  ]
+}

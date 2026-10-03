@@ -1,0 +1,15 @@
+{
+  "item": "sofe:sorc_ember_charm",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 15,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "fire_damage",
+      "value": 2
+    }
+  ],
+  "effects": []
+}

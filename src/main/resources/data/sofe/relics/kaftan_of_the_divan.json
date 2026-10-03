@@ -1,0 +1,27 @@
+{
+  "item": "sofe:kaftan_of_the_divan",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 35,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "royal_treasury"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 1,
+      "chance": 0.3
+    }
+  ]
+}

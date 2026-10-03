@@ -4,9 +4,9 @@
   "classes": [
     "king"
   ],
-  "min_item_level": 11,
+  "min_item_level": 74,
   "requires": {
     "attribute": "strength",
-    "value": 19
+    "value": 66
   }
 }

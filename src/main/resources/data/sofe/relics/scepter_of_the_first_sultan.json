@@ -1,0 +1,20 @@
+{
+  "item": "sofe:scepter_of_the_first_sultan",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 18,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "decree_of_steadfastness"
+    }
+  ],
+  "effects": []
+}

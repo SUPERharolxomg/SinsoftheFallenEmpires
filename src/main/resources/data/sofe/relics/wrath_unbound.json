@@ -1,0 +1,35 @@
+{
+  "item": "sofe:wrath_unbound",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 98,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 21
+    },
+    {
+      "stat": "fire_damage",
+      "value": 10
+    },
+    {
+      "stat": "crit_damage",
+      "value": 32
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "ignite",
+      "s": 4
+    },
+    {
+      "on": "kill",
+      "do": "explode",
+      "damage": 8,
+      "radius": 3
+    }
+  ]
+}

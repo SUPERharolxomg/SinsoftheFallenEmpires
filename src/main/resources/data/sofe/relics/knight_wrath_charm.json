@@ -1,0 +1,23 @@
+{
+  "item": "sofe:knight_wrath_charm",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 58,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "contained_wrath"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "effect",
+      "effect": "minecraft:strength",
+      "s": 4
+    }
+  ]
+}

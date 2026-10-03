@@ -1,0 +1,31 @@
+{
+  "item": "sofe:verdict_of_cassian",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 38,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 9
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "verdict"
+    },
+    {
+      "stat": "crit_chance",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "stun",
+      "chance": 0.15,
+      "s": 1.0
+    }
+  ]
+}

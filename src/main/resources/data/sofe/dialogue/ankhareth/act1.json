@@ -1,0 +1,35 @@
+{
+  "style": "sulthari",
+  "npc": "ankhareth",
+  "priority": 1,
+  "requires": {
+    "type": "act_reached",
+    "act": 1
+  },
+  "lines": [
+    {
+      "speaker": "ankhareth",
+      "text": "dialogue.sofe.ankhareth.act1"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.ankhareth.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "necromancer"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}
