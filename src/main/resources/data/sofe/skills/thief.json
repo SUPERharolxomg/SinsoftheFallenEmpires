@@ -8,11 +8,14 @@
     "double_edge": {
       "cost": 10,
       "cooldown_s": 1,
-      "marks": 2
+      "damage": 3,
+      "marks": 2,
+      "range": 3.5
     },
     "light_fingers": {
       "cost": 15,
-      "cooldown_s": 8
+      "cooldown_s": 8,
+      "range": 4
     },
     "smoke_step": {
       "cost": 20,
@@ -22,30 +25,110 @@
     "cutthroat": {
       "cost": 25,
       "cooldown_s": 6,
-      "bonus_per_mark": 0.2
+      "damage": 6,
+      "per_mark": 0.2,
+      "range": 3.5
     },
     "fjord_snare": {
       "cost": 20,
-      "cooldown_s": 10
+      "cooldown_s": 10,
+      "damage": 4,
+      "root_s": 3,
+      "bleed_s": 4,
+      "duration_s": 30,
+      "range": 10
     },
     "throwing_axe": {
       "cost": 15,
-      "cooldown_s": 5
+      "cooldown_s": 5,
+      "damage": 5,
+      "range": 14
     },
     "deep_pockets": {
       "gold_bonus": 0.25,
-      "double_loot_chance": 0.1
+      "double_chance": 0.1
     },
     "thousand_cuts": {
       "cost": 40,
       "cooldown_s": 20,
-      "targets": 6
+      "damage": 7,
+      "targets": 6,
+      "radius": 8
     },
-    "scavengers_instinct": {},
+    "scavengers_instinct": {
+      "backstab": 1.5
+    },
     "the_great_heist": {
       "cost": 100,
       "cooldown_s": 120,
       "duration_s": 8
+    },
+    "quick_hands": {
+      "damage_bonus": 0.12
+    },
+    "third_edge": {
+      "third": 1
+    },
+    "butchers_arithmetic": {
+      "per_mark_add": 0.05
+    },
+    "open_artery": {
+      "bleed_s": 1.5
+    },
+    "whirling_steel": {
+      "targets_add": 0.4,
+      "damage_bonus": 0.1
+    },
+    "master_thief": {
+      "duration_s_add": 1
+    },
+    "pickpocket": {
+      "cooldown_cut": 0.1,
+      "range_add": 1
+    },
+    "sleight_of_hand": {
+      "marks": 1
+    },
+    "twin_axes": {
+      "twin": 1
+    },
+    "keen_axe": {
+      "damage_bonus": 0.12,
+      "range_add": 1
+    },
+    "the_fences_cut": {
+      "gold_bonus_add": 0.1,
+      "double_chance_add": 0.02
+    },
+    "ambusher": {
+      "backstab_add": 0.1
+    },
+    "thick_smoke": {
+      "duration_s_add": 0.5
+    },
+    "choking_smoke": {
+      "blind_s": 1
+    },
+    "line_of_snares": {
+      "extra_snares": 1
+    },
+    "barbed_rope": {
+      "damage_bonus": 0.2,
+      "bleed_s_add": 1
+    },
+    "ash_cloak": {
+      "strength": 1
+    },
+    "shadow_walker": {
+      "cooldown_cut": 0.08
+    },
+    "hunters_patience": {
+      "root_s_add": 0.5,
+      "duration_s_add": 10
+    },
+    "master_of_the_fjords": {
+      "cooldown_cut": 0.08,
+      "cost_cut": 0.06
     }
   }
 }

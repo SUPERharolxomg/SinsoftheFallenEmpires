@@ -7,7 +7,10 @@
   "skills": {
     "scale_strike": {
       "cost": 10,
-      "cooldown_s": 3
+      "cooldown_s": 3,
+      "damage": 6,
+      "range": 4,
+      "max_bonus": 1.5
     },
     "shield_wall": {
       "cost": 15,
@@ -16,15 +19,24 @@
     },
     "banner_cry": {
       "cost": 10,
-      "cooldown_s": 10
+      "cooldown_s": 10,
+      "radius": 8,
+      "mark_s": 8
     },
     "legionary_charge": {
       "cost": 20,
-      "cooldown_s": 8
+      "cooldown_s": 8,
+      "damage": 6,
+      "distance": 8,
+      "duration_s": 0.5,
+      "knockdown_s": 1.5
     },
     "verdict": {
       "cost": 25,
-      "cooldown_s": 12
+      "cooldown_s": 12,
+      "damage": 9,
+      "radius": 4,
+      "stun_s": 2
     },
     "protectors_oath": {
       "cost": 20,
@@ -38,13 +50,82 @@
     "living_rampart": {
       "cost": 35,
       "cooldown_s": 25,
-      "width": 5
+      "width": 5,
+      "duration_s": 8
     },
-    "contained_wrath": {},
+    "contained_wrath": {
+      "fraction": 0.5,
+      "max": 20
+    },
     "last_one_standing": {
       "cost": 100,
       "cooldown_s": 120,
       "duration_s": 10
+    },
+    "weighted_blade": {
+      "damage_bonus": 0.12
+    },
+    "rending_strike": {
+      "bleed_s_add": 1
+    },
+    "cavalry_drill": {
+      "distance_add": 1,
+      "damage_bonus": 0.1
+    },
+    "trampling_charge": {
+      "damage": 4
+    },
+    "relentless_advance": {
+      "cooldown_cut": 0.08,
+      "cost_cut": 0.05
+    },
+    "executioners_edge": {
+      "execute_bonus": 0.15
+    },
+    "charge_mastery": {
+      "damage_bonus": 0.04
+    },
+    "wrath_of_the_scale": {
+      "max_bonus_add": 0.2
+    },
+    "tower_shield": {
+      "duration_s_add": 0.5
+    },
+    "shield_bash": {
+      "damage": 3
+    },
+    "sworn_guardian": {
+      "duration_s_add": 1,
+      "absorb_add": 0.03
+    },
+    "bulwark_of_aureum": {
+      "width_add": 1,
+      "duration_s_add": 1
+    },
+    "rallying_call": {
+      "strength_s": 2
+    },
+    "banner_of_the_order": {
+      "radius_add": 1.5
+    },
+    "wide_judgment": {
+      "radius_add": 0.6
+    },
+    "heavy_verdict": {
+      "damage_bonus": 0.12
+    },
+    "martyrs_resolve": {
+      "resolve_per_enemy": 2
+    },
+    "sentence_of_the_scale": {
+      "stun_s_add": 0.3
+    },
+    "oathbound_voice": {
+      "cooldown_cut": 0.06,
+      "cost_cut": 0.06
+    },
+    "war_banner": {
+      "banner_s": 2
     }
   }
 }

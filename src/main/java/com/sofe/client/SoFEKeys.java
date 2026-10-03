@@ -29,6 +29,9 @@ public final class SoFEKeys {
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, CATEGORY);
     public static final KeyMapping JOURNAL = new KeyMapping("key.sofe.journal", KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, CATEGORY);
+    /** The Knight's stance: Shield or Charge (docs/Clases.md). */
+    public static final KeyMapping STANCE = new KeyMapping("key.sofe.stance", KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
 
     static {
         for (int i = 0; i < 5; i++) {
@@ -55,6 +58,7 @@ public final class SoFEKeys {
         event.register(SKILL_TREE);
         event.register(CHARACTER);
         event.register(JOURNAL);
+        event.register(STANCE);
     }
 
     /**
@@ -84,6 +88,9 @@ public final class SoFEKeys {
         }
         for (int slot = 0; slot < BELT.length; slot++) {
             if (pressed(BELT[slot], minecraft)) SoFENetwork.sendToServer(new com.sofe.network.StationPackets.Drink(slot));
+        }
+        while (STANCE.consumeClick()) {
+            SoFENetwork.sendToServer(new com.sofe.network.StancePacket());
         }
         while (FLASK.consumeClick()) {
             SoFENetwork.sendToServer(new com.sofe.network.StationPackets.Drink(com.sofe.network.StationPackets.Drink.FLASK));
