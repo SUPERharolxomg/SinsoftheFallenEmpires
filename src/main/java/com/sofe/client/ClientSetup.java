@@ -38,10 +38,13 @@ public final class ClientSetup {
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::registerRenderers);
         modBus.addListener(com.sofe.client.render.SoFEEntityRenderers::addLayers);
         MinecraftForge.EVENT_BUS.addListener(CombatHudOverlay::onRenderOverlay);
+        MinecraftForge.EVENT_BUS.addListener(CastPoses::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
+        if (ArmorShots.enabled() || SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ShotsWorld::onClientTick);
         if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
+        if (SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(SkillShots::onClientTick);
         modBus.addListener(SoFEKeys::register);
         modBus.addListener(ClientSetup::registerItemProperties);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
@@ -81,6 +84,14 @@ public final class ClientSetup {
                 net.minecraft.client.renderer.item.ItemProperties.register(shield.get(), net.minecraft.resources.ResourceLocation.withDefaultNamespace("blocking"),
                         (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1f : 0f)));
         event.enqueueWork(ClientSetup::rangedProperties);
+        event.enqueueWork(ClientSetup::curioRenderers);
+    }
+
+    /** Every ring, necklace and charm is seen on the Bearer who wears it (Curios). */
+    private static void curioRenderers() {
+        net.minecraftforge.registries.ForgeRegistries.ITEMS.getValues().stream()
+                .filter(item -> item instanceof com.sofe.gear.GearItems.Trinket)
+                .forEach(item -> top.theillusivec4.curios.api.client.CuriosRendererRegistry.register(item, () -> com.sofe.client.render.JewelryRenderer.INSTANCE));
     }
 
     /** The bows and crossbows of batch 3 pull back as the vanilla ones do; each bow by its own draw time. */

@@ -124,6 +124,21 @@ public final class SoFENetwork {
                 .decoder(SpendAttributePacket::decode)
                 .consumerMainThread(SpendAttributePacket::handle)
                 .add();
+        CHANNEL.messageBuilder(CastPosePacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CastPosePacket::encode)
+                .decoder(CastPosePacket::decode)
+                .consumerMainThread(CastPosePacket::handle)
+                .add();
+        CHANNEL.messageBuilder(AssignSlotPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(AssignSlotPacket::encode)
+                .decoder(AssignSlotPacket::decode)
+                .consumerMainThread(AssignSlotPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(StancePacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(StancePacket::encode)
+                .decoder(StancePacket::decode)
+                .consumerMainThread(StancePacket::handle)
+                .add();
         CHANNEL.messageBuilder(CastSkillPacket.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(CastSkillPacket::encode)
                 .decoder(CastSkillPacket::decode)

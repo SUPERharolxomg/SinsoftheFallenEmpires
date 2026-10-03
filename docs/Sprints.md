@@ -305,17 +305,27 @@ Design: [Pociones.md](Pociones.md).
 
 ## Sprint 6 — Remaining Classes (Weeks 13-14)
 Skill tables in [Clases.md](Clases.md).
-- [ ] Knight: Shield and Charge stances + 10 skills
-- [ ] Necromancer: soul binding, Clay Wardens + 10 skills
-- [ ] Thief: Marks and stealing + 10 skills
-- [ ] King: Decrees, Authority, Janissary Guard, Bronze Cannon + 10 skills
-- [ ] Remaining Sorceress skills (levels 11-30)
-- [ ] Balance damage/cooldown values in `data/sofe/skills/`
-- [ ] Companion system: hire one of the other four Bearers (UC-22)
-- [ ] *(Rules)* Bearer quests for Acts I–II
-- [ ] *(Rules)* Nordrath fate side quests
-- [ ] Write and translate (en/es) the Act I–II dialogue; placeholder portraits for every speaker
-- [ ] *(Annex)* Class Concord passives (one per class) ready for Sprint 7.5
+- [x] Knight: Shield and Charge stances (key G) + 10 skills. Shield Stance takes less and gains Resolve from blocks and blows; Charge Stance hits harder and runs, burning Resolve. Banner marks for the Verdict, Shield Wall, the Oath, the Rampart that stops projectiles, Contained Wrath, Last One Standing (`KnightSkills`, `ClassMechanics`)
+- [x] Necromancer: soul binding (enemies dying near him or marked by Threshold Touch give a soul, up to 10), Clay Wardens (`SummonedAlly`) + 10 skills, with soul costs, Rite of Passage stacks, Heavy Heart bursts and the Great Judgment raising the fallen (`NecromancerSkills`)
+- [x] Thief: Marks (basic blows and skills, up to 5, spent by Cutthroat) and stealing (blessings, potions, Dinars, now and then gear) + 10 skills, with backstab criticals, Deep Pockets and the Great Heist (`ThiefSkills`)
+- [x] King: Decrees (one zone at a time; Voice of the Throne makes them longer and wider), Authority from his scepter, kills and healing, the Janissary Guard, the Bronze Cannon (`BronzeCannon`), Command, the Royal Treasury coins + 10 skills (`KingSkills`)
+- [x] Remaining Sorceress skills (levels 11-30): Burning Calligraphy, Water Mirror (with an ice clone), Petal Tempest, Starfall, Written Eclipse (free spells, two runes each); Sky Map and Arcane Poetry on the constellations
+- [x] Balance damage/cooldown values in `data/sofe/skills/` (first pass: every skill has its numbers; tuning after playtests)
+- [x] *(Extra)* Every learned active skill can be placed in any Combat Bar slot: hover it in the skill tree and press 1-5
+- [x] *(Extra)* English and Spanish descriptions for all 50 skills in the skill tree
+- [x] *(Extra)* Skill trees of 30 per class, Diablo II style: three branch tabs of 10, the 10 base skills plus 20 upgrades per class (synergies that raise a skill's numbers and changes to how it works), written by `scripts/make_skill_tree.py` from `scripts/skill_tree_catalog.py` and applied by `Upgrades`
+- [x] *(Extra)* The Necromancer raises the Embalmed Dead (linen-wrapped husks of Khemet) with upgrades for their time, health, damage and number; the Clay Warden is drawn on the vanilla iron golem; the King's Janissaries wear their own skin; the Sorceress's ice clone wears its caster's skin
+- [x] *(Extra)* Casting poses (arms thrown forward or raised overhead), a glow in the hand and bolts that fly from the hand (`SkillFx`, `CastPoses`)
+- [x] *(Extra)* Dev tool: `./gradlew runClient -PskillShots=all` casts each skill on husks, screenshots it and logs the result (`SkillShots`)
+- [x] *(Extra)* Batch 4 of uniques (`scripts/uniques_catalog.py`, `scripts/make_uniques.py`): 110 class uniques, 22 per Bearer (6 weapons, 8 armor pieces as 3D models, 2 rings, 2 amulets, 4 charms) that only their class can use, many giving ranks to their skills; 39 uniques for anyone (20 charms, 8 jewels, 7 weapons, 4 armor pieces); and the Grand Talisman, a third size of random charm. Their effects are data (`UniqueEffects`: on hit, on kill, when hurt, while worn) and their tooltips are written from them in English and Spanish. Drops and the gamblers only offer uniques the Bearer can use
+- [x] *(Extra)* Level cap 100, twenty levels per act (`act_caps` in `leveling.json`); mobs and bosses follow the Bearer's level (a boss one above the strongest near); every item level spread over 1-100 by empire, uniques ask their full level, and the strongest four uniques of each class (and four for anyone) are level 100
+- [x] Companion system (UC-22): talk to another Bearer in Sulthari and choose "Travel with me". The companion follows at the player's level, fights with its class skills (the Knight's Verdict and Shield Wall, the Necromancer's drain, wraps and Embalmed, the Sorceress's fire, frost, sparks and stars, the Thief's strikes from behind and smoke, the King's decree and Janissaries), waits or follows on command, speaks when entering each region and when a boss falls, and goes back to Sulthari when dismissed or beaten (`CompanionEntity`, `Companions`)
+- [x] *(Rules)* Bearer quests for Acts I–II: one per hero and act (10), only for the player's own hero, each with its giver, its fight and a class unique as reward (`data/sofe/quests/bearer`, written by `scripts/make_story.py` from `scripts/story_catalog.py`)
+- [x] *(Rules)* Nordrath fate side quests: The Endless War (free the warriors or let them fight: the clans at peace or still at war, which Hrolf the skald remembers) and The Cold Forge
+- [x] Write and translate (en/es) the Act I–II dialogue; placeholder portraits for every speaker (`scripts/make_placeholder_portraits.py`; the box uses a painted portrait, then the live NPC, then the placeholder). `DialogueCoverageTest` checks every line in both languages and a face for every speaker
+- [x] *(Annex)* Class Concord passives (one per class) ready for Sprint 7.5 (`ClassConcord`): for now the group is the Bearer, their companion and the Bearers within 32 blocks; Knight +5% armor, Necromancer +3% life steal, Sorceress +5% regeneration, Thief +3% critical chance, King +5% healing, all five +10% damage
+- [x] *(Extra)* Multiplayer with repeated classes: each Thief keeps their own Marks and can rob an enemy once, several Necromancers can mark one enemy with Threshold Touch, a companion is refused only when a Bearer of that class is in the player's group (not anywhere on the server), mobs follow the average level of the group near them, and the Concord forgets players who log out
+- [x] *(Extra)* Jewelry seen on the Bearer (`JewelryRenderer`, Curios): a 3D chain round the neck with the pendant cut from the icon, a band with its stone on each hand for the rings, and the charms hanging from cords on the belt (two in front, two on the hips, two behind); colors read from each icon. Relic and Legacy jewelry shimmers, and anything above Common gives off sparks of its rarity's color. The 89 jewelry and charm icons are redrawn at 32×32 with recut gems and a glint (`scripts/upscale_jewelry.py`). `-PshotSets=jewelry` screenshots them, and the screenshot tools create `run/saves/shots` when it is missing (`ShotsWorld`)
 
 ## Sprint 7 — Empires & Bosses (Weeks 15-18)
 - [ ] Parsivan, Khemet and Aureum regions: biomes, fixed structures, Veil unlocks per act, Star Lapis / Solar Gold / Orichalcum / Void Rifts worldgen and tiers
