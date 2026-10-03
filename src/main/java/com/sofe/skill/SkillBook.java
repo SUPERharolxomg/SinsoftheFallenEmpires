@@ -74,6 +74,22 @@ public final class SkillBook {
         }
     }
 
+    /**
+     * Puts a learned active skill in one of the five Combat Bar slots (the ultimate keeps its own). A skill
+     * already in that slot moves to the one the new skill leaves, so nothing learned is lost.
+     */
+    public boolean assign(SkillInfo skill, int slot) {
+        if (skill.type() != SkillType.ACTIVE || rank(skill.id()) < 1 || slot < 0 || slot >= ULTIMATE_SLOT) return false;
+        int from = -1;
+        for (int i = 0; i < ULTIMATE_SLOT; i++) {
+            if (skill.id().equals(slots[i])) from = i;
+        }
+        String displaced = slots[slot];
+        slots[slot] = skill.id();
+        if (from >= 0 && from != slot) slots[from] = displaced;
+        return true;
+    }
+
     public Optional<String> slot(int index) {
         return index >= 0 && index < SLOTS ? Optional.ofNullable(slots[index]) : Optional.empty();
     }

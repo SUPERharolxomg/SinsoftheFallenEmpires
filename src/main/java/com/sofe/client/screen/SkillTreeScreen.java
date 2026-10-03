@@ -25,16 +25,19 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Diablo II style skill tree (docs/Clases.md): one row per unlock level, arrows from each skill
- * to the ones it opens, the rank on every skill, the points left, and Active / Passive tabs.
+ * Diablo II style skill tree (docs/Clases.md): 30 skills in three branch tabs of 10, one row per unlock
+ * level, arrows from each skill to the ones it opens, the rank on every skill and the points left.
  * Clicking a skill asks the server to put a point in it; the server applies the rules.
  */
 public class SkillTreeScreen extends Screen {
-    private static final int PANEL_W = 250, PANEL_H = 228;
-    private static final int CELL = 26, COLUMN_GAP = 62, ROW_GAP = 46;
+    /** The skill under the mouse, for placing it on the Combat Bar with 1-5. */
+    private SkillInfo hoveredSkill;
+    private static final int PANEL_W = 290, PANEL_H = 214;
+    private static final int CELL = 20, COLUMN_GAP = 54, ROW_GAP = 27;
     private static final int GOLD = 0xFFE8B64A, PARCHMENT = 0xE6DCC8, MUTED = 0xA89F8E;
 
-    private boolean passiveTab;
+    /** The branch shown: 0, 1 or 2. */
+    private int tab;
 
     public SkillTreeScreen() {
         super(Component.translatable("key.sofe.skill_tree"));
@@ -50,11 +53,13 @@ public class SkillTreeScreen extends Screen {
 
     @Override
     protected void init() {
-        int x = left() + PANEL_W - 70;
-        addRenderableWidget(Button.builder(Component.translatable("gui.sofe.skill_tree.tab.active"), b -> passiveTab = false)
-                .bounds(x, top() + 24, 64, 18).build());
-        addRenderableWidget(Button.builder(Component.translatable("gui.sofe.skill_tree.tab.passive"), b -> passiveTab = true)
-                .bounds(x, top() + 46, 64, 18).build());
+        int x = left() + PANEL_W - 104;
+        String cls = playerClass().map(PlayerClass::id).orElse("knight");
+        for (int i = 0; i < 3; i++) {
+            int branch = i;
+            addRenderableWidget(Button.builder(Component.translatable("gui.sofe.skill_tree.branch." + cls + "." + i), b -> tab = branch)
+                    .bounds(x, top() + 22 + i * 22, 100, 18).build());
+        }
     }
 
     private Optional<PlayerClass> playerClass() {
@@ -63,18 +68,17 @@ public class SkillTreeScreen extends Screen {
 
     private List<SkillInfo> visibleSkills() {
         return playerClass().map(SkillCatalog::forClass).orElse(List.of()).stream()
-                .filter(s -> passiveTab == (s.type() == SkillType.PASSIVE))
+                .filter(s -> s.tab() == tab)
                 .toList();
     }
 
-    /** Where a skill sits: actives by their column, passives stacked in the middle of their own tab. */
+    /** Where a skill sits in its branch: by its column and the row of its level. */
     private int cellX(SkillInfo s) {
-        int column = s.type() == SkillType.PASSIVE ? 1 : s.column();
-        return left() + 18 + column * COLUMN_GAP;
+        return left() + 16 + s.column() * COLUMN_GAP;
     }
 
     private int cellY(SkillInfo s) {
-        return top() + 26 + s.row() * ROW_GAP;
+        return top() + 22 + s.row() * ROW_GAP;
     }
 
     private SkillBook book(SyncProgressPacket progress) {
@@ -102,8 +106,8 @@ public class SkillTreeScreen extends Screen {
         graphics.drawString(this.font, Component.translatable("gui.sofe.skill_tree.title",
                 Component.translatable(playerClass.get().translationKey())), l + 8, t + 8, GOLD, false);
         graphics.drawString(this.font, Component.translatable("gui.sofe.skill_tree.points", p.skillPoints()),
-                l + PANEL_W - 70, t + 70, p.skillPoints() > 0 ? GOLD : PARCHMENT, false);
-        graphics.drawString(this.font, Component.translatable("gui.sofe.skill_tree.level", p.level()), l + PANEL_W - 70, t + 82, MUTED, false);
+                l + PANEL_W - 104, t + 96, p.skillPoints() > 0 ? GOLD : PARCHMENT, false);
+        graphics.drawString(this.font, Component.translatable("gui.sofe.skill_tree.level", p.level()), l + PANEL_W - 104, t + 108, MUTED, false);
 
         List<SkillInfo> skills = visibleSkills();
         // Arrows first, so the skills are drawn over them
@@ -113,6 +117,7 @@ public class SkillTreeScreen extends Screen {
         }
 
         SkillInfo hovered = null;
+        this.hoveredSkill = null;
         for (SkillInfo s : skills) {
             int x = cellX(s), y = cellY(s);
             int rank = book.rank(s.id());
@@ -128,6 +133,7 @@ public class SkillTreeScreen extends Screen {
             graphics.drawString(this.font, rankText, x + CELL - this.font.width(rankText), y + CELL - 6, rank > 0 ? 0xFFFFFF : MUTED, true);
             if (mouseX >= x && mouseX < x + CELL && mouseY >= y && mouseY < y + CELL) {
                 hovered = s;
+                this.hoveredSkill = s;
             }
         }
 
@@ -142,7 +148,7 @@ public class SkillTreeScreen extends Screen {
         int color = open ? GOLD : 0xFF4A4034;
         int x1 = cellX(from) + CELL / 2, y1 = cellY(from) + CELL;
         int x2 = cellX(to) + CELL / 2, y2 = cellY(to);
-        int mid = y2 - 8;
+        int mid = y2 - 4;
         graphics.fill(x1, y1, x1 + 2, mid, color);
         graphics.fill(Math.min(x1, x2), mid, Math.max(x1, x2) + 2, mid + 2, color);
         graphics.fill(x2, mid, x2 + 2, y2, color);
@@ -155,6 +161,14 @@ public class SkillTreeScreen extends Screen {
         lines.add(Component.translatable("gui.sofe.skill_tree.type." + s.type().name().toLowerCase(Locale.ROOT))
                 .append(" · ").append(Component.translatable("gui.sofe.skill_tree.level", s.level())).withStyle(ChatFormatting.GRAY));
         lines.add(Component.translatable("gui.sofe.skill_tree.rank", book.rank(s.id()), s.maxRank()));
+        if (s.isUpgrade()) {
+            Component improved = Component.empty();
+            for (int i = 0; i < s.upgrades().size(); i++) {
+                if (i > 0) improved = improved.copy().append(", ");
+                improved = improved.copy().append(Component.translatable("skill.sofe." + s.upgrades().get(i)));
+            }
+            lines.add(Component.translatable("gui.sofe.skill_tree.improves", improved).withStyle(ChatFormatting.AQUA));
+        }
         if (Language.getInstance().has(s.descriptionKey())) {
             lines.add(Component.translatable(s.descriptionKey()).withStyle(ChatFormatting.ITALIC));
         }
@@ -164,9 +178,22 @@ public class SkillTreeScreen extends Screen {
                 : Component.translatable("message.sofe.learn." + check.name().toLowerCase(Locale.ROOT),
                 Component.translatable(s.translationKey()), book.levelForNextRank(s)).withStyle(ChatFormatting.RED);
         lines.add(status);
+        if (s.type() == com.sofe.skill.SkillType.ACTIVE && book.rank(s.id()) > 0) {
+            lines.add(Component.translatable("gui.sofe.skill_tree.assign").withStyle(ChatFormatting.AQUA));
+        }
         List<FormattedCharSequence> out = new ArrayList<>();
         lines.forEach(c -> out.addAll(this.font.split(c, 200)));
         return out;
+    }
+
+    /** Over a learned active skill, 1 to 5 put it in that Combat Bar slot. */
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (hoveredSkill != null && keyCode >= org.lwjgl.glfw.GLFW.GLFW_KEY_1 && keyCode <= org.lwjgl.glfw.GLFW.GLFW_KEY_5) {
+            SoFENetwork.sendToServer(new com.sofe.network.AssignSlotPacket(hoveredSkill.id(), keyCode - org.lwjgl.glfw.GLFW.GLFW_KEY_1));
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override

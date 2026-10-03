@@ -7,31 +7,46 @@
   "skills": {
     "threshold_touch": {
       "cost": 8,
-      "cooldown_s": 1
+      "cooldown_s": 1,
+      "damage": 4,
+      "range": 8,
+      "drain": 0.4
     },
     "clay_warden": {
       "cooldown_s": 4,
       "souls": 1,
       "duration_s": 30,
-      "max_wardens": 3
+      "max_wardens": 3,
+      "health": 40,
+      "golem_damage": 7,
+      "armor": 2
     },
     "burial_wraps": {
       "cost": 15,
       "cooldown_s": 10,
-      "duration_s": 3
+      "root_s": 3,
+      "range": 14
     },
     "scales_of_anubet": {
       "cost": 30,
       "cooldown_s": 20,
-      "execute_below": 0.25
+      "threshold": 0.25,
+      "damage": 8,
+      "range": 16
     },
     "scarab_plague": {
       "cost": 20,
-      "cooldown_s": 8
+      "cooldown_s": 8,
+      "damage": 3,
+      "duration_s": 6,
+      "jumps": 3,
+      "jump_range": 6,
+      "range": 16
     },
     "canopic_jars": {
       "cooldown_s": 15,
-      "souls": 3
+      "souls": 3,
+      "heal": 8
     },
     "rite_of_passage": {
       "damage_bonus": 0.05,
@@ -40,13 +55,99 @@
     },
     "boat_of_the_dead": {
       "cost": 50,
-      "cooldown_s": 30
+      "cooldown_s": 30,
+      "damage": 12,
+      "distance": 16,
+      "width": 3,
+      "duration_s": 3
     },
-    "heavy_heart": {},
+    "heavy_heart": {
+      "damage": 6,
+      "radius": 3
+    },
     "the_great_judgment": {
       "cost": 100,
       "cooldown_s": 150,
-      "duration_s": 12
+      "duration_s": 12,
+      "radius": 6,
+      "rise_s": 20,
+      "range": 20
+    },
+    "soul_siphon": {
+      "drain_add": 0.1,
+      "damage_bonus": 0.1
+    },
+    "lingering_mark": {
+      "slow_s": 1
+    },
+    "final_rites": {
+      "souls_add": 1
+    },
+    "weighed_heart": {
+      "threshold_add": 0.03
+    },
+    "devouring_beam": {
+      "chain": 1
+    },
+    "judges_gaze": {
+      "range_add": 1.5,
+      "cost_cut": 0.06
+    },
+    "soul_harvest": {
+      "max_souls_add": 1
+    },
+    "verdict_of_anubet": {
+      "damage_bonus": 0.15,
+      "cooldown_cut": 0.06
+    },
+    "baked_clay": {
+      "health_add": 6,
+      "golem_damage_add": 1.5
+    },
+    "legion_of_clay": {
+      "max_wardens_add": 0.4
+    },
+    "tight_wraps": {
+      "root_s_add": 0.5
+    },
+    "mummify": {
+      "damage": 1.5
+    },
+    "swarm_queen": {
+      "jumps_add": 1,
+      "damage_bonus": 0.1
+    },
+    "locust_cloud": {
+      "slow_level": 1
+    },
+    "the_ferrymans_toll": {
+      "damage_bonus": 0.15,
+      "width_add": 0.5
+    },
+    "tide_of_the_underworld": {
+      "duration_s_add": 1,
+      "radius_add": 0.5
+    },
+    "raise_the_embalmed": {
+      "cost": 20,
+      "cooldown_s": 6,
+      "count": 2,
+      "max_dead": 6,
+      "duration_s": 20,
+      "health": 16,
+      "dead_damage": 4
+    },
+    "embalming_salts": {
+      "health_add": 6,
+      "count_add": 0.25
+    },
+    "linen_of_eternity": {
+      "duration_s_add": 4,
+      "max_dead_add": 0.4
+    },
+    "jackal_fury": {
+      "dead_damage_add": 1.5,
+      "cooldown_cut": 0.05
     }
   }
 }
