@@ -47,6 +47,7 @@ public final class MobLevels {
     public static void onJoin(EntityJoinLevelEvent event) {
         if (event.loadedFromDisk() || !(event.getLevel() instanceof ServerLevel level)) return;
         if (!(event.getEntity() instanceof Mob mob) || !(mob instanceof Enemy) || levelOf(mob).isPresent()) return;
+        if (mob instanceof com.sofe.entity.summon.Ally) return; // a Bearer's summon is not a monster of the region
         // the Burning Deep uses the region above it at 1:8, two levels higher (docs/Mundo.md, W1); the End comes later
         if (level.dimension() != Level.OVERWORLD && level.dimension() != Level.NETHER) return;
         boolean deep = level.dimension() == Level.NETHER;
@@ -61,9 +62,29 @@ public final class MobLevels {
         Region region = map.get().regionAt(mob.getBlockX() * scale, mob.getBlockZ() * scale);
         Player nearest = level.getNearestPlayer(mob, NEAREST_PLAYER_RANGE);
         int act = nearest != null ? StoryAct.of(nearest) : 0;
-        int mobLevel = rules.levelFor(region, act, new java.util.Random(level.getRandom().nextLong()));
-        if (deep) mobLevel = Math.min(30, mobLevel + DEEP_BONUS);
+        boolean boss = mob instanceof com.sofe.entity.boss.SoFEBossEntity;
+        int bearer = boss ? strongestNear(level, mob) : groupLevel(level, mob, nearest);
+        int mobLevel = rules.levelFor(region, act, bearer, boss, new java.util.Random(level.getRandom().nextLong()));
+        if (deep) mobLevel = Math.min(rules.maxLevel(), mobLevel + DEEP_BONUS);
         apply(mob, mobLevel, rules);
+    }
+
+    /**
+     * The level a mob follows: the average of the Bearers within 32 blocks of the nearest one (its group), so a group
+     * of mixed levels meets enemies fit for all of it; a lone Bearer, their own level.
+     */
+    private static int groupLevel(ServerLevel level, Mob mob, Player nearest) {
+        if (nearest == null) return 0;
+        var group = level.getEntitiesOfClass(Player.class, nearest.getBoundingBox().inflate(32));
+        if (group.isEmpty()) return com.sofe.gear.PlayerGear.level(nearest);
+        return (int) Math.round(group.stream().mapToInt(com.sofe.gear.PlayerGear::level).average().orElse(1));
+    }
+
+    /** The level of the strongest Bearer near a boss (its whole party fights it). */
+    private static int strongestNear(ServerLevel level, Mob mob) {
+        int best = 0;
+        for (Player p : level.getEntitiesOfClass(Player.class, mob.getBoundingBox().inflate(48))) best = Math.max(best, com.sofe.gear.PlayerGear.level(p));
+        return best;
     }
 
     /** Stores the level and adds the scaling modifiers; also used by tests and future admin tools. */

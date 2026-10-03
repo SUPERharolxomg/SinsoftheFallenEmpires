@@ -64,17 +64,23 @@ public final class ProgressionData {
      * @return how many levels were gained
      */
     public int addXp(long amount, LevelingRules rules) {
-        if (amount <= 0 || level >= rules.maxLevel()) return 0;
+        return addXp(amount, rules, rules.maxLevel());
+    }
+
+    /** As {@link #addXp(long, LevelingRules)}, stopping at this level (the cap of the player's act). */
+    public int addXp(long amount, LevelingRules rules, int cap) {
+        int top = Math.min(cap, rules.maxLevel());
+        if (amount <= 0 || level >= top) return 0;
         xp += amount;
         int gained = 0;
-        while (level < rules.maxLevel() && xp >= rules.xpToNext(level)) {
+        while (level < top && xp >= rules.xpToNext(level)) {
             xp -= rules.xpToNext(level);
             level++;
             gained++;
             skillPoints += rules.skillPointsPerLevel();
             attributePoints += rules.attributePointsPerLevel();
         }
-        if (level >= rules.maxLevel()) {
+        if (level >= top) {
             xp = 0;
         }
         return gained;
