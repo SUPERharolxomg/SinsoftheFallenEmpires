@@ -1,0 +1,27 @@
+{
+  "item": "sofe:knot_of_the_grimsson_clan",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 58,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "thief"
+    },
+    {
+      "stat": "crit_chance",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "marks",
+      "n": 1,
+      "chance": 0.2
+    }
+  ]
+}

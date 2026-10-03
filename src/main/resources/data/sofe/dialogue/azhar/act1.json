@@ -1,0 +1,35 @@
+{
+  "style": "sulthari",
+  "npc": "azhar",
+  "priority": 1,
+  "requires": {
+    "type": "act_reached",
+    "act": 1
+  },
+  "lines": [
+    {
+      "speaker": "azhar",
+      "text": "dialogue.sofe.azhar.act1"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.azhar.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "king"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -50,7 +50,16 @@ public final class ProgressionHandler {
 
     public static void addXp(ServerPlayer player, long amount) {
         ProgressionCapability.get(player).ifPresent(progress -> {
-            int gained = progress.addXp(amount, ProgressionRulesManager.leveling());
+            LevelingRules leveling = ProgressionRulesManager.leveling();
+            int cap = leveling.capFor(com.sofe.story.StoryAct.of(player));
+            if (progress.level() >= cap && progress.level() < leveling.maxLevel()) { // the act holds the Bearer back
+                if (player.tickCount - player.getPersistentData().getInt("sofe_cap_told") > 20 * 60) {
+                    player.getPersistentData().putInt("sofe_cap_told", player.tickCount);
+                    player.displayClientMessage(Component.translatable("message.sofe.level_cap", cap).withStyle(ChatFormatting.GRAY), false);
+                }
+                return;
+            }
+            int gained = progress.addXp(amount, leveling, cap);
             if (gained > 0) {
                 LevelingRules rules = ProgressionRulesManager.leveling();
                 player.sendSystemMessage(Component.translatable("message.sofe.level_up", progress.level(),
@@ -81,6 +90,18 @@ public final class ProgressionHandler {
                     Component.translatable(skill.get().translationKey()), p.skills().levelForNextRank(skill.get())), true);
         }
         sync(player);
+    }
+
+    /** Moves a learned active skill to a Combat Bar slot (Left Alt + 1-5). */
+    public static void assignSlot(ServerPlayer player, String skillId, int slot) {
+        Optional<ProgressionData> progress = ProgressionCapability.get(player);
+        Optional<SkillInfo> skill = SkillCatalog.byId(skillId);
+        if (progress.isEmpty() || skill.isEmpty()) return;
+        if (progress.get().skills().assign(skill.get(), slot)) {
+            player.level().playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.4f, 1.4f);
+            CombatHandler.sync(player);
+            sync(player);
+        }
     }
 
     public static void spendAttribute(ServerPlayer player, CharacterAttribute attribute) {

@@ -1,0 +1,27 @@
+{
+  "item": "sofe:medal_of_the_scale",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 35,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "protectors_oath"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "heal",
+      "every_s": 6,
+      "amount": 1
+    }
+  ]
+}

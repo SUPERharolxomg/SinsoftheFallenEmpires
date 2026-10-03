@@ -1,0 +1,31 @@
+{
+  "item": "sofe:musket_of_the_siege",
+  "item_level": 70,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 68,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 11
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "siege_decree"
+    },
+    {
+      "stat": "crit_chance",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "slow",
+      "s": 3,
+      "lvl": 2
+    }
+  ]
+}

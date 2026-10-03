@@ -1,0 +1,30 @@
+{
+  "item": "sofe:last_breath",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 58,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 11
+    },
+    {
+      "stat": "crit_damage",
+      "value": 25
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "execute",
+      "below": 0.15
+    },
+    {
+      "on": "hit",
+      "do": "marks",
+      "n": 1
+    }
+  ]
+}

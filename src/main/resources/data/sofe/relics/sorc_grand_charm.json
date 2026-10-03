@@ -1,0 +1,20 @@
+{
+  "item": "sofe:sorc_grand_charm",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 98,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "sorceress"
+    },
+    {
+      "stat": "intellect",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

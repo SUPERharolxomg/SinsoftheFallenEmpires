@@ -1,0 +1,20 @@
+{
+  "item": "sofe:sorc_frost_charm",
+  "item_level": 37,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 35,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "frost_lance"
+    },
+    {
+      "stat": "frost_damage",
+      "value": 2
+    }
+  ],
+  "effects": []
+}

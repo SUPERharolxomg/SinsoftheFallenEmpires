@@ -1,0 +1,26 @@
+{
+  "item": "sofe:veil_of_laleh",
+  "item_level": 23,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 21,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "intellect",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "petal_tempest"
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:night_vision"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "item": "sofe:trousers_of_the_vizier",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 28,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "charisma",
+      "value": 6
+    },
+    {
+      "stat": "will",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:luck"
+    }
+  ]
+}

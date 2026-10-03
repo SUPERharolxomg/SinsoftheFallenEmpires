@@ -1,0 +1,26 @@
+{
+  "item": "sofe:annihilus",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 98,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 10
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 16
+    },
+    {
+      "stat": "frost_resistance",
+      "value": 16
+    },
+    {
+      "stat": "storm_resistance",
+      "value": 16
+    }
+  ],
+  "effects": []
+}

@@ -1,0 +1,14 @@
+{
+  "item": "sofe:hourglass_charm",
+  "item_level": 47,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 45,
+  "affixes": [
+    {
+      "stat": "cooldown_reduction",
+      "value": 4
+    }
+  ],
+  "effects": []
+}

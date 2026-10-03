@@ -1,0 +1,31 @@
+{
+  "item": "sofe:heart_of_the_legion",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 98,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 16
+    },
+    {
+      "stat": "max_health",
+      "value": 18
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:strength",
+      "when": "low_health"
+    },
+    {
+      "on": "hurt",
+      "do": "knockback",
+      "v": 0.8
+    }
+  ]
+}

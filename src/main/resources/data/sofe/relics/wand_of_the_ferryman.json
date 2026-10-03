@@ -1,0 +1,27 @@
+{
+  "item": "sofe:wand_of_the_ferryman",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 15,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 6
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "raise_the_embalmed"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "souls",
+      "n": 1,
+      "chance": 0.3
+    }
+  ]
+}

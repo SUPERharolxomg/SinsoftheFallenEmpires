@@ -7,6 +7,6 @@
   "min_item_level": 1,
   "requires": {
     "attribute": "strength",
-    "value": 9
+    "value": 11
   }
 }

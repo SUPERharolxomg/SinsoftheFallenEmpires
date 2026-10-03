@@ -1,0 +1,35 @@
+{
+  "item": "sofe:sunder_of_the_order",
+  "item_level": 20,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 18,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 6
+    },
+    {
+      "stat": "physical_damage",
+      "value": 12
+    },
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "knight"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "vs_undead",
+      "mult": 1.6
+    },
+    {
+      "on": "hit",
+      "do": "lifesteal",
+      "frac": 0.05
+    }
+  ]
+}

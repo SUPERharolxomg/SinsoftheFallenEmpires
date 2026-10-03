@@ -49,7 +49,9 @@ public final class SkillCaster {
         var gear = com.sofe.gear.PlayerGear.bonuses(player);
         int rank = Math.max(1, com.sofe.gear.GearBonuses.effectiveRank(progress.get().skills().rank(info.id()),
                 gear.bonusRanks(info.id(), info.owner().id())));
-        Optional<SkillStats> stats = classData.flatMap(d -> d.skill(info.id())).map(s -> s.withRank(rank));
+        var book = progress.get().skills();
+        // the skill's own rank, then its learned upgrades (Diablo II synergies)
+        Optional<SkillStats> stats = classData.flatMap(d -> d.skill(info.id())).map(s -> Upgrades.apply(info.id(), s.withRank(rank), book::rank));
         Optional<ResourcePool> resource = combat.get().resource();
         if (skill.isEmpty() || stats.isEmpty() || resource.isEmpty()) {
             tell(player, Component.translatable("message.sofe.skill.not_ready", name));
@@ -63,17 +65,31 @@ public final class SkillCaster {
             tell(player, Component.translatable("message.sofe.skill.cooldown", name, seconds));
             return;
         }
-        if (!resource.get().spend(stats.get().cost())) {
+        // the Necromancer's Wardens and Jars are paid in souls
+        int souls = (int) stats.get().param("souls", 0);
+        if (souls > data.souls()) {
+            tell(player, Component.translatable("message.sofe.skill.no_souls", souls));
+            return;
+        }
+        // Written Eclipse: every spell is free while the sky is dark
+        boolean eclipse = info.owner() == PlayerClass.SORCERESS && ClassState.active(ClassState.of(player).eclipseUntil, player);
+        if (!eclipse && !resource.get().spend(stats.get().cost())) {
             tell(player, Component.translatable("message.sofe.skill.no_resource",
                     Component.translatable(info.owner().resource().translationKey())));
             return;
         }
+        if (souls > 0) data.setSouls(data.souls() - souls);
         int cooldown = (int) Math.round(stats.get().cooldownTicks() * (1 - gear.fraction(com.sofe.gear.GearStat.COOLDOWN_REDUCTION)));
         data.cooldowns().start(info.id(), now, cooldown);
 
+        SkillFx.cast(player, info.id());
         Skill.Result result = skill.get().cast(new Skill.Context(player, info, stats.get(), data, classData.get()));
         result.rune().flatMap(rune -> data.runes().add(rune)).ifPresent(done ->
                 Constellations.trigger(player, done.constellation(), done.runes(), result.impact(), classData.get()));
+        if (eclipse) { // and every spell leaves a second rune
+            result.rune().flatMap(rune -> data.runes().add(rune)).ifPresent(done ->
+                    Constellations.trigger(player, done.constellation(), done.runes(), result.impact(), classData.get()));
+        }
 
         data.markDirty();
         CombatHandler.sync(player);

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:treads_of_the_underworld",
+  "item_level": 83,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 81,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 8
+    },
+    {
+      "stat": "dodge",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:invisibility",
+      "when": "crouching"
+    }
+  ]
+}

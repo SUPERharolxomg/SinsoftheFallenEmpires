@@ -112,11 +112,33 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ranged.RangedHandler::onHurt);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ranged.RangedHandler::onEntityJoin);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.Tools::onBlockBreak);
+        // Sprint 6: the class mechanics, lasting skills and the Royal Treasury
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onShieldBlock);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onDeath);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onDrops);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.SkillTasks::onServerTick);
+        // Sprint 6: companions and Class Concord
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onChangedDimension);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onDeath);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onHeal);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.king.KingSkills::onPickup);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.WeaponTraitHandler::onBlock);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ArmorSets::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ArmorSets::onHurt);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.RelicEffects::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.RelicEffects::onKill);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.UniqueEffects::onKill);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.UniqueEffects::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, com.sofe.gear.UniqueEffects::onHurt);
         // last, so the Wrappings of the Undying see the damage after every reduction
         MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, com.sofe.gear.RelicEffects::onHurt);
         MinecraftForge.EVENT_BUS.addListener(CharacterStats::onAttacked);

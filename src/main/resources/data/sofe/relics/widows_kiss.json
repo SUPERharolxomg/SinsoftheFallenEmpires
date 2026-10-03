@@ -1,9 +1,9 @@
 {
   "item": "sofe:widows_kiss",
-  "item_level": 5,
+  "item_level": 24,
   "droppable": true,
   "slot": "weapon",
-  "min_level": 4,
+  "min_level": 22,
   "affixes": [
     {
       "stat": "agility",

@@ -29,7 +29,16 @@ public final class GearDataManager {
      * @param slot     the gear slot of a droppable Relic, for gambles of one slot (null for boss Relics)
      * @param minLevel the item level from which a droppable Relic can appear
      */
-    public record Relic(String id, String item, int itemLevel, List<GearData.Roll> affixes, boolean droppable, GearSlot slot, int minLevel) {
+    public record Relic(String id, String item, int itemLevel, List<GearData.Roll> affixes, boolean droppable, GearSlot slot, int minLevel,
+                        String playerClass, List<JsonObject> effects) {
+        public Relic(String id, String item, int itemLevel, List<GearData.Roll> affixes, boolean droppable, GearSlot slot, int minLevel) {
+            this(id, item, itemLevel, affixes, droppable, slot, minLevel, null, List.of());
+        }
+
+        /** Whether a Bearer of this class can use it (class uniques serve only their class). */
+        public boolean suits(String classId) {
+            return playerClass == null || playerClass.equals(classId);
+        }
     }
 
     private static volatile List<Affix> affixes = List.of();
@@ -103,7 +112,8 @@ public final class GearDataManager {
                         loaded.put(id.getPath(), new Relic(id.getPath(), o.get("item").getAsString(), itemLevel, rolls,
                                 o.has("droppable") && o.get("droppable").getAsBoolean(),
                                 o.has("slot") ? GearSlot.byId(o.get("slot").getAsString()) : null,
-                                o.has("min_level") ? o.get("min_level").getAsInt() : itemLevel));
+                                o.has("min_level") ? o.get("min_level").getAsInt() : itemLevel,
+                                o.has("class") ? o.get("class").getAsString() : null, effects(o)));
                     } catch (RuntimeException e) {
                         SoFEMod.LOGGER.error("Skipping relic {}: {}", id, e.getMessage());
                     }
@@ -111,6 +121,17 @@ public final class GearDataManager {
                 relics = Map.copyOf(loaded);
             }
         });
+    }
+
+    private static List<JsonObject> effects(JsonObject o) {
+        List<JsonObject> list = new ArrayList<>();
+        if (o.has("effects")) for (JsonElement e : o.getAsJsonArray("effects")) list.add(e.getAsJsonObject());
+        return List.copyOf(list);
+    }
+
+    /** The droppable Relics a Bearer of this class can use (class uniques of other classes left out). */
+    public static List<Relic> droppableRelicsFor(String classId) {
+        return droppableRelics().stream().filter(r -> r.suits(classId)).toList();
     }
 
     /** For GameTests and the unit-test style checks in game. */

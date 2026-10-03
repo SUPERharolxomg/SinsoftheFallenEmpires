@@ -1,0 +1,35 @@
+{
+  "style": "sulthari",
+  "npc": "cassian",
+  "priority": 1,
+  "requires": {
+    "type": "act_reached",
+    "act": 1
+  },
+  "lines": [
+    {
+      "speaker": "cassian",
+      "text": "dialogue.sofe.cassian.act1"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.cassian.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "knight"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

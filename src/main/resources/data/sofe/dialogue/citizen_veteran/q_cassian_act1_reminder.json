@@ -1,0 +1,29 @@
+{
+  "style": "sulthari",
+  "npc": "citizen_veteran",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/cassian_act1",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/cassian_act1",
+          "step": 2
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "citizen_veteran",
+      "text": "dialogue.sofe.q.cassian_act1.reminder"
+    }
+  ]
+}

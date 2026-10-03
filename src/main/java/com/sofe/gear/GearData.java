@@ -20,7 +20,7 @@ public record GearData(int itemLevel, Rarity rarity, List<Roll> affixes, Charact
     }
 
     /** Every item needs level ≥ item level − 3. */
-    public static final int LEVEL_MARGIN = 3;
+    public static final int LEVEL_MARGIN = 5;
 
     public GearData {
         affixes = List.copyOf(affixes);
@@ -31,7 +31,9 @@ public record GearData(int itemLevel, Rarity rarity, List<Roll> affixes, Charact
         return new GearData(itemLevel, Rarity.COMMON, List.of(), null, 0, null, List.of());
     }
 
+    /** Random gear asks a few levels under its own; a unique (Relic) asks its full level, as in Diablo II. */
     public int requiredLevel() {
+        if (rarity == Rarity.RELIC) return Math.max(1, itemLevel);
         return Math.max(1, itemLevel - LEVEL_MARGIN);
     }
 

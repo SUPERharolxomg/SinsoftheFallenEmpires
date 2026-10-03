@@ -1,0 +1,24 @@
+{
+  "item": "sofe:eclipse_plate",
+  "item_level": 67,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 65,
+  "affixes": [
+    {
+      "stat": "armor",
+      "value": 6
+    },
+    {
+      "stat": "void_resistance",
+      "value": 25
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "wither",
+      "s": 2
+    }
+  ]
+}

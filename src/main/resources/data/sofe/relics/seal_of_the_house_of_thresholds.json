@@ -1,0 +1,26 @@
+{
+  "item": "sofe:seal_of_the_house_of_thresholds",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 58,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "necromancer"
+    },
+    {
+      "stat": "magic_damage",
+      "value": 10
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "resource",
+      "per_s": 0.5
+    }
+  ]
+}

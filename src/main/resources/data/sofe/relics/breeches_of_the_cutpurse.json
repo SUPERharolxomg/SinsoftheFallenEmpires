@@ -1,0 +1,19 @@
+{
+  "item": "sofe:breeches_of_the_cutpurse",
+  "item_level": 30,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 28,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 6
+    },
+    {
+      "stat": "dodge",
+      "value": 5
+    }
+  ],
+  "effects": []
+}

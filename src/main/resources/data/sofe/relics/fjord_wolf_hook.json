@@ -1,0 +1,32 @@
+{
+  "item": "sofe:fjord_wolf_hook",
+  "item_level": 73,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 71,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 12
+    },
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "fjord_snare"
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "slow",
+      "s": 2,
+      "lvl": 2
+    },
+    {
+      "on": "hit",
+      "do": "bleed",
+      "s": 3
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "item": "sofe:necro_ankh_charm",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 38,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "raise_the_embalmed"
+    },
+    {
+      "stat": "max_resource",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

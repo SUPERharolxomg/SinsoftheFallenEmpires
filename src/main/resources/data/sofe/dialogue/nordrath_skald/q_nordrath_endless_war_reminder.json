@@ -1,0 +1,29 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_skald",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/nordrath_endless_war",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/nordrath_endless_war",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_skald",
+      "text": "dialogue.sofe.q.nordrath_endless_war.reminder"
+    }
+  ]
+}

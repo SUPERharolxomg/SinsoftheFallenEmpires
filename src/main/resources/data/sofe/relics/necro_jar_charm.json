@@ -1,0 +1,22 @@
+{
+  "item": "sofe:necro_jar_charm",
+  "item_level": 63,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 61,
+  "class": "necromancer",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 2,
+      "parameter": "canopic_jars"
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 1
+    }
+  ]
+}

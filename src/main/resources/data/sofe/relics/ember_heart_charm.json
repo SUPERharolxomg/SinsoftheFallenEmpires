@@ -1,0 +1,18 @@
+{
+  "item": "sofe:ember_heart_charm",
+  "item_level": 50,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 48,
+  "affixes": [
+    {
+      "stat": "fire_damage",
+      "value": 3
+    },
+    {
+      "stat": "fire_resistance",
+      "value": 10
+    }
+  ],
+  "effects": []
+}

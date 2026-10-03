@@ -1,7 +1,14 @@
 {
-  "max_level": 30,
+  "max_level": 100,
   "xp_base": 60,
   "xp_exponent": 1.5,
   "skill_points_per_level": 1,
-  "attribute_points_per_level": 5
+  "attribute_points_per_level": 5,
+  "act_caps": [
+    20,
+    40,
+    60,
+    80,
+    100
+  ]
 }

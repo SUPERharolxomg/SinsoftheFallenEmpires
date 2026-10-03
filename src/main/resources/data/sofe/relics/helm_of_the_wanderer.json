@@ -1,0 +1,24 @@
+{
+  "item": "sofe:helm_of_the_wanderer",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 15,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 4
+    },
+    {
+      "stat": "all_attributes",
+      "value": 1
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:night_vision"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "item": "sofe:band_of_unbroken_oaths",
+  "item_level": 63,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 61,
+  "class": "knight",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "knight"
+    },
+    {
+      "stat": "life_steal",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "lifesteal",
+      "frac": 0.05
+    }
+  ]
+}

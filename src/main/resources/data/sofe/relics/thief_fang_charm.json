@@ -1,0 +1,20 @@
+{
+  "item": "sofe:thief_fang_charm",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 58,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "skill_ranks",
+      "value": 1,
+      "parameter": "double_edge"
+    },
+    {
+      "stat": "crit_damage",
+      "value": 8
+    }
+  ],
+  "effects": []
+}

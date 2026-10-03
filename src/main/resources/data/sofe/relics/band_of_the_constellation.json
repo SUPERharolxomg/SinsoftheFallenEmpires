@@ -1,0 +1,20 @@
+{
+  "item": "sofe:band_of_the_constellation",
+  "item_level": 63,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 61,
+  "class": "sorceress",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 1,
+      "parameter": "sorceress"
+    },
+    {
+      "stat": "magic_damage",
+      "value": 10
+    }
+  ],
+  "effects": []
+}

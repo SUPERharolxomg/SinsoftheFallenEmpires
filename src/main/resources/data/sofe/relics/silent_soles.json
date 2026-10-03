@@ -1,0 +1,27 @@
+{
+  "item": "sofe:silent_soles",
+  "item_level": 80,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 78,
+  "class": "thief",
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 9
+    },
+    {
+      "stat": "dodge",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:speed",
+      "amp": 1,
+      "when": "night"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "item": "sofe:tide_of_teeth",
+  "item_level": 40,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 38,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 7
+    },
+    {
+      "stat": "frost_damage",
+      "value": 3
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "freeze",
+      "chance": 0.1,
+      "s": 2
+    }
+  ]
+}

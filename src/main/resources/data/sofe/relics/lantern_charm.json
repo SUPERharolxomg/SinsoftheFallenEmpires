@@ -1,0 +1,20 @@
+{
+  "item": "sofe:lantern_charm",
+  "item_level": 27,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 25,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 1
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:night_vision"
+    }
+  ]
+}

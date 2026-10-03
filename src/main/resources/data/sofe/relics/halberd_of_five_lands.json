@@ -1,0 +1,33 @@
+{
+  "item": "sofe:halberd_of_five_lands",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 98,
+  "class": "king",
+  "affixes": [
+    {
+      "stat": "class_skill_ranks",
+      "value": 2,
+      "parameter": "king"
+    },
+    {
+      "stat": "charisma",
+      "value": 18
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "chain",
+      "targets": 3,
+      "frac": 0.4
+    },
+    {
+      "on": "kill",
+      "do": "effect",
+      "effect": "minecraft:strength",
+      "s": 5
+    }
+  ]
+}

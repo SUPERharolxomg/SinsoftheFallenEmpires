@@ -87,6 +87,9 @@ public final class StoryParser {
                 case "open_dialogue" -> new QuestEffect.OpenDialogue(str(effect, "dialogue", null));
                 case "give_item" -> new QuestEffect.GiveItem(str(effect, "item", null), effect.has("count") ? effect.get("count").getAsInt() : 1);
                 case "open_class_select" -> new QuestEffect.OpenClassSelect();
+                case "give_relic" -> new QuestEffect.GiveRelic(str(effect, "relic", null));
+                case "hire_companion" -> new QuestEffect.HireCompanion(str(effect, "bearer", null));
+                case "companion_order" -> new QuestEffect.CompanionOrder(str(effect, "order", null));
                 case "play_sound" -> new QuestEffect.PlaySound(str(effect, "sound", null),
                         effect.has("volume") ? effect.get("volume").getAsFloat() : 1f, effect.has("pitch") ? effect.get("pitch").getAsFloat() : 1f);
                 case "particles" -> new QuestEffect.Particles(str(effect, "particle", null), effect.has("count") ? effect.get("count").getAsInt() : 20);

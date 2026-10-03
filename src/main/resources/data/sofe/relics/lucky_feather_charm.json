@@ -1,0 +1,21 @@
+{
+  "item": "sofe:lucky_feather_charm",
+  "item_level": 17,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 15,
+  "affixes": [
+    {
+      "stat": "dodge",
+      "value": 2
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:slow_falling",
+      "when": "always"
+    }
+  ]
+}

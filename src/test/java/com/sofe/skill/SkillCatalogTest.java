@@ -18,16 +18,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class SkillCatalogTest {
 
     @Test
+    void upgradesImproveSkillsOfTheirOwnClass() {
+        for (SkillInfo s : SkillCatalog.all()) {
+            for (String improved : s.upgrades()) {
+                assertEquals(s.owner(), SkillCatalog.byId(improved).orElseThrow().owner(), s.id() + " improves " + improved);
+            }
+        }
+    }
+
+    @Test
     void everyClassHasTheTreeFromTheClassesDocument() {
-        assertEquals(50, SkillCatalog.all().size());
+        assertEquals(150, SkillCatalog.all().size());
         for (PlayerClass c : PlayerClass.values()) {
             List<SkillInfo> skills = SkillCatalog.forClass(c);
-            assertEquals(10, skills.size(), c + " should have 10 skills");
+            assertEquals(30, skills.size(), c + " should have 30 skills");
+            for (int tab = 0; tab < 3; tab++) {
+                int branch = tab;
+                assertEquals(10, skills.stream().filter(s -> s.tab() == branch).count(), c + ": 10 skills in branch " + tab);
+            }
             assertEquals(3, count(skills, 1, SkillType.ACTIVE), c + ": 3 actives at level 1");
             assertEquals(3, count(skills, 11, SkillType.ACTIVE), c + ": 3 actives at level 11");
-            assertEquals(1, count(skills, 11, SkillType.PASSIVE), c + ": 1 passive at level 11");
             assertEquals(1, count(skills, 21, SkillType.ACTIVE), c + ": 1 active at level 21");
-            assertEquals(1, count(skills, 21, SkillType.PASSIVE), c + ": 1 passive at level 21");
             assertEquals(1, count(skills, 30, SkillType.ULTIMATE), c + ": 1 ultimate at level 30");
         }
     }

@@ -1,0 +1,28 @@
+{
+  "item": "sofe:seal_of_the_eighth_lock",
+  "item_level": 100,
+  "droppable": true,
+  "slot": "talisman",
+  "min_level": 98,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 8
+    },
+    {
+      "stat": "max_health",
+      "value": 16
+    },
+    {
+      "stat": "cooldown_reduction",
+      "value": 8
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "absorption",
+      "every_s": 30
+    }
+  ]
+}
