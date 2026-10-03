@@ -127,7 +127,7 @@ Three routes, from easiest to strongest: **buy**, **distill** and **the Bearer's
 
 ## Gear progression by act
 
-Each act unlocks an ore, a maximum craftable rarity and a potion type. Level ranges follow the level-30 cap (see [Clases.md](Clases.md)).
+Each act unlocks an ore, a maximum craftable rarity and a potion type. Level ranges follow the level-100 cap, twenty levels per act (see [Jugabilidad.md](Jugabilidad.md#difficulty-rises-with-each-act)).
 
 | Act | Levels | New ore | Best craftable gear | Best loot | New potions |
 | --- | --- | --- | --- | --- | --- |
