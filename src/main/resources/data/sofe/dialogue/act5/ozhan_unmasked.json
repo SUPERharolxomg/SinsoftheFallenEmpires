@@ -1,0 +1,28 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act5.ozhan_unmasked.1"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act5.ozhan_unmasked.2"
+    },
+    {
+      "speaker": "solrath",
+      "text": "dialogue.sofe.act5.ozhan_unmasked.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act5.ozhan_unmasked.3.answer1",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.act5.ozhan_unmasked.3.answer2",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act4.sulthari_besieged.1"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act4.sulthari_besieged.2"
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.act4.sulthari_besieged.3"
+    }
+  ],
+  "on_end": [
+    {
+      "type": "start_quest",
+      "quest": "sofe:act5_ascension"
+    }
+  ]
+}

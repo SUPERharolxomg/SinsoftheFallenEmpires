@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " L ",
+    "GTG",
+    "BBB"
+  ],
+  "key": {
+    "L": {
+      "item": "sofe:star_lapis"
+    },
+    "G": {
+      "item": "sofe:solar_gold_ingot"
+    },
+    "T": {
+      "item": "minecraft:smithing_table"
+    },
+    "B": {
+      "item": "sofe:sulthari_brass_ingot"
+    }
+  },
+  "result": {
+    "item": "sofe:jeweler",
+    "count": 1
+  }
+}

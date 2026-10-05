@@ -1,0 +1,61 @@
+{
+  "type": "bearer",
+  "act": 3,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 3200,
+        "z": 4000,
+        "radius": 24
+      },
+      "target": {
+        "x": 3200,
+        "z": 4000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:bog_mummy",
+        "count": 8
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:bog_mummy",
+          "count": 8,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2600
+    },
+    {
+      "type": "give_relic",
+      "relic": "ring_of_bound_souls"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "necromancer"
+      },
+      {
+        "type": "act_reached",
+        "act": 3
+      }
+    ]
+  }
+}

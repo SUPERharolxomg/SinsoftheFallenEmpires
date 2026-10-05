@@ -1,0 +1,16 @@
+{
+  "style": "khemet",
+  "npc": "khemet_embalmer",
+  "priority": 6,
+  "requires": {
+    "type": "fate_is",
+    "region": "khemet",
+    "fate": "rest"
+  },
+  "lines": [
+    {
+      "speaker": "khemet_embalmer",
+      "text": "dialogue.sofe.khemet_embalmer.fate.rest"
+    }
+  ]
+}

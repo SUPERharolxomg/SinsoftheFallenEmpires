@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aureum_widow",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aureum_widow",
+      "text": "dialogue.sofe.aureum_widow.act5.1"
+    }
+  ]
+}

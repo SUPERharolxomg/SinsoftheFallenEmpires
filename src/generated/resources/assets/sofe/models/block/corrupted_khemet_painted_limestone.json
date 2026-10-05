@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sofe:block/corrupted_khemet_painted_limestone"
+  }
+}

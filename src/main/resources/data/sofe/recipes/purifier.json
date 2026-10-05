@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GLG",
+    "GFG",
+    "SSS"
+  ],
+  "key": {
+    "G": {
+      "item": "sofe:solar_gold_ingot"
+    },
+    "L": {
+      "item": "sofe:star_lapis"
+    },
+    "F": {
+      "item": "minecraft:blast_furnace"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "sofe:purifier",
+    "count": 1
+  }
+}

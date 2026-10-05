@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/jeweler_bottom",
+    "side": "sofe:block/jeweler_side",
+    "top": "sofe:block/jeweler_top"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "sofe:block/khemet_sandstone_slab"
+    },
+    "type=double": {
+      "model": "sofe:block/khemet_carved_sandstone"
+    },
+    "type=top": {
+      "model": "sofe:block/khemet_sandstone_slab_top"
+    }
+  }
+}

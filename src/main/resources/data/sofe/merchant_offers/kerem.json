@@ -1,0 +1,113 @@
+{
+  "role": "jeweler",
+  "empire": "sulthari",
+  "offers": [
+    {
+      "sell": "sofe:cut_wrath_ruby",
+      "price": 300,
+      "min_act": 2,
+      "min_favor": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cut_lust_amethyst",
+      "price": 300,
+      "min_act": 3,
+      "min_favor": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cut_greed_topaz",
+      "price": 300,
+      "min_act": 4,
+      "min_favor": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cut_sloth_moonstone",
+      "price": 300,
+      "min_act": 3,
+      "min_favor": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cut_gluttony_amber",
+      "price": 300,
+      "min_act": 2,
+      "min_favor": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cut_envy_emerald",
+      "price": 300,
+      "min_act": 4,
+      "min_favor": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cut_pride_sunstone",
+      "price": 300,
+      "min_act": 5,
+      "min_favor": 2,
+      "stock": 1
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:rough_wrath_ruby",
+      "price": 25
+    },
+    {
+      "item": "sofe:rough_lust_amethyst",
+      "price": 25
+    },
+    {
+      "item": "sofe:rough_greed_topaz",
+      "price": 25
+    },
+    {
+      "item": "sofe:rough_sloth_moonstone",
+      "price": 25
+    },
+    {
+      "item": "sofe:rough_gluttony_amber",
+      "price": 25
+    },
+    {
+      "item": "sofe:rough_envy_emerald",
+      "price": 25
+    },
+    {
+      "item": "sofe:rough_pride_sunstone",
+      "price": 25
+    },
+    {
+      "item": "sofe:cut_wrath_ruby",
+      "price": 70
+    },
+    {
+      "item": "sofe:cut_lust_amethyst",
+      "price": 70
+    },
+    {
+      "item": "sofe:cut_greed_topaz",
+      "price": 70
+    },
+    {
+      "item": "sofe:cut_sloth_moonstone",
+      "price": 70
+    },
+    {
+      "item": "sofe:cut_gluttony_amber",
+      "price": 70
+    },
+    {
+      "item": "sofe:cut_envy_emerald",
+      "price": 70
+    },
+    {
+      "item": "sofe:cut_pride_sunstone",
+      "price": 70
+    }
+  ]
+}

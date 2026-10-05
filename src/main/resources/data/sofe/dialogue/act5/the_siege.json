@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act5.the_siege.1"
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.act5.the_siege.2"
+    }
+  ]
+}

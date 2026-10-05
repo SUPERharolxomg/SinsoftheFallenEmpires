@@ -1,0 +1,29 @@
+{
+  "style": "khemet",
+  "npc": "khemet_scribe",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/khemet_sunken_archive",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/khemet_sunken_archive",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.q.khemet_sunken_archive.reminder"
+    }
+  ]
+}

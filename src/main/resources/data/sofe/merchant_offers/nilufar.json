@@ -1,0 +1,30 @@
+{
+  "role": "purifier",
+  "empire": "sulthari",
+  "offers": [
+    {
+      "sell": "sofe:aetherium_shard",
+      "price": 180,
+      "min_act": 3,
+      "stock": 2
+    },
+    {
+      "sell": "sofe:aetherium_shard",
+      "count": 3,
+      "price": 480,
+      "min_act": 4,
+      "min_favor": 3,
+      "stock": 1
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:black_aetherium_shard",
+      "price": 9
+    },
+    {
+      "item": "sofe:void_ash",
+      "price": 2
+    }
+  ]
+}

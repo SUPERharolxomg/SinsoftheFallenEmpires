@@ -10,6 +10,8 @@ import os
 import re
 import sys
 
+import set_pieces
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from armor_catalog import SETS  # noqa: E402
@@ -122,6 +124,7 @@ def main():
                 f.write(json.dumps(base, indent=2) + "\n")
         with open(os.path.join(DATA, "armor_sets", s["name"] + ".json"), "w", encoding="utf-8") as f:
             f.write(json.dumps({"bonuses": s["bonus"]}, indent=2) + "\n")
+    set_pieces.write_all()  # what each piece gives on its own
     print("armor data: %d sets (%d new)" % (len(SETS), len(new)))
 
 

@@ -1,6 +1,9 @@
 {
   "values": [
     "sofe:sulthari_sandstone_brick_slab",
-    "sofe:nordrath_runestone_brick_slab"
+    "sofe:nordrath_runestone_brick_slab",
+    "sofe:parsivan_white_plaster_slab",
+    "sofe:khemet_sandstone_slab",
+    "sofe:aureum_marble_brick_slab"
   ]
 }

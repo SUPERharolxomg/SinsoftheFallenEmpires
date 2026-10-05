@@ -1,0 +1,14 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act5.the_inverted_throne.1"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act5.the_inverted_throne.2"
+    }
+  ]
+}

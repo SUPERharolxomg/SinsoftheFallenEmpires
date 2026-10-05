@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "sofe:minor_pomegranate_elixir",
-    "sofe:bearers_tonic"
+    "sofe:bearers_tonic",
+    "sofe:strong_pomegranate_elixir",
+    "sofe:strong_bearers_tonic",
+    "sofe:major_pomegranate_elixir",
+    "sofe:major_bearers_tonic",
+    "sofe:grand_pomegranate_elixir",
+    "sofe:grand_bearers_tonic",
+    "sofe:imperial_pomegranate_elixir",
+    "sofe:imperial_bearers_tonic"
   ]
 }

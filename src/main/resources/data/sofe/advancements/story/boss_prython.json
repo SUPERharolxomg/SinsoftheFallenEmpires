@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:prythons_mirror"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_prython"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_prython.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/boss_solrath"
+}

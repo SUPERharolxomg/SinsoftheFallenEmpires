@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "sofe:block/aureum_marble_bricks",
+    "side": "sofe:block/aureum_marble_bricks",
+    "top": "sofe:block/aureum_marble_bricks"
+  }
+}

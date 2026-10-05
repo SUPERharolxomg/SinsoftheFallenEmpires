@@ -1,0 +1,43 @@
+{
+  "style": "parsivan",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "luxara",
+      "text": "dialogue.sofe.luxara.1"
+    },
+    {
+      "speaker": "luxara",
+      "text": "dialogue.sofe.luxara.own",
+      "condition": {
+        "type": "class_is",
+        "class": "sorceress"
+      }
+    },
+    {
+      "speaker": "luxara",
+      "text": "dialogue.sofe.luxara.other",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "sorceress"
+        }
+      }
+    },
+    {
+      "speaker": "luxara",
+      "text": "dialogue.sofe.luxara.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.luxara.refuse",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.luxara.silent",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

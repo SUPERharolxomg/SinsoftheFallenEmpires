@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:envyris_borrowed_scythe"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_envyris"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_envyris.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/enter_aureum"
+}

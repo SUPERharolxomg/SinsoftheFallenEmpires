@@ -1,0 +1,14 @@
+{
+  "style": "khemet",
+  "npc": "khemet_embalmer",
+  "lines": [
+    {
+      "speaker": "khemet_embalmer",
+      "text": "dialogue.sofe.khemet_embalmer.act1.1"
+    },
+    {
+      "speaker": "khemet_embalmer",
+      "text": "dialogue.sofe.khemet_embalmer.act1.2"
+    }
+  ]
+}

@@ -326,6 +326,38 @@ UNIQUES = [
           [a("agility", 6), a("fire_resistance", 15)], [W("effect", effect="minecraft:speed", when="day")], ("Sandstriders", "Andarenas")),
     armor("legs_of_the_seventh_sin", None, 27, "leggings", "heavy", {"plate": (100, 20, 20), "trim": (40, 30, 30), "gem": (255, 60, 40)}, "great",
           [a("all_attributes", 6), a("crit_damage", 15)], [W("effect", effect="minecraft:strength", when="low_health")], ("Legs of the Seventh Sin", "Piernas del Séptimo Pecado")),
+
+    # ======================================================================================= the bosses of Acts III and IV (for any Bearer)
+    # each Broken Oath and Archsin leaves one, its mechanic made into the item (EmpireBosses, boss loot tables)
+    jewel("whisper_of_mirael", "amulet", None, 14, SILVER, AMETHYST, [a("agility", 7), a("charisma", 6), a("dodge", 5)],
+          [W("effect", effect="minecraft:invisibility", when="crouching"), H("blind", chance=0.1)], ("Whisper of Mirael", "Susurro de Mirael"), pendant="eye"),
+    weapon("thessyns_needle", None, 15, "serrated_dagger", 0.8, [a("agility", 8), a("crit_chance", 5)], [H("poison", s=3), H("slow", s=2)],
+           ("Thessyn's Needle", "Aguja de Thessyn")),
+    jewel("ring_of_the_long_watch", "ring", None, 16, BRONZE, ONYX, [a("will", 7), a("intellect", 5)], [H("stun", chance=0.08, s=2), W("effect", effect="minecraft:night_vision")],
+          ("Ring of the Long Watch", "Anillo de la Larga Vigilia")),
+    jewel("heart_of_luxara", "amulet", None, 18, GOLD, RUBY, [a("charisma", 9), a("life_steal", 5), a("all_attributes", 3)],
+          [H("weaken", chance=0.15), W("effect", effect="minecraft:regeneration", when="night")], ("Heart of Luxara", "Corazón de Luxara"), pendant="drop"),
+    armor("crown_of_the_stagnant_king", None, 18, "helmet", "royal", {"cloth": (60, 70, 50), "trim": (200, 170, 70), "gem": (90, 200, 120)}, "crown",
+          [a("vitality", 8), a("armor", 4)], [U("slow", s=3, lvl=1), W("effect", effect="minecraft:regeneration", when="low_health")],
+          ("Crown of the Stagnant King", "Corona del Rey Estancado")),
+    weapon("goldarcs_scales", None, 20, "justicar_maul", 0.12, [a("strength", 10), a("physical_damage", 16)], [K("dinars", n=2), H("stun", chance=0.1, s=1)],
+           ("Goldarc's Scales", "Balanza de Goldarc")),
+    jewel("nixaras_false_ring", "ring", None, 21, GOLD, TOPAZ, [a("agility", 9), a("crit_chance", 6)], [K("dinars", n=1, chance=0.5), H("blind", chance=0.08)],
+          ("Nixara's False Ring", "Anillo Falso de Nixara")),
+    jewel("hoard_of_avarok", "amulet", None, 23, GOLD, TOPAZ, [a("all_attributes", 7), a("max_health", 12)], [K("dinars", n=3), W("absorption", every_s=25)],
+          ("Hoard of Avarok", "Tesoro de Avarok"), pendant="sun"),
+    armor("maw_of_fenrath", None, 21, "chestplate", "heavy", {"plate": (70, 64, 60), "trim": (150, 40, 30), "gem": (140, 255, 120)}, "great",
+          [a("vitality", 10), a("life_steal", 5)], [K("heal", amount=3), U("poison", s=3)], ("Maw of Fenrath", "Fauces de Fenrath")),
+    weapon("gularths_cleaver", None, 23, "battle_greatsword", 0.06, [a("strength", 12), a("life_steal", 6)], [H("lifesteal", frac=0.08), K("heal", amount=3)],
+           ("Gularth's Cleaver", "Cuchilla de Gularth")),
+    armor("mask_of_shadeyn", None, 24, "helmet", "heavy", {"plate": (190, 196, 210), "trim": (60, 60, 80), "gem": (200, 220, 255)}, "great",
+          [a("all_attributes", 6), a("armor", 5)], [U("thorns", frac=0.25)], ("Mask of Shadeyn", "Máscara de Shadeyn")),
+    jewel("sun_halo_of_solrath", "amulet", None, 27, GOLD, TOPAZ, [a("all_attributes", 8), a("magic_damage", 16), a("max_health", 14)],
+          [H("lightning", chance=0.08, mult=1.5), W("effect", effect="minecraft:regeneration", when="day")], ("Sun Halo of Solrath", "Halo Solar de Solrath"), pendant="sun"),
+    weapon("ashbringer_of_the_first_fallen", None, 30, "oathblade", 0.78, [a("all_attributes", 10), a("physical_damage", 24), a("magic_damage", 24), a("life_steal", 6)],
+           [H("ignite", s=4), H("wither", s=3), K("heal", amount=4)], ("Ashbringer of the First Fallen", "Portadora de Ceniza del Primer Caído")),
+    weapon("envyris_borrowed_scythe", None, 25, "shadow_scythe", 0.7, [a("all_attributes", 8), a("physical_damage", 18), a("magic_damage", 18)],
+           [H("wither", s=3), H("lifesteal", frac=0.05)], ("Envyris's Borrowed Scythe", "Guadaña Prestada de Envyris")),
 ]
 
 # a third size of random charm, as in Diablo II

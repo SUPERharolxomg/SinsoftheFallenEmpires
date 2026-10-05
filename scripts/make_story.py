@@ -13,12 +13,27 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from story_catalog import (BEARER_LINES, BEARER_QUESTS, CLASSES, COMPANION, FATE_QUESTS, FATE_REACTIONS, HERO, HIRE,  # noqa: E402
                            ORDERS)
+import story_catalog_act34 as act34  # noqa: E402
 
 RES = os.path.join("src", "main", "resources")
 DATA = os.path.join(RES, "data", "sofe")
 OD = collections.OrderedDict
 EN, ES = OD(), OD()
-STYLE = {1: "sulthari", 2: "nordrath"}
+STYLE = {1: "sulthari", 2: "nordrath", 3: "parsivan", 4: "aureum", 5: "sulthari"}
+
+
+def region_of(q):
+    """The region of an Act III/IV quest: its own, or its giver's camp."""
+    if q.get("region"):
+        return q["region"]
+    for r in act34.CAMP:
+        if q["giver"].startswith(r + "_"):
+            return r
+    return "nordrath"
+
+
+def style_of(q):
+    return region_of(q) if q.get("act", 2) >= 3 else STYLE[q.get("act", 2)]
 
 
 def say(key, texts):
@@ -52,13 +67,18 @@ def quest_files(q, kind):
     base = "quest.sofe.%s.%s" % (kind, q["id"])
     say(base, q["title"])
     steps, n = [], 0
-    giver_region = "Skarnhold" if q.get("act", 2) == 2 else "Sulthari"
+    act = q.get("act", 2)
+    giver_region = ("Skarnhold", "Skarnhold") if act == 2 else ("Sulthari", "Sulthari") if act < 2 else act34.CAMP_NAMES[region_of(q)]
     if q.get("reach"):
-        place, x, z = q["reach"]
+        if isinstance(q["reach"], str):  # an Act III/IV place
+            en_name, es_name, x, z = act34.PLACES[q["reach"]]
+            names = (en_name, es_name)
+        else:
+            place, x, z = q["reach"]
+            names = {"arena": ("the Nordrath Arena", "la Arena de Nordrath"), "forge": ("the Nordrath Forge", "la Forja de Nordrath"),
+                     "caverns": ("the western caverns", "las cavernas del oeste")}[place]
         steps.append(OD([("objective", {"type": "reach", "x": x, "z": z, "radius": 24}), ("target", {"x": x, "z": z})]))
         n += 1
-        names = {"arena": ("the Nordrath Arena", "la Arena de Nordrath"), "forge": ("the Nordrath Forge", "la Forja de Nordrath"),
-                 "caverns": ("the western caverns", "las cavernas del oeste")}[place]
         say("%s.step%d" % (base, n), ("Go to %s." % names[0], "Ve a %s." % names[1]))
     steps.append(OD([("objective", {"type": "kill", "entity": q["spawn"].split(":")[0] + ":" + ("void_*" if "void" in q["spawn"] else q["spawn"].split(":")[1]),
                                     "count": q["count"]}),
@@ -68,7 +88,7 @@ def quest_files(q, kind):
     steps.append(OD([("objective", {"type": "manual"})]))
     n += 1
     giver_name = "npc.sofe." + q["giver"]
-    say("%s.step%d" % (base, n), ("Go back to whoever asked for your help in %s." % giver_region, "Vuelve con quien te pidió ayuda en %s." % giver_region))
+    say("%s.step%d" % (base, n), ("Go back to whoever asked for your help in %s." % giver_region[0], "Vuelve con quien te pidió ayuda en %s." % giver_region[1]))
     rewards = [{"type": "give_xp", "amount": q["xp"]}]
     if q.get("relic"):
         rewards.append({"type": "give_relic", "relic": q["relic"]})
@@ -78,13 +98,13 @@ def quest_files(q, kind):
     if kind == "bearer":
         quest["requires"] = {"type": "all_of", "conditions": [{"type": "class_is", "class": q["cls"]}, {"type": "act_reached", "act": q["act"]}]}
     else:
-        quest["requires"] = {"type": "act_reached", "act": 2}
+        quest["requires"] = {"type": "act_reached", "act": q.get("act", 2)}
     write(os.path.join(DATA, "quests", kind, q["id"] + ".json"), quest)
     return qid, n
 
 
 def giver_dialogues(q, kind, qid, last):
-    npc, style = q["giver"], STYLE[q.get("act", 2)]
+    npc, style = q["giver"], style_of(q)
     key = "dialogue.sofe.q.%s" % q["id"]
     folder = os.path.join(DATA, "dialogue", npc)
     say(key + ".offer.1", q["offer"][0])
@@ -93,7 +113,7 @@ def giver_dialogues(q, kind, qid, last):
     say(key + ".later", ("Not yet.", "Todavía no."))
     say(key + ".reminder", q["reminder"])
     starts = {"type": "all_of", "conditions": [{"type": "not", "condition": step(1, qid)}] +
-              ([{"type": "class_is", "class": q["cls"]}, {"type": "act_reached", "act": q["act"]}] if kind == "bearer" else [{"type": "act_reached", "act": 2}])}
+              ([{"type": "class_is", "class": q["cls"]}, {"type": "act_reached", "act": q["act"]}] if kind == "bearer" else [{"type": "act_reached", "act": q.get("act", 2)}])}
     write(os.path.join(folder, "q_%s_offer.json" % q["id"]), OD([
         ("style", style), ("npc", npc), ("priority", 20), ("requires", starts),
         ("lines", [line(npc, key + ".offer.1"),
@@ -111,10 +131,10 @@ def giver_dialogues(q, kind, qid, last):
             say(key + ".answer." + fate, ask)
             say(key + ".reply." + fate, reply)
             answers.append(OD([("text", key + ".answer." + fate), ("next", 2),
-                               ("effects", [{"type": "set_fate", "region": "nordrath", "fate": fate}, {"type": "advance_quest", "quest": qid}])]))
+                               ("effects", [{"type": "set_fate", "region": region_of(q), "fate": fate}, {"type": "advance_quest", "quest": qid}])]))
         lines[1] = line(npc, key + ".choice.2", answers=answers)
         for fate, _, _ in q["answers"]:  # only the reply to the fate chosen is shown
-            lines.append(line(npc, key + ".reply." + fate, condition={"type": "fate_is", "region": "nordrath", "fate": fate}))
+            lines.append(line(npc, key + ".reply." + fate, condition={"type": "fate_is", "region": region_of(q), "fate": fate}))
         write(os.path.join(folder, "q_%s_done.json" % q["id"]), OD([
             ("style", style), ("npc", npc), ("priority", 25), ("requires", exactly(last, qid)), ("lines", lines)]))
     else:
@@ -160,6 +180,35 @@ def bearers():
         say("dialogue.sofe.order." + o, ORDERS[o])
 
 
+def folk():
+    """The refugees in the camps of Parsivan, Khemet and Aureum: their first lines while the Archsin rules, then
+    once it has fallen; and what one of them says of the region's fate."""
+    for region, people in act34.FOLK.items():
+        for npc, (names, freed_act, now, later) in people.items():
+            say("npc.sofe." + npc, names)
+            folder = os.path.join(DATA, "dialogue", npc)
+            for act, lines_ in ((1, now), (freed_act, later)):
+                keys = []
+                for i, texts in enumerate(lines_):
+                    k = "dialogue.sofe.%s.act%d.%d" % (npc, act, i + 1)
+                    say(k, texts)
+                    keys.append(k)
+                d = OD([("style", region), ("npc", npc)])
+                if act > 1:
+                    d["priority"] = act
+                    d["requires"] = {"type": "act_reached", "act": act}
+                d["lines"] = [line(npc, k) for k in keys]
+                write(os.path.join(folder, "act%d.json" % act), d)
+    for region, witness in act34.FATE_WITNESS.items():
+        for fate, texts in act34.FATE_REACTIONS[region].items():
+            key = "dialogue.sofe.%s.fate.%s" % (witness, fate)
+            say(key, texts)
+            write(os.path.join(DATA, "dialogue", witness, "fate_%s.json" % fate), OD([
+                ("style", region), ("npc", witness), ("priority", 6),
+                ("requires", {"type": "fate_is", "region": region, "fate": fate}),
+                ("lines", [line(witness, key)])]))
+
+
 def fate_reactions():
     folder = os.path.join(DATA, "dialogue", "nordrath_skald")
     for fate, texts in FATE_REACTIONS.items():
@@ -199,10 +248,16 @@ if __name__ == "__main__":
     for q in BEARER_QUESTS:
         qid, last = quest_files(q, "bearer")
         giver_dialogues(q, "bearer", qid, last)
-    for q in FATE_QUESTS:
+    for q in FATE_QUESTS + act34.SIDE_QUESTS:
         qid, last = quest_files(q, "side")
         giver_dialogues(q, "side", qid, last)
+    for q in act34.BEARER_QUESTS_34:
+        qid, last = quest_files(q, "bearer")
+        giver_dialogues(q, "bearer", qid, last)
+    for cls, acts in act34.BEARER_LINES_34.items():
+        BEARER_LINES[cls].update(acts)
     bearers()
     fate_reactions()
+    folk()
     lang()
     print("story: %d Bearer quests, %d fate quests, %d companions" % (len(BEARER_QUESTS), len(FATE_QUESTS), len(COMPANION)))

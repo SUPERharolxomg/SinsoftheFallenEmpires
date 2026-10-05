@@ -1,0 +1,21 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "sofe:sulthari_desert",
+    "sofe:ashen_wastes",
+    "sofe:nordrath_tundra",
+    "sofe:nordrath_ice_fields",
+    "sofe:nordrath_volcanic_forges",
+    "sofe:parsivan_gardens",
+    "sofe:khemet_valley",
+    "sofe:aureum_hills"
+  ],
+  "spawners": [
+    {
+      "type": "sofe:void_skeleton",
+      "weight": 45,
+      "minCount": 1,
+      "maxCount": 3
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/tempering_anvil_bottom",
+    "side": "sofe:block/tempering_anvil_side",
+    "top": "sofe:block/tempering_anvil_top"
+  }
+}

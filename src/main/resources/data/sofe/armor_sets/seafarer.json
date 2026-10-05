@@ -12,5 +12,37 @@
       "amplifier": 0,
       "when": "water"
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "effect",
+        "effect": "minecraft:water_breathing",
+        "amplifier": 0,
+        "when": "water"
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "drown",
+        "value": 0.2
+      }
+    ],
+    "leggings": [
+      {
+        "type": "effect",
+        "effect": "minecraft:dolphins_grace",
+        "amplifier": 0,
+        "when": "water"
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.15
+      }
+    ]
+  }
 }

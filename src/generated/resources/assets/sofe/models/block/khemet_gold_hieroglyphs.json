@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sofe:block/khemet_gold_hieroglyphs"
+  }
+}

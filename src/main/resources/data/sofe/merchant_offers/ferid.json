@@ -1,15 +1,64 @@
 {
   "role": "alchemist",
+  "empire": "sulthari",
   "offers": [
     {
       "sell": "sofe:minor_pomegranate_elixir",
       "price": 15,
-      "stock": 8
+      "stock": 7
     },
     {
       "sell": "sofe:bearers_tonic",
-      "price": 25,
+      "price": 24,
       "stock": 6
+    },
+    {
+      "sell": "sofe:strong_pomegranate_elixir",
+      "price": 40,
+      "stock": 6,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:strong_bearers_tonic",
+      "price": 64,
+      "stock": 5,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:major_pomegranate_elixir",
+      "price": 90,
+      "stock": 5,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:major_bearers_tonic",
+      "price": 144,
+      "stock": 4,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:grand_pomegranate_elixir",
+      "price": 160,
+      "stock": 4,
+      "min_act": 4
+    },
+    {
+      "sell": "sofe:grand_bearers_tonic",
+      "price": 256,
+      "stock": 3,
+      "min_act": 4
+    },
+    {
+      "sell": "sofe:imperial_pomegranate_elixir",
+      "price": 260,
+      "stock": 3,
+      "min_act": 5
+    },
+    {
+      "sell": "sofe:imperial_bearers_tonic",
+      "price": 416,
+      "stock": 2,
+      "min_act": 5
     },
     {
       "sell": "sofe:brass_flask",

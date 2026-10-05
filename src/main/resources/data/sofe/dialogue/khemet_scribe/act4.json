@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "khemet_scribe",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.khemet_scribe.act4.1"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_gardener",
+  "lines": [
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.parsivan_gardener.act1.1"
+    },
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.parsivan_gardener.act1.2"
+    }
+  ]
+}

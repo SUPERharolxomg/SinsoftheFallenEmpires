@@ -85,6 +85,8 @@ Each empire has its own ore, generated only in its region, so unlocking a new re
 
 **Gems.** Mining has a 3% chance of a **rough gem** (Ruby of Wrath, Emerald of Envy, etc., one per sin). They are cut at the Jeweler and socketed into gear. **Oath Gems** (perfect version) drop only from the Broken Oaths.
 
+**What a set gem gives** (cut / Oath): Ruby of Wrath +6 / 12% physical damage, Amethyst of Lust +2 / 4% life steal, Topaz of Greed +4 / 8 Charisma, Moonstone of Sloth +6 / 12 armor, Amber of Gluttony +10 / 20 health, Emerald of Envy +3 / 6% critical chance, Sunstone of Pride +2 / 4 to all attributes. A rough gem cannot be set. The Jeweler opens sockets one at a time (250, 750 and 2,000 Dinars) on weapons and chestplates, up to three.
+
 **Class synergies.** The Thief applies his 10% double loot (*Deep Pockets*) to mined gems too. The Necromancer's Clay Wardens can mine a block when no enemies are near.
 
 ## Forges and crafting
@@ -110,8 +112,8 @@ Three routes, from easiest to strongest: **buy**, **distill** and **the Bearer's
 
 | Potion | Effect | Buy (Ferid) | Distill at the Alembic | Enemy drop |
 | --- | --- | --- | --- | --- |
-| **Pomegranate Elixir** (minor / major / imperial) | Heals 4 / 8 / 14 hearts over 3 s | Minor, 15 Dinars | Parsivan pomegranate + brass flask (+ Aetherium for imperial) | Common |
-| **Bearer's Tonic** | Restores 40% of your class resource | 25 Dinars | Khemet lotus + powdered Star Lapis | Common |
+| **Pomegranate Elixir** (minor / strong / major / grand / imperial, one per act) | Heals 20 / 35 / 50 / 75 / 100 health: half at once, the rest over 3 s | Ferid, from its act | The weaker elixir + 2 pomegranates + the act's material (Glacial Iron nugget, Star Lapis powder, Solar Gold powder, Aetherium shard) | Common |
+| **Bearer's Tonic** (the same five strengths) | Restores 25 / 35 / 50 / 65 / 80% of your class resource | Ferid, from its act | The weaker tonic + 2 desert lotus + the act's material | Common |
 | **Oasis Water** | Slowly heals life and resource over 10 s | No | Cactus + water + powdered Solar Gold | Rare |
 | **Sage Antidote** | Removes poison, bleed and slow | 20 Dinars | Mountain sage + milk | Uncommon |
 | **War Oil** (fire / frost / storm) | Weapon deals elemental damage for 60 s | No | Nordrath fish oil + element ore | Rare |

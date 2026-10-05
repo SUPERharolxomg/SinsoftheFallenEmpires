@@ -1,0 +1,48 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/aureum_gold_of_the_courts",
+          "step": 1
+        }
+      },
+      {
+        "type": "act_reached",
+        "act": 4
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.offer.1"
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.offer.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.aureum_gold_of_the_courts.accept",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:side/aureum_gold_of_the_courts"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.aureum_gold_of_the_courts.later",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.aureum_senator.act1.1"
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.aureum_senator.act1.2"
+    }
+  ]
+}

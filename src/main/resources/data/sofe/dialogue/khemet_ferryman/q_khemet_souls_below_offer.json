@@ -1,0 +1,48 @@
+{
+  "style": "khemet",
+  "npc": "khemet_ferryman",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/khemet_souls_below",
+          "step": 1
+        }
+      },
+      {
+        "type": "act_reached",
+        "act": 3
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.q.khemet_souls_below.offer.1"
+    },
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.q.khemet_souls_below.offer.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.khemet_souls_below.accept",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:side/khemet_souls_below"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.khemet_souls_below.later",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

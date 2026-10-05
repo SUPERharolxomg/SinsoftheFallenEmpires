@@ -1,0 +1,29 @@
+{
+  "style": "aureum",
+  "npc": "aureum_widow",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/shirin_act4",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/shirin_act4",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_widow",
+      "text": "dialogue.sofe.q.shirin_act4.reminder"
+    }
+  ]
+}

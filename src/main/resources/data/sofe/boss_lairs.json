@@ -1,0 +1,97 @@
+{
+  "_comment": "Where each boss waits (BossLairs): x and z are the middle of its room or arena, radius how near a Bearer must come to wake it. A boss rises only for Bearers who have not beaten it yet.",
+  "lairs": {
+    "sofe:kaleth": {
+      "x": -1200,
+      "z": -3022,
+      "radius": 18
+    },
+    "sofe:serath": {
+      "x": 1200,
+      "z": -3000,
+      "radius": 22
+    },
+    "sofe:vorath": {
+      "x": 0,
+      "z": -4500,
+      "radius": 22
+    },
+    "sofe:mirael": {
+      "x": 3600,
+      "z": -500,
+      "radius": 12
+    },
+    "sofe:thessyn": {
+      "x": 5200,
+      "z": 700,
+      "radius": 16
+    },
+    "sofe:luxara": {
+      "x": 9000,
+      "z": -5000,
+      "radius": 12
+    },
+    "sofe:dormiel": {
+      "x": 3208,
+      "z": 4000,
+      "radius": 16
+    },
+    "sofe:morthis": {
+      "x": 7994,
+      "z": 8500,
+      "radius": 14
+    },
+    "sofe:goldarc": {
+      "x": -3600,
+      "z": -500,
+      "radius": 14
+    },
+    "sofe:nixara": {
+      "x": -3600,
+      "z": 1500,
+      "radius": 14
+    },
+    "sofe:avarok": {
+      "x": -8000,
+      "z": 500,
+      "radius": 16
+    },
+    "sofe:fenrath": {
+      "x": -600,
+      "z": -2484,
+      "radius": 18
+    },
+    "sofe:gularth": {
+      "x": -600,
+      "z": -2550,
+      "radius": 18
+    },
+    "sofe:shadeyn": {
+      "x": -6000,
+      "z": 7000,
+      "radius": 22
+    },
+    "sofe:envyris": {
+      "x": -9000,
+      "z": -8000,
+      "radius": 18
+    },
+    "sofe:solrath": {
+      "x": 700,
+      "z": 700,
+      "radius": 16
+    },
+    "sofe:prython": {
+      "x": -700,
+      "z": 700,
+      "radius": 15,
+      "y": 201
+    },
+    "sofe:nahrazel": {
+      "x": -700,
+      "z": 1050,
+      "radius": 26,
+      "y": -20
+    }
+  }
+}

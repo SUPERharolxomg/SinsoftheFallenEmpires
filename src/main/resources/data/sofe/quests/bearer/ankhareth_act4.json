@@ -1,0 +1,61 @@
+{
+  "type": "bearer",
+  "act": 4,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -6000,
+        "z": 7000,
+        "radius": 24
+      },
+      "target": {
+        "x": -6000,
+        "z": 7000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gladiator_shade",
+        "count": 8
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:gladiator_shade",
+          "count": 8,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 3800
+    },
+    {
+      "type": "give_relic",
+      "relic": "mask_of_the_ferryman"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "necromancer"
+      },
+      {
+        "type": "act_reached",
+        "act": 4
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "sofe:alembic",
+  "ingredients": [
+    {
+      "item": "sofe:strong_pomegranate_elixir",
+      "count": 1
+    },
+    {
+      "item": "sofe:pomegranate",
+      "count": 2
+    },
+    {
+      "item": "sofe:star_lapis_powder",
+      "count": 1
+    }
+  ],
+  "result": "sofe:major_pomegranate_elixir"
+}

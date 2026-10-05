@@ -1,0 +1,43 @@
+{
+  "style": "khemet",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "morthis",
+      "text": "dialogue.sofe.morthis.1"
+    },
+    {
+      "speaker": "morthis",
+      "text": "dialogue.sofe.morthis.own",
+      "condition": {
+        "type": "class_is",
+        "class": "necromancer"
+      }
+    },
+    {
+      "speaker": "morthis",
+      "text": "dialogue.sofe.morthis.other",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "necromancer"
+        }
+      }
+    },
+    {
+      "speaker": "morthis",
+      "text": "dialogue.sofe.morthis.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.morthis.refuse",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.morthis.silent",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}
