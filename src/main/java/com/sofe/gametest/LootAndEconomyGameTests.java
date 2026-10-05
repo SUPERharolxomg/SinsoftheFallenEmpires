@@ -134,17 +134,22 @@ public class LootAndEconomyGameTests {
         ServerPlayer hero = bearer(helper, "sofe_test_relic", new Vec3(1.5, 1, 1.5));
         KalethEntity kaleth = helper.spawn(EntityRegistry.KALETH.get(), new Vec3(3.5, 1, 3.5));
         kaleth.setNoAi(true);
-        BlockPos at = kaleth.blockPosition();
+        BlockPos fell = kaleth.blockPosition();
         kaleth.hurt(hero.damageSources().playerAttack(hero), 100_000);
         helper.runAfterDelay(2, () -> {
+            // the coffer stands on the floor near where Kaleth fell (the middle of the ring of coffers)
+            BlockPos at = BlockPos.betweenClosedStream(fell.offset(-4, -4, -4), fell.offset(4, 4, 4))
+                    .filter(p -> helper.getLevel().getBlockEntity(p) instanceof RewardCoffer.Entity).map(BlockPos::immutable).findFirst().orElse(fell);
             helper.assertTrue(helper.getLevel().getBlockEntity(at) instanceof RewardCoffer.Entity, "no Reward Coffer where Kaleth fell");
             RewardCoffer.Entity coffer = (RewardCoffer.Entity) helper.getLevel().getBlockEntity(at);
-            List<ItemStack> share = coffer.take(hero.getUUID());
-            ItemStack relic = share.stream().filter(s -> s.is(ItemRegistry.KALETH_BLADE.get())).findFirst().orElse(ItemStack.EMPTY);
-            helper.assertFalse(relic.isEmpty(), "Kaleth's Blade is not in the share: " + share);
+            helper.assertTrue(coffer.isOwner(hero.getUUID()), "the coffer is not the hero's own");
+            helper.assertTrue(RewardCoffer.open(hero, helper.getLevel(), at, coffer), "the owner could not open the coffer");
+            helper.assertTrue(helper.getLevel().getBlockState(at).isAir(), "an opened coffer should be gone");
+            ItemStack relic = ItemStack.EMPTY;
+            for (ItemStack s : hero.getInventory().items) if (s.is(ItemRegistry.KALETH_BLADE.get())) relic = s;
+            helper.assertFalse(relic.isEmpty(), "Kaleth's Blade is not in the hero's share");
             helper.assertTrue(GearNbt.read(relic).map(g -> g.rarity() == Rarity.RELIC && "kaleth_blade".equals(g.relic())).orElse(false), "the Relic has no Relic data");
             helper.assertTrue(GearNbt.owner(relic).map(hero.getUUID()::equals).orElse(false), "the Relic is not bound to its owner");
-            helper.assertTrue(coffer.take(hero.getUUID()).isEmpty(), "a share can be taken only once");
             helper.succeed();
         });
     }

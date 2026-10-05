@@ -53,6 +53,7 @@ public class VorathEntity extends ArchsinEntity implements GeoEntity {
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.vorath.idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.vorath.walk");
     private static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("animation.vorath.attack");
+    private static final RawAnimation SIGNATURE = RawAnimation.begin().thenPlay("animation.vorath.signature");
 
     private final AnimatableInstanceCache animations = GeckoLibUtil.createInstanceCache(this);
     private float rage;
@@ -214,9 +215,15 @@ public class VorathEntity extends ArchsinEntity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "main", 5, state -> {
+            if (signing()) return state.setAndContinue(SIGNATURE);
             if (this.swinging) return state.setAndContinue(ATTACK);
             return state.setAndContinue(state.isMoving() ? WALK : IDLE);
         }));
+    }
+
+    @Override
+    public String modelName() {
+        return "vorath";
     }
 
     @Override
@@ -236,5 +243,35 @@ public class VorathEntity extends ArchsinEntity implements GeoEntity {
     @SuppressWarnings("unused")
     private PlayState idle() {
         return PlayState.CONTINUE;
+    }
+
+    // --- signature attack (SoFEBossEntity.Signature): his great axe splits the ground: a line of lava erupts from the wound
+
+    private net.minecraft.world.phys.Vec3 signatureAim = net.minecraft.world.phys.Vec3.ZERO;
+
+    @Override
+    protected Signature signature() {
+        return new Signature("vorath_splitter", 30, 220, 12);
+    }
+
+    @Override
+    protected void signatureWindup(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target, int tick,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        if (tick == 1) signatureAim = Signatures.toward(this, target);
+        if (tick % 3 == 0) Signatures.drawLine(level, position(), signatureAim, 12, net.minecraft.core.particles.ParticleTypes.FLAME);
+    }
+
+    @Override
+    protected void signatureStrike(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        for (var p : Signatures.line(position(), signatureAim, 12, 3, fighters)) {
+            Signatures.strike(this, p, signatureDamage(2.4), position(), 0.6, 0.9);
+            p.setSecondsOnFire(6);
+        }
+        for (double t = 1; t <= 12; t += 1.5) {
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.LAVA, getX() + signatureAim.x * t, getY() + 0.3, getZ() + signatureAim.z * t, 6, 0.4, 0.2, 0.4, 0);
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION, getX() + signatureAim.x * t, getY() + 0.3, getZ() + signatureAim.z * t, 1, 0, 0, 0, 0);
+        }
+        level.playSound(null, blockPosition(), net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.HOSTILE, 1.6f, 0.6f);
     }
 }

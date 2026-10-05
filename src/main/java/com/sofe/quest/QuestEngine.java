@@ -47,6 +47,16 @@ import java.util.Optional;
 public final class QuestEngine {
     /** The Act I main quest, started when the player becomes a Bearer. */
     public static final String FIRST_QUEST = "sofe:act1_eclipse";
+    /** Favor a finished quest earns with the empire where it ends (docs/Anexos.md, "Favor per empire"). */
+    public static final int QUEST_FAVOR = 80;
+
+    /** Favor with the empire of the land the player stands in (Sulthari when it is no empire's). */
+    public static void favorHere(ServerPlayer player, int points) {
+        String empire = com.sofe.world.SoFEWorld.regionMap(player.server)
+                .map(m -> m.regionAt(player.getBlockX(), player.getBlockZ()))
+                .filter(r -> r != com.sofe.world.region.Region.OCEAN).map(r -> r.id()).orElse("sulthari");
+        com.sofe.economy.MerchantService.gainFavor(player, empire, points);
+    }
     private static final int MAX_EFFECT_DEPTH = 16; // a dialogue that starts a quest that opens a dialogue...
     private static final int POSITION_CHECK_TICKS = 20;
     private static final double BOSS_WAKE_RADIUS = 24;
@@ -113,6 +123,7 @@ public final class QuestEngine {
         story.quests().forEach((id, state) -> {
             StoryProgress.QuestState old = before.get(id);
             if (state.completed() && (old == null || !old.completed())) {
+                favorHere(player, QUEST_FAVOR);
                 StoryDataManager.quest(id).ifPresent(q -> player.sendSystemMessage(Component.translatable("message.sofe.quest_completed",
                         Component.translatable(q.translationKey())).withStyle(ChatFormatting.GOLD)));
                 player.level().playSound(null, player.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.7f, 1f);

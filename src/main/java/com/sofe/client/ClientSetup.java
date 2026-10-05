@@ -42,7 +42,8 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
-        if (ArmorShots.enabled() || SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ShotsWorld::onClientTick);
+        if (ArmorShots.enabled() || SkillShots.enabled() || PlaceShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ShotsWorld::onClientTick);
+        if (PlaceShots.enabled()) MinecraftForge.EVENT_BUS.addListener(PlaceShots::onClientTick);
         if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
         if (SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(SkillShots::onClientTick);
         modBus.addListener(SoFEKeys::register);

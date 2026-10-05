@@ -83,6 +83,7 @@ public final class SkillCaster {
         data.cooldowns().start(info.id(), now, cooldown);
 
         SkillFx.cast(player, info.id());
+        player.getPersistentData().putString(com.sofe.entity.boss.EnvyrisEntity.LAST_SKILL, info.id()); // Envyris answers with it
         Skill.Result result = skill.get().cast(new Skill.Context(player, info, stats.get(), data, classData.get()));
         result.rune().flatMap(rune -> data.runes().add(rune)).ifPresent(done ->
                 Constellations.trigger(player, done.constellation(), done.runes(), result.impact(), classData.get()));

@@ -21,13 +21,40 @@ import java.util.List;
 
 /**
  * A recipe of a SoFE station (docs/Pociones.md, "Forges and crafting"), a custom recipe type: the
- * Imperial Forge (needs its Blueprint, makes Tempered gear of an item level) or the Alembic (potions).
+ * Imperial Forge (needs its Blueprint, makes Tempered gear of an item level), the Alembic (potions), the Jeweler
+ * (cuts rough gems) or the Purifier (Black Aetherium into aetherium). A recipe may also cost Dinars.
  * Ingredients are taken from the player's inventory; the station screen lists the recipes.
  */
 public record StationRecipe(ResourceLocation id, Kind kind, List<Ingredient> ingredients, Item result, int count,
-                            String blueprint, int itemLevel) implements Recipe<Container> {
+                            String blueprint, int itemLevel, long dinars) implements Recipe<Container> {
 
-    public enum Kind { IMPERIAL_FORGE, ALEMBIC }
+    /** The stations: the Forge (Blueprints, Tempered gear), the Alembic (potions), the Jeweler (cuts gems) and the Purifier. */
+    public enum Kind {
+        IMPERIAL_FORGE, ALEMBIC, JEWELER, PURIFIER;
+
+        public RecipeType<StationRecipe> type() {
+            return switch (this) {
+                case IMPERIAL_FORGE -> SoFERecipes.IMPERIAL_FORGE.get();
+                case ALEMBIC -> SoFERecipes.ALEMBIC.get();
+                case JEWELER -> SoFERecipes.JEWELER.get();
+                case PURIFIER -> SoFERecipes.PURIFIER.get();
+            };
+        }
+
+        public RecipeSerializer<StationRecipe> serializer() {
+            return switch (this) {
+                case IMPERIAL_FORGE -> SoFERecipes.FORGE_SERIALIZER.get();
+                case ALEMBIC -> SoFERecipes.ALEMBIC_SERIALIZER.get();
+                case JEWELER -> SoFERecipes.JEWELER_SERIALIZER.get();
+                case PURIFIER -> SoFERecipes.PURIFIER_SERIALIZER.get();
+            };
+        }
+
+        /** "gui.sofe.station.forge" and so on. */
+        public String titleKey() {
+            return "gui.sofe.station." + (this == IMPERIAL_FORGE ? "forge" : name().toLowerCase(java.util.Locale.ROOT));
+        }
+    }
 
     public record Ingredient(Item item, int count) {
     }
@@ -86,12 +113,12 @@ public record StationRecipe(ResourceLocation id, Kind kind, List<Ingredient> ing
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return kind == Kind.IMPERIAL_FORGE ? SoFERecipes.FORGE_SERIALIZER.get() : SoFERecipes.ALEMBIC_SERIALIZER.get();
+        return kind.serializer();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return kind == Kind.IMPERIAL_FORGE ? SoFERecipes.IMPERIAL_FORGE.get() : SoFERecipes.ALEMBIC.get();
+        return kind.type();
     }
 
     @Override
@@ -111,7 +138,8 @@ public record StationRecipe(ResourceLocation id, Kind kind, List<Ingredient> ing
             return new StationRecipe(id, kind, ingredients, item(json.get("result").getAsString()),
                     json.has("count") ? json.get("count").getAsInt() : 1,
                     json.has("blueprint") ? json.get("blueprint").getAsString() : "",
-                    json.has("item_level") ? json.get("item_level").getAsInt() : 1);
+                    json.has("item_level") ? json.get("item_level").getAsInt() : 1,
+                    json.has("dinars") ? json.get("dinars").getAsLong() : 0);
         }
 
         private static Item item(String id) {
@@ -124,7 +152,7 @@ public record StationRecipe(ResourceLocation id, Kind kind, List<Ingredient> ing
         public StationRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             List<Ingredient> ingredients = buf.readList(b -> new Ingredient(b.readById(net.minecraft.core.registries.BuiltInRegistries.ITEM), b.readVarInt()));
             return new StationRecipe(id, kind, ingredients, buf.readById(net.minecraft.core.registries.BuiltInRegistries.ITEM), buf.readVarInt(),
-                    buf.readUtf(), buf.readVarInt());
+                    buf.readUtf(), buf.readVarInt(), buf.readVarLong());
         }
 
         @Override
@@ -137,6 +165,7 @@ public record StationRecipe(ResourceLocation id, Kind kind, List<Ingredient> ing
             buf.writeVarInt(recipe.count());
             buf.writeUtf(recipe.blueprint());
             buf.writeVarInt(recipe.itemLevel());
+            buf.writeVarLong(recipe.dinars());
         }
     }
 }

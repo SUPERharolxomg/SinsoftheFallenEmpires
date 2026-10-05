@@ -46,7 +46,10 @@ public class WorldPresetGameTests {
         assertBiome(helper, aetheris, 4200, -1000, SoFEBiomes.PARSIVAN_GARDENS);
         assertBiome(helper, aetheris, 3500, 4200, SoFEBiomes.KHEMET_VALLEY);
         assertBiome(helper, aetheris, -4000, 0, SoFEBiomes.AUREUM_HILLS);
-        assertBiome(helper, aetheris, 5900, -5900, SoFEBiomes.AETHERIS_OCEAN);
+        assertBiome(helper, aetheris, 0, 8000, SoFEBiomes.AETHERIS_OCEAN);         // the Southern Sea
+        assertBiome(helper, aetheris, 12_200, 0, SoFEBiomes.AETHERIS_OCEAN);       // beyond the edge
+        assertBiome(helper, aetheris, 9000, -5000, SoFEBiomes.PARSIVAN_GARDENS);   // the north-east is Parsivan
+        assertBiome(helper, aetheris, -9000, -8000, SoFEBiomes.AUREUM_HILLS);      // the north-west is Aureum
         helper.succeed();
     }
 

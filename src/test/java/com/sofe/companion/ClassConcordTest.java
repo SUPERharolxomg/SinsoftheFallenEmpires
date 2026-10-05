@@ -32,4 +32,11 @@ class ClassConcordTest {
     void allFiveAreTheFivePillars() {
         assertTrue(ClassConcord.pillars(ClassConcord.concord(5, EnumSet.allOf(PlayerClass.class))));
     }
+
+    @Test
+    void theNecromancersConcordStealsMoreLifeFromTheEdgeOfDeath() {
+        assertEquals(0.03, ClassConcord.lifeSteal(0.8f), 1e-9);
+        assertEquals(0.03, ClassConcord.lifeSteal(0.25f), 1e-9);
+        assertEquals(0.05, ClassConcord.lifeSteal(0.2f), 1e-9);
+    }
 }

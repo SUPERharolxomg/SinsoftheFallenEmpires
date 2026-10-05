@@ -158,4 +158,28 @@ public class BrassSentinelEntity extends SoFEBossEntity implements com.sofe.enti
         if (hit) target.setDeltaMovement(target.getDeltaMovement().add(0, 0.4, 0));
         return hit;
     }
+
+    // --- signature attack (SoFEBossEntity.Signature): its piston fists slam the floor together: a shockwave rings out across the observatory
+
+    private net.minecraft.world.phys.Vec3 signatureAim = net.minecraft.world.phys.Vec3.ZERO;
+
+    @Override
+    protected Signature signature() {
+        return new Signature("sentinel_piston", 30, 220, 9);
+    }
+
+    @Override
+    protected void signatureWindup(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target, int tick,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        if (tick == 1) signatureAim = Signatures.toward(this, target);
+        if (tick % 4 == 0) Signatures.drawRing(level, position(), 8, net.minecraft.core.particles.ParticleTypes.CRIT);
+    }
+
+    @Override
+    protected void signatureStrike(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        for (var p : Signatures.ring(position(), 8, fighters)) if (p.onGround()) Signatures.strike(this, p, signatureDamage(1.8), position(), 1.5, 0.7);
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION, getX(), getY() + 0.3, getZ(), 8, 3, 0.1, 3, 0);
+        level.playSound(null, blockPosition(), net.minecraft.sounds.SoundEvents.ANVIL_LAND, net.minecraft.sounds.SoundSource.HOSTILE, 2.0f, 0.5f);
+    }
 }

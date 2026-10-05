@@ -6,19 +6,21 @@ import com.sofe.player.ResourceType;
 
 /**
  * What each attribute point does, from data/sofe/attributes.json (docs/Clases.md, "Attributes").
- * Effects count the points above the base of 10, so a new character has vanilla health and the
- * class's primary attribute already gives its edge.
+ * Effects count the points above the base of 10, so the class's primary attribute already gives its edge.
+ * Every Bearer has a base health of its own (50, against vanilla's 20); each Vitality point adds health and a
+ * little movement speed, up to a cap.
  */
 public record AttributeRules(double physicalDamage, double critChance, double critMultiplier, double dodgeChance, double dodgeCap,
                              double magicDamage, double maxMana, double resourceRegen, double maxEssence, double maxResolve,
-                             double maxAuthority, double decreeStrength, double maxHealth) {
+                             double maxAuthority, double decreeStrength, double maxHealth, double baseHealth, double moveSpeed,
+                             double moveSpeedCap) {
 
     public static final AttributeRules DEFAULT = new AttributeRules(0.01, 0.005, 1.5, 0.003, 0.30,
-            0.01, 1, 0.02, 1, 1, 1, 0.01, 0.5);
+            0.01, 1, 0.02, 1, 1, 1, 0.01, 2, 50, 0.002, 0.25);
 
     /** The combined effect of a character's attributes. */
     public record Effects(double physicalDamageMultiplier, double magicDamageMultiplier, double critChance, double critMultiplier,
-                          double dodgeChance, double maxHealthBonus, double regenMultiplier, int[] maxResourceBonus) {
+                          double dodgeChance, double maxHealthBonus, double regenMultiplier, int[] maxResourceBonus, double moveSpeedBonus) {
 
         public int maxResourceBonus(ResourceType type) {
             return maxResourceBonus[type.ordinal()];
@@ -52,7 +54,8 @@ public record AttributeRules(double physicalDamage, double critChance, double cr
                 Math.min(dodgeCap, agi * dodgeChance),
                 vit * maxHealth,
                 1 + will * resourceRegen,
-                resource);
+                resource,
+                Math.min(moveSpeedCap, Math.max(0, vit) * moveSpeed));
     }
 
     public static AttributeRules parse(JsonObject json) {
@@ -70,7 +73,10 @@ public record AttributeRules(double physicalDamage, double critChance, double cr
                 get(json, "will", "max_resolve", d.maxResolve),
                 get(json, "charisma", "max_authority", d.maxAuthority),
                 get(json, "charisma", "decree_strength", d.decreeStrength),
-                get(json, "vitality", "max_health", d.maxHealth));
+                get(json, "vitality", "max_health", d.maxHealth),
+                json.has("base_health") ? json.get("base_health").getAsDouble() : d.baseHealth,
+                get(json, "vitality", "move_speed", d.moveSpeed),
+                get(json, "vitality", "move_speed_cap", d.moveSpeedCap));
     }
 
     private static double get(JsonObject json, String attribute, String key, double fallback) {
