@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_aureum",
+  "features": "sofe:imperial_marble",
+  "step": "underground_ores"
+}

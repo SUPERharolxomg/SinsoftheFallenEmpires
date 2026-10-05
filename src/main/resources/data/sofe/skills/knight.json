@@ -14,7 +14,7 @@
     },
     "shield_wall": {
       "cost": 15,
-      "cooldown_s": 8,
+      "cooldown_s": 12,
       "duration_s": 2
     },
     "banner_cry": {
@@ -33,14 +33,14 @@
     },
     "verdict": {
       "cost": 25,
-      "cooldown_s": 12,
+      "cooldown_s": 18,
       "damage": 9,
       "radius": 4,
       "stun_s": 2
     },
     "protectors_oath": {
       "cost": 20,
-      "cooldown_s": 15,
+      "cooldown_s": 20,
       "absorb": 0.3,
       "duration_s": 6
     },
@@ -49,7 +49,7 @@
     },
     "living_rampart": {
       "cost": 35,
-      "cooldown_s": 25,
+      "cooldown_s": 40,
       "width": 5,
       "duration_s": 8
     },

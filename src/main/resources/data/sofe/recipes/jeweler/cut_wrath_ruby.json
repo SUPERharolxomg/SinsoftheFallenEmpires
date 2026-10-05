@@ -1,0 +1,12 @@
+{
+  "type": "sofe:jeweler",
+  "ingredients": [
+    {
+      "item": "sofe:rough_wrath_ruby",
+      "count": 1
+    }
+  ],
+  "result": "sofe:cut_wrath_ruby",
+  "count": 1,
+  "dinars": 120
+}

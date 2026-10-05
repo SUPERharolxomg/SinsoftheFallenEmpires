@@ -56,7 +56,7 @@ Costs and cooldowns below are the **rank 1** values: they live in data files so 
 | **Intellect** | +1% magic damage and +1 maximum Mana |
 | **Will** | +2% resource regeneration and +1 maximum Essence and Resolve |
 | **Charisma** | +1 maximum Authority and +1% strength of Decrees and auras |
-| **Vitality** | +0.5 maximum health (a full heart every 4 points) |
+| **Vitality** | +2 maximum health (a full heart per point) and +0.2% movement speed (up to +25%); every Bearer starts with 50 health |
 
 **Starting values:** 10 in every attribute, plus 10 in the class's primary attribute:
 

@@ -27,6 +27,51 @@ public final class EconomyData {
     private final Deque<Sold> buyback = new ArrayDeque<>();
     private final Set<String> blueprints = new HashSet<>();
     private int flaskCharges = FLASK_START;
+    /** Favor with each empire, in points (docs/Anexos.md, "Favor per empire"), by region id. */
+    private final Map<String, Integer> favor = new HashMap<>();
+
+    /** The points each Favor rank needs: Stranger, Known, Trusted, Honored, Sworn, Exalted. */
+    public static final int[] FAVOR_RANKS = {0, 100, 300, 600, 1000, 1600};
+    public static final int MAX_FAVOR_RANK = FAVOR_RANKS.length - 1;
+    /** Each rank of Favor takes 2% off that empire's prices (10% at Exalted). */
+    public static final double DISCOUNT_PER_RANK = 0.02;
+
+    public int favorPoints(String empire) {
+        return favor.getOrDefault(empire, 0);
+    }
+
+    public int favorRank(String empire) {
+        return rankOf(favorPoints(empire));
+    }
+
+    public static int rankOf(int points) {
+        int rank = 0;
+        for (int i = 0; i < FAVOR_RANKS.length; i++) if (points >= FAVOR_RANKS[i]) rank = i;
+        return rank;
+    }
+
+    /** Adds Favor; returns the new rank if it went up, else -1. */
+    public int addFavor(String empire, int points) {
+        if (points <= 0) return -1;
+        int before = favorRank(empire);
+        favor.merge(empire, points, Integer::sum);
+        int after = favorRank(empire);
+        return after > before ? after : -1;
+    }
+
+    public Map<String, Integer> favor() {
+        return Map.copyOf(favor);
+    }
+
+    public void loadFavor(Map<String, Integer> points) {
+        favor.clear();
+        favor.putAll(points);
+    }
+
+    /** A price after the Favor discount with its empire. */
+    public static int discounted(int price, int rank) {
+        return Math.max(1, (int) Math.round(price * (1 - DISCOUNT_PER_RANK * Math.max(0, Math.min(MAX_FAVOR_RANK, rank)))));
+    }
 
     public long dinars() {
         return dinars;
@@ -59,10 +104,15 @@ public final class EconomyData {
 
     /** Checks act, stock and Dinars, then takes the price. The caller gives the item when BOUGHT. */
     public BuyResult buy(MerchantOffer offer, int act, long day) {
+        return buy(offer, act, MAX_FAVOR_RANK, offer.price(), day);
+    }
+
+    /** As buy, with the Favor the buyer has with the merchant's empire and the price after its discount. */
+    public BuyResult buy(MerchantOffer offer, int act, int favorRank, int price, long day) {
         restockIfNewDay(day);
-        if (act < offer.minAct()) return BuyResult.LOCKED;
+        if (act < offer.minAct() || favorRank < offer.minFavor()) return BuyResult.LOCKED;
         if (left(offer) <= 0) return BuyResult.SOLD_OUT;
-        if (!spend(offer.price())) return BuyResult.NO_DINARS;
+        if (!spend(price)) return BuyResult.NO_DINARS;
         bought.merge(offer.key(), 1, Integer::sum);
         return BuyResult.BOUGHT;
     }
@@ -141,5 +191,6 @@ public final class EconomyData {
 
     public void copyFrom(EconomyData other) {
         load(other.dinars, other.bought, other.stockDay, other.buyback(), other.blueprints, other.flaskCharges);
+        loadFavor(other.favor);
     }
 }

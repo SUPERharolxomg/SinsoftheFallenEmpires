@@ -63,10 +63,19 @@ public final class Soulbound {
     public static void onToss(ItemTossEvent event) {
         ItemStack stack = event.getEntity().getItem();
         if (!is(stack)) return;
-        event.setCanceled(true);
         Player player = event.getPlayer();
-        if (!player.getInventory().add(stack)) player.getInventory().placeItemBackInInventory(stack);
-        player.displayClientMessage(Component.translatable("message.sofe.soulbound").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        if (player.getInventory().add(stack) || stack.isEmpty()) {   // back in the pack: the toss never happens
+            event.setCanceled(true);
+            player.displayClientMessage(Component.translatable("message.sofe.soulbound").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            return;
+        }
+        // no room in the pack (a full inventory when a boss gives its Shard): it falls, but it never fades and only
+        // its owner can pick it up. Putting it back here would toss it again, and again, until the server falls.
+        var item = event.getEntity();
+        item.setUnlimitedLifetime();
+        item.setTarget(player.getUUID());
+        item.setNoPickUpDelay();
+        player.displayClientMessage(Component.translatable("message.sofe.soulbound.full").withStyle(ChatFormatting.LIGHT_PURPLE), true);
     }
 
     /**

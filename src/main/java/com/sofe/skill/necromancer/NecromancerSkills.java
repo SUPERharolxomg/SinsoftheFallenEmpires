@@ -1,5 +1,7 @@
 package com.sofe.skill.necromancer;
 
+import com.sofe.skill.ClassState;
+
 import com.sofe.combat.CombatData;
 import com.sofe.entity.boss.SoFEBossEntity;
 import com.sofe.entity.summon.SummonedAlly;
@@ -98,6 +100,13 @@ public final class NecromancerSkills {
         var golem = com.sofe.entity.summon.ClayGolem.summon(player, s.ticks("duration_s", 30), at, s.param("health", 40), s.param("golem_damage", 7));
         golem.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(s.param("armor", 2)); // Scarab Shell
         player.level().playSound(null, player.blockPosition(), SoundEvents.ROOTED_DIRT_PLACE, SoundSource.PLAYERS, 1, 0.6f);
+        // the more Wardens stand and the stronger they are, the longer the next one takes to shape
+        int standing = wardens(player).size();
+        int rank = Math.max(1, ClassState.rank(player, ctx.info().id()));
+        double scale = (1 + s.param("cooldown_per_warden", 0.5) * Math.max(0, standing - 1)) * (1 + s.param("cooldown_per_rank", 0.08) * (rank - 1));
+        long now = player.level().getGameTime();
+        int ticks = (int) Math.round(ctx.combat().cooldowns().remaining(ctx.info().id(), now) * scale);
+        ctx.combat().cooldowns().start(ctx.info().id(), now, ticks);
         return Skill.Result.at(at);
     }
 

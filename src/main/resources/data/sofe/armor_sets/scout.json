@@ -6,5 +6,36 @@
       "amplifier": 1,
       "when": "always"
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "projectile",
+        "value": 0.04
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "all",
+        "value": 0.02
+      }
+    ],
+    "leggings": [
+      {
+        "type": "effect",
+        "effect": "minecraft:speed",
+        "amplifier": 0,
+        "when": "always"
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.3
+      }
+    ]
+  }
 }

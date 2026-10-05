@@ -1,266 +1,768 @@
 {
-  "_comment": "Fixed places of the story (docs/Mundo.md, W1 and W6). x and z are the center; size_x and size_z the footprint. Structures with a zone are protected when a journey is created. Changing this file only affects new worlds.",
-  "spawn": {
-    "x": 0,
-    "z": 12
+ "_comment": "Fixed places of the story (docs/Mundo.md, W1 and W6). x and z are the center; size_x and size_z the footprint. Structures with a zone are protected when a journey is created. Changing this file only affects new worlds.",
+ "spawn": {
+  "x": 0,
+  "z": 12
+ },
+ "structures": {
+  "sofe:sulthari/city": {
+   "x": 0,
+   "z": 0,
+   "size_x": 320,
+   "size_z": 320,
+   "zone": "city"
   },
-  "structures": {
-    "sofe:sulthari/city": {
-      "x": 0,
-      "z": 0,
-      "size_x": 320,
-      "size_z": 320,
-      "zone": "city"
-    },
-    "sofe:sulthari/homestead": {
-      "x": 232,
-      "z": 0,
-      "size_x": 96,
-      "size_z": 128,
-      "zone": "homestead"
-    },
-    "sofe:sulthari/plaza": {
-      "x": 0,
-      "z": 12,
-      "size_x": 48,
-      "size_z": 48
-    },
-    "sofe:sulthari/great_observatory": {
-      "x": 0,
-      "z": -96,
-      "size_x": 64,
-      "size_z": 64
-    },
-    "sofe:sulthari/palace": {
-      "x": 0,
-      "z": 100,
-      "size_x": 72,
-      "size_z": 56
-    },
-    "sofe:sulthari/low_bazaar": {
-      "x": -92,
-      "z": 24,
-      "size_x": 64,
-      "size_z": 56
-    },
-    "sofe:sulthari/lower_district": {
-      "x": -96,
-      "z": 100,
-      "size_x": 96,
-      "size_z": 80
-    },
-    "sofe:sulthari/training_grounds": {
-      "x": 96,
-      "z": 40,
-      "size_x": 56,
-      "size_z": 56
-    },
-    "sofe:sulthari/forge": {
-      "x": 72,
-      "z": -40,
-      "size_x": 32,
-      "size_z": 32
-    },
-    "sofe:sulthari/bank": {
-      "x": -40,
-      "z": -40,
-      "size_x": 24,
-      "size_z": 24
-    },
-    "sofe:nordrath/forge": {
-      "x": -1200,
-      "z": -3000,
-      "size_x": 48,
-      "size_z": 64,
-      "zone": "dungeon"
-    },
-    "sofe:nordrath/forge_boss_room": {
-      "x": -1200,
-      "z": -3022,
-      "size_x": 44,
-      "size_z": 20,
-      "zone": "arena"
-    },
-    "sofe:nordrath/arena": {
-      "x": 1200,
-      "z": -3000,
-      "size_x": 64,
-      "size_z": 64,
-      "zone": "dungeon"
-    },
-    "sofe:nordrath/arena_floor": {
-      "x": 1200,
-      "z": -3000,
-      "size_x": 50,
-      "size_z": 50,
-      "zone": "arena"
-    },
-    "sofe:nordrath/burning_citadel": {
-      "x": 0,
-      "z": -4500,
-      "size_x": 96,
-      "size_z": 96,
-      "zone": "dungeon"
-    },
-    "sofe:nordrath/citadel_arena": {
-      "x": 0,
-      "z": -4500,
-      "size_x": 48,
-      "size_z": 48,
-      "zone": "arena"
-    },
-    "sofe:nordrath/caverns_entrance": {
-      "x": -600,
-      "z": -2400,
-      "size_x": 16,
-      "size_z": 16,
-      "zone": "dungeon"
-    },
-    "sofe:nordrath/city": {
-      "x": 0,
-      "z": -2400,
-      "size_x": 400,
-      "size_z": 400,
-      "zone": "city"
-    }
+  "sofe:sulthari/homestead": {
+   "x": 232,
+   "z": 0,
+   "size_x": 96,
+   "size_z": 128,
+   "zone": "homestead"
   },
-  "waystones": {
-    "sofe:sulthari/plaza": {
-      "x": 6,
-      "z": 12
-    },
-    "sofe:sulthari/observatory": {
-      "x": 8,
-      "z": -70
-    },
-    "sofe:sulthari/low_bazaar": {
-      "x": -70,
-      "z": 24
-    },
-    "sofe:nordrath/forge": {
-      "x": -1200,
-      "z": -2960
-    },
-    "sofe:nordrath/arena": {
-      "x": 1200,
-      "z": -2962
-    },
-    "sofe:nordrath/burning_citadel": {
-      "x": 6,
-      "z": -4444
-    },
-    "sofe:nordrath/city": {
-      "x": -5,
-      "z": -2374
-    }
+  "sofe:sulthari/plaza": {
+   "x": 0,
+   "z": 12,
+   "size_x": 48,
+   "size_z": 48
   },
-  "npcs": [
-    {
-      "npc": "ozhan",
-      "type": "story",
-      "x": 0,
-      "z": 84,
-      "yaw": 180
-    },
-    {
-      "npc": "council_elder",
-      "type": "story",
-      "x": 4,
-      "z": -74,
-      "yaw": 0
-    },
-    {
-      "npc": "knight",
-      "type": "bearer",
-      "x": -6,
-      "z": 90,
-      "yaw": 180
-    },
-    {
-      "npc": "necromancer",
-      "type": "bearer",
-      "x": -3,
-      "z": 92,
-      "yaw": 180
-    },
-    {
-      "npc": "sorceress",
-      "type": "bearer",
-      "x": 3,
-      "z": 92,
-      "yaw": 180
-    },
-    {
-      "npc": "thief",
-      "type": "bearer",
-      "x": 6,
-      "z": 90,
-      "yaw": 180
-    },
-    {
-      "npc": "king",
-      "type": "bearer",
-      "x": 0,
-      "z": 94,
-      "yaw": 180
-    },
-    {
-      "npc": "ferid",
-      "type": "merchant",
-      "role": "alchemist",
-      "x": -84,
-      "z": 14,
-      "yaw": 90
-    },
-    {
-      "npc": "dilara",
-      "type": "merchant",
-      "role": "smith",
-      "x": 70,
-      "z": -36,
-      "yaw": 270
-    },
-    {
-      "npc": "yusuf",
-      "type": "merchant",
-      "role": "quartermaster",
-      "x": -84,
-      "z": 34,
-      "yaw": 90
-    },
-    {
-      "npc": "selim",
-      "type": "merchant",
-      "role": "money_changer",
-      "x": -40,
-      "z": -34,
-      "yaw": 0
-    }
-  ],
-  "gates": {
-    "sofe:nordrath/forge": {
-      "x": -1200,
-      "z": -2969,
-      "condition": "sofe:nordrath_forge",
-      "hint": "message.sofe.gate.nordrath_forge"
-    },
-    "sofe:nordrath/arena": {
-      "x": 1200,
-      "z": -2970,
-      "condition": "sofe:nordrath_arena",
-      "hint": "message.sofe.gate.nordrath_arena"
-    },
-    "sofe:nordrath/burning_citadel": {
-      "x": 0,
-      "z": -4453,
-      "condition": "sofe:burning_citadel",
-      "hint": "message.sofe.gate.burning_citadel"
-    },
-    "sofe:nordrath/caverns": {
-      "x": -600,
-      "z": -2400,
-      "condition": "sofe:nordrath_caverns",
-      "hint": "message.sofe.gate.nordrath_caverns"
-    }
+  "sofe:sulthari/great_observatory": {
+   "x": 0,
+   "z": -96,
+   "size_x": 64,
+   "size_z": 64
+  },
+  "sofe:sulthari/palace": {
+   "x": 0,
+   "z": 100,
+   "size_x": 72,
+   "size_z": 56
+  },
+  "sofe:sulthari/low_bazaar": {
+   "x": -92,
+   "z": 24,
+   "size_x": 64,
+   "size_z": 56
+  },
+  "sofe:sulthari/lower_district": {
+   "x": -96,
+   "z": 100,
+   "size_x": 96,
+   "size_z": 80
+  },
+  "sofe:sulthari/training_grounds": {
+   "x": 96,
+   "z": 40,
+   "size_x": 56,
+   "size_z": 56
+  },
+  "sofe:sulthari/forge": {
+   "x": 72,
+   "z": -40,
+   "size_x": 32,
+   "size_z": 32
+  },
+  "sofe:sulthari/bank": {
+   "x": -40,
+   "z": -40,
+   "size_x": 24,
+   "size_z": 24
+  },
+  "sofe:nordrath/forge": {
+   "x": -1200,
+   "z": -3000,
+   "size_x": 48,
+   "size_z": 64,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/forge_boss_room": {
+   "x": -1200,
+   "z": -3022,
+   "size_x": 44,
+   "size_z": 20,
+   "zone": "arena"
+  },
+  "sofe:nordrath/arena": {
+   "x": 1200,
+   "z": -3000,
+   "size_x": 64,
+   "size_z": 64,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/arena_floor": {
+   "x": 1200,
+   "z": -3000,
+   "size_x": 50,
+   "size_z": 50,
+   "zone": "arena"
+  },
+  "sofe:nordrath/burning_citadel": {
+   "x": 0,
+   "z": -4500,
+   "size_x": 96,
+   "size_z": 96,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/citadel_arena": {
+   "x": 0,
+   "z": -4500,
+   "size_x": 48,
+   "size_z": 48,
+   "zone": "arena"
+  },
+  "sofe:nordrath/caverns_entrance": {
+   "x": -600,
+   "z": -2400,
+   "size_x": 16,
+   "size_z": 16,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/city": {
+   "x": 0,
+   "z": -2400,
+   "size_x": 400,
+   "size_z": 400,
+   "zone": "city"
+  },
+  "sofe:parsivan/baths": {
+   "x": 3600,
+   "z": -500,
+   "size_x": 48,
+   "size_z": 48,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/silk_road": {
+   "x": 5200,
+   "z": 700,
+   "size_x": 56,
+   "size_z": 56,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/enchanted_gardens": {
+   "x": 9000,
+   "z": -5000,
+   "size_x": 96,
+   "size_z": 96,
+   "zone": "dungeon"
+  },
+  "sofe:khemet/catacombs": {
+   "x": 3200,
+   "z": 4000,
+   "size_x": 64,
+   "size_z": 40,
+   "zone": "dungeon"
+  },
+  "sofe:khemet/stagnant_marsh": {
+   "x": 8000,
+   "z": 8500,
+   "size_x": 96,
+   "size_z": 96,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/treasury": {
+   "x": -3600,
+   "z": -500,
+   "size_x": 48,
+   "size_z": 48,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/market": {
+   "x": -3600,
+   "z": 1500,
+   "size_x": 64,
+   "size_z": 64,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/golden_vaults": {
+   "x": -8000,
+   "z": 500,
+   "size_x": 72,
+   "size_z": 72,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/colosseum": {
+   "x": -6000,
+   "z": 7000,
+   "size_x": 96,
+   "size_z": 80,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/shadow_throne": {
+   "x": -9000,
+   "z": -8000,
+   "size_x": 64,
+   "size_z": 64,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/caverns": {
+   "x": -600,
+   "z": -2484,
+   "size_x": 48,
+   "size_z": 48,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/feast_halls": {
+   "x": -600,
+   "z": -2550,
+   "size_x": 56,
+   "size_z": 40,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/baths_pool": {
+   "x": 3600,
+   "z": -500,
+   "size_x": 18,
+   "size_z": 18,
+   "zone": "arena"
+  },
+  "sofe:parsivan/caravanserai_court": {
+   "x": 5200,
+   "z": 700,
+   "size_x": 36,
+   "size_z": 36,
+   "zone": "arena"
+  },
+  "sofe:parsivan/gardens_heart": {
+   "x": 9000,
+   "z": -5000,
+   "size_x": 26,
+   "size_z": 26,
+   "zone": "arena"
+  },
+  "sofe:khemet/catacombs_crypt": {
+   "x": 3208,
+   "z": 4000,
+   "size_x": 44,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:khemet/marsh_pyramid": {
+   "x": 7994,
+   "z": 8500,
+   "size_x": 30,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:aureum/treasury_hall": {
+   "x": -3600,
+   "z": -500,
+   "size_x": 30,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:aureum/market_forum": {
+   "x": -3600,
+   "z": 1500,
+   "size_x": 30,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:aureum/vault_floor": {
+   "x": -8000,
+   "z": 500,
+   "size_x": 30,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:aureum/colosseum_floor": {
+   "x": -6000,
+   "z": 7000,
+   "size_x": 50,
+   "size_z": 40,
+   "zone": "arena"
+  },
+  "sofe:aureum/throne_room": {
+   "x": -9000,
+   "z": -8000,
+   "size_x": 40,
+   "size_z": 40,
+   "zone": "arena"
+  },
+  "sofe:nordrath/caverns_floor": {
+   "x": -600,
+   "z": -2484,
+   "size_x": 30,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:nordrath/feast_hall": {
+   "x": -600,
+   "z": -2550,
+   "size_x": 40,
+   "size_z": 30,
+   "zone": "arena"
+  },
+  "sofe:sulthari/temple": {
+   "x": 700,
+   "z": 700,
+   "size_x": 48,
+   "size_z": 48,
+   "zone": "dungeon"
+  },
+  "sofe:sulthari/temple_hall": {
+   "x": 700,
+   "z": 700,
+   "size_x": 34,
+   "size_z": 34,
+   "zone": "arena"
+  },
+  "sofe:sulthari/celestial_spire": {
+   "x": -700,
+   "z": 700,
+   "size_x": 40,
+   "size_z": 40,
+   "zone": "dungeon"
+  },
+  "sofe:sulthari/spire_crown": {
+   "x": -700,
+   "z": 700,
+   "size_x": 34,
+   "size_z": 34,
+   "min_y": 198,
+   "max_y": 230,
+   "zone": "arena"
+  },
+  "sofe:sulthari/inverted_throne": {
+   "x": -700,
+   "z": 1050,
+   "size_x": 64,
+   "size_z": 80,
+   "zone": "dungeon"
+  },
+  "sofe:sulthari/throne_floor": {
+   "x": -700,
+   "z": 1050,
+   "size_x": 56,
+   "size_z": 56,
+   "min_y": -24,
+   "max_y": 20,
+   "zone": "arena"
+  },
+  "sofe:sulthari/void_gate": {
+   "x": -48,
+   "z": -96,
+   "size_x": 12,
+   "size_z": 12,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/camp": {
+   "x": 300,
+   "z": -4200,
+   "size_x": 32,
+   "size_z": 32,
+   "zone": "camp"
+  },
+  "sofe:parsivan/camp": {
+   "x": 4400,
+   "z": 100,
+   "size_x": 32,
+   "size_z": 32,
+   "zone": "camp"
+  },
+  "sofe:khemet/camp": {
+   "x": 5200,
+   "z": 5600,
+   "size_x": 32,
+   "size_z": 32,
+   "zone": "camp"
+  },
+  "sofe:aureum/camp": {
+   "x": -5600,
+   "z": 1000,
+   "size_x": 32,
+   "size_z": 32,
+   "zone": "camp"
   }
+ },
+ "waystones": {
+  "sofe:sulthari/plaza": {
+   "x": 6,
+   "z": 12
+  },
+  "sofe:sulthari/observatory": {
+   "x": 8,
+   "z": -70
+  },
+  "sofe:sulthari/low_bazaar": {
+   "x": -70,
+   "z": 24
+  },
+  "sofe:nordrath/forge": {
+   "x": -1200,
+   "z": -2960
+  },
+  "sofe:nordrath/arena": {
+   "x": 1200,
+   "z": -2962
+  },
+  "sofe:nordrath/burning_citadel": {
+   "x": 6,
+   "z": -4444
+  },
+  "sofe:nordrath/city": {
+   "x": -5,
+   "z": -2374
+  },
+  "sofe:parsivan/baths": {
+   "x": 3571,
+   "z": -500
+  },
+  "sofe:parsivan/silk_road": {
+   "x": 5167,
+   "z": 700
+  },
+  "sofe:parsivan/enchanted_gardens": {
+   "x": 8947,
+   "z": -5000
+  },
+  "sofe:khemet/catacombs": {
+   "x": 3163,
+   "z": 4000
+  },
+  "sofe:khemet/stagnant_marsh": {
+   "x": 7947,
+   "z": 8500
+  },
+  "sofe:aureum/treasury": {
+   "x": -3572,
+   "z": -500
+  },
+  "sofe:aureum/market": {
+   "x": -3564,
+   "z": 1500
+  },
+  "sofe:aureum/golden_vaults": {
+   "x": -7960,
+   "z": 500
+  },
+  "sofe:aureum/colosseum": {
+   "x": -5947,
+   "z": 7000
+  },
+  "sofe:aureum/shadow_throne": {
+   "x": -8964,
+   "z": -8000
+  },
+  "sofe:nordrath/caverns": {
+   "x": -606,
+   "z": -2394
+  },
+  "sofe:ascension/temple": {
+   "x": 670,
+   "z": 700
+  },
+  "sofe:ascension/celestial_spire": {
+   "x": -694,
+   "z": 715
+  },
+  "sofe:ascension/inverted_throne": {
+   "x": -694,
+   "z": 1092
+  },
+  "sofe:nordrath/camp": {
+   "x": 300,
+   "z": -4194
+  },
+  "sofe:parsivan/camp": {
+   "x": 4400,
+   "z": 106
+  },
+  "sofe:khemet/camp": {
+   "x": 5200,
+   "z": 5606
+  },
+  "sofe:aureum/camp": {
+   "x": -5600,
+   "z": 1006
+  }
+ },
+ "npcs": [
+  {
+   "npc": "ozhan",
+   "type": "story",
+   "x": 0,
+   "z": 84,
+   "yaw": 180
+  },
+  {
+   "npc": "council_elder",
+   "type": "story",
+   "x": 4,
+   "z": -74,
+   "yaw": 0
+  },
+  {
+   "npc": "knight",
+   "type": "bearer",
+   "x": -6,
+   "z": 90,
+   "yaw": 180
+  },
+  {
+   "npc": "necromancer",
+   "type": "bearer",
+   "x": -3,
+   "z": 92,
+   "yaw": 180
+  },
+  {
+   "npc": "sorceress",
+   "type": "bearer",
+   "x": 3,
+   "z": 92,
+   "yaw": 180
+  },
+  {
+   "npc": "thief",
+   "type": "bearer",
+   "x": 6,
+   "z": 90,
+   "yaw": 180
+  },
+  {
+   "npc": "king",
+   "type": "bearer",
+   "x": 0,
+   "z": 94,
+   "yaw": 180
+  },
+  {
+   "npc": "ferid",
+   "type": "merchant",
+   "role": "alchemist",
+   "x": -84,
+   "z": 14,
+   "yaw": 90
+  },
+  {
+   "npc": "dilara",
+   "type": "merchant",
+   "role": "smith",
+   "x": 70,
+   "z": -36,
+   "yaw": 270
+  },
+  {
+   "npc": "yusuf",
+   "type": "merchant",
+   "role": "quartermaster",
+   "x": -84,
+   "z": 34,
+   "yaw": 90
+  },
+  {
+   "npc": "selim",
+   "type": "merchant",
+   "role": "money_changer",
+   "x": -40,
+   "z": -34,
+   "yaw": 0
+  },
+  {
+   "npc": "ferid_camp_nordrath",
+   "type": "merchant",
+   "role": "alchemist",
+   "x": 295,
+   "z": -4204,
+   "yaw": 0
+  },
+  {
+   "npc": "dilara_camp_nordrath",
+   "type": "merchant",
+   "role": "smith",
+   "x": 305,
+   "z": -4204,
+   "yaw": 0
+  },
+  {
+   "npc": "ferid_camp_parsivan",
+   "type": "merchant",
+   "role": "alchemist",
+   "x": 4395,
+   "z": 96,
+   "yaw": 0
+  },
+  {
+   "npc": "dilara_camp_parsivan",
+   "type": "merchant",
+   "role": "smith",
+   "x": 4405,
+   "z": 96,
+   "yaw": 0
+  },
+  {
+   "npc": "ferid_camp_khemet",
+   "type": "merchant",
+   "role": "alchemist",
+   "x": 5195,
+   "z": 5596,
+   "yaw": 0
+  },
+  {
+   "npc": "dilara_camp_khemet",
+   "type": "merchant",
+   "role": "smith",
+   "x": 5205,
+   "z": 5596,
+   "yaw": 0
+  },
+  {
+   "npc": "ferid_camp_aureum",
+   "type": "merchant",
+   "role": "alchemist",
+   "x": -5605,
+   "z": 996,
+   "yaw": 0
+  },
+  {
+   "npc": "dilara_camp_aureum",
+   "type": "merchant",
+   "role": "smith",
+   "x": -5595,
+   "z": 996,
+   "yaw": 0
+  },
+  {
+   "npc": "kerem",
+   "type": "merchant",
+   "role": "jeweler",
+   "x": -44,
+   "z": -36,
+   "yaw": 90
+  },
+  {
+   "npc": "nilufar",
+   "type": "merchant",
+   "role": "purifier",
+   "x": -36,
+   "z": -104,
+   "yaw": 0
+  }
+ ],
+ "gates": {
+  "sofe:nordrath/forge": {
+   "x": -1200,
+   "z": -2969,
+   "condition": "sofe:nordrath_forge",
+   "hint": "message.sofe.gate.nordrath_forge"
+  },
+  "sofe:nordrath/arena": {
+   "x": 1200,
+   "z": -2970,
+   "condition": "sofe:nordrath_arena",
+   "hint": "message.sofe.gate.nordrath_arena"
+  },
+  "sofe:nordrath/burning_citadel": {
+   "x": 0,
+   "z": -4453,
+   "condition": "sofe:burning_citadel",
+   "hint": "message.sofe.gate.burning_citadel"
+  },
+  "sofe:nordrath/caverns": {
+   "x": -600,
+   "z": -2400,
+   "condition": "sofe:nordrath_caverns",
+   "hint": "message.sofe.gate.nordrath_caverns"
+  },
+  "sofe:parsivan/baths": {
+   "x": 3576,
+   "z": -500,
+   "condition": "sofe:parsivan_baths",
+   "hint": "message.sofe.gate.parsivan_baths",
+   "axis": "x"
+  },
+  "sofe:parsivan/silk_road": {
+   "x": 5172,
+   "z": 700,
+   "condition": "sofe:silk_road",
+   "hint": "message.sofe.gate.silk_road",
+   "axis": "x"
+  },
+  "sofe:parsivan/enchanted_gardens": {
+   "x": 8952,
+   "z": -5000,
+   "condition": "sofe:enchanted_gardens",
+   "hint": "message.sofe.gate.enchanted_gardens",
+   "axis": "x"
+  },
+  "sofe:khemet/catacombs": {
+   "x": 3168,
+   "z": 4000,
+   "condition": "sofe:khemet_catacombs",
+   "hint": "message.sofe.gate.khemet_catacombs",
+   "axis": "x"
+  },
+  "sofe:khemet/stagnant_marsh": {
+   "x": 7952,
+   "z": 8500,
+   "condition": "sofe:stagnant_marsh",
+   "hint": "message.sofe.gate.stagnant_marsh",
+   "axis": "x"
+  },
+  "sofe:aureum/treasury": {
+   "x": -3577,
+   "z": -500,
+   "condition": "sofe:aureum_treasury",
+   "hint": "message.sofe.gate.aureum_treasury",
+   "axis": "x"
+  },
+  "sofe:aureum/market": {
+   "x": -3569,
+   "z": 1500,
+   "condition": "sofe:aureum_market",
+   "hint": "message.sofe.gate.aureum_market",
+   "axis": "x"
+  },
+  "sofe:aureum/golden_vaults": {
+   "x": -7965,
+   "z": 500,
+   "condition": "sofe:golden_vaults",
+   "hint": "message.sofe.gate.golden_vaults",
+   "axis": "x"
+  },
+  "sofe:aureum/colosseum": {
+   "x": -5953,
+   "z": 7000,
+   "condition": "sofe:colosseum",
+   "hint": "message.sofe.gate.colosseum",
+   "axis": "x"
+  },
+  "sofe:aureum/shadow_throne": {
+   "x": -8969,
+   "z": -8000,
+   "condition": "sofe:shadow_throne",
+   "hint": "message.sofe.gate.shadow_throne",
+   "axis": "x"
+  },
+  "sofe:nordrath/feast_halls": {
+   "x": -600,
+   "z": -2531,
+   "condition": "sofe:feast_halls",
+   "hint": "message.sofe.gate.feast_halls"
+  },
+  "sofe:sulthari/temple": {
+   "x": 676,
+   "z": 700,
+   "condition": "sofe:temple_of_sulthari",
+   "hint": "message.sofe.gate.temple_of_sulthari",
+   "axis": "x"
+  },
+  "sofe:sulthari/celestial_spire": {
+   "x": -700,
+   "z": 708,
+   "condition": "sofe:celestial_spire",
+   "hint": "message.sofe.gate.celestial_spire"
+  },
+  "sofe:sulthari/inverted_throne": {
+   "x": -700,
+   "z": 1086,
+   "condition": "sofe:inverted_throne",
+   "hint": "message.sofe.gate.inverted_throne"
+  },
+  "sofe:sulthari/void_gate": {
+   "x": -48,
+   "z": -92,
+   "condition": "sofe:void_gate",
+   "hint": "message.sofe.gate.void_gate"
+  }
+ }
 }

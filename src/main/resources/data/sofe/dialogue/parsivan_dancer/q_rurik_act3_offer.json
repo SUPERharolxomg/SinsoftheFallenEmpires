@@ -1,0 +1,52 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_dancer",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/rurik_act3",
+          "step": 1
+        }
+      },
+      {
+        "type": "class_is",
+        "class": "thief"
+      },
+      {
+        "type": "act_reached",
+        "act": 3
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_dancer",
+      "text": "dialogue.sofe.q.rurik_act3.offer.1"
+    },
+    {
+      "speaker": "parsivan_dancer",
+      "text": "dialogue.sofe.q.rurik_act3.offer.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.rurik_act3.accept",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:bearer/rurik_act3"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.rurik_act3.later",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

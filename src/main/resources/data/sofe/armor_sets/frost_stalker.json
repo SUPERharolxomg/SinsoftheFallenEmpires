@@ -14,5 +14,33 @@
       "amplifier": 0,
       "when": "always"
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "magic",
+        "value": 0.04
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "freeze",
+        "value": 0.25
+      }
+    ],
+    "leggings": [
+      {
+        "type": "unfreeze"
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.15
+      }
+    ]
+  }
 }

@@ -40,12 +40,19 @@ Each section gives the default behavior; the ones marked **Decided** were confir
 - If every participant dies or leaves, the boss **resets** to full health after 30 s and the arena reopens.
 - In multiplayer, a player at 0 health is downed first and can be revived (see [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires)).
 - **Avarok** gives back every item he stole when he dies or when the fight resets. He never steals story items or Relics.
+- **Presence and phases.** Every boss and Broken Oath announces itself the first time a Bearer comes near: its name across the screen with its Law or Sin under it, a roar and a moment of darkness. Below half health it enters its second phase, stronger each time (+25% damage, +12% speed, +4 armor), never by healing: a shockwave throws the Bearers back, the sky darkens, and for a moment it cannot be hurt.
+- **Lairs.** Each boss waits in its lair (`data/sofe/boss_lairs.json`) and rises when a Bearer who has not beaten it comes in.
+
+### Elites and hordes
+
+- **Elites.** A monster that spawns by itself is an elite 4% of the time (+1% per act): gold name, an aura, 2.5x health, enchanted armor and weapon of its act's metal (iron, diamond, netherite) and one or two traits (Stoneskin, Swift, Burning, Vampiric, Cursed, Brutal). Killed by a Bearer it leaves one of its enchanted pieces and a veiled (unidentified) item, an Imperial piece of gear or a piece of an armor set of the killer's class; three times the experience, and the Flask refills.
+- **Hordes of the Void.** Every seventh day, at nightfall, each Bearer more than 300 blocks from a city, camp or Homestead has a 60% chance of being hunted by a horde: 10 Void creatures, +3 per act and per Bearer with them, never more than 30, in three waves.
 
 ---
 
 ## G2. Travel
 
-The map is 12,000 × 12,000 blocks. Walking back to Sulthari from Aureum to refill the Flask is not fun, so there is fast travel.
+The map is 25,000 × 25,000 blocks. Walking back to Sulthari from Aureum to refill the Flask is not fun, so there is fast travel.
 
 - **Aetherium Waystones** (`sofe:waystone`) are found in Sulthari, in every liberated camp and at every discovered dungeon entrance. The player activates one by touching it.
 - Travel between activated Waystones is **free** from the Waystone screen. It is not allowed during combat, inside arenas, or toward a region the player has not unlocked.

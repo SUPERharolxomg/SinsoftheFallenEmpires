@@ -138,4 +138,20 @@ class ProgressionTest {
             throw new AssertionError(e);
         }
     }
+
+    @Test
+    void enemiesFollowTheBearersLevelNotTheRegionsTop() {
+        var mobs = com.sofe.mob.MobScalingRules.defaults();
+        var random = new java.util.Random(4);
+        for (int i = 0; i < 200; i++) {
+            int lowly = mobs.levelFor(com.sofe.world.region.Region.SULTHARI, 1, 1, false, random);
+            assertTrue(lowly >= 1 && lowly <= 2, "a level-1 Bearer met a level-" + lowly + " enemy in Sulthari");
+            int strong = mobs.levelFor(com.sofe.world.region.Region.SULTHARI, 2, 40, false, random);
+            assertTrue(strong >= 38 && strong <= 41, "a level-40 Bearer met a level-" + strong + " enemy");
+            int boss = mobs.levelFor(com.sofe.world.region.Region.NORDRATH, 2, 30, true, random);
+            assertEquals(31, boss, "a boss stands one level above the strongest Bearer");
+            int floored = mobs.levelFor(com.sofe.world.region.Region.NORDRATH, 2, 12, false, random);
+            assertTrue(floored >= 20, "Nordrath's enemies are never under its least level, met " + floored);
+        }
+    }
 }

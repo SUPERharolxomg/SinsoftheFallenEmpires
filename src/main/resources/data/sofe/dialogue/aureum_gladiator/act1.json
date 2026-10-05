@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aureum_gladiator",
+  "lines": [
+    {
+      "speaker": "aureum_gladiator",
+      "text": "dialogue.sofe.aureum_gladiator.act1.1"
+    },
+    {
+      "speaker": "aureum_gladiator",
+      "text": "dialogue.sofe.aureum_gladiator.act1.2"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    " P "
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:sugar_cane"
+    },
+    "P": {
+      "item": "sofe:solar_gold_powder"
+    }
+  },
+  "result": {
+    "item": "sofe:sunreed_papyrus",
+    "count": 3
+  }
+}

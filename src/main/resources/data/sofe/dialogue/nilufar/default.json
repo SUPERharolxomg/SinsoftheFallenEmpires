@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "nilufar",
+  "lines": [
+    {
+      "speaker": "nilufar",
+      "text": "dialogue.sofe.nilufar.1"
+    },
+    {
+      "speaker": "nilufar",
+      "text": "dialogue.sofe.nilufar.2"
+    }
+  ]
+}

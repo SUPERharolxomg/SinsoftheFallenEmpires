@@ -1,0 +1,30 @@
+{
+  "item": "sofe:goldarcs_scales",
+  "item_level": 67,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 65,
+  "affixes": [
+    {
+      "stat": "strength",
+      "value": 10
+    },
+    {
+      "stat": "physical_damage",
+      "value": 16
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 2
+    },
+    {
+      "on": "hit",
+      "do": "stun",
+      "chance": 0.1,
+      "s": 1
+    }
+  ]
+}

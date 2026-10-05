@@ -1,0 +1,24 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "prython",
+      "text": "dialogue.sofe.act5.prython_temptation.1"
+    },
+    {
+      "speaker": "prython",
+      "text": "dialogue.sofe.act5.prython_temptation.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act5.prython_temptation.2.answer1",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.act5.prython_temptation.2.answer2",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "khemet_embalmer",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "khemet_embalmer",
+      "text": "dialogue.sofe.khemet_embalmer.act4.1"
+    }
+  ]
+}

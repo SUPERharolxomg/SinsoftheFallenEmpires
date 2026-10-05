@@ -1,5 +1,6 @@
 {
   "role": "smith",
+  "empire": "sulthari",
   "offers": [
     {
       "sell": "minecraft:lantern",

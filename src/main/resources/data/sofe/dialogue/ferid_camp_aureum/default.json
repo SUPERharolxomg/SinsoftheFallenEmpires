@@ -1,0 +1,10 @@
+{
+  "style": "aureum",
+  "npc": "ferid_camp_aureum",
+  "lines": [
+    {
+      "speaker": "ferid_camp_aureum",
+      "text": "dialogue.sofe.camp.ferid"
+    }
+  ]
+}

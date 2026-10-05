@@ -1,0 +1,30 @@
+{
+  "item": "sofe:nixaras_false_ring",
+  "item_level": 70,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 68,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 9
+    },
+    {
+      "stat": "crit_chance",
+      "value": 6
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 1,
+      "chance": 0.5
+    },
+    {
+      "on": "hit",
+      "do": "blind",
+      "chance": 0.08
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "sofe:jeweler",
+  "ingredients": [
+    {
+      "item": "sofe:rough_greed_topaz",
+      "count": 1
+    }
+  ],
+  "result": "sofe:cut_greed_topaz",
+  "count": 1,
+  "dinars": 120
+}

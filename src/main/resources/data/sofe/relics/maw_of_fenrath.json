@@ -1,0 +1,29 @@
+{
+  "item": "sofe:maw_of_fenrath",
+  "item_level": 70,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 68,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 10
+    },
+    {
+      "stat": "life_steal",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "heal",
+      "amount": 3
+    },
+    {
+      "on": "hurt",
+      "do": "poison",
+      "s": 3
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "item": "sofe:hoard_of_avarok",
+  "item_level": 77,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 75,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 7
+    },
+    {
+      "stat": "max_health",
+      "value": 12
+    }
+  ],
+  "effects": [
+    {
+      "on": "kill",
+      "do": "dinars",
+      "n": 3
+    },
+    {
+      "on": "worn",
+      "do": "absorption",
+      "every_s": 25
+    }
+  ]
+}

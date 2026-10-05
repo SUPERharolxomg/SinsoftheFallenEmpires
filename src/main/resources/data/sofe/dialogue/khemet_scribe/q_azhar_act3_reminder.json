@@ -1,0 +1,29 @@
+{
+  "style": "khemet",
+  "npc": "khemet_scribe",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/azhar_act3",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/azhar_act3",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.q.azhar_act3.reminder"
+    }
+  ]
+}

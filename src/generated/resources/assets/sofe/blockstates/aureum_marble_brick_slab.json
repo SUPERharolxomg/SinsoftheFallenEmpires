@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "sofe:block/aureum_marble_brick_slab"
+    },
+    "type=double": {
+      "model": "sofe:block/aureum_marble_bricks"
+    },
+    "type=top": {
+      "model": "sofe:block/aureum_marble_brick_slab_top"
+    }
+  }
+}

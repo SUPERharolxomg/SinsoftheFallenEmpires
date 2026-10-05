@@ -15,7 +15,15 @@ import net.minecraft.world.level.Level;
  * One of the seven Archsins (README, "The Seven Archsins"). Besides what every boss does, an Archsin
  * tempts the player before the fight and leaves each participant their own Codex Shard.
  */
-public abstract class ArchsinEntity extends SoFEBossEntity {
+public abstract class ArchsinEntity extends SoFEBossEntity implements com.sofe.entity.SoFEAnimated {
+
+    private final software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache animationCache =
+            software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache() {
+        return animationCache;
+    }
 
     protected ArchsinEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level, BossEvent.BossBarColor.RED);
@@ -23,6 +31,12 @@ public abstract class ArchsinEntity extends SoFEBossEntity {
     }
 
     public abstract Sin sin();
+
+    /** Under its name, as a Bearer first comes near: the Sin it is. */
+    @Override
+    protected Component presenceSubtitle() {
+        return Component.translatable("message.sofe.boss.archsin_presence", Component.translatable(sin().translationKey()));
+    }
 
     /** The first defeat gives the Shard; later ones (Echo fights) do not give another. */
     @Override

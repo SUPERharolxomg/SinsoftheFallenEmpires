@@ -1,0 +1,10 @@
+{
+  "style": "nordrath",
+  "npc": "dilara_camp_nordrath",
+  "lines": [
+    {
+      "speaker": "dilara_camp_nordrath",
+      "text": "dialogue.sofe.camp.dilara"
+    }
+  ]
+}

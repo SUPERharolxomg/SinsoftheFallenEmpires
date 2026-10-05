@@ -92,6 +92,12 @@ public final class MerchantService {
     public static void open(ServerPlayer player, Entity merchant, String npc) {
         Optional<MerchantOffer.Catalog> catalog = catalog(npc);
         if (catalog.isEmpty()) return;
+        String requires = catalog.get().requires();
+        if (requires != null && !com.sofe.story.StoryCapability.get(player).map(s -> s.hasDefeated(requires)).orElse(false)) {
+            // a camp's merchants trade once its Archsin has fallen for this Bearer
+            player.displayClientMessage(Component.translatable("message.sofe.camp.not_free").withStyle(ChatFormatting.GRAY), true);
+            return;
+        }
         TRADING.put(player.getUUID(), merchant.getId());
         refresh(player, npc);
     }
@@ -100,11 +106,12 @@ public final class MerchantService {
         catalog(npc).ifPresent(catalog -> EconomyCapability.get(player).ifPresent(economy -> {
             economy.restockIfNewDay(day(player));
             int act = StoryAct.of(player);
+            int rank = economy.favorRank(catalog.empire());
             List<OpenMerchantPacket.Offer> offers = new ArrayList<>();
-            List<MerchantOffer> available = catalog.available(act);
+            List<MerchantOffer> available = catalog.available(act, rank);
             for (int i = 0; i < available.size(); i++) {
                 MerchantOffer o = available.get(i);
-                offers.add(new OpenMerchantPacket.Offer(i, stackOf(o), o.price(), economy.left(o)));
+                offers.add(new OpenMerchantPacket.Offer(i, stackOf(o), EconomyData.discounted(o.price(), rank), economy.left(o)));
             }
             List<OpenMerchantPacket.Sellable> sellables = new ArrayList<>();
             for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
@@ -117,7 +124,8 @@ public final class MerchantService {
             for (int i = 0; i < sold.size(); i++) {
                 buyback.add(new OpenMerchantPacket.Sellable(i, parse(sold.get(i).itemNbt()), sold.get(i).price()));
             }
-            SoFENetwork.sendTo(player, new OpenMerchantPacket(npc, economy.dinars(), offers, sellables, buyback, isMoneyChanger(catalog)));
+            SoFENetwork.sendTo(player, new OpenMerchantPacket(npc, economy.dinars(), offers, sellables, buyback, isMoneyChanger(catalog),
+                    catalog.empire(), rank, economy.favorPoints(catalog.empire())));
         }));
     }
 
@@ -183,12 +191,15 @@ public final class MerchantService {
     }
 
     private static void buy(ServerPlayer player, MerchantOffer.Catalog catalog, EconomyData e, int index) {
-        List<MerchantOffer> available = catalog.available(StoryAct.of(player));
+        int rank = e.favorRank(catalog.empire());
+        List<MerchantOffer> available = catalog.available(StoryAct.of(player), rank);
         if (index < 0 || index >= available.size()) return;
         MerchantOffer offer = available.get(index);
-        EconomyData.BuyResult result = e.buy(offer, StoryAct.of(player), day(player));
+        int price = EconomyData.discounted(offer.price(), rank);
+        EconomyData.BuyResult result = e.buy(offer, StoryAct.of(player), rank, price, day(player));
         switch (result) {
             case BOUGHT -> {
+                gainFavor(player, e, catalog.empire(), Math.max(1, price / 10));
                 ItemStack stack = stackOf(offer);
                 if (stack.getItem() instanceof com.sofe.gear.VeiledItem veiled) {
                     // the gambler lifts the veil at the counter; the outcome has its own message
@@ -217,7 +228,24 @@ public final class MerchantService {
         player.getInventory().items.set(slot, ItemStack.EMPTY);
         e.addDinars(price.getAsInt());
         e.sold(new EconomyData.Sold(saved.toString(), price.getAsInt()));
+        gainFavor(player, e, catalog.empire(), price.getAsInt() / 20);
         player.displayClientMessage(Component.translatable("message.sofe.trade.sold", price.getAsInt()).withStyle(ChatFormatting.GOLD), true);
+    }
+
+    /** Favor with an empire (trading, quests, its bosses); a new rank is announced. */
+    public static void gainFavor(ServerPlayer player, EconomyData e, String empire, int points) {
+        int rank = e.addFavor(empire, points);
+        if (rank < 0) return;
+        player.sendSystemMessage(Component.translatable("message.sofe.favor.rank_up", Component.translatable("region.sofe." + empire),
+                Component.translatable("gui.sofe.favor.rank." + rank)).withStyle(ChatFormatting.GOLD));
+        player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.6f, 1.2f);
+    }
+
+    public static void gainFavor(ServerPlayer player, String empire, int points) {
+        EconomyCapability.get(player).ifPresent(e -> {
+            gainFavor(player, e, empire, points);
+            EconomyHandler.sync(player);
+        });
     }
 
     private static void give(ServerPlayer player, ItemStack stack) {

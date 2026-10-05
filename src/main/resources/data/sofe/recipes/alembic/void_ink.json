@@ -1,0 +1,19 @@
+{
+  "type": "sofe:alembic",
+  "ingredients": [
+    {
+      "item": "minecraft:chorus_fruit",
+      "count": 2
+    },
+    {
+      "item": "sofe:void_crystal",
+      "count": 1
+    },
+    {
+      "item": "minecraft:ink_sac",
+      "count": 1
+    }
+  ],
+  "result": "sofe:void_ink",
+  "count": 1
+}

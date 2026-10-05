@@ -71,6 +71,7 @@ public class SoFEMod {
         WorldgenRegistry.FEATURES.register(modBus);
         com.sofe.registry.SoFEBlocks.BLOCK_ENTITIES.register(modBus);
         com.sofe.registry.SoFEEffects.EFFECTS.register(modBus);
+        com.sofe.travel.Homeward.ENCHANTMENTS.register(modBus);
         com.sofe.registry.SoFERecipes.TYPES.register(modBus);
         com.sofe.registry.SoFERecipes.SERIALIZERS.register(modBus);
         com.sofe.gear.loot.GearLoot.FUNCTIONS.register(modBus);
@@ -112,6 +113,7 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ranged.RangedHandler::onHurt);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.ranged.RangedHandler::onEntityJoin);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.Tools::onBlockBreak);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, com.sofe.gear.GemMining::onBlockBreak);
         // Sprint 6: the class mechanics, lasting skills and the Royal Treasury
         MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onHurt);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.skill.ClassMechanics::onShieldBlock);
@@ -158,7 +160,26 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onTeleport);
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onLogout);
         MinecraftForge.EVENT_BUS.addListener(StructurePositions::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lair.BossLairs::onAddReloadListeners);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lair.BossLairs::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.EliteMobs::onSpawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.VoidHordes::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.boss.BossKit::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.build.RegionHealing::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.ZahirCaravan::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.economy.ZahirCaravan::onJoin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.boss.ThessynEntity::onRightClickBlock);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.boss.NixaraEntity::onPickup);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.boss.LuxaraEntity::onAttack);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.boss.AvarokEntity::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.travel.Homeward::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.travel.Homeward::onUseStart);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.EliteMobs::onTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.EliteMobs::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.EliteMobs::onDrops);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.EliteMobs::onExperience);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onNeighborNotify);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onCreateSpawn);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.command.SoFECommands::register);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onSpawnCheck);
@@ -177,6 +198,11 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, TravelCapability::attach);
         MinecraftForge.EVENT_BUS.addListener(TravelCapability::onClone);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, CorpseHandler::onDeath);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, com.sofe.death.DeathSpectate::onDeath);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.death.DeathSpectate::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.death.DeathSpectate::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.death.DeathSpectate::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.death.DeathSpectate::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(WaystoneService::onRespawn);
         MinecraftForge.EVENT_BUS.addListener(WaystoneService::onLogout);
         MinecraftForge.EVENT_BUS.addListener(JourneyRules::onEntityJoin);
@@ -191,6 +217,8 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.world.region.RegionTitleHandler::onChangeDimension);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, com.sofe.mob.MobTraits::onJoin);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onHurt);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onArrow);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onTick);
 
         // Sprint 5.5: gear, economy, stations, potions
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.GearDataManager::onAddReloadListeners);

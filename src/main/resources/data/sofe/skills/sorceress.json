@@ -30,7 +30,7 @@
     },
     "burning_calligraphy": {
       "cost": 25,
-      "cooldown_s": 10,
+      "cooldown_s": 14,
       "damage": 3,
       "length": 8,
       "duration_s": 6,
@@ -38,13 +38,13 @@
     },
     "water_mirror": {
       "cost": 20,
-      "cooldown_s": 8,
+      "cooldown_s": 14,
       "distance": 8,
       "clone_s": 5
     },
     "petal_tempest": {
       "cost": 30,
-      "cooldown_s": 12,
+      "cooldown_s": 16,
       "damage": 3,
       "radius": 4,
       "duration_s": 4
@@ -54,7 +54,7 @@
     },
     "starfall": {
       "cost": 60,
-      "cooldown_s": 25,
+      "cooldown_s": 35,
       "stars": 7,
       "damage": 9,
       "radius": 5,

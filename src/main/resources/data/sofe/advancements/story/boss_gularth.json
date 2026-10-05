@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:gularths_cleaver"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_gularth"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_gularth.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/act4"
+}

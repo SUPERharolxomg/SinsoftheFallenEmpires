@@ -1,0 +1,18 @@
+{
+  "style": "parsivan",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act3.the_eastern_shadows.1"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act3.the_eastern_shadows.2"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act3.the_eastern_shadows.3"
+    }
+  ]
+}

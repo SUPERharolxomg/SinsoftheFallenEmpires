@@ -141,7 +141,21 @@ public class SkillGameTests {
         float before = s.sorceress().getMaxHealth();
         ProgressionCapability.get(s.sorceress()).orElseThrow().load(10, 0, 0, 4, true);
         for (int i = 0; i < 4; i++) ProgressionHandler.spendAttribute(s.sorceress(), CharacterAttribute.VITALITY);
-        helper.assertTrue(s.sorceress().getMaxHealth() == before + 2, "4 Vitality should add 2 health: " + before + " -> " + s.sorceress().getMaxHealth());
+        helper.assertTrue(s.sorceress().getMaxHealth() == before + 8, "4 Vitality should add 8 health: " + before + " -> " + s.sorceress().getMaxHealth());
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void everyBearerHasFiftyHealthAndVitalityMakesThemFaster(GameTestHelper helper) {
+        Setup s = setup(helper);
+        com.sofe.progression.CharacterStats.applyHealth(s.sorceress());
+        helper.assertTrue(s.sorceress().getMaxHealth() >= 50, "a Bearer should have 50 health: " + s.sorceress().getMaxHealth());
+        helper.assertTrue(s.sorceress().getHealth() == s.sorceress().getMaxHealth(), "a new Bearer should start at full health");
+        double before = s.sorceress().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        ProgressionCapability.get(s.sorceress()).orElseThrow().load(10, 0, 0, 10, true);
+        for (int i = 0; i < 10; i++) ProgressionHandler.spendAttribute(s.sorceress(), CharacterAttribute.VITALITY);
+        double after = s.sorceress().getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+        helper.assertTrue(after > before, "Vitality did not make her faster: " + before + " -> " + after);
         helper.succeed();
     }
 }

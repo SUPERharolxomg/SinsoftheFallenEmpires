@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MM",
+    "MM"
+  ],
+  "key": {
+    "M": {
+      "item": "sofe:imperial_marble"
+    }
+  },
+  "result": {
+    "item": "sofe:aureum_polished_marble",
+    "count": 4
+  }
+}

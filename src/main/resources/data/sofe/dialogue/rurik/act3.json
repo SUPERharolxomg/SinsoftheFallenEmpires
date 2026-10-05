@@ -1,0 +1,35 @@
+{
+  "style": "parsivan",
+  "npc": "rurik",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "rurik",
+      "text": "dialogue.sofe.rurik.act3"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.rurik.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "thief"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

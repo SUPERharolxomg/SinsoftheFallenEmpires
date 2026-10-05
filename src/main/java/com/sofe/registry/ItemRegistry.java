@@ -603,16 +603,35 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> ECLIPSE_PLATE = armor("eclipse_plate", SoFETiers.Armor.ECLIPSE_PLATE, ArmorItem.Type.CHESTPLATE);
     public static final RegistryObject<Item> SANDSTRIDERS = armor("sandstriders", SoFETiers.Armor.SANDSTRIDERS, ArmorItem.Type.BOOTS);
     public static final RegistryObject<Item> LEGS_OF_THE_SEVENTH_SIN = armor("legs_of_the_seventh_sin", SoFETiers.Armor.LEGS_OF_THE_SEVENTH_SIN, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> WHISPER_OF_MIRAEL = trinket("whisper_of_mirael", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> THESSYNS_NEEDLE = ITEMS.register("thessyns_needle",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.SOLAR_GOLD, 5, -1.5f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.BLEED), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> RING_OF_THE_LONG_WATCH = trinket("ring_of_the_long_watch", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> HEART_OF_LUXARA = trinket("heart_of_luxara", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> CROWN_OF_THE_STAGNANT_KING = armor("crown_of_the_stagnant_king", SoFETiers.Armor.CROWN_OF_THE_STAGNANT_KING, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> GOLDARCS_SCALES = ITEMS.register("goldarcs_scales",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 8, -3.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.STUN, com.sofe.gear.WeaponTrait.SLAM), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> NIXARAS_FALSE_RING = trinket("nixaras_false_ring", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> HOARD_OF_AVAROK = trinket("hoard_of_avarok", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> MAW_OF_FENRATH = armor("maw_of_fenrath", SoFETiers.Armor.MAW_OF_FENRATH, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> GULARTHS_CLEAVER = ITEMS.register("gularths_cleaver",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.ORICHALCUM, 9, -3.0f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> MASK_OF_SHADEYN = armor("mask_of_shadeyn", SoFETiers.Armor.MASK_OF_SHADEYN, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> SUN_HALO_OF_SOLRATH = trinket("sun_halo_of_solrath", GearSlot.JEWELRY);
+    public static final RegistryObject<Item> ASHBRINGER_OF_THE_FIRST_FALLEN = ITEMS.register("ashbringer_of_the_first_fallen",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 9, -2.4f, 0.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.SWEEP, com.sofe.gear.WeaponTrait.HOLY), null, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> ENVYRIS_BORROWED_SCYTHE = ITEMS.register("envyris_borrowed_scythe",
+            () -> new com.sofe.gear.TraitWeapon(SoFETiers.AETHERIUM, 9, -3.0f, 1.0, java.util.EnumSet.of(com.sofe.gear.WeaponTrait.REACH, com.sofe.gear.WeaponTrait.SWEEP), null, new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> GRAND_TALISMAN = trinket("grand_talisman", GearSlot.TALISMAN);
     private static final List<RegistryObject<Item>> U_HANDHELD = List.of(
             SUNDER_OF_THE_ORDER, VERDICT_OF_CASSIAN, WRATH_UNBOUND, WAND_OF_THE_FERRYMAN, THOTH_REED, SICKLE_OF_MORTHIS,
             KHOPESH_OF_THE_EMBALMER, LALEH_LANTERN, TEAR_OF_THE_MOON, ASTROLABE_OF_SHIRIN, ASH_AND_EMBER, FANGS_OF_FENRATH,
             SMUGGLERS_SEAX, LAST_BREATH, FJORD_WOLF_HOOK, GREED_INCARNATE, SCEPTER_OF_THE_FIRST_SULTAN, AZHAR_CRESCENT,
-            JANISSARY_OATH, JUNGLE_OF_GLASS, CHAINMASTER, ECHO_OF_KALETH);
+            JANISSARY_OATH, JUNGLE_OF_GLASS, CHAINMASTER, ECHO_OF_KALETH, THESSYNS_NEEDLE, ASHBRINGER_OF_THE_FIRST_FALLEN);
     private static final List<RegistryObject<Item>> U_LARGE = List.of(
             BROKEN_BANNER_LANCE, ANVIL_OF_AUREUM, OATHKEEPER, STAFF_OF_THE_NINE_GATES, ANUBETS_JUDGEMENT, PEN_OF_THE_POET_KING,
             STAFF_OF_WINTER_GARDENS, SKYFALL, HALBERD_OF_FIVE_LANDS, CARAVAN_BREAKER, TIDE_OF_TEETH, HARVEST_OF_SHADOWS,
-            FLAIL_OF_THE_PENITENT);
+            FLAIL_OF_THE_PENITENT, GOLDARCS_SCALES, GULARTHS_CLEAVER, ENVYRIS_BORROWED_SCYTHE);
     private static final List<RegistryObject<Item>> U_GUN = List.of(
             VOICE_OF_THE_CANNON, MUSKET_OF_THE_SIEGE);
     private static final List<RegistryObject<Item>> U_ARMOR = List.of(
@@ -623,7 +642,7 @@ public final class ItemRegistry {
             HOOD_OF_ASH, MASK_OF_THE_HEIST, JERKIN_OF_MANY_POCKETS, WOLFSKIN_OF_THE_RAIDER, BREECHES_OF_THE_CUTPURSE, SHADOWSTEP_LEGWRAPS,
             BOOTS_OF_THE_FJORD_RUNNER, SILENT_SOLES, TURBAN_OF_THE_PEACOCK_THRONE, CROWN_OF_AZHAR, KAFTAN_OF_THE_DIVAN, ROBES_OF_THE_GOLDEN_AGE,
             TROUSERS_OF_THE_VIZIER, LEGS_OF_THE_CONQUEROR, SLIPPERS_OF_THE_HAREM_ROAD, TREAD_OF_KINGS, HELM_OF_THE_WANDERER, ECLIPSE_PLATE,
-            SANDSTRIDERS, LEGS_OF_THE_SEVENTH_SIN);
+            SANDSTRIDERS, LEGS_OF_THE_SEVENTH_SIN, CROWN_OF_THE_STAGNANT_KING, MAW_OF_FENRATH, MASK_OF_SHADEYN);
     private static final List<RegistryObject<Item>> U_FLAT = List.of(
             SIGNET_OF_THE_ORDER, BAND_OF_UNBROKEN_OATHS, MEDAL_OF_THE_SCALE, TEAR_OF_AUREUM, KNIGHT_SHIELD_CHARM, KNIGHT_BANNER_CHARM,
             KNIGHT_WRATH_CHARM, KNIGHT_GRAND_CHARM, RING_OF_BOUND_SOULS, SEAL_OF_THE_HOUSE_OF_THRESHOLDS, HEART_SCARAB, EYE_OF_MORTHIS,
@@ -636,7 +655,8 @@ public final class ItemRegistry {
             BLOODSTONE_CHARM, HOURGLASS_CHARM, COMPASS_OF_THE_CODEX, EMBER_HEART_CHARM, FROSTBOUND_CHARM, THUNDER_IDOL_CHARM,
             PILGRIM_CHARM, ANNIHILUS, TORCH_OF_THE_BEARERS, SEAL_OF_THE_EIGHTH_LOCK, CODEX_PAGE_CHARM, VORATH_CINDER,
             RING_OF_THE_CARAVANSERAI, SERPENT_EYE_RING, FROST_WYRM_BAND, VOID_TOUCHED_RING, AMULET_OF_THE_DAWN, TIDECALLER_PENDANT,
-            BONE_OF_THE_FIRST_FALLEN, PRYTHONS_MIRROR, GRAND_TALISMAN);
+            BONE_OF_THE_FIRST_FALLEN, PRYTHONS_MIRROR, WHISPER_OF_MIRAEL, RING_OF_THE_LONG_WATCH, HEART_OF_LUXARA, NIXARAS_FALSE_RING,
+            HOARD_OF_AVAROK, SUN_HALO_OF_SOLRATH, GRAND_TALISMAN);
     // </generated-uniques>
 
     // <generated-armor> by scripts/make_armor_data.py from scripts/armor_catalog.py: the class sets
@@ -807,9 +827,33 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> POMEGRANATE = ITEMS.register("pomegranate",
             () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.4f).build())));
     public static final RegistryObject<Item> DESERT_LOTUS = ITEMS.register("desert_lotus", () -> new Item(new Item.Properties()));
+    // <generated-potions> by scripts/make_potions.py: an elixir and a tonic per act
     public static final RegistryObject<Item> MINOR_POMEGRANATE_ELIXIR = ITEMS.register("minor_pomegranate_elixir",
-            () -> new ConsumableItems.Elixir(new Item.Properties()));
-    public static final RegistryObject<Item> BEARERS_TONIC = ITEMS.register("bearers_tonic", () -> new ConsumableItems.Tonic(new Item.Properties()));
+            () -> new ConsumableItems.Elixir(new Item.Properties(), 20));
+    public static final RegistryObject<Item> BEARERS_TONIC = ITEMS.register("bearers_tonic",
+            () -> new ConsumableItems.Tonic(new Item.Properties(), 0.25f));
+    public static final RegistryObject<Item> STRONG_POMEGRANATE_ELIXIR = ITEMS.register("strong_pomegranate_elixir",
+            () -> new ConsumableItems.Elixir(new Item.Properties(), 35));
+    public static final RegistryObject<Item> STRONG_BEARERS_TONIC = ITEMS.register("strong_bearers_tonic",
+            () -> new ConsumableItems.Tonic(new Item.Properties(), 0.35f));
+    public static final RegistryObject<Item> MAJOR_POMEGRANATE_ELIXIR = ITEMS.register("major_pomegranate_elixir",
+            () -> new ConsumableItems.Elixir(new Item.Properties().rarity(Rarity.UNCOMMON), 50));
+    public static final RegistryObject<Item> MAJOR_BEARERS_TONIC = ITEMS.register("major_bearers_tonic",
+            () -> new ConsumableItems.Tonic(new Item.Properties().rarity(Rarity.UNCOMMON), 0.5f));
+    public static final RegistryObject<Item> GRAND_POMEGRANATE_ELIXIR = ITEMS.register("grand_pomegranate_elixir",
+            () -> new ConsumableItems.Elixir(new Item.Properties().rarity(Rarity.UNCOMMON), 75));
+    public static final RegistryObject<Item> GRAND_BEARERS_TONIC = ITEMS.register("grand_bearers_tonic",
+            () -> new ConsumableItems.Tonic(new Item.Properties().rarity(Rarity.UNCOMMON), 0.65f));
+    public static final RegistryObject<Item> IMPERIAL_POMEGRANATE_ELIXIR = ITEMS.register("imperial_pomegranate_elixir",
+            () -> new ConsumableItems.Elixir(new Item.Properties().rarity(Rarity.UNCOMMON), 100));
+    public static final RegistryObject<Item> IMPERIAL_BEARERS_TONIC = ITEMS.register("imperial_bearers_tonic",
+            () -> new ConsumableItems.Tonic(new Item.Properties().rarity(Rarity.UNCOMMON), 0.8f));
+
+    /** Every elixir and tonic, weakest first. */
+    public static List<RegistryObject<Item>> potions() {
+        return List.of(MINOR_POMEGRANATE_ELIXIR, BEARERS_TONIC, STRONG_POMEGRANATE_ELIXIR, STRONG_BEARERS_TONIC, MAJOR_POMEGRANATE_ELIXIR, MAJOR_BEARERS_TONIC, GRAND_POMEGRANATE_ELIXIR, GRAND_BEARERS_TONIC, IMPERIAL_POMEGRANATE_ELIXIR, IMPERIAL_BEARERS_TONIC);
+    }
+    // </generated-potions>
     public static final RegistryObject<Item> BEARERS_FLASK = ITEMS.register("bearers_flask",
             () -> new ConsumableItems.Flask(new Item.Properties().rarity(Rarity.RARE)));
 
@@ -818,6 +862,89 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> FROSTPELT = ITEMS.register("frostpelt", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> VOID_ASH = ITEMS.register("void_ash", () -> new Item(new Item.Properties()));
 
+    // --- secondary materials of Acts III to V (docs/Anexos.md, A3)
+    public static final RegistryObject<Item> MOONSILK = ITEMS.register("moonsilk", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SUNREED_PAPYRUS = ITEMS.register("sunreed_papyrus", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal",
+            () -> new Item(new Item.Properties().rarity(Rarity.RARE).fireResistant()));
+    public static final RegistryObject<Item> VOID_INK = ITEMS.register("void_ink", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
+    /** The seven sin gems, each rough, cut and as an Oath Gem (com.sofe.gear.SinGem): "rough_wrath_ruby" and so on. */
+    public static final java.util.Map<String, RegistryObject<Item>> SIN_GEMS = sinGems();
+
+    private static java.util.Map<String, RegistryObject<Item>> sinGems() {
+        java.util.Map<String, RegistryObject<Item>> gems = new java.util.LinkedHashMap<>();
+        for (com.sofe.gear.SinGem gem : com.sofe.gear.SinGem.values()) {
+            for (com.sofe.gear.SinGem.Form form : com.sofe.gear.SinGem.Form.values()) {
+                Rarity rarity = form == com.sofe.gear.SinGem.Form.OATH ? Rarity.EPIC : form == com.sofe.gear.SinGem.Form.CUT ? Rarity.UNCOMMON : Rarity.COMMON;
+                gems.put(gem.id(form), ITEMS.register(gem.id(form), () -> new Item(new Item.Properties().rarity(rarity))));
+            }
+        }
+        return gems;
+    }
+
+    public static Item sinGem(com.sofe.gear.SinGem gem, com.sofe.gear.SinGem.Form form) {
+        return SIN_GEMS.get(gem.id(form)).get();
+    }
+
+    // <generated-boss-eggs>
+    public static final RegistryObject<Item> MIRAEL_SPAWN_EGG = ITEMS.register("mirael_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.MIRAEL, 0x5A2A7A, 0xE070FF, new Item.Properties()));
+    public static final RegistryObject<Item> THESSYN_SPAWN_EGG = ITEMS.register("thessyn_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.THESSYN, 0x2A3A30, 0xC0E0B0, new Item.Properties()));
+    public static final RegistryObject<Item> DORMIEL_SPAWN_EGG = ITEMS.register("dormiel_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.DORMIEL, 0x2A3050, 0x90C0FF, new Item.Properties()));
+    public static final RegistryObject<Item> LUXARA_SPAWN_EGG = ITEMS.register("luxara_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.LUXARA, 0x7A1A5A, 0xFF80C0, new Item.Properties()));
+    public static final RegistryObject<Item> MORTHIS_SPAWN_EGG = ITEMS.register("morthis_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.MORTHIS, 0x3A4A2A, 0x90FF80, new Item.Properties()));
+    public static final RegistryObject<Item> GOLDARC_SPAWN_EGG = ITEMS.register("goldarc_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.GOLDARC, 0xC49232, 0x3A2A10, new Item.Properties()));
+    public static final RegistryObject<Item> NIXARA_SPAWN_EGG = ITEMS.register("nixara_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.NIXARA, 0x3A3020, 0xE0B040, new Item.Properties()));
+    public static final RegistryObject<Item> AVAROK_SPAWN_EGG = ITEMS.register("avarok_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.AVAROK, 0xE0B030, 0x8A1A1A, new Item.Properties()));
+    public static final RegistryObject<Item> FENRATH_SPAWN_EGG = ITEMS.register("fenrath_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.FENRATH, 0x4A4038, 0x90FF60, new Item.Properties()));
+    public static final RegistryObject<Item> GULARTH_SPAWN_EGG = ITEMS.register("gularth_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.GULARTH, 0x6A4A3A, 0xC04030, new Item.Properties()));
+    public static final RegistryObject<Item> SHADEYN_SPAWN_EGG = ITEMS.register("shadeyn_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.SHADEYN, 0xC0C8D8, 0x2A2A3A, new Item.Properties()));
+    public static final RegistryObject<Item> SOLRATH_SPAWN_EGG = ITEMS.register("solrath_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.SOLRATH, 0x4A1A6A, 0xFFD050, new Item.Properties()));
+    public static final RegistryObject<Item> PRYTHON_SPAWN_EGG = ITEMS.register("prython_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.PRYTHON, 0x2A2010, 0xFFD060, new Item.Properties()));
+    public static final RegistryObject<Item> NAHRAZEL_SPAWN_EGG = ITEMS.register("nahrazel_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.NAHRAZEL, 0x1A0A2A, 0xB050FF, new Item.Properties()));
+    public static final RegistryObject<Item> ENVYRIS_SPAWN_EGG = ITEMS.register("envyris_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.ENVYRIS, 0x1A3A20, 0x60FF90, new Item.Properties()));
+
+    public static List<RegistryObject<Item>> bossEggs() {
+        return List.of(MIRAEL_SPAWN_EGG, THESSYN_SPAWN_EGG, DORMIEL_SPAWN_EGG, LUXARA_SPAWN_EGG, MORTHIS_SPAWN_EGG, GOLDARC_SPAWN_EGG, NIXARA_SPAWN_EGG, AVAROK_SPAWN_EGG, FENRATH_SPAWN_EGG, GULARTH_SPAWN_EGG, SHADEYN_SPAWN_EGG, SOLRATH_SPAWN_EGG, PRYTHON_SPAWN_EGG, NAHRAZEL_SPAWN_EGG, ENVYRIS_SPAWN_EGG);
+    }
+    // </generated-boss-eggs>
+    // <generated-empire-eggs>
+    public static final RegistryObject<Item> SAND_GHOUL_SPAWN_EGG = ITEMS.register("sand_ghoul_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.SAND_GHOUL, 0xA8875A, 0xFFAA28, new Item.Properties()));
+    public static final RegistryObject<Item> CLOCKWORK_SCARAB_SPAWN_EGG = ITEMS.register("clockwork_scarab_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.CLOCKWORK_SCARAB, 0xB07C30, 0x3CD2C8, new Item.Properties()));
+    public static final RegistryObject<Item> DRAUGR_SPAWN_EGG = ITEMS.register("draugr_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.DRAUGR, 0x4E5A64, 0x96EBFF, new Item.Properties()));
+    public static final RegistryObject<Item> RIME_WOLF_SPAWN_EGG = ITEMS.register("rime_wolf_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.RIME_WOLF, 0xCEDEE8, 0x78C8F0, new Item.Properties()));
+    public static final RegistryObject<Item> MIRAGE_DANCER_SPAWN_EGG = ITEMS.register("mirage_dancer_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.MIRAGE_DANCER, 0x78329A, 0xFF78DC, new Item.Properties()));
+    public static final RegistryObject<Item> BOG_MUMMY_SPAWN_EGG = ITEMS.register("bog_mummy_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.BOG_MUMMY, 0x625638, 0x8CFF78, new Item.Properties()));
+    public static final RegistryObject<Item> GILDED_LEGIONNAIRE_SPAWN_EGG = ITEMS.register("gilded_legionnaire_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.GILDED_LEGIONNAIRE, 0xC49232, 0x8C1A1E, new Item.Properties()));
+    public static final RegistryObject<Item> GLADIATOR_SHADE_SPAWN_EGG = ITEMS.register("gladiator_shade_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.GLADIATOR_SHADE, 0x28202E, 0xD2C8FF, new Item.Properties()));
+    // </generated-empire-eggs>
+    public static final RegistryObject<Item> VOID_ZOMBIE_SPAWN_EGG = ITEMS.register("void_zombie_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.VOID_ZOMBIE, 0x22183A, 0xC46EFF, new Item.Properties()));
+    public static final RegistryObject<Item> VOID_SKELETON_SPAWN_EGG = ITEMS.register("void_skeleton_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegistry.VOID_SKELETON, 0x32264A, 0xE08CFF, new Item.Properties()));
     public static final RegistryObject<Item> VOID_WRETCH_SPAWN_EGG = ITEMS.register("void_wretch_spawn_egg",
             () -> new ForgeSpawnEggItem(EntityRegistry.VOID_WRETCH, 0x1A0F24, 0x8E3FD6, new Item.Properties()));
     public static final RegistryObject<Item> VOID_STALKER_SPAWN_EGG = ITEMS.register("void_stalker_spawn_egg",
@@ -929,13 +1056,17 @@ public final class ItemRegistry {
 
     /** The materials of monsters and the Deep, beside the ores and ingots. */
     public static List<Item> creatureMaterials() {
-        return List.of(INFERNAL_EMBER.get(), WAILING_SOUL.get(), DUNE_LEATHER.get(), FROSTPELT.get(), VOID_ASH.get());
+        List<Item> items = new ArrayList<>(List.of(INFERNAL_EMBER.get(), WAILING_SOUL.get(), DUNE_LEATHER.get(), FROSTPELT.get(), VOID_ASH.get(),
+                MOONSILK.get(), SUNREED_PAPYRUS.get(), VOID_CRYSTAL.get(), VOID_INK.get()));
+        SIN_GEMS.values().forEach(g -> items.add(g.get()));
+        return items;
     }
 
     /** Potions, the Flask, food, scrolls and the story's items. */
     public static List<Item> consumables() {
         List<Item> items = new ArrayList<>();
-        for (RegistryObject<Item> i : List.of(BEARERS_FLASK, BEARERS_TONIC, MINOR_POMEGRANATE_ELIXIR, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
+        potions().forEach(i -> items.add(i.get()));
+        for (RegistryObject<Item> i : List.of(BEARERS_FLASK, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
                 RETURN_SCROLL, BLUEPRINT, CODEX_SHARD, DINAR)) {
             items.add(i.get());
         }
@@ -951,16 +1082,22 @@ public final class ItemRegistry {
 
     /** Spawn eggs use the vanilla template model. */
     public static List<RegistryObject<Item>> spawnEggs() {
-        return List.of(VOID_WRETCH_SPAWN_EGG, VOID_STALKER_SPAWN_EGG, BRASS_SENTINEL_SPAWN_EGG,
-                KALETH_SPAWN_EGG, SERATH_SPAWN_EGG, VORATH_SPAWN_EGG);
+        List<RegistryObject<Item>> eggs = new ArrayList<>(List.of(VOID_ZOMBIE_SPAWN_EGG, VOID_SKELETON_SPAWN_EGG, VOID_WRETCH_SPAWN_EGG, VOID_STALKER_SPAWN_EGG, BRASS_SENTINEL_SPAWN_EGG,
+                KALETH_SPAWN_EGG, SERATH_SPAWN_EGG, VORATH_SPAWN_EGG, SAND_GHOUL_SPAWN_EGG, CLOCKWORK_SCARAB_SPAWN_EGG, DRAUGR_SPAWN_EGG,
+                RIME_WOLF_SPAWN_EGG, MIRAGE_DANCER_SPAWN_EGG, BOG_MUMMY_SPAWN_EGG, GILDED_LEGIONNAIRE_SPAWN_EGG, GLADIATOR_SHADE_SPAWN_EGG));
+        eggs.addAll(bossEggs());
+        return eggs;
     }
 
     /** Plain items with a flat model and textures/item/&lt;id&gt;.png. */
     public static List<RegistryObject<Item>> flatItems() {
         List<RegistryObject<Item>> flat = new ArrayList<>(List.of(RETURN_SCROLL, CODEX_SHARD, INFERNAL_EMBER, WAILING_SOUL, DINAR,
                 BRASS_AMULET, BRASS_RING, SMALL_TALISMAN, LARGE_TALISMAN, BLUEPRINT, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
-                MINOR_POMEGRANATE_ELIXIR, BEARERS_TONIC, BEARERS_FLASK, DUNE_LEATHER, FROSTPELT, VOID_ASH));
+                MINOR_POMEGRANATE_ELIXIR, BEARERS_TONIC, BEARERS_FLASK, DUNE_LEATHER, FROSTPELT, VOID_ASH,
+                MOONSILK, SUNREED_PAPYRUS, VOID_CRYSTAL, VOID_INK));
+        flat.addAll(SIN_GEMS.values());
         flat.addAll(armorPieces());
+        flat.addAll(potions());
         flat.addAll(jewelry());
         flat.addAll(veiled());
         flat.addAll(A3_FLAT);

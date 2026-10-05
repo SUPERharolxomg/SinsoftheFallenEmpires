@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "sofe:imperial_marble"
+  },
+  "result": "sofe:aureum_marble_bricks",
+  "count": 1
+}

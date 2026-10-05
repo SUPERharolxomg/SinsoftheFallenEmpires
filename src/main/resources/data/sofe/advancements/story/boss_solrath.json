@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:sun_halo_of_solrath"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_solrath"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_solrath.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/act5"
+}

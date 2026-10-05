@@ -1,0 +1,12 @@
+{
+  "type": "sofe:jeweler",
+  "ingredients": [
+    {
+      "item": "sofe:rough_lust_amethyst",
+      "count": 1
+    }
+  ],
+  "result": "sofe:cut_lust_amethyst",
+  "count": 1,
+  "dinars": 120
+}

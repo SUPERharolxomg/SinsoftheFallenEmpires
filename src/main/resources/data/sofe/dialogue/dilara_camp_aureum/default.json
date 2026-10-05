@@ -1,0 +1,10 @@
+{
+  "style": "aureum",
+  "npc": "dilara_camp_aureum",
+  "lines": [
+    {
+      "speaker": "dilara_camp_aureum",
+      "text": "dialogue.sofe.camp.dilara"
+    }
+  ]
+}

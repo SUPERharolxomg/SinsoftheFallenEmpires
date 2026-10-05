@@ -1,0 +1,48 @@
+{
+  "type": "side",
+  "act": 3,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 9000,
+        "z": -5000,
+        "radius": 24
+      },
+      "target": {
+        "x": 9000,
+        "z": -5000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:mirage_dancer",
+        "count": 6
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:mirage_dancer",
+          "count": 6,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2200
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "style": "khemet",
+  "npc": "khemet_embalmer",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/ankhareth_act3",
+          "step": 1
+        }
+      },
+      {
+        "type": "class_is",
+        "class": "necromancer"
+      },
+      {
+        "type": "act_reached",
+        "act": 3
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_embalmer",
+      "text": "dialogue.sofe.q.ankhareth_act3.offer.1"
+    },
+    {
+      "speaker": "khemet_embalmer",
+      "text": "dialogue.sofe.q.ankhareth_act3.offer.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.ankhareth_act3.accept",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:bearer/ankhareth_act3"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.ankhareth_act3.later",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

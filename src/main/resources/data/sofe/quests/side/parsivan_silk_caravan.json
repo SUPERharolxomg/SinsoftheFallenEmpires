@@ -1,0 +1,53 @@
+{
+  "type": "side",
+  "act": 3,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 5200,
+        "z": 700,
+        "radius": 24
+      },
+      "target": {
+        "x": 5200,
+        "z": 700
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:void_*",
+        "count": 6
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:void_stalker",
+          "count": 6,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 1800
+    },
+    {
+      "type": "give_item",
+      "item": "sofe:moonsilk",
+      "count": 8
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}

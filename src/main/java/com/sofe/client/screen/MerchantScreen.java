@@ -124,6 +124,14 @@ public class MerchantScreen extends Screen {
         g.fill(l - 2, t - 2, l + PANEL_W + 2, t + PANEL_H + 2, 0xFF000000 | GOLD);
         g.fill(l, t, l + PANEL_W, t + PANEL_H, 0xF0181410);
         g.drawString(this.font, this.title, l + 8, t + 8, GOLD, false);
+        // the Favor with this merchant's empire, and the discount it gives
+        Component favor = Component.translatable("gui.sofe.favor.line", Component.translatable("region.sofe." + state.empire()),
+                Component.translatable("gui.sofe.favor.rank." + state.favorRank()), (int) Math.round(com.sofe.economy.EconomyData.DISCOUNT_PER_RANK * 100 * state.favorRank()));
+        g.pose().pushPose();
+        g.pose().translate(l + 8 + this.font.width(this.title) + 8, t + 9, 0);
+        g.pose().scale(0.75f, 0.75f, 1f);
+        g.drawString(this.font, favor, 0, 0, MUTED, false);
+        g.pose().popPose();
         Component dinars = Component.translatable("gui.sofe.merchant.dinars", state.dinars());
         g.drawString(this.font, dinars, l + PANEL_W - 8 - this.font.width(dinars), t + 8, GOLD, false);
 

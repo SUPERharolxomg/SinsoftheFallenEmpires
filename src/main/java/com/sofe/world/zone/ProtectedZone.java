@@ -27,7 +27,7 @@ public record ProtectedZone(String id, Kind kind, int minX, int minY, int minZ, 
             return switch (action) {
                 case BREAK -> canBreak;
                 case PLACE, USE_ITEM_ON_BLOCK -> canPlace;
-                case EXPLOSION, MOB_GRIEFING, FLUID, PISTON -> this == HOMESTEAD;
+                case EXPLOSION, MOB_GRIEFING, FLUID, PISTON, FIRE -> this == HOMESTEAD;
             };
         }
 

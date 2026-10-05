@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "khemet_ferryman",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.khemet_ferryman.act4.1"
+    }
+  ]
+}

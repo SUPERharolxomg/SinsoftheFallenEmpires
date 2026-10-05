@@ -1,0 +1,118 @@
+{
+  "type": "main",
+  "act": 4,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach_region",
+        "region": "aureum"
+      },
+      "target": {
+        "x": -1600,
+        "z": 0
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act4/the_western_ruins"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:goldarc"
+      },
+      "target": {
+        "x": -3600,
+        "z": -500
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:nixara"
+      },
+      "target": {
+        "x": -3600,
+        "z": 1500
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:avarok"
+      },
+      "target": {
+        "x": -8000,
+        "z": 500
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:fenrath"
+      },
+      "target": {
+        "x": -600,
+        "z": -2484
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act4/below_the_north"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:gularth"
+      },
+      "target": {
+        "x": -600,
+        "z": -2550
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:shadeyn"
+      },
+      "target": {
+        "x": -6000,
+        "z": 7000
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:envyris"
+      },
+      "target": {
+        "x": -9000,
+        "z": -8000
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act4/the_shadow_throne"
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 12000
+    },
+    {
+      "type": "open_dialogue",
+      "dialogue": "sofe:act4/sulthari_besieged"
+    },
+    {
+      "type": "advance_act",
+      "act": 5
+    }
+  ]
+}

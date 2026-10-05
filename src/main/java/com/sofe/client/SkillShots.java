@@ -143,6 +143,7 @@ public final class SkillShots {
         }
         for (var old : level.getEntitiesOfClass(LivingEntity.class, new AABB(floor).inflate(40), e -> !(e instanceof ServerPlayer))) old.discard();
         ClassState.forget(p);
+        p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL); // a spectator cannot cast (another tool may have left one)
         PlayerClass cls = info.owner();
         PlayerClassCapability.get(p).ifPresent(d -> d.set(cls));
         ProgressionCapability.get(p).ifPresent(prog -> {

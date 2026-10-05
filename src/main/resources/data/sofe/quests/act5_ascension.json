@@ -1,0 +1,64 @@
+{
+  "type": "main",
+  "act": 5,
+  "steps": [
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:solrath"
+      },
+      "target": {
+        "x": 700,
+        "z": 700
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act5/the_siege"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:prython"
+      },
+      "target": {
+        "x": -700,
+        "z": 700
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act5/the_spire"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:nahrazel"
+      },
+      "target": {
+        "x": -700,
+        "z": 1050
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act5/the_inverted_throne"
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 30000
+    },
+    {
+      "type": "open_dialogue",
+      "dialogue": "sofe:act5/the_ending"
+    }
+  ]
+}

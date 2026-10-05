@@ -1,0 +1,52 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/cassian_act4",
+          "step": 1
+        }
+      },
+      {
+        "type": "class_is",
+        "class": "knight"
+      },
+      {
+        "type": "act_reached",
+        "act": 4
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.cassian_act4.offer.1"
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.cassian_act4.offer.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.cassian_act4.accept",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:bearer/cassian_act4"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.cassian_act4.later",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

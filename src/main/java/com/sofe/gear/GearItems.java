@@ -73,8 +73,13 @@ public final class GearItems {
         public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level level, java.util.List<Component> tooltip,
                                     net.minecraft.world.item.TooltipFlag flag) {
             super.appendHoverText(stack, level, tooltip, flag);
-            if (getMaterial() instanceof SoFETiers.Armor set && ArmorSets.bonusKey(set) != null) {
-                tooltip.add(Component.translatable(ArmorSets.bonusKey(set)).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+            if (getMaterial() instanceof SoFETiers.Armor set) {
+                String piece = ArmorSets.pieceKey(set, getEquipmentSlot());
+                if (piece != null) tooltip.add(Component.translatable(piece).withStyle(net.minecraft.ChatFormatting.AQUA));
+                if (ArmorSets.bonusKey(set) != null) {
+                    tooltip.add(Component.translatable("armorpiece.sofe.full_set").withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+                    tooltip.add(Component.translatable(ArmorSets.bonusKey(set)).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+                }
             }
         }
 

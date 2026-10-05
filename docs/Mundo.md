@@ -38,40 +38,39 @@ Small extra dimensions are used only where the story needs them:
 
 ### Map of Aetheris
 
-North is −Z, as in Minecraft. The world border is **±6,000 blocks** (12,000 × 12,000).
+North is −Z, as in Minecraft. The world is **25,000 × 25,000 blocks**: the regions fill ±12,000 and the ocean runs on to ±12,500. The empires are large on purpose, with room for their dungeons, camps and zones of their own; Waystones make the distances bearable.
 
 ```text
-                              z = -6000
-          ┌─────────────────────────────────────────────┐
-          │                  OCEAN                      │
-          │     ┌─────────────────────────────┐         │
-          │     │   NORDRATH CLANS (Act II)   │         │
-          │     │   Wrath · Gluttony (below)  │         │
-          │     └──────────────┬──────────────┘         │
-          │ ┌──────────────┐ ░░│░░ ┌─────────────────┐  │
-          │ │   AUREUM     │ ░░░░░ │  PARSIVAN COURT │  │
- x = -6000│ │   REPUBLIC   │░ SUL ░│   (Act III)     │  │ x = 6000
-          │ │   (Act IV)   │░THARI░│   Lust          │  │
-          │ │ Greed · Envy │░ (I) ░└─────────────────┘  │
-          │ └──────────────┘ ░░░░░ ┌─────────────────┐  │
-          │                  ░░│░░ │  KHEMET (III)   │  │
-          │                    └───│  Sloth          │  │
-          │                        └─────────────────┘  │
-          │                  OCEAN                      │
-          └─────────────────────────────────────────────┘
-                              z = 6000
-   ░ = Ashen Wastes (corrupted wilderness around Sulthari)
+                                   z = -12000
+   ┌───────────────────┬─────────────────────────────────┬───────────────────┐
+   │  AUREUM (north-   │                                 │  PARSIVAN (north- │
+   │  west): the Shadow│        NORDRATH CLANS           │  east): Enchanted │
+   │  Throne ruins     │        (Act II)                 │  Gardens          │
+   │                   │        Wrath · Gluttony (below) │                   │
+   │      x = -6000    │                                 │    x = 6000       │
+   ├───────────────────┴──────────┬──────────┬───────────┴───────────────────┤ z = -1500
+   │  AUREUM REPUBLIC (Act IV)    │ SULTHARI │  PARSIVAN COURT (Act III)     │
+x =│  Greed · Envy                │ (Act I)  │  Lust                         │ x =
+-12000 Treasury, Market, Vaults  ├────┬─────┴───────────────────────────────┤ 12000
+   │                              │    │ z = 1500                          │
+   ├──────────────────────────────┤ S  │  KHEMET ASCENDANCY (Act III)      │
+   │  AUREUM (south-west): coast, │ E  │  Sloth                            │
+   │  quarries, the Colosseum     │ A  │  Catacombs, Stagnant Marsh        │
+   │                              │    │                                   │
+   └──────────────────────────────┴────┴───────────────────────────────────┘
+                                   z = 12000      (ocean beyond, to ±12,500)
 ```
 
-Regions only touch at their borders; the Seal Veil runs along every shared border.
+Regions only touch at their borders; the Seal Veil runs along every shared border. A region can be made of several rectangles (Parsivan, Aureum).
 
 | Region | X range | Z range | Main biomes | Opens at |
 |--------|---------|---------|-------------|----------|
 | **Sulthari** (city + Ashen Wastes) | −1,500 → 1,500 | −1,500 → 1,500 | Desert plateau, mesa, oasis, Ashen Wastes | Start (Act I) |
-| **Nordrath** | −2,500 → 2,500 | −5,800 → −1,500 | Tundra, fjords, ice caves, volcanic forges | Act II |
-| **Parsivan** | 1,500 → 5,800 | −1,500 → 1,500 | Hanging gardens, mountain passes, Silk Road steppe | Act III |
-| **Khemet** | 800 → 5,800 | 1,500 → 5,800 | River valley, dunes, marsh | Act III (Catacombs after Luxara) |
-| **Aureum** | −5,800 → −1,500 | −1,500 → 3,500 | Marble hills, quarries, coast | Act IV |
+| **Nordrath** | −6,000 → 6,000 | −12,000 → −1,500 | Tundra, fjords, ice caves, volcanic forges | Act II |
+| **Parsivan** | 1,500 → 12,000 and 6,000 → 12,000 | −1,500 → 1,500 and −12,000 → −1,500 | Hanging gardens, mountain passes, Silk Road steppe | Act III |
+| **Khemet** | 800 → 12,000 | 1,500 → 12,000 | River valley, dunes, marsh | Act III (Catacombs after Luxara) |
+| **Aureum** | −12,000 → −1,500, −12,000 → −6,000 and −12,000 → −1,500 | −1,500 → 3,500, −12,000 → −1,500 and 3,500 → 12,000 | Marble hills, quarries, coast | Act IV |
+| **Southern Sea** | −1,500 → 800 | 1,500 → 12,000 | Ocean between Aureum and Khemet | Never |
 | **Ocean** | Everything else inside the border | | Deep ocean, islands | Never (see W2) |
 
 **Enemy levels.** Each region has an enemy level range, which sets mob stats and the item level of their loot ([Pociones.md](Pociones.md#gear-progression-by-act)):
@@ -88,7 +87,7 @@ Regions only touch at their borders; the Seal Veil runs along every shared borde
 
 **Biome zones.** Inside a region, round zones of other biomes give it variety; like the layout they are saved with the world. Nordrath: tundra, two ice fields to the west and east, and volcanic forges around the Burning Citadel and the Nordrath Forge.
 
-**Fixed locations (examples).** Sulthari city at (0, 0). Burning Citadel ~(0, −4,500), Nordrath Forge ~(−1,200, −3,000), Nordrath Arena ~(1,200, −3,000), Nordrath Caverns entrance ~(−600, −2,400). Enchanted Gardens ~(4,200, −1,000). Stagnant Marsh ~(3,500, 4,200). Golden Vaults ~(−4,000, 0). The Celestial Spire rises above Sulthari only in Act V. The region bounds are part of the `sofe:aetheris` world preset (`data/sofe/worldgen/world_preset/aetheris.json`, generated from `RegionMap.defaultLayout()`) and are **saved inside each world** when it is created, so a later change to the layout only affects new worlds. Structure positions live in `data/sofe/structure_positions.json` (spawn, story structures and their protected zones, NPCs and Waystones), so they can change without code; a journey copies its zones when it is created.
+**Fixed locations.** Sulthari city at (0, 0). Nordrath: Skarnhold (0, −2,400), Nordrath Forge (−1,200, −3,000), Nordrath Arena (1,200, −3,000), Burning Citadel (0, −4,500), the Caverns' entrance (−600, −2,400) with the Caverns and the Feast Halls below it. Parsivan: Baths (3,600, −500), Silk Road caravanserai (5,200, 700), Enchanted Gardens (9,000, −5,000). Khemet: Catacombs (3,200, 4,000), Stagnant Marsh (8,000, 8,500). Aureum: Treasury (−3,600, −500), Market (−3,600, 1,500), Golden Vaults (−8,000, 500), Colosseum (−6,000, 7,000), Shadow Throne (−9,000, −8,000). Each boss waits in its lair (`data/sofe/boss_lairs.json`). The Celestial Spire rises above Sulthari only in Act V. The region bounds are part of the `sofe:aetheris` world preset (`data/sofe/worldgen/world_preset/aetheris.json`, generated from `RegionMap.defaultLayout()`) and are **saved inside each world** when it is created, so a later change to the layout only affects new worlds. Structure positions live in `data/sofe/structure_positions.json` (spawn, story structures and their protected zones, NPCs and Waystones), so they can change without code; a journey copies its zones when it is created.
 
 ---
 
@@ -215,10 +214,10 @@ Mod ores generate **only in their region's biomes** (biome tags `sofe:is_nordrat
 | Ore | Region (X / Z) | Biomes | Height (Y) | Veins per chunk | Vein size | Notes |
 |-----|----------------|--------|------------|-----------------|-----------|-------|
 | **Sulthari Brass** | Sulthari (±1,500) | Plateau, mesa | 40 → 120 | 10 | 6–9 | Also in cliff faces; start material |
-| **Glacial Iron** | Nordrath (z −1,500 → −5,800) | Tundra, ice caves | −16 → 48 | 6 | 5–8 | Deepslate form below Y 0; double in ice caves |
-| **Star Lapis** | Parsivan (x 1,500 → 5,800) | Mountains, passes | 80 → 200 | 4 | 3–5 | Hard to spot by day, sparkles at night |
-| **Solar Gold** | Khemet (x 800 → 5,800, z 1,500 → 5,800) | Dunes, river valley | −32 → 32 | 3 | 4–6 | Extra veins inside tombs |
-| **Orichalcum** | Aureum (x −1,500 → −5,800) | Marble hills, quarries | −64 → −16 | 2 | 3–5 | Deep only |
+| **Glacial Iron** | Nordrath (z −1,500 → −12,000) | Tundra, ice caves | −16 → 48 | 6 | 5–8 | Deepslate form below Y 0; double in ice caves |
+| **Star Lapis** | Parsivan (x 1,500 → 12,000) | Mountains, passes | 80 → 200 | 4 | 3–5 | Hard to spot by day, sparkles at night |
+| **Solar Gold** | Khemet (x 800 → 12,000, z 1,500 → 12,000) | Dunes, river valley | −32 → 32 | 3 | 4–6 | Extra veins inside tombs |
+| **Orichalcum** | Aureum (x −1,500 → −12,000) | Marble hills, quarries | −64 → −16 | 2 | 3–5 | Deep only |
 | **Raw Aetherium** | All unlocked regions | Near Void Rifts | −64 → −40 | 1 rift per ~8 chunks | 2–4 around the rift | Needs an Orichalcum pickaxe. Before Act V, aetherium comes from purifying Black Aetherium |
 
 **Vanilla ores** (coal, copper, iron, gold, redstone, lapis, diamond) generate as usual in every region, so the early game still feels like Minecraft.

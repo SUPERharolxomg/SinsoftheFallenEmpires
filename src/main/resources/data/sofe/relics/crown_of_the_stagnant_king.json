@@ -1,0 +1,31 @@
+{
+  "item": "sofe:crown_of_the_stagnant_king",
+  "item_level": 60,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 58,
+  "affixes": [
+    {
+      "stat": "vitality",
+      "value": 8
+    },
+    {
+      "stat": "armor",
+      "value": 4
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "slow",
+      "s": 3,
+      "lvl": 1
+    },
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:regeneration",
+      "when": "low_health"
+    }
+  ]
+}

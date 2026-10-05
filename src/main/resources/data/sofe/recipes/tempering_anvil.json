@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    " A ",
+    "III"
+  ],
+  "key": {
+    "G": {
+      "item": "sofe:solar_gold_ingot"
+    },
+    "A": {
+      "item": "minecraft:anvil"
+    },
+    "I": {
+      "item": "sofe:glacial_iron_ingot"
+    }
+  },
+  "result": {
+    "item": "sofe:tempering_anvil",
+    "count": 1
+  }
+}

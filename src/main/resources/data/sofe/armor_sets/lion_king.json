@@ -11,5 +11,34 @@
       "action": "knockback",
       "value": 0.6
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "projectile",
+        "value": 0.05
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "all",
+        "value": 0.03
+      }
+    ],
+    "leggings": [
+      {
+        "type": "on_kill",
+        "heal": 1.0
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.15
+      }
+    ]
+  }
 }

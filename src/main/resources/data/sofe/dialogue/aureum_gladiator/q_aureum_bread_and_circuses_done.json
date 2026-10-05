@@ -1,0 +1,45 @@
+{
+  "style": "aureum",
+  "npc": "aureum_gladiator",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/aureum_bread_and_circuses",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/aureum_bread_and_circuses",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_gladiator",
+      "text": "dialogue.sofe.q.aureum_bread_and_circuses.done.1"
+    },
+    {
+      "speaker": "aureum_gladiator",
+      "text": "dialogue.sofe.q.aureum_bread_and_circuses.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.aureum_bread_and_circuses.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/aureum_bread_and_circuses"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

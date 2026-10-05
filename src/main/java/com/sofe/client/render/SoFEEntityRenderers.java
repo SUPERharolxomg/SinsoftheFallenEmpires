@@ -1,5 +1,7 @@
 package com.sofe.client.render;
 
+import java.util.HashMap;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.sofe.SoFEMod;
@@ -46,7 +48,13 @@ public final class SoFEEntityRenderers {
     }
 
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityRegistry.VOID_WRETCH.get(), ctx -> new GeoMobRenderer<>(ctx, "void_wretch", 0.5f));
+        event.registerEntityRenderer(EntityRegistry.VOID_WRETCH.get(), ctx -> new GeoMobRenderer<>(ctx, "void_wretch", 0.6f));
+        event.registerEntityRenderer(EntityRegistry.VOID_ZOMBIE.get(), VoidZombieRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.VOID_SKELETON.get(), VoidSkeletonRenderer::new);
+        for (var mob : EntityRegistry.empireMobs()) {
+            String model = mob.getId().getPath();
+            event.registerEntityRenderer(mob.get(), ctx -> new GeoMobRenderer<>(ctx, model, model.equals("clockwork_scarab") ? 0.3f : 0.5f));
+        }
         event.registerEntityRenderer(EntityRegistry.THROWN_WEAPON.get(), ThrownWeaponRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SUMMONED_ALLY.get(), SummonRenderers.Ally::new);
         event.registerEntityRenderer(EntityRegistry.BRONZE_CANNON.get(), SummonRenderers.Cannon::new);
@@ -67,6 +75,25 @@ public final class SoFEEntityRenderers {
         event.registerEntityRenderer(EntityRegistry.KALETH.get(), ctx -> new GeoMobRenderer<>(ctx, "kaleth", 0.7f));
         event.registerEntityRenderer(EntityRegistry.SERATH.get(), ctx -> new GeoMobRenderer<>(ctx, "serath", 0.6f));
         event.registerEntityRenderer(EntityRegistry.VORATH.get(), ctx -> new GeoMobRenderer<>(ctx, "vorath", 1.2f));
+        // <generated-boss-renderers>
+        event.registerEntityRenderer(EntityRegistry.MIRAEL.get(), ctx -> new GeoMobRenderer<>(ctx, "mirael", 0.8f));
+        event.registerEntityRenderer(EntityRegistry.THESSYN.get(), ctx -> new GeoMobRenderer<>(ctx, "thessyn", 1.28f));
+        event.registerEntityRenderer(EntityRegistry.DORMIEL.get(), ctx -> new GeoMobRenderer<>(ctx, "dormiel", 0.8f));
+        event.registerEntityRenderer(EntityRegistry.LUXARA.get(), ctx -> new GeoMobRenderer<>(ctx, "luxara", 0.96f));
+        event.registerEntityRenderer(EntityRegistry.MORTHIS.get(), ctx -> new GeoMobRenderer<>(ctx, "morthis", 1.44f));
+        event.registerEntityRenderer(EntityRegistry.GOLDARC.get(), ctx -> new GeoMobRenderer<>(ctx, "goldarc", 0.96f));
+        event.registerEntityRenderer(EntityRegistry.NIXARA.get(), ctx -> new GeoMobRenderer<>(ctx, "nixara", 0.8f));
+        event.registerEntityRenderer(EntityRegistry.AVAROK.get(), ctx -> new GeoMobRenderer<>(ctx, "avarok", 1.28f));
+        event.registerEntityRenderer(EntityRegistry.FENRATH.get(), ctx -> new GeoMobRenderer<>(ctx, "fenrath", 1.6f));
+        event.registerEntityRenderer(EntityRegistry.GULARTH.get(), ctx -> new GeoMobRenderer<>(ctx, "gularth", 1.6f));
+        event.registerEntityRenderer(EntityRegistry.SHADEYN.get(), ctx -> new GeoMobRenderer<>(ctx, "shadeyn", 0.88f));
+        event.registerEntityRenderer(EntityRegistry.SOLRATH.get(), ctx -> new GeoMobRenderer<>(ctx, "solrath", 0.88f));
+        event.registerEntityRenderer(EntityRegistry.PRYTHON.get(), ctx -> new GeoMobRenderer<>(ctx, "prython", 1.12f));
+        event.registerEntityRenderer(EntityRegistry.NAHRAZEL.get(), ctx -> new GeoMobRenderer<>(ctx, new NahrazelModel(), 2.08f));
+        event.registerEntityRenderer(EntityRegistry.ENVYRIS.get(), ctx -> new GeoMobRenderer<>(ctx, "envyris", 0.96f));
+        event.registerEntityRenderer(EntityRegistry.SEAL_GLYPH.get(), ctx -> new GeoMobRenderer<>(ctx, "seal_glyph", 0.4f));
+        event.registerEntityRenderer(EntityRegistry.ENVY_COPY.get(), EnvyCopyRenderer::new);
+        // </generated-boss-renderers>
     }
 
     /** The Bearer outfit over every player's own skin (docs/Clases.md, "How the player looks"). */
@@ -86,7 +113,7 @@ public final class SoFEEntityRenderers {
     static class GeoMobRenderer<T extends net.minecraft.world.entity.LivingEntity & software.bernie.geckolib.core.animatable.GeoAnimatable>
             extends software.bernie.geckolib.renderer.GeoEntityRenderer<T> {
         GeoMobRenderer(EntityRendererProvider.Context ctx, String model, float shadow) {
-            this(ctx, new software.bernie.geckolib.model.DefaultedEntityGeoModel<>(SoFEMod.id(model), true), shadow);
+            this(ctx, new PhaseModel<>(model), shadow);
         }
 
         GeoMobRenderer(EntityRendererProvider.Context ctx, software.bernie.geckolib.model.GeoModel<T> model, float shadow) {
@@ -94,19 +121,89 @@ public final class SoFEEntityRenderers {
             this.shadowRadius = shadow;
             addRenderLayer(new software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer<>(this));
         }
+
+        /** A creature that grows (Gularth) is drawn at its own scale. */
+        @Override
+        public void render(T entity, float yaw, float partialTick, PoseStack pose, MultiBufferSource buffers, int light) {
+            float scale = entity instanceof com.sofe.entity.boss.Scaled scaled ? scaled.renderScale() : 1f;
+            if (scale == 1f) {
+                super.render(entity, yaw, partialTick, pose, buffers, light);
+                return;
+            }
+            pose.pushPose();
+            pose.scale(scale, scale, scale);
+            super.render(entity, yaw, partialTick, pose, buffers, light);
+            pose.popPose();
+        }
+    }
+
+    /**
+     * A model that shows a boss breaking (scripts/make_boss_models.py): past its first phase it is drawn with its
+     * _broken texture (split by fractures of its own colour) when it has one, its p2_ bones appear (what breaks out
+     * of it) and its p1_ bones are gone (what broke off). Creatures that are not bosses are drawn as they are.
+     */
+    static class PhaseModel<T extends net.minecraft.world.entity.LivingEntity & software.bernie.geckolib.core.animatable.GeoAnimatable>
+            extends software.bernie.geckolib.model.DefaultedEntityGeoModel<T> {
+        private static final Map<ResourceLocation, Boolean> EXISTS = new HashMap<>();
+        private final ResourceLocation broken;
+
+        PhaseModel(String model) {
+            super(SoFEMod.id(model), true);
+            this.broken = SoFEMod.id("textures/entity/" + model + "_broken.png");
+        }
+
+        static boolean exists(ResourceLocation texture) {
+            return EXISTS.computeIfAbsent(texture, t -> Minecraft.getInstance().getResourceManager().getResource(t).isPresent());
+        }
+
+        protected int shownPhase(T entity) {
+            return entity instanceof com.sofe.entity.boss.SoFEBossEntity boss ? boss.shownPhase() : 1;
+        }
+
+        @Override
+        public ResourceLocation getTextureResource(T entity) {
+            return shownPhase(entity) >= 2 && exists(broken) ? broken : super.getTextureResource(entity);
+        }
+
+        @Override
+        public void setCustomAnimations(T entity, long instanceId, software.bernie.geckolib.core.animation.AnimationState<T> state) {
+            super.setCustomAnimations(entity, instanceId, state);
+            boolean second = shownPhase(entity) >= 2;
+            for (var bone : getAnimationProcessor().getRegisteredBones()) {
+                if (bone.getName().startsWith("p2_")) bone.setHidden(!second);
+                else if (bone.getName().startsWith("p1_")) bone.setHidden(second);
+            }
+        }
+    }
+
+    /** Nahrazel is a colossus of ash in his first form, the Void itself in his second, and breaking apart in the Codex. */
+    static class NahrazelModel extends PhaseModel<com.sofe.entity.boss.NahrazelEntity> {
+        private static final ResourceLocation ASH = SoFEMod.id("textures/entity/nahrazel_ash.png");
+        private static final ResourceLocation WHOLE = SoFEMod.id("textures/entity/nahrazel.png");
+
+        NahrazelModel() {
+            super("nahrazel");
+        }
+
+        @Override
+        public ResourceLocation getTextureResource(com.sofe.entity.boss.NahrazelEntity entity) {
+            if (entity.form() <= 1) return ASH;
+            return entity.form() == 2 ? WHOLE : super.getTextureResource(entity);
+        }
     }
 
     /** The Sentinel's metal is corrupted by the Void below half health. */
-    static class SentinelModel extends software.bernie.geckolib.model.DefaultedEntityGeoModel<BrassSentinelEntity> {
+    static class SentinelModel extends PhaseModel<BrassSentinelEntity> {
         private static final ResourceLocation VOID_TEXTURE = SoFEMod.id("textures/entity/brass_sentinel_void.png");
+        private static final ResourceLocation WHOLE = SoFEMod.id("textures/entity/brass_sentinel.png");
 
         SentinelModel() {
-            super(SoFEMod.id("brass_sentinel"), true);
+            super("brass_sentinel");
         }
 
         @Override
         public ResourceLocation getTextureResource(BrassSentinelEntity entity) {
-            return entity.getHealth() < entity.getMaxHealth() / 2 ? VOID_TEXTURE : super.getTextureResource(entity);
+            return entity.getHealth() < entity.getMaxHealth() / 2 ? VOID_TEXTURE : WHOLE;
         }
     }
 
@@ -127,13 +224,89 @@ public final class SoFEEntityRenderers {
             Map.entry("nordrath_apprentice", "kai"), Map.entry("nordrath_hunter", "makena"), Map.entry("nordrath_elder", "noor"),
             Map.entry("nordrath_child", "efe"), Map.entry("nordrath_brewer", "zuri"), Map.entry("nordrath_raider", "ari"),
             Map.entry("nordrath_skald", "steve"), Map.entry("nordrath_furrier", "alex"), Map.entry("nordrath_runesmith", "zuri"),
-            Map.entry("kasim", "efe"), Map.entry("nordrath_gambler", "makena"));
+            Map.entry("kasim", "efe"), Map.entry("nordrath_gambler", "makena"),
+            Map.entry("kerem", "kai"), Map.entry("nilufar", "alex"), Map.entry("zahir", "noor"),
+            Map.entry("parsivan_poet", "alex"), Map.entry("parsivan_gardener", "efe"), Map.entry("parsivan_dancer", "sunny"),
+            Map.entry("khemet_embalmer", "makena"), Map.entry("khemet_ferryman", "noor"), Map.entry("khemet_scribe", "zuri"),
+            Map.entry("aureum_senator", "ari"), Map.entry("aureum_gladiator", "steve"), Map.entry("aureum_widow", "kai"));
+
+    /** "ferid_camp_parsivan" looks like Ferid. */
+    private static String skinId(String id) {
+        int camp = id.indexOf("_camp_");
+        return camp > 0 ? id.substring(0, camp) : id;
+    }
 
     /** The skin of an NPC id: its own when the mod or a resource pack has one, else a default skin. */
     public static ResourceLocation skinFor(String id) {
         ResourceLocation own = SoFEMod.id("textures/entity/npc/" + id + ".png");
         if (Minecraft.getInstance().getResourceManager().getResource(own).isPresent()) return own;
         return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/player/wide/" + DEFAULT_SKINS.getOrDefault(id, "steve") + ".png");
+    }
+
+    /** The Void Zombie: the zombie's model in Void flesh, eyes that glow in the dark. */
+    static class VoidZombieRenderer extends net.minecraft.client.renderer.entity.ZombieRenderer {
+        private static final ResourceLocation TEXTURE = SoFEMod.id("textures/entity/voidkin/void_zombie.png");
+        private static final RenderType EYES = RenderType.eyes(SoFEMod.id("textures/entity/voidkin/void_zombie_eyes.png"));
+
+        VoidZombieRenderer(EntityRendererProvider.Context ctx) {
+            super(ctx);
+            addLayer(new net.minecraft.client.renderer.entity.layers.EyesLayer<>(this) {
+                @Override
+                public RenderType renderType() {
+                    return EYES;
+                }
+            });
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(net.minecraft.world.entity.monster.Zombie zombie) {
+            return TEXTURE;
+        }
+    }
+
+    /** The Void Skeleton: black and violet bones, eyes that glow in the dark. */
+    static class VoidSkeletonRenderer extends net.minecraft.client.renderer.entity.SkeletonRenderer {
+        private static final ResourceLocation TEXTURE = SoFEMod.id("textures/entity/voidkin/void_skeleton.png");
+        private static final RenderType EYES = RenderType.eyes(SoFEMod.id("textures/entity/voidkin/void_skeleton_eyes.png"));
+
+        VoidSkeletonRenderer(EntityRendererProvider.Context ctx) {
+            super(ctx);
+            addLayer(new net.minecraft.client.renderer.entity.layers.EyesLayer<>(this) {
+                @Override
+                public RenderType renderType() {
+                    return EYES;
+                }
+            });
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(net.minecraft.world.entity.monster.AbstractSkeleton skeleton) {
+            return TEXTURE;
+        }
+    }
+
+    /** Envyris's copy of a Bearer's hero: the hero's face, darkened by her shadow. */
+    static class EnvyCopyRenderer extends net.minecraft.client.renderer.entity.HumanoidMobRenderer<com.sofe.entity.boss.EnvyCopy,
+            PlayerModel<com.sofe.entity.boss.EnvyCopy>> {
+        EnvyCopyRenderer(EntityRendererProvider.Context ctx) {
+            super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(com.sofe.entity.boss.EnvyCopy copy) {
+            return skinFor(copy.bearer().npcId());
+        }
+
+        @Override
+        protected void scale(com.sofe.entity.boss.EnvyCopy copy, PoseStack pose, float partialTicks) {
+            pose.scale(1.05f, 1.05f, 1.05f);
+        }
+
+        /** Her shadow on the copy: drawn dark, with a violet cast. */
+        @Override
+        public void render(com.sofe.entity.boss.EnvyCopy copy, float yaw, float partialTick, PoseStack pose, MultiBufferSource buffers, int light) {
+            super.render(copy, yaw, partialTick, pose, buffers, net.minecraft.client.renderer.LightTexture.pack(2, 2));
+        }
     }
 
     /** A companion looks like its hero as an NPC in Sulthari, with what it carries in hand. */
@@ -163,7 +336,7 @@ public final class SoFEEntityRenderers {
 
         @Override
         public ResourceLocation getTextureLocation(StoryNpcEntity entity) {
-            return textures.computeIfAbsent(entity.npcId(), id -> {
+            return textures.computeIfAbsent(skinId(entity.npcId()), id -> {
                 ResourceLocation own = SoFEMod.id("textures/entity/npc/" + id + ".png");
                 if (Minecraft.getInstance().getResourceManager().getResource(own).isPresent()) return own;
                 String skin = DEFAULT_SKINS.getOrDefault(id, "steve");

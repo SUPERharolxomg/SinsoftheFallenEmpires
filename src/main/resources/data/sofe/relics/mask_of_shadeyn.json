@@ -1,0 +1,24 @@
+{
+  "item": "sofe:mask_of_shadeyn",
+  "item_level": 80,
+  "droppable": true,
+  "slot": "armor",
+  "min_level": 78,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 6
+    },
+    {
+      "stat": "armor",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hurt",
+      "do": "thorns",
+      "frac": 0.25
+    }
+  ]
+}

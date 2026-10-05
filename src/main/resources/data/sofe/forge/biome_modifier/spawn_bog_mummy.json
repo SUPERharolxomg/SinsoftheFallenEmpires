@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "sofe:khemet_valley"
+  ],
+  "spawners": [
+    {
+      "type": "sofe:bog_mummy",
+      "weight": 80,
+      "minCount": 1,
+      "maxCount": 3
+    }
+  ]
+}
