@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:nixaras_false_ring"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_nixara"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_nixara.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/enter_aureum"
+}

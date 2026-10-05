@@ -1,0 +1,14 @@
+{
+  "style": "khemet",
+  "npc": "khemet_scribe",
+  "lines": [
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.khemet_scribe.act1.1"
+    },
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.khemet_scribe.act1.2"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "type": "bearer",
+  "act": 4,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -8000,
+        "z": 500,
+        "radius": 24
+      },
+      "target": {
+        "x": -8000,
+        "z": 500
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gilded_legionnaire",
+        "count": 8
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:gilded_legionnaire",
+          "count": 8,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 3800
+    },
+    {
+      "type": "give_relic",
+      "relic": "boots_of_the_fjord_runner"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "thief"
+      },
+      {
+        "type": "act_reached",
+        "act": 4
+      }
+    ]
+  }
+}

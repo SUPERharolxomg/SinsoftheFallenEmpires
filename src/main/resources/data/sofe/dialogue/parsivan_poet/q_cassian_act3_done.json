@@ -1,0 +1,45 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_poet",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/cassian_act3",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/cassian_act3",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.q.cassian_act3.done.1"
+    },
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.q.cassian_act3.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.cassian_act3.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:bearer/cassian_act3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

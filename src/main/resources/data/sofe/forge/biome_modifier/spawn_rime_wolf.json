@@ -1,0 +1,15 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "sofe:nordrath_tundra",
+    "sofe:nordrath_ice_fields"
+  ],
+  "spawners": [
+    {
+      "type": "sofe:rime_wolf",
+      "weight": 60,
+      "minCount": 2,
+      "maxCount": 4
+    }
+  ]
+}

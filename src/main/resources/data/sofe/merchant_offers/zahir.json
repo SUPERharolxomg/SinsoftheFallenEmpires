@@ -1,0 +1,104 @@
+{
+  "role": "wanderer",
+  "empire": "sulthari",
+  "offers": [
+    {
+      "sell": "sofe:rough_wrath_ruby",
+      "price": 90,
+      "min_act": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:rough_lust_amethyst",
+      "price": 90,
+      "min_act": 3,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:rough_greed_topaz",
+      "price": 90,
+      "min_act": 4,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:rough_sloth_moonstone",
+      "price": 90,
+      "min_act": 3,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:rough_gluttony_amber",
+      "price": 90,
+      "min_act": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:rough_envy_emerald",
+      "price": 90,
+      "min_act": 4,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:rough_pride_sunstone",
+      "price": 90,
+      "min_act": 5,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:moonsilk",
+      "count": 4,
+      "price": 60,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:sunreed_papyrus",
+      "count": 6,
+      "price": 40,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:imperial_marble",
+      "count": 16,
+      "price": 30,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:star_lapis",
+      "count": 2,
+      "price": 120,
+      "min_act": 3,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:solar_gold_ingot",
+      "count": 2,
+      "price": 160,
+      "min_act": 3,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:orichalcum_ingot",
+      "price": 260,
+      "min_act": 4,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:aetherium_shard",
+      "price": 200,
+      "min_act": 4,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:void_crystal",
+      "price": 600,
+      "min_act": 5,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:veiled_jewelry",
+      "price": 150,
+      "min_act": 3,
+      "stock": 1
+    }
+  ]
+}

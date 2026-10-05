@@ -18,10 +18,26 @@ class RegionMapTest {
     void fixedLocationsFromTheWorldDocument() {
         assertEquals(Region.SULTHARI, map.regionAt(0, 0));            // Sulthari city
         assertEquals(Region.NORDRATH, map.regionAt(0, -4500));        // Burning Citadel
-        assertEquals(Region.PARSIVAN, map.regionAt(4200, -1000));     // Enchanted Gardens
-        assertEquals(Region.KHEMET, map.regionAt(3500, 4200));        // Stagnant Marsh
-        assertEquals(Region.AUREUM, map.regionAt(-4000, 0));          // Golden Vaults
-        assertEquals(Region.OCEAN, map.regionAt(5900, -5900));
+        assertEquals(Region.PARSIVAN, map.regionAt(9000, -5000));     // Enchanted Gardens, in the north-east
+        assertEquals(Region.PARSIVAN, map.regionAt(3600, -500));      // Parsivan Baths
+        assertEquals(Region.KHEMET, map.regionAt(8000, 8500));        // Stagnant Marsh
+        assertEquals(Region.AUREUM, map.regionAt(-8000, 500));        // Golden Vaults
+        assertEquals(Region.AUREUM, map.regionAt(-9000, -8000));      // Shadow Throne, in the north-west
+        assertEquals(Region.AUREUM, map.regionAt(-6000, 7000));       // Colosseum, in the south-west
+        assertEquals(Region.OCEAN, map.regionAt(0, 8000));            // the Southern Sea
+        assertEquals(Region.OCEAN, map.regionAt(12_100, 0));          // beyond the edge
+    }
+
+    @Test
+    void theWorldIsTwentyFiveThousandAcross() {
+        int minX = map.bounds().stream().mapToInt(RegionBounds::minX).min().orElseThrow();
+        int maxX = map.bounds().stream().mapToInt(RegionBounds::maxX).max().orElseThrow();
+        int minZ = map.bounds().stream().mapToInt(RegionBounds::minZ).min().orElseThrow();
+        int maxZ = map.bounds().stream().mapToInt(RegionBounds::maxZ).max().orElseThrow();
+        assertEquals(-RegionMap.EDGE, minX);
+        assertEquals(RegionMap.EDGE, maxX);
+        assertEquals(-RegionMap.EDGE, minZ);
+        assertEquals(RegionMap.EDGE, maxZ);
     }
 
     @Test

@@ -1,0 +1,83 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/aureum_gold_of_the_courts",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/aureum_gold_of_the_courts",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.choice.1"
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.choice.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.aureum_gold_of_the_courts.answer.law",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "aureum",
+              "fate": "law"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/aureum_gold_of_the_courts"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.aureum_gold_of_the_courts.answer.shared",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "aureum",
+              "fate": "shared"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/aureum_gold_of_the_courts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.reply.law",
+      "condition": {
+        "type": "fate_is",
+        "region": "aureum",
+        "fate": "law"
+      }
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.reply.shared",
+      "condition": {
+        "type": "fate_is",
+        "region": "aureum",
+        "fate": "shared"
+      }
+    }
+  ]
+}

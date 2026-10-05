@@ -7,6 +7,7 @@ The Janissary wears a skin the user chose (textures/entity/summon/janissary.png)
 Run from the repository root: python scripts/make_summon_skins.py
 """
 import json
+import math
 import os
 
 from PIL import Image
@@ -126,36 +127,105 @@ def cannon():
 
 
 def clay_golem():
-    """The Clay Warden on the vanilla iron golem: iron turned to baked clay by brightness, the vines to turquoise
-    wraps, the face painted gold with dark eyes. The vanilla texture is read from the Minecraft jar."""
+    """The Clay Warden on the vanilla iron golem's model, as a guardian of Khemet: sun-baked clay (shaded from the
+    vanilla iron, with soft strata and real cracks), the vines turned to inlays of glazed turquoise, a pharaoh's
+    nemes headdress striped in gold and lapis, a gold mask with kohl-lined eyes that glow with the bound soul, a
+    broad usekh collar and a gold scarab on the chest. The vanilla texture is read from the Minecraft jar; the
+    boxes are those of the iron golem (128x128: head 0,0 8x10x8, nose 24,0, body 0,40 18x12x11, waist 0,70)."""
     import io
+    import random
     import zipfile
     jar = os.path.expanduser(os.path.join("~", ".gradle", "caches", "forge_gradle", "minecraft_repo", "versions", "1.20.1", "client-extra.jar"))
     img = Image.open(io.BytesIO(zipfile.ZipFile(jar).read("assets/minecraft/textures/entity/iron_golem/iron_golem.png"))).convert("RGBA")
-    clay = [(70, 34, 20), (120, 62, 36), (170, 98, 60), (200, 130, 84), (230, 170, 120)]
+    rnd = random.Random(7)
+    clay = [(78, 38, 22), (122, 64, 38), (160, 92, 56), (186, 116, 72), (210, 146, 98), (230, 176, 128)]
     out = img.load()
+    vines = set()
     for y in range(img.height):
         for x in range(img.width):
             r, g, b, a = out[x, y]
             if not a:
                 continue
-            if g > r + 15 and g > b + 15:  # the vines
-                out[x, y] = (40, 170, 160, a) if (x + y) % 3 else (30, 120, 120, a)
-                continue
+            if g > r + 15 and g > b + 15:
+                vines.add((x, y))
             lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-            c = clay[min(4, int(lum * 5))]
-            if (x * 5 + y * 3) % 23 == 0:
-                c = clay[0]  # cracks in the clay
-            out[x, y] = c + (a,)
-    for y in range(10):  # the gold face on the front of the head (box uv 0,0 8x10x8: front at 8,8)
-        for x in range(8):
-            out[8 + x, 8 + y] = ((226, 176, 56) if y > 1 else (190, 140, 40)) + (255,)
-    for (x, y) in ((10, 12), (11, 12), (13, 12), (14, 12)):
-        out[x, y] = (20, 16, 24, 255)
-    for (x, y) in ((10, 11), (14, 11)):
-        out[x, y] = (110, 250, 230, 255)  # the soul in the eyes
-    for (x, y) in ((11, 16), (12, 16), (13, 16)):
-        out[x, y] = (120, 70, 20, 255)
+            strata = 0.05 * math.sin(y * 0.9) + 0.03 * math.sin(x * 0.37 + y * 0.21)  # soft layers of baked clay
+            i = max(0, min(5, int((lum + strata) * 6.2 - 0.6)))
+            out[x, y] = clay[i] + (a,)
+    for (x, y) in vines:  # glazed turquoise inlay, lit on its upper edge
+        up = (x, y - 1) not in vines
+        out[x, y] = ((120, 236, 220) if up else (40, 176, 168) if (x + y) % 2 else (28, 138, 136)) + (255,)
+    # cracks: short wandering lines of dark clay with a lighter lip
+    for _ in range(70):
+        x, y = rnd.randrange(img.width), rnd.randrange(img.height)
+        for _ in range(rnd.randint(3, 6)):
+            if 0 <= x < img.width and 0 <= y < img.height and out[x, y][3] and (x, y) not in vines:
+                out[x, y] = clay[0] + (255,)
+                if 0 <= y - 1 and out[x, y - 1][3]:
+                    out[x, y - 1] = clay[5] + (255,)
+            x += rnd.choice((-1, 0, 1))
+            y += 1
+
+    gold = [(150, 98, 24), (214, 160, 46), (246, 206, 90), (255, 240, 180)]
+    lapis = [(20, 34, 96), (36, 64, 160), (70, 110, 210)]
+    turq = (40, 186, 176)
+
+    def stripes(x0, y0, w, h, vertical=True, start=0):
+        for yy in range(h):
+            for xx in range(w):
+                k = (xx if vertical else yy) + start
+                c = gold[2] if k % 2 == 0 else lapis[1]
+                if (yy if vertical else xx) == h - 1 if vertical else False:
+                    c = gold[1]
+                out[x0 + xx, y0 + yy] = c + (255,)
+
+    # the nemes: top, sides and back of the head striped; a gold band across the brow
+    stripes(8, 0, 8, 8, vertical=True)                    # top
+    stripes(0, 8, 8, 10, vertical=False)                  # right side
+    stripes(16, 8, 8, 10, vertical=False)                 # left side
+    stripes(24, 8, 8, 10, vertical=False, start=1)        # back
+    for x in range(8, 16):                                 # the face: gold mask
+        for y in range(8, 18):
+            c = gold[2] if x < 12 else gold[1]
+            if y == 8:
+                c = lapis[1]
+            elif y == 9:
+                c = gold[3] if x % 2 else gold[2]
+            out[x, y] = c + (255,)
+    for x in range(9, 15):                                 # kohl brows and lines
+        out[x, 11] = (24, 18, 30, 255)
+    for (x, y) in ((9, 12), (10, 12), (13, 12), (14, 12), (15, 12), (8, 12)):
+        out[x, y] = (24, 18, 30, 255)
+    for (x, y) in ((10, 12), (13, 12)):
+        out[x, y] = (130, 255, 236, 255)                   # the soul in the eyes
+    for (x, y) in ((11, 15), (12, 15)):
+        out[x, y] = gold[0] + (255,)                       # the mouth
+    for y in range(16, 18):                                # the false beard's start, lapis and gold
+        for x in range(11, 13):
+            out[x, y] = (lapis[1] if y % 2 else gold[1]) + (255,)
+    for x in range(24, 32):                                # the nose box: gold
+        for y in range(0, 6):
+            if out[x, y][3]:
+                out[x, y] = (gold[2] if x < 28 else gold[1]) + (255,)
+    # the usekh collar on the chest (body front: x 11..29, y 51..63) and the top of the shoulders
+    for x in range(11, 29):
+        for y in range(51, 55):
+            band = y - 51
+            out[x, y] = ((gold[2], lapis[1], turq, gold[1])[band]) + (255,)
+        if x % 3 == 0:
+            out[x, 55] = gold[1] + (255,)                  # the drops of the collar
+    # the scarab in the middle of the chest
+    scarab = ["..gg..", ".gGGg.", "tgGGgt", "ttggtt", "ttggtt", ".t..t."]
+    for dy, row in enumerate(scarab):
+        for dx, ch in enumerate(row):
+            c = {"g": gold[2], "G": gold[3], "t": turq}.get(ch)
+            if c:
+                out[17 + dx, 56 + dy] = c + (255,)
+    # a gold band round the waist (waist box 0,70: front 6..15, 76..81)
+    for x in range(0, 30):
+        if out[x, 76][3]:
+            out[x, 76] = gold[1] + (255,)
+            out[x, 77] = lapis[1] + (255,)
     img.save(os.path.join(OUT, "clay_golem.png"))
 
 

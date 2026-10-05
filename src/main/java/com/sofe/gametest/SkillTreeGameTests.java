@@ -75,6 +75,24 @@ public class SkillTreeGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void eachStandingWardenMakesTheNextSlowerToShape(GameTestHelper helper) {
+        ServerPlayer necro = bearer(helper, PlayerClass.NECROMANCER, Map.of("clay_warden", 1), "clay_warden");
+        var combat = com.sofe.combat.CombatCapability.get(necro).orElseThrow();
+        combat.setSouls(10);
+        SkillCaster.cast(necro, 0);
+        var wardens = helper.getLevel().getEntitiesOfClass(com.sofe.entity.summon.ClayGolem.class, new AABB(necro.blockPosition()).inflate(8));
+        helper.assertTrue(wardens.size() == 1, "no Clay Warden was shaped (souls left " + combat.souls() + ")");
+        long now = necro.level().getGameTime();
+        long first = combat.cooldowns().remaining("clay_warden", now);
+        combat.cooldowns().start("clay_warden", now, 0);
+        SkillCaster.cast(necro, 0);
+        long second = combat.cooldowns().remaining("clay_warden", now);
+        helper.assertTrue(second > first, "the second Warden's cooldown (" + second + ") should be longer than the first's (" + first + ")");
+        helper.getLevel().getEntitiesOfClass(com.sofe.entity.summon.ClayGolem.class, new AABB(necro.blockPosition()).inflate(8)).forEach(g -> g.discard());
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void aClassUniqueServesOnlyItsOwnClass(GameTestHelper helper) {
         ServerPlayer knight = bearer(helper, PlayerClass.KNIGHT, Map.of(), "");
         var crown = com.sofe.gear.GearMaker.relic("crown_of_the_scale", null).orElseThrow();

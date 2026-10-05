@@ -10,9 +10,12 @@ public final class CooldownTracker {
 
     private final Map<String, Cooldown> cooldowns = new HashMap<>();
 
+    /** Starts a cooldown; a duration of 0 or less clears it (the skill is ready at once). */
     public void start(String skill, long now, int durationTicks) {
         if (durationTicks > 0) {
             cooldowns.put(skill, new Cooldown(now, now + durationTicks));
+        } else {
+            cooldowns.remove(skill);
         }
     }
 

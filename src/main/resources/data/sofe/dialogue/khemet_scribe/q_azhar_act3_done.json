@@ -1,0 +1,45 @@
+{
+  "style": "khemet",
+  "npc": "khemet_scribe",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/azhar_act3",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/azhar_act3",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.q.azhar_act3.done.1"
+    },
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.q.azhar_act3.done.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.azhar_act3.thanks",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:bearer/azhar_act3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

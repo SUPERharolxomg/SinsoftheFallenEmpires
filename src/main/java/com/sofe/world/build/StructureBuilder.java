@@ -30,6 +30,7 @@ public final class StructureBuilder {
         if (!built) {
             if (piece.startsWith("sulthari/")) built = SultharisBuilder.blockout(level, structure, piece);
             else if (piece.startsWith("nordrath/")) built = NordrathBuilder.blockout(level, structure, piece);
+            if (!built) built = EmpireBuilder.blockout(level, structure, piece);
         }
         return built;
     }

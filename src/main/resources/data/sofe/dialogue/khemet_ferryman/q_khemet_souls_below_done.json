@@ -1,0 +1,83 @@
+{
+  "style": "khemet",
+  "npc": "khemet_ferryman",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/khemet_souls_below",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/khemet_souls_below",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.q.khemet_souls_below.choice.1"
+    },
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.q.khemet_souls_below.choice.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.khemet_souls_below.answer.rest",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "khemet",
+              "fate": "rest"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/khemet_souls_below"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.khemet_souls_below.answer.guardians",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "khemet",
+              "fate": "guardians"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/khemet_souls_below"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.q.khemet_souls_below.reply.rest",
+      "condition": {
+        "type": "fate_is",
+        "region": "khemet",
+        "fate": "rest"
+      }
+    },
+    {
+      "speaker": "khemet_ferryman",
+      "text": "dialogue.sofe.q.khemet_souls_below.reply.guardians",
+      "condition": {
+        "type": "fate_is",
+        "region": "khemet",
+        "fate": "guardians"
+      }
+    }
+  ]
+}

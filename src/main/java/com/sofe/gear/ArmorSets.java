@@ -33,8 +33,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The full-set bonuses: wearing all four pieces of one set gives the bonuses of data/sofe/armor_sets/&lt;set&gt;.json
- * (written by scripts/make_armor_data.py from the armor catalog). Effects are renewed every second as short,
+ * The armor sets' bonuses (data/sofe/armor_sets/&lt;set&gt;.json, written by scripts/make_armor_data.py and
+ * scripts/set_pieces.py): every piece gives its own bonus while worn ("pieces"), and wearing all four of one set
+ * gives every piece's bonus together with the set's own ("bonuses"). Effects are renewed every second as short,
  * quiet effects, so they end as soon as a piece comes off. The kinds of bonus:
  * <ul>
  *   <li>{@code effect}: a potion effect, {@code when} always, low_health, crouching, water, night, day or falling</li>
@@ -43,11 +44,16 @@ import java.util.Optional;
  *   <li>{@code answer}: what melee attackers suffer: knockback, reflect, ignite, slow, poison, wither or weakness</li>
  *   <li>{@code on_kill}: a heal or an effect after each kill</li>
  *   <li>{@code unfreeze}: the cold never takes hold; {@code reveal}: enemies around glow through walls</li>
+ *   <li>{@code resist}: less damage of one kind (fire, magic, projectile, explosion, fall, freeze, wither, drown or
+ *   all), adding up over the pieces to at most 60%</li>
  * </ul>
  */
 public final class ArmorSets {
     private static final int CHECK = 20, LASTS = 50;
     private static volatile Map<String, List<JsonObject>> bonuses = Map.of();
+    private static volatile Map<String, Map<String, List<JsonObject>>> pieces = Map.of();
+    private static final EquipmentSlot[] ARMOR = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    public static final double MAX_RESIST = 0.6;
 
     private ArmorSets() {
     }
@@ -57,12 +63,23 @@ public final class ArmorSets {
             @Override
             protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager resources, ProfilerFiller profiler) {
                 Map<String, List<JsonObject>> loaded = new HashMap<>();
+                Map<String, Map<String, List<JsonObject>>> loadedPieces = new HashMap<>();
                 files.forEach((id, json) -> {
                     List<JsonObject> list = new ArrayList<>();
                     for (JsonElement e : json.getAsJsonObject().getAsJsonArray("bonuses")) list.add(e.getAsJsonObject());
                     loaded.put(id.getPath(), List.copyOf(list));
+                    if (json.getAsJsonObject().has("pieces")) {
+                        Map<String, List<JsonObject>> bySlot = new HashMap<>();
+                        json.getAsJsonObject().getAsJsonObject("pieces").entrySet().forEach(e -> {
+                            List<JsonObject> piece = new ArrayList<>();
+                            for (JsonElement b : e.getValue().getAsJsonArray()) piece.add(b.getAsJsonObject());
+                            bySlot.put(e.getKey(), List.copyOf(piece));
+                        });
+                        loadedPieces.put(id.getPath(), Map.copyOf(bySlot));
+                    }
                 });
                 bonuses = Map.copyOf(loaded);
+                pieces = Map.copyOf(loadedPieces);
                 SoFEMod.LOGGER.info("Loaded {} armor set bonuses", loaded.size());
             }
         });
@@ -81,8 +98,51 @@ public final class ArmorSets {
         return Optional.ofNullable(set);
     }
 
-    private static List<JsonObject> of(Player player) {
-        return fullSet(player).map(s -> bonuses.getOrDefault(s.name().toLowerCase(Locale.ROOT), List.of())).orElse(List.of());
+    /** The name of a slot's piece in the set files: helmet, chestplate, leggings or boots. */
+    public static String pieceName(EquipmentSlot slot) {
+        return switch (slot) {
+            case HEAD -> "helmet";
+            case CHEST -> "chestplate";
+            case LEGS -> "leggings";
+            default -> "boots";
+        };
+    }
+
+    /** Every bonus the player has now: each worn set piece's own, and a full set's. */
+    static List<JsonObject> of(Player player) {
+        List<JsonObject> all = new ArrayList<>();
+        for (EquipmentSlot slot : ARMOR) {
+            if (player.getItemBySlot(slot).getItem() instanceof ArmorItem armor && armor.getMaterial() instanceof SoFETiers.Armor m) {
+                all.addAll(pieces.getOrDefault(m.name().toLowerCase(Locale.ROOT), Map.of()).getOrDefault(pieceName(slot), List.of()));
+            }
+        }
+        fullSet(player).ifPresent(s -> all.addAll(bonuses.getOrDefault(s.name().toLowerCase(Locale.ROOT), List.of())));
+        return all;
+    }
+
+    /** How much less damage of this kind the player's pieces let through (0 to 0.6). */
+    public static double resistance(Player player, net.minecraft.world.damagesource.DamageSource source) {
+        double total = 0;
+        for (JsonObject b : of(player)) {
+            if (!type(b).equals("resist")) continue;
+            if (matches(b.get("damage").getAsString(), source)) total += b.get("value").getAsDouble();
+        }
+        return Math.min(MAX_RESIST, total);
+    }
+
+    private static boolean matches(String kind, net.minecraft.world.damagesource.DamageSource source) {
+        return switch (kind) {
+            case "all" -> true;
+            case "fire" -> source.is(net.minecraft.tags.DamageTypeTags.IS_FIRE);
+            case "magic" -> source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC);
+            case "projectile" -> source.is(net.minecraft.tags.DamageTypeTags.IS_PROJECTILE);
+            case "explosion" -> source.is(net.minecraft.tags.DamageTypeTags.IS_EXPLOSION);
+            case "fall" -> source.is(net.minecraft.tags.DamageTypeTags.IS_FALL);
+            case "freeze" -> source.is(net.minecraft.tags.DamageTypeTags.IS_FREEZING);
+            case "drown" -> source.is(net.minecraft.tags.DamageTypeTags.IS_DROWNING);
+            case "wither" -> source.is(DamageTypes.WITHER) || source.is(DamageTypes.WITHER_SKULL);
+            default -> false;
+        };
     }
 
     private static String type(JsonObject b) {
@@ -142,9 +202,11 @@ public final class ArmorSets {
         }
     }
 
-    /** Melee blows taken: the answers of the set. */
+    /** Damage taken: the pieces' resistances, then, for melee blows, the answers of the set. */
     public static void onHurt(LivingHurtEvent event) {
         if (!(event.getEntity() instanceof Player player) || player.level().isClientSide()) return;
+        double resist = resistance(player, event.getSource());
+        if (resist > 0) event.setAmount((float) (event.getAmount() * (1 - resist)));
         if (!(event.getSource().getDirectEntity() instanceof LivingEntity attacker) || attacker == player) return;
         if (event.getSource().is(DamageTypes.THORNS)) return; // a reflected blow is not answered again
         for (JsonObject b : of(player)) {
@@ -178,6 +240,12 @@ public final class ArmorSets {
                 level.sendParticles(ParticleTypes.SOUL, player.getX(), player.getY() + 1, player.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
             }
         }
+    }
+
+    /** The tooltip line of what one piece gives on its own, or null. */
+    public static String pieceKey(SoFETiers.Armor set, EquipmentSlot slot) {
+        String key = "armorpiece.sofe." + set.name().toLowerCase(Locale.ROOT) + "." + pieceName(slot);
+        return net.minecraft.locale.Language.getInstance().has(key) ? key : null;
     }
 
     /** The tooltip line of a set's bonus, or null for armor without one (the unique pieces). */

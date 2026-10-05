@@ -1,0 +1,15 @@
+{
+  "type": "sofe:purifier",
+  "ingredients": [
+    {
+      "item": "sofe:black_aetherium_shard",
+      "count": 4
+    },
+    {
+      "item": "minecraft:coal",
+      "count": 1
+    }
+  ],
+  "result": "sofe:aetherium_shard",
+  "count": 1
+}

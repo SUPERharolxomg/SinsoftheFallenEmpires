@@ -1,0 +1,12 @@
+{
+  "type": "sofe:jeweler",
+  "ingredients": [
+    {
+      "item": "sofe:rough_sloth_moonstone",
+      "count": 1
+    }
+  ],
+  "result": "sofe:cut_sloth_moonstone",
+  "count": 1,
+  "dinars": 120
+}

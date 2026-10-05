@@ -1,5 +1,6 @@
 {
   "role": "gambler",
+  "empire": "sulthari",
   "offers": [
     {
       "sell": "sofe:veiled_weapon",

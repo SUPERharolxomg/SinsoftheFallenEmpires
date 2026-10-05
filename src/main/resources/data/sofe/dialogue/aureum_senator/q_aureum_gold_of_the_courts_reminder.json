@@ -1,0 +1,29 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/aureum_gold_of_the_courts",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/aureum_gold_of_the_courts",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.aureum_gold_of_the_courts.reminder"
+    }
+  ]
+}

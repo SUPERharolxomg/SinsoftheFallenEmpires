@@ -42,11 +42,15 @@ def mat(dark, mid, light, style="plain", **options):
 
 
 class Model:
-    def __init__(self, name, tex_width=128):
+    def __init__(self, name, tex_width=128, scale=1.0, density=None):
         self.name = name
         self.tex_width = tex_width
+        # pixels of texture per unit: None is GeckoLib's box UV (one pixel a unit); 2 paints every face with twice the
+        # pixels each way (per-face UVs), so a big creature is not blocky
+        self.density = density
         self.bones = []
         self.cubes = []
+        self.scale = scale  # a bigger creature: its geometry, and the pixels painted on it, grow together
 
     def bone(self, name, parent=None, pivot=(0, 0, 0), rotation=None):
         bone = {"name": name, "pivot": [float(v) for v in pivot]}
@@ -57,13 +61,21 @@ class Model:
         self.bones.append(bone)
         return name
 
-    def cube(self, bone, origin, size, material, deco=None, inflate=0.0, mirror_x=False):
-        """A box: origin is its lowest corner. deco(painter, faces) adds details after the material."""
+    def cube(self, bone, origin, size, material, deco=None, inflate=0.0, mirror_x=False, rotation=None, pivot=None):
+        """A box: origin is its lowest corner. deco(painter, faces) adds details after the material. A box may be
+        turned on its own (rotation in degrees round pivot, which defaults to its middle): tilted plates, spikes, blades."""
         cube = {"bone": bone, "origin": list(origin), "size": list(size), "mat": material, "deco": deco, "inflate": inflate}
+        if rotation and any(rotation):
+            cube["rotation"] = list(rotation)
+            cube["pivot"] = list(pivot) if pivot else [origin[i] + size[i] / 2 for i in range(3)]
         self.cubes.append(cube)
         if mirror_x:  # the same box on the other side of the model
+            mirrored_pivot = None
+            if "pivot" in cube:
+                mirrored_pivot = (-cube["pivot"][0], cube["pivot"][1], cube["pivot"][2])
             self.cube(bone if not isinstance(mirror_x, str) else mirror_x,
-                      (-origin[0] - size[0], origin[1], origin[2]), size, material, deco, inflate)
+                      (-origin[0] - size[0], origin[1], origin[2]), size, material, deco, inflate,
+                      rotation=(rotation[0], -rotation[1], -rotation[2]) if rotation else None, pivot=mirrored_pivot)
         return cube
 
     # --- UV packing: shelves of boxes sorted by height
@@ -72,7 +84,7 @@ class Model:
         boxes = sorted(self.cubes, key=lambda c: -(c["size"][1] + c["size"][2]))
         x = y = shelf = 0
         for c in boxes:
-            w, h, d = (math.ceil(v) for v in c["size"])
+            w, h, d = self.texels(c)
             bw, bh = 2 * (w + d), h + d
             if x + bw > self.tex_width:
                 x, y, shelf = 0, y + shelf, 0
@@ -82,15 +94,51 @@ class Model:
         height = y + shelf
         self.tex_height = 1 << max(5, math.ceil(math.log2(max(1, height))))
 
-    def faces(self, c):
+    def texels(self, c):
+        """The size of a box in texture pixels (per-face UVs) or as box UV counts it for packing."""
+        if self.density:
+            return tuple(max(1, int(round(v * self.density))) for v in c["size"])
+        return tuple(math.ceil(v) for v in c["size"])
+
+    def face_uvs(self, c):
+        """Per-face UVs laid out like a box UV (Blockbench's layout, the one the Painter paints)."""
         u, v = c["uv"]
-        w, h, d = (math.ceil(v) for v in c["size"])
-        return {"up": (u + d, v, w, d), "down": (u + d + w, v, w, d), "east": (u, v + d, d, h),
-                "north": (u + d, v + d, w, h), "west": (u + d + w, v + d, d, h), "south": (u + 2 * d + w, v + d, w, h)}
+        w, h, d = self.texels(c)
+        return {"north": {"uv": [u + d, v + d], "uv_size": [w, h]}, "east": {"uv": [u, v + d], "uv_size": [d, h]},
+                "south": {"uv": [u + 2 * d + w, v + d], "uv_size": [w, h]}, "west": {"uv": [u + d + w, v + d], "uv_size": [d, h]},
+                "up": {"uv": [u + d, v], "uv_size": [w, d]}, "down": {"uv": [u + d + w, v], "uv_size": [w, d]}}
+
+    def faces(self, c):
+        """Where each face of a box reads its texture. GeckoLib floors the box's size for its box UV, so the faces
+        are laid out with the floored size (a face thinner than a pixel still gets one pixel painted)."""
+        u, v = c["uv"]
+        if self.density:
+            w, h, d = self.texels(c)
+            return {"up": (u + d, v, w, d), "down": (u + d + w, v, w, d), "east": (u, v + d, d, h),
+                    "north": (u + d, v + d, w, h), "west": (u + d + w, v + d, d, h), "south": (u + 2 * d + w, v + d, w, h)}
+        fw, fh, fd = (math.floor(v) for v in c["size"])
+        w, h, d = max(1, fw), max(1, fh), max(1, fd)
+        return {"up": (u + fd, v, w, d), "down": (u + fd + fw, v, w, d), "east": (u, v + fd, d, h),
+                "north": (u + fd, v + fd, w, h), "west": (u + fd + fw, v + fd, d, h), "south": (u + 2 * fd + fw, v + fd, w, h)}
 
     # --- output
 
+    def apply_scale(self):
+        s = self.scale
+        if s == 1.0:
+            return
+        for b in self.bones:
+            b["pivot"] = [v * s for v in b["pivot"]]
+        for c in self.cubes:
+            c["origin"] = [v * s for v in c["origin"]]
+            c["size"] = [v * s for v in c["size"]]
+            c["inflate"] = c["inflate"] * s
+            if "pivot" in c:
+                c["pivot"] = [v * s for v in c["pivot"]]
+        self.scale = 1.0
+
     def write(self, variants, animations, bounds=(2, 3)):
+        self.apply_scale()
         self.pack()
         bones = []
         for b in self.bones:
@@ -99,9 +147,13 @@ class Model:
             for c in self.cubes:
                 if c["bone"] != b["name"]:
                     continue
-                cube = {"origin": [float(v) for v in c["origin"]], "size": [float(v) for v in c["size"]], "uv": c["uv"]}
+                cube = {"origin": [float(v) for v in c["origin"]], "size": [float(v) for v in c["size"]],
+                        "uv": self.face_uvs(c) if self.density else c["uv"]}
                 if c["inflate"]:
                     cube["inflate"] = c["inflate"]
+                if "rotation" in c:
+                    cube["pivot"] = [float(v) for v in c["pivot"]]
+                    cube["rotation"] = [float(v) for v in c["rotation"]]
                 cubes.append(cube)
             if cubes:
                 out["cubes"] = cubes
@@ -112,6 +164,9 @@ class Model:
                             "visible_bounds_offset": [0, bounds[1] / 2, 0]},
             "bones": bones}]}
         dump(os.path.join(GEO, self.name + ".geo.json"), geo)
+        names = {b["name"] for b in self.bones}
+        for value in animations.values():  # a shared animation may move bones this creature does not have
+            value["bones"] = {k: v for k, v in value["bones"].items() if k in names}
         dump(os.path.join(ANIM, self.name + ".animation.json"), {"format_version": "1.8.0", "animations": {
             "animation.%s.%s" % (self.name, key): value for key, value in animations.items()}})
         for texture_name, recolor in variants.items():
@@ -170,6 +225,10 @@ class Painter:
         dark, mid, light = m["pal"]
         style = m["style"]
         noise = m.get("noise", 10)
+        if style == "glow":
+            noise = m.get("noise", 0)               # light is smooth
+        elif min(w, h) <= 3:
+            noise = noise // 4                      # small pieces (fingers, eyes, claws) stay clean, not speckled
         k = FACE_LIGHT[name]
         for py in range(h):
             for px in range(w):
@@ -202,6 +261,7 @@ class Painter:
                         c = mix(c, light, 0.5)
                 elif style == "glow":
                     glow = True
+                    c = mix(light, mid, min(1.0, py / max(1, h - 1))) if h > 2 else mid   # bright at the top, never dark
                 elif style == "flame":
                     tt = py / max(1, h - 1)
                     c = mix(m.get("hot", (255, 230, 120)), mid, tt)
@@ -220,6 +280,16 @@ class Painter:
                     self.put(x0 + cx, y0 + cy, color, glow=True)
                     cx = max(0, min(w - 1, cx + rnd.choice((-1, 0, 1))))
                     cy = max(0, min(h - 1, cy + 1))
+        # fractures: long jagged cracks of light with dark lips, branching; a body that is breaking apart
+        fracture = m.get("fracture")
+        if fracture and name != "down" and w >= 3 and h >= 3:
+            color, count = fracture
+            n = count * (w * h) / 400.0
+            n = int(n) + (1 if rnd.random() < n - int(n) else 0)
+            if w * h < 40:
+                n = 1 if rnd.random() < count * 0.08 else 0
+            for _ in range(n):
+                self.crack(x0, y0, w, h, color, rnd, rnd.randint(max(3, h // 2), max(4, (h + w) * 2 // 3)))
         # rivets on metal plates
         if style == "metal" and m.get("rivets") and name not in ("up", "down") and w >= 7 and h >= 6:
             for rx, ry in ((1, 1), (w - 2, 1)):
@@ -229,6 +299,31 @@ class Painter:
             for px in range(w):
                 for py in range(h - rnd.randint(0, m["ragged"]), h):
                     self.clear(x0 + px, y0 + py)
+
+    def crack(self, x0, y0, w, h, color, rnd, length, branch=True):
+        """One fracture: it starts at an edge and wanders across, a hot core with a darker lip on each side."""
+        side = rnd.randrange(4)
+        cx, cy = ((rnd.randrange(w), 0), (rnd.randrange(w), h - 1), (0, rnd.randrange(h)), (w - 1, rnd.randrange(h)))[side]
+        dx, dy = ((0, 1), (0, -1), (1, 0), (-1, 0))[side]
+        lip = mix(color, (0, 0, 0), 0.75)
+        for i in range(length):
+            for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                px, py = cx + ox, cy + oy
+                if 0 <= px < w and 0 <= py < h and not self.glow.getpixel((x0 + px, y0 + py))[3]:
+                    self.put(x0 + px, y0 + py, lip)
+            hot = mix(color, (255, 255, 255), 0.45) if i % 4 == 0 else color
+            self.put(x0 + cx, y0 + cy, hot, glow=True)
+            if rnd.random() < 0.45:  # zig-zag
+                if dx == 0:
+                    cx += rnd.choice((-1, 1))
+                else:
+                    cy += rnd.choice((-1, 1))
+            else:
+                cx, cy = cx + dx, cy + dy
+            if not (0 <= cx < w and 0 <= cy < h):
+                break
+            if branch and rnd.random() < 0.05:
+                self.crack(x0, y0, w, h, color, rnd, length // 2, branch=False)
 
     def save(self, name):
         self.img.save(os.path.join(TEX, name + ".png"))
@@ -384,52 +479,81 @@ VOID_CLAW = mat((90, 60, 120), (170, 130, 210), (230, 210, 250), "plain", noise=
 
 
 def void_wretch():
+    """The bestiary sheet's Void Wretch, a head taller than a man: plates of purple-black chitin over a body of Void
+    flesh, a ribcage split open on a burning violet core, a long crested skull with mandibles and a slit of light,
+    blades along the forearms, claws as long as a hand, and two rows of shards down the back."""
+    from creature_kit import glow_mat, veins, centered, spikes
     m = Model("void_wretch", 128)
     m.bone("root")
+    plate = mat((12, 6, 22), (44, 26, 70), (96, 68, 140), "metal", seam=3, cracks=(VOID_GLOW, 0.004), noise=4)
+    flesh = mat((10, 6, 16), (30, 18, 46), (60, 40, 86), "void", cracks=(VOID_GLOW, 0.02), noise=6)
+    core = glow_mat(VOID_GLOW)
+    edge = mat((120, 70, 190), (190, 140, 250), (240, 220, 255), "plain", noise=3)
     for side, sx in (("left", 1), ("right", -1)):
-        leg = m.bone(side + "_leg", "root", (2.5 * sx, 13, 0))
-        m.cube(leg, (1 if sx > 0 else -4, 7, -1.5), (3, 6, 3), VOID_FLESH)
-        m.cube(leg, (1.5 if sx > 0 else -3.5, 2, -1), (2, 5, 2), VOID_FLESH)
-        m.cube(leg, (1 if sx > 0 else -4, 0, -3), (3, 2, 4), VOID_FLESH,
-               deco=lambda p, f, mm, r: [p.at(f["north"], i, 1, VOID_CLAW["pal"][2]) for i in (0, 2)])
-    body = m.bone("body", "root", (0, 13, 0), rotation=(22, 0, 0))
-    m.cube(body, (-3, 12, -2), (6, 4, 4), VOID_FLESH)
-    m.cube(body, (-4.5, 10, -3), (9, 5, 6), VOID_RAG, inflate=0.2)
-    m.cube(body, (-4, 16, -2.5), (8, 8, 5), VOID_FLESH,
-           deco=combine(ribs((10, 6, 18), (2, 4, 6)), rift(VOID_GLOW, 0.5, 1, 1)))
-    for i, y in enumerate((17, 20, 23)):  # shards along the spine
-        m.cube(body, (-0.5, y, 2.5), (1, 2, 1 + (i % 2)), VOID_CLAW)
-    neck = m.bone("neck", "body", (0, 24, -1), rotation=(-26, 0, 0))
-    head = m.bone("head", "neck", (0, 24, -1))
-    m.cube(head, (-3, 24, -4), (6, 7, 6), VOID_FLESH, deco=rift(VOID_GLOW, 0.5, 1, 1, width=1))
-    m.cube(head, (-3, 24, -4), (6, 7, 6), VOID_RAG, inflate=0.6, deco=clear_front_below(1))
+        leg = m.bone(side + "_leg", "root", (3 * sx, 17, 0))
+        x = 1 if sx > 0 else -5
+        m.cube(leg, (x - 0.3, 10, -2.3), (4.6, 7, 4.6), plate, deco=veins(VOID_GLOW, 0.01))      # the thigh plate
+        m.cube(leg, (x + 0.4, 3, -1.6), (3.2, 7, 3.2), flesh)                                     # the shin
+        m.cube(leg, (x + 0.6, 4, -2.6), (2.8, 5, 1), plate)                                        # its greave
+        m.cube(leg, (x + 1.4, 7.5, -3.6), (1, 1, 2), edge)                                         # a spur at the knee
+        m.cube(leg, (x - 0.2, 0, -4.4), (4.4, 3, 6), plate)                                        # a clawed foot
+        for cx in (x, x + 1.7, x + 3.4):
+            m.cube(leg, (cx, 0, -5.6), (0.8, 1, 1.4), edge)
+    body = m.bone("body", "root", (0, 17, 0), rotation=(8, 0, 0))
+    m.cube(body, (-3.5, 17, -2), (7, 5, 4), flesh)                                                 # the waist
+    m.cube(body, (-4, 18, -2.8), (8, 1, 1), plate)
+    m.cube(body, (-4, 20, -2.8), (8, 1, 1), plate)                                                 # the plated belly
+    m.cube(body, (-5.5, 22, -3.2), (11, 11, 6.4), plate,
+           deco=combine(ribs((150, 80, 230), (3, 5, 7)), veins(VOID_GLOW, 0.008)))                  # the chest
+    m.cube(body, (-2.5, 24, -3.8), (5, 5, 1), core,
+           deco=centered(["..W..", ".WWW.", "WWWWW", ".WWW.", "..W.."], {"W": (250, 230, 255)}, top=0, glow_chars="W"))  # the open core
+    for sx in (1, -1):
+        m.cube(body, ((-5.5 if sx < 0 else 3.5), 23, -3.9), (2, 7, 1), plate)                     # the ribs round it
+    for sx in (1, -1):                                                                             # great shoulder plates
+        m.cube(body, ((4.5 if sx > 0 else -10.5), 29, -4), (6, 5, 8), plate)
+        spikes(m, body, ((7.5 if sx > 0 else -7.5), 34, 0), along="z", count=3, length=4, material=edge, size=1.3, spread=2.6)
+    for row in (-2, 2):                                                                            # two rows of shards down the back
+        for i, y in enumerate((22, 25, 28, 31)):
+            m.cube(body, (row - 0.6, y, 3.2), (1.2, 2.2, 2 + i * 0.5), edge)
+    neck = m.bone("neck", "body", (0, 33, -1), rotation=(-12, 0, 0))
+    m.cube(neck, (-1.5, 32, -2.5), (3, 3, 3), flesh)
+    head = m.bone("head", "neck", (0, 34, -1))
+    m.cube(head, (-3, 34, -6.5), (6, 7, 7), plate,
+           deco=centered(["", "", "WWWWWW", ".W..W."], {"W": VOID_GLOW}, top=0, glow_chars="W"))  # a slit of light
+    m.cube(head, (-2.4, 39, -5), (4.8, 4, 8), plate)                                               # the long crest of the skull
+    m.cube(head, (-1.6, 42, -3), (3.2, 2, 8), plate)
+    m.cube(head, (-0.6, 44, -1), (1.2, 3, 5), edge)
+    for sx in (1, -1):                                                                             # mandibles
+        m.cube(head, ((1.6 if sx > 0 else -2.6), 32.5, -7.4), (1, 3, 1.4), edge)
     for side, sx in (("left", 1), ("right", -1)):
-        arm = m.bone(side + "_arm", "body", (5 * sx, 23, 0), rotation=(-12, 0, 8 * -sx))
-        x = 4 if sx > 0 else -6
-        m.cube(arm, (x, 13, -1), (2, 10, 2), VOID_FLESH)
-        m.cube(arm, (x, 6, -1), (2, 7, 2), VOID_FLESH)
-        m.cube(arm, (x - 0.5, 4, -1.5), (3, 2, 3), VOID_FLESH)
-        for cx in (x - 0.5, x + 1.5):
-            m.cube(arm, (cx, 1, -1.5), (1, 3, 1), VOID_CLAW)
+        arm = m.bone(side + "_arm", "body", (7.5 * sx, 31, 0), rotation=(-8, 0, 8 * -sx))
+        x = 6 if sx > 0 else -10
+        m.cube(arm, (x, 22, -2), (4, 9, 4), plate)                                                 # the upper arm
+        m.cube(arm, (x + 0.5, 12, -1.5), (3, 10, 3), flesh, deco=veins(VOID_GLOW, 0.02))          # the forearm
+        m.cube(arm, ((x + 3.4) if sx > 0 else (x - 0.6), 12, -1), (1.2, 11, 2), edge)              # a blade along it
+        m.cube(arm, (x, 9, -2), (4, 3, 4), plate)                                                  # the hand
+        for i, cx in enumerate((x - 0.2, x + 1.5, x + 3.2)):                                       # three long claws
+            m.cube(arm, (cx, 1, -1.6 + i * 0.6), (1, 8, 1), edge)
     anims = {
-        "idle": anim(2.4, {
-            "body": rot(*swing([0, 0, 0], [4, 0, 0], 2.4)),
-            "neck": rot((0.0, [0, 0, 0]), (0.9, [0, 0, 0]), (1.0, [0, 14, 6]), (1.15, [0, -8, -4]), (1.3, [0, 0, 0]), (2.4, [0, 0, 0])),
-            "left_arm": rot(*swing([0, 0, -2], [6, 0, -6], 2.4)),
-            "right_arm": rot(*swing([0, 0, 2], [6, 0, 6], 2.4))}),
-        "walk": anim(1.0, {
-            "left_leg": rot(*swing([28, 0, 0], [-28, 0, 0], 1.0)),
-            "right_leg": rot(*swing([-28, 0, 0], [28, 0, 0], 1.0)),
-            "left_arm": rot(*swing([-24, 0, -4], [20, 0, -4], 1.0)),
-            "right_arm": rot(*swing([20, 0, 4], [-24, 0, 4], 1.0)),
-            "body": rotpos([(0.0, [6, 0, 3]), (0.5, [6, 0, -3]), (1.0, [6, 0, 3])],
-                           [(0.0, [0, 0, 0]), (0.25, [0, -0.6, 0]), (0.5, [0, 0, 0]), (0.75, [0, -0.6, 0]), (1.0, [0, 0, 0])])}),
+        "idle": anim(2.6, {
+            "body": rotpos(swing([8, 0, 0], [12, 0, 0], 2.6), swing([0, 0, 0], [0, 0.5, 0], 2.6)),
+            "neck": rot((0.0, [-12, 0, 0]), (1.0, [-12, 0, 0]), (1.1, [-12, 18, 8]), (1.25, [-12, -12, -6]), (1.4, [-12, 0, 0]), (2.6, [-12, 0, 0])),
+            "left_arm": rot(*swing([-8, 0, -8], [0, 0, -14], 2.6)),
+            "right_arm": rot(*swing([-8, 0, 8], [0, 0, 14], 2.6))}),
+        "walk": anim(1.2, {
+            "left_leg": rot(*swing([24, 0, 0], [-24, 0, 0], 1.2)),
+            "right_leg": rot(*swing([-24, 0, 0], [24, 0, 0], 1.2)),
+            "left_arm": rot(*swing([-28, 0, -8], [16, 0, -8], 1.2)),
+            "right_arm": rot(*swing([16, 0, 8], [-28, 0, 8], 1.2)),
+            "body": rotpos([(0.0, [10, 0, 3]), (0.6, [10, 0, -3]), (1.2, [10, 0, 3])],
+                           [(0.0, [0, 0, 0]), (0.3, [0, -0.7, 0]), (0.6, [0, 0, 0]), (0.9, [0, -0.7, 0]), (1.2, [0, 0, 0])])}),
         "attack": anim(0.6, {
-            "left_arm": rot((0.0, [0, 0, 0]), (0.2, [-130, 0, -20]), (0.4, [20, 0, 0]), (0.6, [0, 0, 0])),
-            "right_arm": rot((0.0, [0, 0, 0]), (0.2, [-130, 0, 20]), (0.4, [20, 0, 0]), (0.6, [0, 0, 0])),
-            "body": rot((0.0, [0, 0, 0]), (0.2, [-10, 0, 0]), (0.4, [12, 0, 0]), (0.6, [0, 0, 0]))}, loop=False),
+            "left_arm": rot((0.0, [-8, 0, -8]), (0.22, [-160, 0, -30]), (0.38, [35, 0, 0]), (0.6, [-8, 0, -8])),
+            "right_arm": rot((0.0, [-8, 0, 8]), (0.27, [-160, 0, 30]), (0.43, [35, 0, 0]), (0.6, [-8, 0, 8])),
+            "body": rot((0.0, [8, 0, 0]), (0.22, [-8, 0, 0]), (0.42, [26, 0, 0]), (0.6, [8, 0, 0])),
+            "neck": rot((0.0, [-12, 0, 0]), (0.22, [-40, 0, 0]), (0.6, [-12, 0, 0]))}, loop=False),
     }
-    m.write({"void_wretch": None}, anims, (1.5, 2.5))
+    m.write({"void_wretch": None}, anims, (2.4, 3.2))
 
 
 # ======================================================================================
@@ -437,48 +561,60 @@ def void_wretch():
 # ======================================================================================
 
 def void_stalker():
+    """The bestiary sheet's Void Stalker: a long beast of black chitin and violet light, a crest of shards down its
+    back, a long skull with one burning eye and jaws full of fangs, a spiked tail."""
+    from creature_kit import glow_mat, veins, spikes
     m = Model("void_stalker", 128)
     m.bone("root")
-    body = m.bone("body", "root", (0, 10, 0))
-    m.cube(body, (-3.5, 8, -7), (7, 6, 13), VOID_FLESH, deco=rift(VOID_GLOW, 0.5, 0, 0, face="up"))
-    m.cube(body, (-4, 9, -8), (8, 6, 5), VOID_FLESH)  # the shoulders
-    for i, z in enumerate((-7, -4, -1, 2)):
-        m.cube(body, (-0.5, 14 if i % 2 else 15, z), (1, 3 if i % 2 else 2, 2), VOID_CLAW,
-               deco=lambda p, f, mm, r: p.at(f["north"], 0, 0, VOID_GLOW, glow=True))
-    head = m.bone("head", "body", (0, 12, -8))
-    m.cube(head, (-2.5, 9, -14), (5, 5, 6), VOID_FLESH,
-           deco=lambda p, f, mm, r: [p.at(f["north"], x, y, VOID_GLOW, glow=True) for x, y in ((0, 1), (1, 2), (4, 1), (3, 2), (2, 3))])
-    jaw = m.bone("jaw", "head", (0, 9, -9))
-    m.cube(jaw, (-3, 8, -15), (1, 2, 4), VOID_CLAW, mirror_x=True)
-    tail = m.bone("tail", "body", (0, 12, 6), rotation=(-25, 0, 0))
-    m.cube(tail, (-1, 11, 6), (2, 2, 6), VOID_FLESH)
-    tip = m.bone("tail_tip", "tail", (0, 12, 12), rotation=(15, 0, 0))
-    m.cube(tip, (-0.5, 11.5, 12), (1, 1, 5), VOID_FLESH)
-    m.cube(tip, (-1, 11, 17), (2, 2, 2), VOID_CLAW, deco=lambda p, f, mm, r: p.at(f["south"], 0, 0, VOID_GLOW, glow=True))
-    for name, x, z in (("front_left_leg", 3, -6), ("front_right_leg", -5, -6), ("back_left_leg", 3, 3), ("back_right_leg", -5, 3)):
-        leg = m.bone(name, "root", (x + 1, 10, z + 1))
-        m.cube(leg, (x, 4, z), (2, 6, 2), VOID_FLESH)
-        m.cube(leg, (x + 0.5, 0, z - 0.5), (1, 4, 1), VOID_CLAW)
+    chitin = mat((10, 6, 18), (34, 20, 54), (72, 50, 104), "metal", seam=3, cracks=(VOID_GLOW, 0.008), noise=5)
+    fang = mat((150, 120, 190), (210, 190, 240), (250, 240, 255), "plain", noise=3)
+    eye = glow_mat(VOID_GLOW)
+    body = m.bone("body", "root", (0, 12, 0))
+    m.cube(body, (-4.5, 9, -9), (9, 8, 18), chitin, deco=veins(VOID_GLOW, 0.012))
+    m.cube(body, (-5, 10, -10), (10, 8, 6), chitin)                                         # the shoulders
+    spikes(m, body, (0, 17, -6), along="z", count=6, length=5, material=VOID_CLAW, size=1.4, spread=3)
+    head = m.bone("head", "body", (0, 14, -10))
+    m.cube(head, (-3, 11, -19), (6, 6, 9), chitin)
+    m.cube(head, (-1, 15.5, -17), (2, 1, 2), eye)                                           # one burning eye
+    m.cube(head, (-2.5, 11, -22), (5, 3, 3), chitin)
+    for sx in (1, -1):
+        m.cube(head, ((2 if sx > 0 else -3), 10, -21.5), (1, 2, 1), fang)
+        m.cube(head, ((1 if sx > 0 else -2), 10, -19.5), (1, 2, 1), fang)
+    jaw = m.bone("jaw", "head", (0, 11, -11))
+    m.cube(jaw, (-2.5, 9, -21), (5, 2, 9), chitin)
+    for i in range(4):
+        m.cube(jaw, (-2 + i * 1.3, 11, -20.5), (0.8, 1.6, 0.8), fang)
+    tail = m.bone("tail", "body", (0, 14, 9), rotation=(-20, 0, 0))
+    m.cube(tail, (-1.5, 12.5, 9), (3, 3, 9), chitin)
+    tip = m.bone("tail_tip", "tail", (0, 14, 18), rotation=(15, 0, 0))
+    m.cube(tip, (-1, 13, 18), (2, 2, 8), chitin)
+    spikes(m, tip, (0, 15, 21), along="z", count=3, length=2.5, material=VOID_CLAW, size=1, spread=2.5)
+    m.cube(tip, (-1.5, 12.5, 26), (3, 3, 3), eye)
+    for name, x, z in (("front_left_leg", 3.5, -8), ("front_right_leg", -6.5, -8), ("back_left_leg", 3.5, 5), ("back_right_leg", -6.5, 5)):
+        leg = m.bone(name, "root", (x + 1.5, 12, z + 1.5))
+        m.cube(leg, (x, 5, z), (3, 7, 3), chitin)
+        m.cube(leg, (x + 0.5, 0, z - 1), (2, 5, 2), VOID_CLAW)
+        m.cube(leg, (x, 0, z - 2.5), (3, 1, 2), VOID_CLAW)
     anims = {
         "idle": anim(2.0, {
             "body": rotpos(swing([0, 0, 0], [-2, 0, 0], 2.0), swing([0, 0, 0], [0, 0.4, 0], 2.0)),
-            "tail": rot(*swing([0, -15, 0], [0, 15, 0], 2.0)),
-            "tail_tip": rot(*swing([0, 20, 0], [0, -20, 0], 2.0)),
-            "jaw": rot((0.0, [0, 0, 0]), (1.4, [0, 0, 0]), (1.5, [0, 18, 0]), (1.6, [0, 0, 0]), (2.0, [0, 0, 0]))}),
+            "tail": rot(*swing([-20, -15, 0], [-20, 15, 0], 2.0)),
+            "tail_tip": rot(*swing([15, 20, 0], [15, -20, 0], 2.0)),
+            "jaw": rot((0.0, [0, 0, 0]), (1.4, [0, 0, 0]), (1.5, [25, 0, 0]), (1.6, [0, 0, 0]), (2.0, [0, 0, 0]))}),
         "walk": anim(0.6, {
             "front_left_leg": rot(*swing([35, 0, 0], [-35, 0, 0], 0.6)),
             "back_right_leg": rot(*swing([35, 0, 0], [-35, 0, 0], 0.6)),
             "front_right_leg": rot(*swing([-35, 0, 0], [35, 0, 0], 0.6)),
             "back_left_leg": rot(*swing([-35, 0, 0], [35, 0, 0], 0.6)),
-            "tail": rot(*swing([10, -20, 0], [10, 20, 0], 0.6)),
+            "tail": rot(*swing([-10, -20, 0], [-10, 20, 0], 0.6)),
             "body": rotpos(swing([0, 0, 2], [0, 0, -2], 0.6), swing([0, 0, 0], [0, 0.8, 0], 0.3))}),
         "attack": anim(0.5, {
-            "body": rotpos([(0.0, [0, 0, 0]), (0.15, [-12, 0, 0]), (0.3, [14, 0, 0]), (0.5, [0, 0, 0])],
-                           [(0.0, [0, 0, 0]), (0.15, [0, 0, 2]), (0.3, [0, 0, -3]), (0.5, [0, 0, 0])]),
-            "jaw": rot((0.0, [0, 0, 0]), (0.15, [0, 35, 0]), (0.3, [0, -5, 0]), (0.5, [0, 0, 0])),
-            "tail": rot((0.0, [0, 0, 0]), (0.2, [-40, 0, 0]), (0.5, [0, 0, 0]))}, loop=False),
+            "body": rotpos([(0.0, [0, 0, 0]), (0.15, [-14, 0, 0]), (0.3, [16, 0, 0]), (0.5, [0, 0, 0])],
+                           [(0.0, [0, 0, 0]), (0.15, [0, 0, 2]), (0.3, [0, 0, -4]), (0.5, [0, 0, 0])]),
+            "jaw": rot((0.0, [0, 0, 0]), (0.15, [45, 0, 0]), (0.3, [-5, 0, 0]), (0.5, [0, 0, 0])),
+            "tail": rot((0.0, [0, 0, 0]), (0.2, [-50, 0, 0]), (0.5, [0, 0, 0]))}, loop=False),
     }
-    m.write({"void_stalker": None}, anims, (1.6, 1.4))
+    m.write({"void_stalker": None}, anims, (2.4, 1.8))
 
 
 # ======================================================================================
@@ -516,7 +652,7 @@ IVORY = mat((120, 108, 86), (190, 178, 150), (236, 228, 204), "plain", noise=6)
 
 
 def kaleth():
-    m = Model("kaleth", 128)
+    m = Model("kaleth", 128, scale=1.2)
     m.bone("root")
     for side, sx in (("left", 1), ("right", -1)):
         leg = m.bone(side + "_leg", "root", (2.5 * sx, 18, 0))
@@ -529,6 +665,8 @@ def kaleth():
     m.cube(body, (-4.5, 17, -2.5), (9, 3, 5), LEATHER, deco=buckle(GOLD["pal"][2]))
     m.cube(body, (-5, 20, -3), (10, 11, 6), IRON_BURNT, deco=rift(FIRE, 0.4, 1, 2, width=1))
     m.cube(body, (-6, 29, -3.5), (12, 3, 7), FUR, inflate=0.3)
+    red_fur = mat((60, 6, 6), (130, 20, 16), (190, 60, 40), "fur", ragged=3, cracks=(FIRE, 0.006), noise=10)
+    m.cube(body, (-7.5, 27, -4.5), (15, 6, 9), red_fur, inflate=0.4)                         # the mantle of red fur
     cape = m.bone("cape", "body", (0, 30, 3.5))
     m.cube(cape, (-5, 11, 3.5), (10, 19, 1), CAPE_RED)
     head = m.bone("head", "body", (0, 31, 0))
@@ -589,7 +727,7 @@ def serath_face(p, f, m, rnd):
 
 
 def serath():
-    m = Model("serath", 128)
+    m = Model("serath", 128, scale=1.15)
     m.bone("root")
     for side, sx in (("left", 1), ("right", -1)):
         leg = m.bone(side + "_leg", "root", (2 * sx, 17, 0))
@@ -608,6 +746,7 @@ def serath():
     head = m.bone("head", "body", (0, 27, 0))
     m.cube(head, (-3.5, 27, -3.5), (7, 7, 7), PALE, deco=serath_face)
     m.cube(head, (-3.5, 27, -3.5), (7, 7, 7), HAIR, inflate=0.5, deco=clear_front_below(2))
+    m.cube(head, (-4, 14, 2.5), (8, 14, 1.6), HAIR)                                            # a mane of red hair down her back
     for sx in (1, -1):
         braid = m.bone("braid_" + ("left" if sx > 0 else "right"), "head", (2.5 * sx, 28, 2), rotation=(12, 0, 0))
         m.cube(braid, (2 if sx > 0 else -4, 19, 1.5), (2, 9, 2), HAIR)
@@ -676,7 +815,7 @@ def sentinel_visor(p, f, m, rnd):
 
 
 def brass_sentinel():
-    m = Model("brass_sentinel", 256)
+    m = Model("brass_sentinel", 256, scale=1.3)
     m.bone("root")
     for side, sx in (("left", 1), ("right", -1)):
         leg = m.bone(side + "_leg", "root", (5 * sx, 16, 0))
@@ -691,7 +830,7 @@ def brass_sentinel():
     m.cube(body, (-9, 23, -6), (18, 13, 11), BRASS)
     m.cube(body, (-6, 30, 5), (3, 9, 3), COPPER, deco=lambda p, f, mm, r: [p.at(f["up"], a, b, (20, 16, 14)) for a in (1,) for b in (1,)])
     m.cube(body, (3, 30, 5), (3, 9, 3), COPPER, deco=lambda p, f, mm, r: [p.at(f["up"], a, b, (20, 16, 14)) for a in (1,) for b in (1,)])
-    m.cube(body, (-2, 29, -6.6), (4, 4, 1), CORE)
+    m.cube(body, (-3, 27, -6.8), (6, 6, 1.2), CORE)                                            # the great aetherium core
     gear = m.bone("chest_gear", "body", (0, 31, -7))
     m.cube(gear, (-5, 26, -7.5), (10, 10, 1), BRASS_PLAIN, deco=gear_face((214, 170, 80), TURQ, variant_hub=VOID_GLOW))
     head = m.bone("head", "body", (0, 36, -1))
@@ -760,7 +899,7 @@ def axe_edge(p, f, m, rnd):
 
 
 def vorath():
-    m = Model("vorath", 256)
+    m = Model("vorath", 256, scale=1.25)
     m.bone("root")
     for side, sx in (("left", 1), ("right", -1)):
         leg = m.bone(side + "_leg", "root", (5 * sx, 24, 0))
@@ -781,6 +920,10 @@ def vorath():
     m.cube(head, (-5, 47, -8), (10, 10, 10), ROCK, deco=vorath_face)
     m.cube(head, (-4, 41, -9), (8, 6, 2), FLAME)
     m.cube(head, (-5.5, 57, -8.5), (11, 1, 11), mat((70, 40, 10), (150, 96, 24), (230, 170, 60), "metal"))
+    from creature_kit import horn as great_horn
+    for sx in (1, -1):                                                                         # great horns sweeping out and up
+        great_horn(m, head, ((6 if sx > 0 else -6), 53, -3), (sx, 0.35, 0.1), 7, CHARRED_HORN, start=3.6, taper=0.85,
+                   curl=(0, 0, 16 * sx), step=3)
     for dx in (-4, -1, 2):
         m.cube(head, (dx + 0.5, 58, -8.5), (1, 2, 1), mat((70, 40, 10), (150, 96, 24), (230, 170, 60), "metal"))
     for side, sx in (("left", 1), ("right", -1)):
@@ -816,9 +959,7 @@ def vorath():
     m.write({"vorath": None}, anims, (4, 5))
 
 
-void_wretch()
-void_stalker()
-kaleth()
-serath()
-brass_sentinel()
-vorath()
+if __name__ == "__main__":
+    void_wretch()
+    void_stalker()
+    # Kaleth, Serath, the Brass Sentinel and Vorath are drawn by make_boss_figures.py now

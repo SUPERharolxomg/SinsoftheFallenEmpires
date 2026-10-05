@@ -1,0 +1,28 @@
+{
+  "style": "khemet",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act3.the_sultans_diary.1"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act3.the_sultans_diary.2"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act3.the_sultans_diary.3"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act3.the_sultans_diary.4"
+    }
+  ],
+  "on_end": [
+    {
+      "type": "start_quest",
+      "quest": "sofe:act4_west"
+    }
+  ]
+}

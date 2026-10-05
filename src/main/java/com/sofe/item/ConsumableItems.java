@@ -37,9 +37,8 @@ public final class ConsumableItems {
 
     /** Puts every potion on cooldown at once. */
     public static void sharedCooldown(Player player) {
-        for (Item potion : List.of(ItemRegistry.MINOR_POMEGRANATE_ELIXIR.get(), ItemRegistry.BEARERS_TONIC.get(), ItemRegistry.BEARERS_FLASK.get())) {
-            player.getCooldowns().addCooldown(potion, SHARED_COOLDOWN);
-        }
+        for (var potion : ItemRegistry.potions()) player.getCooldowns().addCooldown(potion.get(), SHARED_COOLDOWN);
+        player.getCooldowns().addCooldown(ItemRegistry.BEARERS_FLASK.get(), SHARED_COOLDOWN);
     }
 
     /** Heals or restores, then gives back the empty brass flask. */
@@ -83,32 +82,50 @@ public final class ConsumableItems {
 
         @Override
         public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-            tooltip.add(Component.translatable(description).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable(description != null ? description : getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
         }
     }
 
-    /** Pomegranate Elixir (minor): heals 4 hearts over 3 seconds. */
+    /**
+     * A Pomegranate Elixir, one strength per act (20, 35, 50, 75 or 100 health; scripts/make_potions.py): half
+     * heals at once, the rest over 3 seconds (Mending heals amplifier + 1 every second).
+     */
     public static class Elixir extends Potion {
-        public Elixir(Properties properties) {
-            super(properties, "item.sofe.minor_pomegranate_elixir.desc");
+        private final int heal;
+
+        public Elixir(Properties properties, int heal) {
+            super(properties, null);
+            this.heal = heal;
+        }
+
+        public int heal() {
+            return heal;
         }
 
         @Override
         protected void drink(ServerPlayer player) {
-            // Mending heals (amplifier + 1) health every second: 3 health for 3 seconds, about 4 hearts
-            player.addEffect(new MobEffectInstance(SoFEEffects.MENDING.get(), 60, 2, false, true));
+            int now = heal / 2, later = heal - now;
+            player.heal(now);
+            player.addEffect(new MobEffectInstance(SoFEEffects.MENDING.get(), 60, Math.max(0, Math.round(later / 3f) - 1), false, true));
         }
     }
 
-    /** Bearer's Tonic: restores 40% of the class resource. */
+    /** A Bearer's Tonic, one strength per act: restores 25, 35, 50, 65 or 80% of the class resource. */
     public static class Tonic extends Potion {
-        public Tonic(Properties properties) {
-            super(properties, "item.sofe.bearers_tonic.desc");
+        private final float fraction;
+
+        public Tonic(Properties properties, float fraction) {
+            super(properties, null);
+            this.fraction = fraction;
+        }
+
+        public float fraction() {
+            return fraction;
         }
 
         @Override
         protected void drink(ServerPlayer player) {
-            restoreResource(player, 0.4f);
+            restoreResource(player, fraction);
         }
     }
 

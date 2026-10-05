@@ -1,0 +1,15 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_poet",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.parsivan_poet.act4.1"
+    }
+  ]
+}

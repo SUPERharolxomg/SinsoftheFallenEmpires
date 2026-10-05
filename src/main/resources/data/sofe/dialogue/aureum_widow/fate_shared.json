@@ -1,0 +1,16 @@
+{
+  "style": "aureum",
+  "npc": "aureum_widow",
+  "priority": 6,
+  "requires": {
+    "type": "fate_is",
+    "region": "aureum",
+    "fate": "shared"
+  },
+  "lines": [
+    {
+      "speaker": "aureum_widow",
+      "text": "dialogue.sofe.aureum_widow.fate.shared"
+    }
+  ]
+}

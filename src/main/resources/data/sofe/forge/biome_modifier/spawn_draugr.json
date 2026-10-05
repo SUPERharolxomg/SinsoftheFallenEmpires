@@ -1,0 +1,16 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "sofe:nordrath_tundra",
+    "sofe:nordrath_ice_fields",
+    "sofe:nordrath_volcanic_forges"
+  ],
+  "spawners": [
+    {
+      "type": "sofe:draugr",
+      "weight": 70,
+      "minCount": 1,
+      "maxCount": 3
+    }
+  ]
+}

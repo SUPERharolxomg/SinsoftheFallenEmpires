@@ -21,6 +21,7 @@ class ZoneRulesTest {
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.PLACE, false));
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.EXPLOSION, false));
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.MOB_GRIEFING, false));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.FIRE, false));
         assertTrue(ZoneRules.allowed(ZONES, 500, 70, 0, ZoneAction.BREAK, false));
     }
 
@@ -29,6 +30,7 @@ class ZoneRulesTest {
         assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.BREAK, false));
         assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.PLACE, false));
         assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.PISTON, false));
+        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.FIRE, false));
     }
 
     @Test
@@ -46,7 +48,9 @@ class ZoneRulesTest {
         assertTrue(city.contains(layout.spawnX(), 70, layout.spawnZ()), "new players appear inside the city");
         assertFalse(city.contains(homestead.minX(), 70, homestead.minZ()), "the Homestead is outside the walls");
         assertFalse(layout.npcs().isEmpty());
-        layout.npcs().forEach(npc -> assertTrue(city.contains(npc.x(), 70, npc.z()), npc.npc() + " should stand in the city"));
+        // Sulthari's people stand in the city; a liberated camp's merchants stand in their camp
+        layout.npcs().forEach(npc -> assertTrue(city.contains(npc.x(), 70, npc.z()) || zones.stream().anyMatch(z ->
+                z.kind() == ProtectedZone.Kind.CAMP && z.contains(npc.x(), 70, npc.z())), npc.npc() + " should stand in the city or a camp"));
         layout.waystones().forEach((id, w) -> {
             if (id.startsWith("sofe:sulthari/")) assertTrue(city.contains(w.getX(), 70, w.getZ()), id + " should stand in the city");
         });

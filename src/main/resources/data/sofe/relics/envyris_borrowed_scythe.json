@@ -1,0 +1,33 @@
+{
+  "item": "sofe:envyris_borrowed_scythe",
+  "item_level": 83,
+  "droppable": true,
+  "slot": "weapon",
+  "min_level": 81,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 8
+    },
+    {
+      "stat": "physical_damage",
+      "value": 18
+    },
+    {
+      "stat": "magic_damage",
+      "value": 18
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "wither",
+      "s": 3
+    },
+    {
+      "on": "hit",
+      "do": "lifesteal",
+      "frac": 0.05
+    }
+  ]
+}

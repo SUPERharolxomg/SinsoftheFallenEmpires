@@ -19,7 +19,7 @@
     },
     "janissary_guard": {
       "cost": 30,
-      "cooldown_s": 20,
+      "cooldown_s": 30,
       "soldiers": 2,
       "duration_s": 30,
       "health": 24,
@@ -27,7 +27,7 @@
     },
     "siege_decree": {
       "cost": 35,
-      "cooldown_s": 18,
+      "cooldown_s": 24,
       "radius": 5,
       "duration_s": 8,
       "range": 16
@@ -50,7 +50,7 @@
     },
     "bronze_cannon": {
       "cost": 50,
-      "cooldown_s": 30,
+      "cooldown_s": 40,
       "shots": 5,
       "damage": 10
     },

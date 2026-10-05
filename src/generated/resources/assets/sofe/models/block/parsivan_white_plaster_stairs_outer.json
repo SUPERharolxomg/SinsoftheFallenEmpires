@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "sofe:block/parsivan_white_plaster",
+    "side": "sofe:block/parsivan_white_plaster",
+    "top": "sofe:block/parsivan_white_plaster"
+  }
+}

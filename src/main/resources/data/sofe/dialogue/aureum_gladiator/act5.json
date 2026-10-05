@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aureum_gladiator",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aureum_gladiator",
+      "text": "dialogue.sofe.aureum_gladiator.act5.1"
+    }
+  ]
+}

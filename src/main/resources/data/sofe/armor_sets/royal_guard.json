@@ -12,5 +12,35 @@
       "amplifier": 0,
       "when": "always"
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "projectile",
+        "value": 0.06
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "all",
+        "value": 0.04
+      }
+    ],
+    "leggings": [
+      {
+        "type": "resist",
+        "damage": "explosion",
+        "value": 0.1
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.2
+      }
+    ]
+  }
 }

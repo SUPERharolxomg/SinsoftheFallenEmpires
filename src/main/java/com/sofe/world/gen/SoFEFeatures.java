@@ -38,8 +38,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 
 /**
- * Features added to existing biomes: the empire ores of Acts I and II (Sulthari Brass, Glacial Iron)
- * and Runestone by region (docs/Mundo.md, W4), the Seal Veil (every journey biome, and every Nether biome for
+ * Features added to existing biomes: the empire ores (Sulthari Brass, Glacial Iron, Star Lapis, Solar Gold,
+ * Orichalcum, Raw Aetherium deep everywhere), Runestone and Imperial Marble by region (docs/Mundo.md, W4), the Seal Veil (every journey biome, and every Nether biome for
  * the Burning Deep at 1:8) and the Nether ores of the Burning Deep (docs/Anexos.md, A3): Infernal
  * Ember in the basalt deltas, Wailing Soul in the soul sand valleys.
  */
@@ -66,6 +66,26 @@ public final class SoFEFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> RUNESTONE_CONFIGURED = configuredKey("runestone");
     public static final ResourceKey<PlacedFeature> RUNESTONE_PLACED = placedKey("runestone");
     public static final ResourceKey<BiomeModifier> ADD_RUNESTONE = modifierKey("add_runestone");
+
+    /** The empire ores of Acts III and IV, Raw Aetherium deep in every region, and Imperial Marble (docs/Mundo.md, W4). */
+    public static final ResourceKey<ConfiguredFeature<?, ?>> STAR_LAPIS_ORE_CONFIGURED = configuredKey("star_lapis_ore");
+    public static final ResourceKey<PlacedFeature> STAR_LAPIS_ORE_PLACED = placedKey("star_lapis_ore");
+    public static final ResourceKey<BiomeModifier> ADD_STAR_LAPIS_ORE = modifierKey("add_star_lapis_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SOLAR_GOLD_ORE_CONFIGURED = configuredKey("solar_gold_ore");
+    public static final ResourceKey<PlacedFeature> SOLAR_GOLD_ORE_PLACED = placedKey("solar_gold_ore");
+    public static final ResourceKey<BiomeModifier> ADD_SOLAR_GOLD_ORE = modifierKey("add_solar_gold_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORICHALCUM_ORE_CONFIGURED = configuredKey("orichalcum_ore");
+    public static final ResourceKey<PlacedFeature> ORICHALCUM_ORE_PLACED = placedKey("orichalcum_ore");
+    public static final ResourceKey<BiomeModifier> ADD_ORICHALCUM_ORE = modifierKey("add_orichalcum_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> AETHERIUM_ORE_CONFIGURED = configuredKey("aetherium_ore");
+    public static final ResourceKey<PlacedFeature> AETHERIUM_ORE_PLACED = placedKey("aetherium_ore");
+    public static final ResourceKey<BiomeModifier> ADD_AETHERIUM_ORE = modifierKey("add_aetherium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> IMPERIAL_MARBLE_CONFIGURED = configuredKey("imperial_marble");
+    public static final ResourceKey<PlacedFeature> IMPERIAL_MARBLE_PLACED = placedKey("imperial_marble");
+    public static final ResourceKey<BiomeModifier> ADD_IMPERIAL_MARBLE = modifierKey("add_imperial_marble");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> VOID_CRYSTAL_ORE_CONFIGURED = configuredKey("void_crystal_ore");
+    public static final ResourceKey<PlacedFeature> VOID_CRYSTAL_ORE_PLACED = placedKey("void_crystal_ore");
+    public static final ResourceKey<BiomeModifier> ADD_VOID_CRYSTAL_ORE = modifierKey("add_void_crystal_ore");
 
     private SoFEFeatures() {
     }
@@ -110,6 +130,19 @@ public final class SoFEFeatures {
                 OreConfiguration.target(deepslate, block(Material.GLACIAL_IRON, MaterialForm.DEEPSLATE_ORE))), 7)));
         context.register(RUNESTONE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
                 OreConfiguration.target(stone, SoFEBlocks.RUNESTONE.get().defaultBlockState())), 33)));
+        context.register(STAR_LAPIS_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
+                OreConfiguration.target(stone, block(Material.STAR_LAPIS, MaterialForm.ORE))), 4)));
+        context.register(SOLAR_GOLD_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
+                OreConfiguration.target(stone, block(Material.SOLAR_GOLD, MaterialForm.ORE)),
+                OreConfiguration.target(deepslate, block(Material.SOLAR_GOLD, MaterialForm.DEEPSLATE_ORE))), 5)));
+        context.register(ORICHALCUM_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
+                OreConfiguration.target(deepslate, block(Material.ORICHALCUM, MaterialForm.DEEPSLATE_ORE))), 4, 0.3f)));
+        context.register(AETHERIUM_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
+                OreConfiguration.target(deepslate, block(Material.AETHERIUM, MaterialForm.DEEPSLATE_ORE))), 3, 0.5f)));
+        context.register(IMPERIAL_MARBLE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
+                OreConfiguration.target(stone, SoFEBlocks.IMPERIAL_MARBLE.get().defaultBlockState())), 48)));
+        context.register(VOID_CRYSTAL_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
+                OreConfiguration.target(new BlockMatchTest(Blocks.END_STONE), SoFEBlocks.VOID_CRYSTAL_ORE.get().defaultBlockState())), 5)));
         context.register(SEAL_VEIL_CONFIGURED, new ConfiguredFeature<>(WorldgenRegistry.SEAL_VEIL.get(), NoneFeatureConfiguration.INSTANCE));
         context.register(INFERNAL_EMBER_ORE_CONFIGURED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(
                 OreConfiguration.target(new BlockMatchTest(Blocks.BASALT), SoFEBlocks.INFERNAL_EMBER_ORE.get().defaultBlockState()),
@@ -137,6 +170,25 @@ public final class SoFEFeatures {
         context.register(RUNESTONE_PLACED, new PlacedFeature(configured.getOrThrow(RUNESTONE_CONFIGURED), List.of(
                 CountPlacement.of(2), InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(50), VerticalAnchor.absolute(90)), BiomeFilter.biome())));
+        context.register(STAR_LAPIS_ORE_PLACED, new PlacedFeature(configured.getOrThrow(STAR_LAPIS_ORE_CONFIGURED), List.of(
+                CountPlacement.of(4), InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(200)), BiomeFilter.biome())));
+        context.register(SOLAR_GOLD_ORE_PLACED, new PlacedFeature(configured.getOrThrow(SOLAR_GOLD_ORE_CONFIGURED), List.of(
+                CountPlacement.of(3), InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(-32), VerticalAnchor.absolute(32)), BiomeFilter.biome())));
+        context.register(ORICHALCUM_ORE_PLACED, new PlacedFeature(configured.getOrThrow(ORICHALCUM_ORE_CONFIGURED), List.of(
+                CountPlacement.of(2), InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(-16)), BiomeFilter.biome())));
+        // the Void Rifts' aetherium: rare, very deep, in every region (one vein in about eight chunks)
+        context.register(AETHERIUM_ORE_PLACED, new PlacedFeature(configured.getOrThrow(AETHERIUM_ORE_CONFIGURED), List.of(
+                net.minecraft.world.level.levelgen.placement.RarityFilter.onAverageOnceEvery(8), InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(-40)), BiomeFilter.biome())));
+        context.register(IMPERIAL_MARBLE_PLACED, new PlacedFeature(configured.getOrThrow(IMPERIAL_MARBLE_CONFIGURED), List.of(
+                CountPlacement.of(3), InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(50), VerticalAnchor.absolute(100)), BiomeFilter.biome())));
+        context.register(VOID_CRYSTAL_ORE_PLACED, new PlacedFeature(configured.getOrThrow(VOID_CRYSTAL_ORE_CONFIGURED), List.of(
+                CountPlacement.of(8), InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(20), VerticalAnchor.absolute(60)), BiomeFilter.biome())));
         context.register(INFERNAL_EMBER_ORE_PLACED, new PlacedFeature(configured.getOrThrow(INFERNAL_EMBER_ORE_CONFIGURED), List.of(
                 CountPlacement.of(12), InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(10), VerticalAnchor.absolute(118)), BiomeFilter.biome())));
@@ -169,6 +221,26 @@ public final class SoFEFeatures {
         context.register(ADD_RUNESTONE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(SoFEBiomeTagsProvider.regionTag(Region.NORDRATH)),
                 HolderSet.direct(placed.getOrThrow(RUNESTONE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_STAR_LAPIS_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(SoFEBiomeTagsProvider.regionTag(Region.PARSIVAN)),
+                HolderSet.direct(placed.getOrThrow(STAR_LAPIS_ORE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_SOLAR_GOLD_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(SoFEBiomeTagsProvider.regionTag(Region.KHEMET)),
+                HolderSet.direct(placed.getOrThrow(SOLAR_GOLD_ORE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_ORICHALCUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(SoFEBiomeTagsProvider.regionTag(Region.AUREUM)),
+                HolderSet.direct(placed.getOrThrow(ORICHALCUM_ORE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_AETHERIUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(SoFEBiomeTagsProvider.IS_AETHERIS),
+                HolderSet.direct(placed.getOrThrow(AETHERIUM_ORE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_IMPERIAL_MARBLE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(SoFEBiomeTagsProvider.regionTag(Region.AUREUM)),
+                HolderSet.direct(placed.getOrThrow(IMPERIAL_MARBLE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        // the outer islands only: the dragon's island (the_end) stays as it is
+        context.register(ADD_VOID_CRYSTAL_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                HolderSet.direct(biomes.getOrThrow(Biomes.END_HIGHLANDS), biomes.getOrThrow(Biomes.END_MIDLANDS), biomes.getOrThrow(Biomes.END_BARRENS),
+                        biomes.getOrThrow(Biomes.SMALL_END_ISLANDS)),
+                HolderSet.direct(placed.getOrThrow(VOID_CRYSTAL_ORE_PLACED)), GenerationStep.Decoration.UNDERGROUND_ORES));
         context.register(ADD_INFERNAL_EMBER_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.BASALT_DELTAS)), HolderSet.direct(placed.getOrThrow(INFERNAL_EMBER_ORE_PLACED)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));

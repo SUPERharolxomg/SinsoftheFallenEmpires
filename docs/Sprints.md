@@ -328,27 +328,45 @@ Skill tables in [Clases.md](Clases.md).
 - [x] *(Extra)* Jewelry seen on the Bearer (`JewelryRenderer`, Curios): a 3D chain round the neck with the pendant cut from the icon, a band with its stone on each hand for the rings, and the charms hanging from cords on the belt (two in front, two on the hips, two behind); colors read from each icon. Relic and Legacy jewelry shimmers, and anything above Common gives off sparks of its rarity's color. The 89 jewelry and charm icons are redrawn at 32×32 with recut gems and a glint (`scripts/upscale_jewelry.py`). `-PshotSets=jewelry` screenshots them, and the screenshot tools create `run/saves/shots` when it is missing (`ShotsWorld`)
 
 ## Sprint 7 — Empires & Bosses (Weeks 15-18)
-- [ ] Parsivan, Khemet and Aureum regions: biomes, fixed structures, Veil unlocks per act, Star Lapis / Solar Gold / Orichalcum / Void Rifts worldgen and tiers
-- [ ] *(World)* Parsivan, Khemet and Aureum building blocks with corrupted variants; corrupted-to-intact swap when a region is liberated
-- [ ] Parsivan: Luxara (Laleh's voice in the Enchanted Gardens)
-- [ ] Khemet: Morthis (Catacombs gated until Luxara falls); the sultan's diary twist
-- [ ] Aureum: Avarok, Gularth, Envyris (fight against a copy of the player's character)
-- [ ] Broken Oaths III–IX (Mirael, Thessyn, Dormiel, Goldarc, Nixara, Fenrath, Shadeyn), each with the inverted mechanic of its Law
-- [ ] Temptation dialogues for each Archsin, per Bearer
-- [ ] "Sulthari is under siege" transition to Act V
-- [ ] Add empire-specific mobs and loot
-- [ ] *(Rules)* Act III and IV traits for vanilla mobs (frost and fire arrows, shorter creeper fuse, blinding and teleporting endermen, web-shooting spiders)
-- [ ] Jeweler, Purifier, Tempering Anvil and remaining ores (from [Pociones.md](Pociones.md))
-- [ ] *(Annex)* Remaining secondary materials: Moonsilk, Sunreed Papyrus, Imperial Marble
-- [ ] *(Annex)* 7 sin gems (rough, cut, oath)
-- [ ] *(Annex)* Favor per empire (6 ranks, discounts, offer unlocks)
-- [ ] *(Annex)* Liberated camps with merchant copies after each Archsin
-- [ ] *(Annex)* Zahir the Wanderer (traveling caravan every 3 days)
-- [ ] *(World)* Void Gate under the Great Observatory (after Envyris, 12 Eyes of Ender); Void Crystal and Void Ink
-- [ ] *(Rules)* Waystones and Vaults in liberated camps and dungeon entrances; side quests per region, with the Parsivan, Khemet and Aureum fate choices; Bearer quests for Acts III–IV
-- [ ] Write and translate (en/es) the Act III–IV dialogue
-- [ ] *(Annex)* Kerem and Sister Nilufar as NPCs
-- [ ] *(Annex)* Personal loot (Reward Coffer) for every Archsin and Broken Oath
+- [x] *(World)* The world is 25,000 x 25,000 (regions within +/-12,000): every empire grows outwards, Parsivan to the north-east, Aureum to the north-west and south-west, the Southern Sea between Aureum and Khemet (`RegionMap`)
+- [x] *(World)* Parsivan, Khemet and Aureum building sets, intact and corrupted, with stairs, slabs and walls (`scripts/make_empire_blocks.py`, `EmpireBlocks` for the swap when a region is liberated)
+- [x] *(World)* The dungeons and arenas of Acts III and IV and the Nordrath underground: Baths, Silk Road caravanserai, Enchanted Gardens, Catacombs, Stagnant Marsh, Treasury, Market, Golden Vaults, Colosseum, Shadow Throne, Caverns and Feast Halls (`EmpireBuilder`, `scripts/act34_places.py`), each on shaped land with a causeway over water, its Sealed Gate and a Waystone
+- [x] Boss lairs: each boss rises in its room when a Bearer who has not beaten it comes in (`BossLairs`; also fixes Act II, whose bosses only came from eggs)
+- [x] Bosses and Broken Oaths: a presence (title, Law or Sin, darkness) and a second phase that is stronger every time
+- [x] The twelve bosses of Acts III and IV: GeckoLib models (`scripts/make_boss_models.py`), registration, loot and story advancements (`scripts/make_boss_data.py`), portraits cut from their models, and blocks or minions they leave always undone after the fight (`BossKit`)
+- [x] *(Extra)* Eight creatures of the empires, two per act, each spawning only in its region (`EmpireMob`, `scripts/make_empire_mobs.py`, `scripts/make_empire_mob_data.py`)
+- [x] *(Extra)* Elites (mini-bosses) and Hordes of the Void (`EliteMobs`, `VoidHordes`)
+- [x] *(Extra)* Bearers have 50 health; Vitality gives 2 health and a little speed per point; an elixir and a tonic per act with new bottles (`scripts/make_potions.py`)
+- [x] *(Extra)* Armor set pieces give their own bonus, and a full set all of them with its own (`scripts/set_pieces.py`); class unique weapons roll ranks in a random skill of their class
+- [x] *(Extra)* Longer cooldowns on the strongest skills; each Clay Warden standing makes the next slower to shape; the Clay Warden redrawn as a guardian of Khemet; the Necromancer's Concord steals 5% for one below a quarter of their health
+- [x] *(Extra)* Fire never takes hold in a protected place; the Waystone redrawn as a lit runed obelisk; Homeward, a boots enchantment that takes the Bearer back to Sulthari
+- [x] *(Extra)* Enemies follow the Bearer's level (within their region's and act's floor) instead of rolling up to the region's top
+- [x] *(Extra)* Dev tools: `-PplaceShots=empire/place,waystone,mobs,bosses,boss:<id>` (an Aetheris world made on demand)
+- [x] *(Extra)* Every creature redrawn after the user's bestiary sheet (`art/concepts/bosses/bestiary_sheet.png`): bigger, readable silhouettes, glowing eyes and marks (`scripts/creature_kit.py`: horns, bat wings, spikes, halos, drawn faces; `Model.scale` for bigger creatures with more pixels); the Void Wretch and Stalker rebuilt; Void Zombies and Void Skeletons in every region and in the hordes (`scripts/make_void_kin.py`)
+- [x] *(Extra)* The nineteen bosses remade so their presence shows they are broken (`scripts/make_boss_figures.py`): a jointed body of boss proportions with hands that have fingers and a thumb, a face sculpted in 3D (a jutting brow, nose, cheekbones, a jaw that opens, teeth, eyes of light in dark sockets), snapped horns, cracked halos and crowns, rag capes that sway, the torn shackles and split Law seal of every Broken Oath, the cracked sin core of every Archsin; in the second phase the boss is drawn broken (its `_broken` texture split by fractures of its colour, its `p2_` bones breaking out: shards orbiting, flames, eyes torn open), synced by `SoFEBossEntity.shownPhase`; dialogue portraits drawn from the models (`scripts/model_portrait.py`); `-PplaceShots=boss2:<id>` shows a boss in its second phase
+- [x] *(Extra)* A Reward Coffer for each Bearer in the fight, in a ring in the arena: only its owner opens it, it vanishes when opened and fades after thirty minutes unopened (`RewardCoffer`); death shows "You have died" and lets the Bearer watch as a spectator over where they fell for ten seconds before they stand again (`DeathSpectate`); guns held the right way round; a soulbound item that does not fit in a full pack falls at the owner's feet instead of looping forever; Blueprint loot without a named recipe gives one the Bearer does not know
+- [x] *(Extra)* Every boss has a signature attack born of its weapon (`SoFEBossEntity.Signature`, `Signatures`): a wind-up the Bearers can read (its name on screen, its shape drawn on the floor in particles, its own `signature` animation), then the blow; damage scales with the boss's attack, and it comes sooner in the second phase. Kaleth's Cleave of Embers, Serath's Crimson Frenzy, Mirael's Embrace of the Veil, Thessyn's Eight-Legged Impalement, Dormiel's Lantern of the Last Sleep, Goldarc's Charge of the Gilded Shield, Nixara's Weighing of Debts, Fenrath's Rending Pounce, Shadeyn's Shattered Blade, Solrath's Spear of the False Sun, the Sentinel's Piston Slam, Vorath's Wrath Splitter, Luxara's Storm of Wings, Morthis's Grasp of the Marsh, Avarok's Sack of Avarice, Gularth's Butcher's Chop, Envyris's Envious Reaping, Prython's Fall of the Proud Sun, Nahrazel's Rending of the Seal; boss textures at twice the pixels (per-face UVs, `Model.density`), angry brows, bigger heads, bat wings with fingers and a scalloped membrane
+- [x] Parsivan, Khemet and Aureum regions: biomes, fixed structures, Veil unlocks per act, Star Lapis / Solar Gold / Orichalcum worldgen and tiers (`SoFEFeatures`: Star Lapis in Parsivan's heights, Solar Gold in Khemet's sands, Orichalcum deep in Aureum, Raw Aetherium rare and very deep in every region, Imperial Marble in Aureum's hills)
+- [x] *(World)* Parsivan, Khemet and Aureum building blocks with corrupted variants; corrupted-to-intact swap when a region is liberated (`RegionHealing`: the Archsin's first fall heals every corrupted block in its region's places, a slice each tick, once per world; places built later are healed as they are built)
+- [x] Parsivan: Luxara (Laleh's voice in the Enchanted Gardens): charms (a charmed Bearer walks to her and cannot hurt their allies), illusions in her shape, mirrors that throw blows back in her second phase (`LuxaraEntity`)
+- [x] Khemet: Morthis (Catacombs gated until Luxara falls): never moves, slows everyone near, drowsy bolts, the marsh's mummies rise for him (`MorthisEntity`); the sultan's diary twist (`act3/the_sultans_diary`)
+- [x] Aureum: Avarok (steals from each Bearer, never story items or Relics, grows with every theft, gives it all back on death or reset, even to those who left: `AvarokEntity.Hoard`), Gularth (eats the floor, which comes back, and grows up to twice his size), Envyris (a copy of each Bearer's own hero, up to three, the classes of those who hurt her most; answers each Bearer with their last skill)
+- [x] Broken Oaths III–IX, each with the inverted mechanic of its Law: Mirael (fades, comes back behind you, whispers confusion), Thessyn (webs, venom, false chests that hide spiders), Dormiel (clouds of slumber, nightmares), Goldarc (volleys of coins, a ward of gold), Nixara (slips between stalls, false gold, the forum's trapdoors), Fenrath (swallows a Bearer, acid), Shadeyn (shades in copies of a Bearer's gear, blows glance back)
+- [x] Temptation dialogues for each Archsin, with a line of its own for the Bearer whose weakness it is (`scripts/make_temptations.py`)
+- [x] "Sulthari is under siege" transition to Act V (`act4/sulthari_besieged`); the main quests of Acts III and IV (`scripts/make_act34_story.py`)
+- [x] Add empire-specific mobs and loot (eight creatures, see below; each boss leaves its own Relic, twelve new ones)
+- [x] *(Rules)* Act III and IV traits for vanilla mobs (frost and fire arrows, shorter creeper fuse, blinding and teleporting endermen, web-shooting spiders), and Act V's (two-arrow volleys, charged creepers, faster zombies) (`MobTraits`)
+- [x] Jeweler, Purifier, Tempering Anvil and remaining ores (from [Pociones.md](Pociones.md)): the Jeweler's Bench cuts rough gems for Dinars, opens sockets (250 / 750 / 2,000 Dinars) and sets cut or Oath gems (`JewelerBlock`, `Sockets`); the Purifier turns Black Aetherium (dropped by the Void's creatures) into aetherium; the Tempering Anvil tempers an affix by a tenth (three times per item, 1 aetherium) or rerolls the weakest (2 aetherium) (`TemperingAnvilBlock`)
+- [x] *(Annex)* Remaining secondary materials: Moonsilk (Mirage Dancers and Thessyn), Sunreed Papyrus (sugar cane and Solar Gold powder), Imperial Marble (quarried in Aureum; polished, bricks and pillars from it); Void Crystal and Void Ink
+- [x] *(Annex)* 7 sin gems (rough, cut, oath) (`SinGem`): rough from mining a mod ore (3%, the region's sin; the Thief doubles one in ten), cut at the Jeweler, Oath Gems from the Broken Oaths (their Archsin's sin: always the first time, then one fight in three)
+- [x] *(Annex)* Favor per empire (6 ranks, discounts, offer unlocks): Stranger to Exalted at 0 / 100 / 300 / 600 / 1,000 / 1,600 points, 2% off per rank, `min_favor` offers; earned by trading with the empire's merchants (a tenth of the price; a twentieth when selling), finishing quests (80, in the empire where they end) and its bosses (150, an Archsin 400) (`EconomyData`, `MerchantService.gainFavor`); shown in the shop's title
+- [x] *(Annex)* Liberated camps with merchant copies after each Archsin: four camps (Nordrath by the Burning Citadel, Parsivan between the Baths and the Silk Road, Khemet between the Catacombs and the Marsh, Aureum between the Market and the Golden Vaults), protected, with a palisade, tents in the empire's colours, a Waystone and a Personal Vault; their alchemist and smith (Ferid's and Dilara's offers, half the stock, the empire's Favor) trade once the region's Archsin has fallen (`EmpireBuilder.camp`, `scripts/make_camps.py`)
+- [x] *(Annex)* Zahir the Wanderer (traveling caravan every 3 days): he stops for three days at a random liberated camp, then moves on; rough gems, secondary materials, ingots and Void Crystal, one of each per Bearer (`ZahirCaravan`)
+- [x] *(World)* Void Gate under the Great Observatory (after Envyris, 12 Eyes of Ender); Void Crystal and Void Ink: a pavilion beside the Observatory sealed until Envyris falls, a shaft down to a vault with twelve empty End portal frames (`SultharisBuilder.voidGate`); Void Crystal ore on the End's outer islands and in End city chests; Void Ink at the Alembic
+- [x] *(Rules)* Waystones and Vaults in liberated camps and dungeon entrances; side quests per region, with the Parsivan, Khemet and Aureum fate choices; Bearer quests for Acts III–IV: three refugees in each camp give The Dreaming Court (wake the court or let it dream), The Souls Below (guide the kings or bind them as guardians), The Gold of the Courts (restore the Law or share the gold), The Last Silk Caravan, The Sunken Archive and Bread and Circuses; ten Bearer quests (two per hero, with their class Relics); one refugee in each camp remembers the fate (`scripts/story_catalog_act34.py`, `scripts/make_story.py`)
+- [x] Write and translate (en/es) the Act III–IV dialogue: the main story (Sprint 7, phase B), the nine refugees' lines before and after their region is freed, the quests' offers, reminders, choices and endings, and what each Bearer says in Acts III and IV
+- [x] *(Annex)* Kerem and Sister Nilufar as NPCs: Kerem the Cutter in the Bank beside his Jeweler's Bench (cut gems, buys rough ones), Sister Nilufar by the Void Gate beside her Purifier (aetherium, buys Black Aetherium and Void Ash); the Tempering Anvil stands by Dilara
+- [x] *(Annex)* Personal loot (Reward Coffer) for every Archsin and Broken Oath
 
 ## Sprint 7.5 — Multiplayer & Co-op (Weeks 19-20)
 See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
@@ -371,15 +389,15 @@ See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
 - [ ] *(Annex, stretch)* Combo skills between two players
 
 ## Sprint 8 — Act V: The Ascension & Polish (Weeks 21-24)
-- [ ] Sulthari under siege; Ozhan revealed as Solrath, the False Prophet (Law X)
-- [ ] Prython (Pride) at the Celestial Spire, using the mechanics of the six previous Archsins
+- [x] Sulthari under siege; Ozhan revealed as Solrath, the False Prophet (Law X), in the Temple of Sulthari: pillars of holy light, holy bolts, and in his second phase the beaten Broken Oaths raised as echoes (`SolrathEntity`; echoes are weaker and give nothing)
+- [x] Prython (Pride) at the Celestial Spire, using the mechanics of the six previous Archsins in turn (`SinPowers`), his Pride turning blows back in the second phase; his offer at the edge of defeat
 - [ ] Prython's offer: refusal, and the secret "Crowned in Ash" bad ending with one animation per Bearer and a hidden advancement
 - [ ] Aetherium-tier gear (Orichalcum + Raw Aetherium + Void Crystal)
 - [ ] Sealing Quill quest: Void Ink from the Outer Void, required to open the Inverted Throne
-- [ ] The Spire inverts and sinks to the Inverted Throne
+- [x] The Spire inverts and sinks to the Inverted Throne (built beneath Sulthari, reached by a winding stair; a dimension of its own is not needed)
 - [ ] Dimensions `sofe:inverted_throne` and `sofe:codex_interior`
-- [ ] Nahrazel, the First Fallen: colossus of ash, seven sins at once, rewriting the seal inside the Codex
-- [ ] Write and translate (en/es) the Act V dialogue and epilogues
+- [x] Nahrazel, the First Fallen: colossus of ash, seven sins at once (and the Archsins raised as echoes), rewriting the seal inside the Codex (the arena turns to its pages; seven Seals hold him until they are broken) (`NahrazelEntity`, `SealGlyph`)
+- [x] Write and translate (en/es) the Act V dialogue (`scripts/make_act5_story.py`); epilogues still to come
 - [ ] Ending inside the Codex, the region fate slides and the Bearer epilogues (full and unfinished versions), plus the eighth-lock sequel hook
 - [ ] Implement multiplayer boss scaling
 - [ ] *(Rules)* Act V traits for vanilla mobs (corrupted zombies, arrow volleys, charged creepers)

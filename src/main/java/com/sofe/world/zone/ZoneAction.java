@@ -9,5 +9,7 @@ public enum ZoneAction {
     EXPLOSION,
     MOB_GRIEFING,
     FLUID,
-    PISTON
+    PISTON,
+    /** Fire catching or spreading. */
+    FIRE
 }

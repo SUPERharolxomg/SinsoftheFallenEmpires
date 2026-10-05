@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.aureum_senator.act5.1"
+    }
+  ]
+}

@@ -57,7 +57,8 @@ public final class SoFEBlocks {
 
     // --- travel and storage (docs/Jugabilidad.md, G2 and G5) ---
     public static final RegistryObject<Block> WAYSTONE = register("waystone", Shape.HAND_MADE, null, true,
-            () -> new WaystoneBlock(BlockBehaviour.Properties.copy(Blocks.LODESTONE).lightLevel(s -> 10).noOcclusion()));
+            // story waystones stand wherever the journey put them, in a city or out in the wild: no one can break them
+            () -> new WaystoneBlock(BlockBehaviour.Properties.copy(Blocks.LODESTONE).strength(-1f, 3600000f).lightLevel(s -> 10).noOcclusion()));
     public static final RegistryObject<Block> PERSONAL_VAULT = register("personal_vault", Shape.CUBE_SIDES, null, true,
             () -> new VaultBlock(BlockBehaviour.Properties.copy(Blocks.ENDER_CHEST)));
 
@@ -101,6 +102,48 @@ public final class SoFEBlocks {
     public static final RegistryObject<Block> CORRUPTED_NORDRATH_DARK_TIMBER = register("corrupted_nordrath_dark_timber", Shape.PILLAR, null, true,
             () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_STEM).lightLevel(s -> 6)));
 
+    // <generated-empire-blocks> by scripts/make_empire_blocks.py: Parsivan, Khemet and Aureum, intact and corrupted
+    public static final RegistryObject<Block> PARSIVAN_TURQUOISE_TILES = cube("parsivan_turquoise_tiles", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CYAN_TERRACOTTA).mapColor(MapColor.COLOR_CYAN)));
+    public static final RegistryObject<Block> PARSIVAN_WHITE_PLASTER = cube("parsivan_white_plaster", () -> new Block(BlockBehaviour.Properties.copy(Blocks.SMOOTH_QUARTZ).mapColor(MapColor.SNOW)));
+    public static final RegistryObject<Block> PARSIVAN_LAPIS_MOSAIC = cube("parsivan_lapis_mosaic", () -> new Block(BlockBehaviour.Properties.copy(Blocks.LAPIS_BLOCK).mapColor(MapColor.LAPIS)));
+    public static final RegistryObject<Block> CORRUPTED_PARSIVAN_TURQUOISE_TILES = cube("corrupted_parsivan_turquoise_tiles", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CYAN_TERRACOTTA).mapColor(MapColor.COLOR_GRAY)));
+    public static final RegistryObject<Block> CORRUPTED_PARSIVAN_WHITE_PLASTER = cube("corrupted_parsivan_white_plaster", () -> new Block(BlockBehaviour.Properties.copy(Blocks.SMOOTH_QUARTZ).mapColor(MapColor.COLOR_GREEN)));
+    public static final RegistryObject<Block> KHEMET_CARVED_SANDSTONE = cube("khemet_carved_sandstone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE).mapColor(MapColor.SAND)));
+    public static final RegistryObject<Block> KHEMET_PAINTED_LIMESTONE = cube("khemet_painted_limestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.TERRACOTTA_WHITE)));
+    public static final RegistryObject<Block> KHEMET_GOLD_HIEROGLYPHS = cube("khemet_gold_hieroglyphs", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE).mapColor(MapColor.GOLD)));
+    public static final RegistryObject<Block> KHEMET_OBELISK = register("khemet_obelisk", Shape.PILLAR, null, true,
+            () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE).mapColor(MapColor.SAND)));
+    public static final RegistryObject<Block> CORRUPTED_KHEMET_CARVED_SANDSTONE = cube("corrupted_khemet_carved_sandstone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE).mapColor(MapColor.DIRT)));
+    public static final RegistryObject<Block> CORRUPTED_KHEMET_PAINTED_LIMESTONE = cube("corrupted_khemet_painted_limestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.COLOR_BROWN)));
+    public static final RegistryObject<Block> IMPERIAL_MARBLE = cube("imperial_marble", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.QUARTZ)));
+    public static final RegistryObject<Block> AUREUM_POLISHED_MARBLE = cube("aureum_polished_marble", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_DIORITE).mapColor(MapColor.QUARTZ)));
+    public static final RegistryObject<Block> AUREUM_MARBLE_BRICKS = cube("aureum_marble_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).mapColor(MapColor.QUARTZ)));
+    public static final RegistryObject<Block> AUREUM_MARBLE_PILLAR = register("aureum_marble_pillar", Shape.PILLAR, null, true,
+            () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.QUARTZ_PILLAR).mapColor(MapColor.QUARTZ)));
+    public static final RegistryObject<Block> AUREUM_GOLD_MOSAIC = cube("aureum_gold_mosaic", () -> new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).mapColor(MapColor.GOLD)));
+    public static final RegistryObject<Block> CORRUPTED_AUREUM_MARBLE_BRICKS = cube("corrupted_aureum_marble_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).mapColor(MapColor.COLOR_BLACK)));
+    public static final RegistryObject<Block> CORRUPTED_AUREUM_MARBLE_PILLAR = register("corrupted_aureum_marble_pillar", Shape.PILLAR, null, true,
+            () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.QUARTZ_PILLAR).mapColor(MapColor.COLOR_BLACK)));
+    public static final RegistryObject<Block> PARSIVAN_WHITE_PLASTER_STAIRS = register("parsivan_white_plaster_stairs", Shape.STAIRS, PARSIVAN_WHITE_PLASTER, true,
+            () -> new StairBlock(() -> PARSIVAN_WHITE_PLASTER.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SMOOTH_QUARTZ)));
+    public static final RegistryObject<Block> PARSIVAN_WHITE_PLASTER_SLAB = register("parsivan_white_plaster_slab", Shape.SLAB, PARSIVAN_WHITE_PLASTER, true,
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SMOOTH_QUARTZ)));
+    public static final RegistryObject<Block> PARSIVAN_WHITE_PLASTER_WALL = register("parsivan_white_plaster_wall", Shape.WALL, PARSIVAN_WHITE_PLASTER, true,
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SMOOTH_QUARTZ).forceSolidOn()));
+    public static final RegistryObject<Block> KHEMET_SANDSTONE_STAIRS = register("khemet_sandstone_stairs", Shape.STAIRS, KHEMET_CARVED_SANDSTONE, true,
+            () -> new StairBlock(() -> KHEMET_CARVED_SANDSTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE)));
+    public static final RegistryObject<Block> KHEMET_SANDSTONE_SLAB = register("khemet_sandstone_slab", Shape.SLAB, KHEMET_CARVED_SANDSTONE, true,
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE)));
+    public static final RegistryObject<Block> KHEMET_SANDSTONE_WALL = register("khemet_sandstone_wall", Shape.WALL, KHEMET_CARVED_SANDSTONE, true,
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.CUT_SANDSTONE).forceSolidOn()));
+    public static final RegistryObject<Block> AUREUM_MARBLE_BRICK_STAIRS = register("aureum_marble_brick_stairs", Shape.STAIRS, AUREUM_MARBLE_BRICKS, true,
+            () -> new StairBlock(() -> AUREUM_MARBLE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
+    public static final RegistryObject<Block> AUREUM_MARBLE_BRICK_SLAB = register("aureum_marble_brick_slab", Shape.SLAB, AUREUM_MARBLE_BRICKS, true,
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
+    public static final RegistryObject<Block> AUREUM_MARBLE_BRICK_WALL = register("aureum_marble_brick_wall", Shape.WALL, AUREUM_MARBLE_BRICKS, true,
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).forceSolidOn()));
+    // </generated-empire-blocks>
+
     // --- Sealed Gates (docs/Mundo.md, W2): dungeon and arena doors with their own condition
     public static final RegistryObject<Block> SEALED_GATE = register("sealed_gate", Shape.HAND_MADE, null, false,
             () -> new com.sofe.world.lock.SealedGateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE)
@@ -116,6 +159,12 @@ public final class SoFEBlocks {
             () -> new net.minecraft.world.level.block.DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_QUARTZ_ORE)
                     .mapColor(MapColor.COLOR_CYAN).lightLevel(s -> 3), net.minecraft.util.valueproviders.UniformInt.of(2, 5)),
             ItemRegistry.WAILING_SOUL);
+    // --- the Outer Void (docs/Mundo.md: Void Crystal in end stone veins on the outer islands, y 20 to 60)
+    public static final RegistryObject<Block> VOID_CRYSTAL_ORE = ore("void_crystal_ore",
+            () -> new net.minecraft.world.level.block.DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                    .strength(4.5f, 9f).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_PURPLE).lightLevel(s -> 6),
+                    net.minecraft.util.valueproviders.UniformInt.of(4, 8)),
+            ItemRegistry.VOID_CRYSTAL);
 
     // --- Sprint 5.5: crafting stations, the Reward Coffer and Runestone
     public static final RegistryObject<Block> RUNESTONE = cube("runestone",
@@ -126,6 +175,14 @@ public final class SoFEBlocks {
     public static final RegistryObject<Block> ALEMBIC = register("alembic", Shape.CUBE_SIDES, null, true,
             () -> new com.sofe.crafting.StationBlock(com.sofe.crafting.StationRecipe.Kind.ALEMBIC,
                     BlockBehaviour.Properties.copy(Blocks.BREWING_STAND).strength(2.0f).noOcclusion()));
+    // --- Sprint 7: the Jeweler, the Purifier and the Tempering Anvil (docs/Pociones.md, "Forges and crafting")
+    public static final RegistryObject<Block> JEWELER = register("jeweler", Shape.CUBE_SIDES, null, true,
+            () -> new com.sofe.crafting.JewelerBlock(BlockBehaviour.Properties.copy(Blocks.SMITHING_TABLE).lightLevel(s -> 5).noOcclusion()));
+    public static final RegistryObject<Block> PURIFIER = register("purifier", Shape.CUBE_SIDES, null, true,
+            () -> new com.sofe.crafting.StationBlock(com.sofe.crafting.StationRecipe.Kind.PURIFIER,
+                    BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE).lightLevel(s -> 9).noOcclusion()));
+    public static final RegistryObject<Block> TEMPERING_ANVIL = register("tempering_anvil", Shape.CUBE_SIDES, null, true,
+            () -> new com.sofe.crafting.TemperingAnvilBlock(BlockBehaviour.Properties.copy(Blocks.ANVIL).sound(SoundType.ANVIL).noOcclusion()));
     public static final RegistryObject<Block> REWARD_COFFER = register("reward_coffer", Shape.CUBE_SIDES, null, false,
             () -> new com.sofe.entity.boss.RewardCoffer.Block(BlockBehaviour.Properties.copy(Blocks.CHEST)
                     .strength(-1.0f, 3_600_000.0f).noLootTable().lightLevel(s -> 8)));

@@ -1,0 +1,16 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_poet",
+  "priority": 6,
+  "requires": {
+    "type": "fate_is",
+    "region": "parsivan",
+    "fate": "awakened"
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.parsivan_poet.fate.awakened"
+    }
+  ]
+}

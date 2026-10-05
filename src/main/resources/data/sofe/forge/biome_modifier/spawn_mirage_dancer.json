@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "sofe:parsivan_gardens"
+  ],
+  "spawners": [
+    {
+      "type": "sofe:mirage_dancer",
+      "weight": 70,
+      "minCount": 1,
+      "maxCount": 2
+    }
+  ]
+}

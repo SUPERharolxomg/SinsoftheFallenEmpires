@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aureum_widow",
+  "lines": [
+    {
+      "speaker": "aureum_widow",
+      "text": "dialogue.sofe.aureum_widow.act1.1"
+    },
+    {
+      "speaker": "aureum_widow",
+      "text": "dialogue.sofe.aureum_widow.act1.2"
+    }
+  ]
+}

@@ -76,6 +76,9 @@ public final class EconomyCapability {
         data.blueprints().forEach(b -> blueprints.add(StringTag.valueOf(b)));
         tag.put("blueprints", blueprints);
         tag.putInt("flask", data.flaskCharges());
+        CompoundTag favor = new CompoundTag();
+        data.favor().forEach(favor::putInt);
+        tag.put("favor", favor);
         return tag;
     }
 
@@ -94,6 +97,10 @@ public final class EconomyCapability {
         for (int i = 0; i < bp.size(); i++) blueprints.add(bp.getString(i));
         data.load(tag.getLong("dinars"), bought, tag.contains("stock_day") ? tag.getLong("stock_day") : -1, buyback, blueprints,
                 tag.contains("flask") ? tag.getInt("flask") : EconomyData.FLASK_START);
+        Map<String, Integer> favor = new HashMap<>();
+        CompoundTag f = tag.getCompound("favor");
+        f.getAllKeys().forEach(k -> favor.put(k, f.getInt(k)));
+        data.loadFavor(favor);
     }
 
     public static final class Provider implements ICapabilitySerializable<CompoundTag> {

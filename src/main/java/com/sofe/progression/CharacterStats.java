@@ -41,6 +41,8 @@ import java.util.UUID;
 public final class CharacterStats {
     private static final UUID HEALTH_ID = UUID.fromString("0f8c1e7a-6b3d-4b8e-9a51-2d7c4e1f9b01");
     private static final UUID ARMOR_ID = UUID.fromString("0f8c1e7a-6b3d-4b8e-9a51-2d7c4e1f9b02");
+    private static final UUID BASE_HEALTH_ID = UUID.fromString("0f8c1e7a-6b3d-4b8e-9a51-2d7c4e1f9b03");
+    private static final UUID SPEED_ID = UUID.fromString("0f8c1e7a-6b3d-4b8e-9a51-2d7c4e1f9b04");
 
     private CharacterStats() {
     }
@@ -64,13 +66,31 @@ public final class CharacterStats {
                 Math.min(rules.dodgeCap(), base.dodgeChance() + gear.fraction(GearStat.DODGE)),
                 base.maxHealthBonus() + gear.get(GearStat.MAX_HEALTH),
                 base.regenMultiplier() * (1 + gear.fraction(GearStat.RESOURCE_REGEN)),
-                resource));
+                resource,
+                base.moveSpeedBonus()));
     }
 
-    /** Applies the Vitality and gear health bonus and the gear's armor; called whenever the sheet, class or gear changes. */
+    /**
+     * Applies the Bearer's base health (50, every player, class or not), the Vitality and gear health bonus, the
+     * Vitality's movement speed and the gear's armor; called whenever the sheet, class or gear changes. The first
+     * time the base health is given (a new character, or an old one after this rule came), the player is healed to
+     * full so they do not start with 20 of 50.
+     */
     public static void applyHealth(ServerPlayer player) {
         AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
         if (health == null) return;
+        double extraBase = ProgressionRulesManager.attributes().baseHealth() - health.getBaseValue();
+        boolean firstTime = health.getModifier(BASE_HEALTH_ID) == null;
+        health.removeModifier(BASE_HEALTH_ID);
+        if (extraBase > 0) {
+            health.addPermanentModifier(new AttributeModifier(BASE_HEALTH_ID, "SoFE Bearer health", extraBase, AttributeModifier.Operation.ADDITION));
+        }
+        AttributeInstance speed = player.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null) {
+            speed.removeModifier(SPEED_ID);
+            double fast = effects(player).map(AttributeRules.Effects::moveSpeedBonus).orElse(0.0);
+            if (fast > 0) speed.addPermanentModifier(new AttributeModifier(SPEED_ID, "SoFE Vitality speed", fast, AttributeModifier.Operation.MULTIPLY_BASE));
+        }
         double bonus = effects(player).map(AttributeRules.Effects::maxHealthBonus).orElse(0.0);
         health.removeModifier(HEALTH_ID);
         if (bonus > 0) {
@@ -82,7 +102,7 @@ public final class CharacterStats {
             double gearArmor = PlayerGear.bonuses(player).get(GearStat.ARMOR);
             if (gearArmor > 0) armor.addTransientModifier(new AttributeModifier(ARMOR_ID, "SoFE gear armor", gearArmor, AttributeModifier.Operation.ADDITION));
         }
-        if (player.getHealth() > player.getMaxHealth()) {
+        if (player.getHealth() > player.getMaxHealth() || firstTime && extraBase > 0) {
             player.setHealth(player.getMaxHealth());
         }
     }

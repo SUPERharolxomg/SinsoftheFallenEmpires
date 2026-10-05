@@ -179,4 +179,31 @@ public class KalethEntity extends BrokenOathEntity {
             p.displayClientMessage(Component.translatable("message.sofe.kaleth.stunned").withStyle(ChatFormatting.RED), true);
         }
     }
+
+    // --- signature attack (SoFEBossEntity.Signature): the Burning Blade raised high, then a cleave of fire across everything before him
+
+    private net.minecraft.world.phys.Vec3 signatureAim = net.minecraft.world.phys.Vec3.ZERO;
+
+    @Override
+    protected Signature signature() {
+        return new Signature("kaleth_cleave", 30, 220, 7);
+    }
+
+    @Override
+    protected void signatureWindup(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target, int tick,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        if (tick == 1) signatureAim = Signatures.toward(this, target);
+        if (tick % 4 == 0) Signatures.drawArc(level, this, signatureAim, 6.5, 150, net.minecraft.core.particles.ParticleTypes.FLAME);
+    }
+
+    @Override
+    protected void signatureStrike(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        for (var p : Signatures.arc(this, signatureAim, 6.5, 150, fighters)) {
+            Signatures.strike(this, p, signatureDamage(2.2), position(), 1.2, 0.3);
+            p.setSecondsOnFire(5);
+        }
+        Signatures.drawArc(level, this, signatureAim, 6.5, 150, net.minecraft.core.particles.ParticleTypes.LAVA);
+        level.playSound(null, blockPosition(), net.minecraft.sounds.SoundEvents.BLAZE_SHOOT, net.minecraft.sounds.SoundSource.HOSTILE, 1.6f, 0.6f);
+    }
 }

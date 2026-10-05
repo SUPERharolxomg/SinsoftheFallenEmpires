@@ -52,7 +52,21 @@ public final class GearClient {
             lines.add(at++, Component.translatable(gear.rarity().translationKey()).withStyle(Style.EMPTY.withColor(gear.rarity().color())));
             lines.add(at++, Component.translatable("gear.sofe.tooltip.item_level", gear.itemLevel()).withStyle(ChatFormatting.GRAY));
             for (GearData.Roll roll : gear.affixes()) {
+                if (com.sofe.gear.Sockets.isGem(roll)) continue; // set gems are listed under the sockets
                 lines.add(at++, affixLine(roll).withStyle(Style.EMPTY.withColor(met ? (gear.rarity() == Rarity.RELIC ? RELIC_GOLD : AFFIX_BLUE) : INACTIVE)));
+            }
+            int sockets = com.sofe.gear.Sockets.opened(stack);
+            if (sockets > 0) {   // the sockets: each set gem with what it gives, then the empty ones
+                var gems = com.sofe.gear.Sockets.gems(gear);
+                for (GearData.Roll gem : gems) {
+                    String id = gem.affix().substring(com.sofe.gear.Sockets.GEM_PREFIX.length());
+                    int color = com.sofe.gear.SinGem.of(id).map(f -> f.gem().color()).orElse(0xFFFFFF);
+                    lines.add(at++, Component.literal("◆ ").append(Component.translatable("item.sofe." + id)).append(": ").append(affixLine(gem))
+                            .withStyle(Style.EMPTY.withColor(met ? color : INACTIVE)));
+                }
+                for (int i = gems.size(); i < sockets; i++) {
+                    lines.add(at++, Component.literal("◇ ").append(Component.translatable("gear.sofe.tooltip.empty_socket")).withStyle(ChatFormatting.DARK_GRAY));
+                }
             }
             if (gear.relic() != null) {
                 lines.add(at++, Component.translatable("item.sofe." + gear.relic() + ".effect").withStyle(Style.EMPTY.withColor(RELIC_GOLD).withItalic(true)));

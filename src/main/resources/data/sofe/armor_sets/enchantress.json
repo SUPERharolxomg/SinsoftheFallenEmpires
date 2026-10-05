@@ -5,5 +5,36 @@
       "action": "weakness",
       "value": 0
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "magic",
+        "value": 0.05
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "magic",
+        "value": 0.05
+      }
+    ],
+    "leggings": [
+      {
+        "type": "effect",
+        "effect": "minecraft:slow_falling",
+        "amplifier": 0,
+        "when": "falling"
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.2
+      }
+    ]
+  }
 }

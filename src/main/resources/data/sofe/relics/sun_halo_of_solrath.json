@@ -1,0 +1,35 @@
+{
+  "item": "sofe:sun_halo_of_solrath",
+  "item_level": 90,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 88,
+  "affixes": [
+    {
+      "stat": "all_attributes",
+      "value": 8
+    },
+    {
+      "stat": "magic_damage",
+      "value": 16
+    },
+    {
+      "stat": "max_health",
+      "value": 14
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "lightning",
+      "chance": 0.08,
+      "mult": 1.5
+    },
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:regeneration",
+      "when": "day"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "prython",
+      "text": "dialogue.sofe.act5.prythons_offer.1",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act5.prythons_offer.1.answer1",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.act5.prythons_offer.1.answer2",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

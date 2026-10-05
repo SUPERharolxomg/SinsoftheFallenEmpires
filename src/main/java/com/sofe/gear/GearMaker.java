@@ -81,13 +81,32 @@ public final class GearMaker {
         return roll(generator, random);
     }
 
-    /** A Relic, bound to its owner (docs/Anexos.md, A6). */
+    /** The random skill bonus of a class unique weapon: +1 or +2 ranks to one of its class's skills (not an upgrade). */
+    public static Optional<GearData.Roll> randomSkillRanks(GearDataManager.Relic relic, RandomSource random) {
+        if (relic.slot() != GearSlot.WEAPON || relic.playerClass() == null) return Optional.empty();
+        var cls = com.sofe.player.PlayerClass.byId(relic.playerClass());
+        if (cls.isEmpty()) return Optional.empty();
+        List<com.sofe.skill.SkillInfo> skills = com.sofe.skill.SkillCatalog.forClass(cls.get()).stream()
+                .filter(s -> !s.isUpgrade()).toList();
+        if (skills.isEmpty()) return Optional.empty();
+        var skill = skills.get(random.nextInt(skills.size()));
+        return Optional.of(new GearData.Roll("relic:" + relic.id() + ":random_skill", GearStat.SKILL_RANKS, skill.id(), 1 + random.nextInt(2)));
+    }
+
+    /**
+     * A Relic, bound to its owner (docs/Anexos.md, A6). A class unique weapon also rolls, as Diablo II class items
+     * do, one bonus of its own: +1 or +2 ranks to one skill of its class drawn at random (a Necromancer's glaive may
+     * come with +2 Clay Warden, another with +1 Scarab Plague), so two copies of it need not be alike.
+     */
     public static Optional<ItemStack> relic(String id, Player owner) {
         return GearDataManager.relic(id).flatMap(relic -> {
             Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(relic.item()));
             if (item == null) return Optional.empty();
             ItemStack stack = new ItemStack(item);
-            GearNbt.write(stack, new GearData(relic.itemLevel(), Rarity.RELIC, relic.affixes(), null, 0, relic.id(), List.of()));
+            List<GearData.Roll> affixes = new java.util.ArrayList<>(relic.affixes());
+            RandomSource random = owner != null ? owner.getRandom() : RandomSource.create();
+            randomSkillRanks(relic, random).ifPresent(affixes::add);
+            GearNbt.write(stack, new GearData(relic.itemLevel(), Rarity.RELIC, List.copyOf(affixes), null, 0, relic.id(), List.of()));
             if (owner != null) GearNbt.bind(stack, owner);
             return Optional.of(stack);
         });

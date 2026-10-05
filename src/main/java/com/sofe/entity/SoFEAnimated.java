@@ -11,7 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A mob drawn with a GeckoLib model (scripts/make_mob_models.py): it plays
- * animation.&lt;model&gt;.attack while swinging, .walk while moving and .idle otherwise.
+ * animation.&lt;model&gt;.attack while swinging, .walk while moving and .idle otherwise (and a boss its
+ * .signature during its signature attack).
  */
 public interface SoFEAnimated extends GeoEntity {
 
@@ -21,6 +22,8 @@ public interface SoFEAnimated extends GeoEntity {
     @Override
     default void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "main", 5, state -> {
+            if (this instanceof com.sofe.entity.boss.SoFEBossEntity boss && boss.signing())
+                return state.setAndContinue(Animations.of(modelName(), "signature", false));   // the boss's own blow
             if (((LivingEntity) this).swinging) return state.setAndContinue(Animations.of(modelName(), "attack", false));
             return state.setAndContinue(Animations.of(modelName(), state.isMoving() ? "walk" : "idle", true));
         }));

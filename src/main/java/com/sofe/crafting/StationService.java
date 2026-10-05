@@ -55,11 +55,16 @@ public final class StationService {
         if (r.kind() == StationRecipe.Kind.IMPERIAL_FORGE && !EconomyCapability.get(player).map(e -> e.knows(r.blueprint())).orElse(false)) {
             return Result.UNKNOWN_BLUEPRINT;
         }
-        if (!r.canMake(player.getInventory())) {
+        var wallet = EconomyCapability.get(player).orElse(null);
+        if (!r.canMake(player.getInventory()) || (r.dinars() > 0 && (wallet == null || wallet.dinars() < r.dinars()))) {
             player.displayClientMessage(Component.translatable("message.sofe.station.missing").withStyle(ChatFormatting.RED), true);
             return Result.MISSING;
         }
         r.consume(player.getInventory());
+        if (r.dinars() > 0) {
+            wallet.spend(r.dinars());
+            com.sofe.economy.EconomyHandler.sync(player);
+        }
         ItemStack made = r.kind() == StationRecipe.Kind.IMPERIAL_FORGE
                 // the Forge always makes Tempered gear or better: one guaranteed affix
                 ? GearMaker.rollItem(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(r.result()).toString(),
@@ -68,15 +73,19 @@ public final class StationService {
                 : new ItemStack(r.result(), r.count());
         Component name = made.getHoverName();
         if (!player.getInventory().add(made)) player.drop(made, false);
-        player.level().playSound(null, opened.pos(), r.kind() == StationRecipe.Kind.IMPERIAL_FORGE ? SoundEvents.ANVIL_USE : SoundEvents.BREWING_STAND_BREW,
+        player.level().playSound(null, opened.pos(), switch (r.kind()) {
+                    case IMPERIAL_FORGE -> SoundEvents.ANVIL_USE;
+                    case ALEMBIC -> SoundEvents.BREWING_STAND_BREW;
+                    case JEWELER -> SoundEvents.AMETHYST_BLOCK_CHIME;
+                    case PURIFIER -> SoundEvents.BEACON_POWER_SELECT;
+                },
                 SoundSource.BLOCKS, 0.8f, 1f);
         player.displayClientMessage(Component.translatable("message.sofe.station.made", name).withStyle(ChatFormatting.GOLD), true);
         return Result.MADE;
     }
 
     public static java.util.List<StationRecipe> all(net.minecraft.world.item.crafting.RecipeManager recipes, StationRecipe.Kind kind) {
-        return java.util.List.copyOf(recipes.getAllRecipesFor(kind == StationRecipe.Kind.IMPERIAL_FORGE
-                ? SoFERecipes.IMPERIAL_FORGE.get() : SoFERecipes.ALEMBIC.get()));
+        return java.util.List.copyOf(recipes.getAllRecipesFor(kind.type()));
     }
 
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {

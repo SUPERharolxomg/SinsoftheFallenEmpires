@@ -1,0 +1,10 @@
+{
+  "style": "parsivan",
+  "npc": "dilara_camp_parsivan",
+  "lines": [
+    {
+      "speaker": "dilara_camp_parsivan",
+      "text": "dialogue.sofe.camp.dilara"
+    }
+  ]
+}

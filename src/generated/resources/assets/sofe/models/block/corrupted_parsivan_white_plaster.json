@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sofe:block/corrupted_parsivan_white_plaster"
+  }
+}

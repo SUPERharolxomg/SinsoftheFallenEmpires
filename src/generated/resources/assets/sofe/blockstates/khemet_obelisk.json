@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "sofe:block/khemet_obelisk_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "sofe:block/khemet_obelisk"
+    },
+    "axis=z": {
+      "model": "sofe:block/khemet_obelisk_horizontal",
+      "x": 90
+    }
+  }
+}

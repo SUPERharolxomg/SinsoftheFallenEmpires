@@ -1,0 +1,18 @@
+{
+  "style": "aureum",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act4.the_western_ruins.1"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act4.the_western_ruins.2"
+    },
+    {
+      "speaker": "ozhan",
+      "text": "dialogue.sofe.act4.the_western_ruins.3"
+    }
+  ]
+}

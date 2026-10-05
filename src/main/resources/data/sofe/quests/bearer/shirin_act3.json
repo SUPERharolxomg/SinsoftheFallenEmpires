@@ -1,0 +1,61 @@
+{
+  "type": "bearer",
+  "act": 3,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 9000,
+        "z": -5000,
+        "radius": 24
+      },
+      "target": {
+        "x": 9000,
+        "z": -5000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:mirage_dancer",
+        "count": 8
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:mirage_dancer",
+          "count": 8,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2600
+    },
+    {
+      "type": "give_relic",
+      "relic": "ring_of_three_runes"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "sorceress"
+      },
+      {
+        "type": "act_reached",
+        "act": 3
+      }
+    ]
+  }
+}

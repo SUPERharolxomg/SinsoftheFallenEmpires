@@ -1,0 +1,61 @@
+{
+  "type": "bearer",
+  "act": 4,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -3600,
+        "z": 1500,
+        "radius": 24
+      },
+      "target": {
+        "x": -3600,
+        "z": 1500
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gilded_legionnaire",
+        "count": 8
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:gilded_legionnaire",
+          "count": 8,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 3800
+    },
+    {
+      "type": "give_relic",
+      "relic": "turban_of_the_peacock_throne"
+    }
+  ],
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "class_is",
+        "class": "king"
+      },
+      {
+        "type": "act_reached",
+        "act": 4
+      }
+    ]
+  }
+}

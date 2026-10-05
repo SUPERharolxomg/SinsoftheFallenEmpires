@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sofe:block/parsivan_turquoise_tiles"
+  }
+}

@@ -252,7 +252,7 @@ Playing with other people gives extra rewards, but **solo play is never blocked 
 | Class in the Pact | Everyone gets |
 | --- | --- |
 | Knight | +5% armor |
-| Necromancer | +3% life steal |
+| Necromancer | +3% life steal; +5% for a member below 25% health |
 | Sorceress | +5% resource regeneration |
 | Thief | +3% critical chance |
 | King | +5% healing received |

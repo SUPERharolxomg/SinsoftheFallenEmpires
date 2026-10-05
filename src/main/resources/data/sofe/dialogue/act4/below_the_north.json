@@ -1,0 +1,10 @@
+{
+  "style": "nordrath",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.act4.below_the_north.1"
+    }
+  ]
+}

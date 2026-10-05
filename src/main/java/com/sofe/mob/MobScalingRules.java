@@ -64,16 +64,17 @@ public record MobScalingRules(Map<Region, int[]> regionLevels, List<Integer> act
     }
 
     /**
-     * A mob that follows the Bearer: the region's level (raised to the act floor) is only the least it can be;
-     * near a stronger Bearer it matches them, a little under or over, and a boss stands one level above.
+     * A mob that follows the Bearer: near a Bearer it matches their level, a little under or over (a boss one above),
+     * and never falls below the least of its region or the floor of the act; with no Bearer near, the region's roll.
+     * So a level-40 Bearer meets level-40 enemies, and a level-1 Bearer in Sulthari never meets a level-20 one.
      *
      * @param playerLevel the level of the Bearer it follows (the strongest near, for a boss), or 0 when none is near
      */
     public int levelFor(Region region, int nearestPlayerAct, int playerLevel, boolean boss, RandomGenerator random) {
-        int base = levelFor(region, nearestPlayerAct, random);
-        if (playerLevel <= 0) return base;
+        if (playerLevel <= 0) return levelFor(region, nearestPlayerAct, random);
+        int floor = Math.max(regionLevels.get(region)[0], nearestPlayerAct > 0 ? actFloor(nearestPlayerAct) : 1);
         int follow = boss ? playerLevel + 1 : playerLevel - 2 + random.nextInt(4);
-        return Math.max(1, Math.min(maxLevel, Math.max(base, follow)));
+        return Math.max(1, Math.min(maxLevel, Math.max(floor, follow)));
     }
 
     /** Health multiplier: level 1 is x1, each level above adds healthPerLevel. */

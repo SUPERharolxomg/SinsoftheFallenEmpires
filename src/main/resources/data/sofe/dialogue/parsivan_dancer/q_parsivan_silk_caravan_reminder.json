@@ -1,0 +1,29 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_dancer",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/parsivan_silk_caravan",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/parsivan_silk_caravan",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_dancer",
+      "text": "dialogue.sofe.q.parsivan_silk_caravan.reminder"
+    }
+  ]
+}

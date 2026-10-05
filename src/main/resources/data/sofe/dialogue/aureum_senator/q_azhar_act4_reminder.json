@@ -1,0 +1,29 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:bearer/azhar_act4",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:bearer/azhar_act4",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.q.azhar_act4.reminder"
+    }
+  ]
+}
