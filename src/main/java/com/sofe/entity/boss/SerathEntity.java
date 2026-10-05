@@ -131,4 +131,34 @@ public class SerathEntity extends BrokenOathEntity {
         level.playSound(null, blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.HOSTILE, 1f, 1.4f);
         fighters.forEach(p -> p.displayClientMessage(Component.translatable("message.sofe.serath.phase2").withStyle(ChatFormatting.DARK_RED), true));
     }
+
+    // --- signature attack (SoFEBossEntity.Signature): her two bone blades: she leaps on her prey and cuts it three times, drinking what she spills
+
+    private net.minecraft.world.phys.Vec3 signatureAim = net.minecraft.world.phys.Vec3.ZERO;
+
+    @Override
+    protected Signature signature() {
+        return new Signature("serath_flurry", 20, 200, 12);
+    }
+
+    @Override
+    protected void signatureWindup(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target, int tick,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        if (tick == 1) signatureAim = Signatures.toward(this, target);
+        if (target != null && tick % 3 == 0) level.sendParticles(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.8f, 0.05f, 0.1f), 1.6f), target.getX(), target.getY() + 0.1, target.getZ(), 12, 0.6, 0, 0.6, 0);
+    }
+
+    @Override
+    protected void signatureStrike(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LivingEntity target,
+                                   java.util.List<net.minecraft.server.level.ServerPlayer> fighters) {
+        if (target == null || !target.isAlive()) return;
+        var d = Signatures.toward(this, target);
+        moveTo(target.getX() - d.x * 1.4, target.getY(), target.getZ() - d.z * 1.4, getYRot(), getXRot());
+        float dealt = signatureDamage(2.4f);
+        if (target instanceof net.minecraft.server.level.ServerPlayer p) Signatures.strike(this, p, dealt, position(), 0.4, 0.1);
+        target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WITHER, 80, 1), this);
+        heal(dealt * 0.5f);
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY() + 1, target.getZ(), 3, 0.4, 0.4, 0.4, 0);
+        level.playSound(null, blockPosition(), net.minecraft.sounds.SoundEvents.PLAYER_ATTACK_SWEEP, net.minecraft.sounds.SoundSource.HOSTILE, 1.4f, 0.8f);
+    }
 }

@@ -18,14 +18,25 @@ public final class RegionMap {
         }
     }
 
-    /** The layout from docs/Mundo.md. New worlds store their own copy, so changing this never moves an existing world. */
+    /**
+     * The layout from docs/Mundo.md: a world of 25,000 x 25,000 blocks (regions within +/-12,000, ocean beyond).
+     * Sulthari stays in the middle and Nordrath to the north; Parsivan takes the east and north-east, Khemet the
+     * south-east, Aureum the west, north-west and south-west, with the Southern Sea between Aureum and Khemet.
+     * A region may be several rectangles. New worlds store their own copy, so changing this never moves an
+     * existing world.
+     */
+    public static final int EDGE = 12_000;
+
     public static RegionMap defaultLayout() {
         return new RegionMap(List.of(
                 new RegionBounds(Region.SULTHARI, -1500, 1500, -1500, 1500),
-                new RegionBounds(Region.NORDRATH, -2500, 2500, -5800, -1500),
-                new RegionBounds(Region.PARSIVAN, 1500, 5800, -1500, 1500),
-                new RegionBounds(Region.KHEMET, 800, 5800, 1500, 5800),
-                new RegionBounds(Region.AUREUM, -5800, -1500, -1500, 3500)
+                new RegionBounds(Region.NORDRATH, -6000, 6000, -EDGE, -1500),
+                new RegionBounds(Region.PARSIVAN, 1500, EDGE, -1500, 1500),
+                new RegionBounds(Region.PARSIVAN, 6000, EDGE, -EDGE, -1500),
+                new RegionBounds(Region.KHEMET, 800, EDGE, 1500, EDGE),
+                new RegionBounds(Region.AUREUM, -EDGE, -1500, -1500, 3500),
+                new RegionBounds(Region.AUREUM, -EDGE, -6000, -EDGE, -1500),
+                new RegionBounds(Region.AUREUM, -EDGE, -1500, 3500, EDGE)
         ));
     }
 

@@ -135,6 +135,9 @@ public final class SoFETiers {
         ECLIPSE_PLATE("eclipse_plate", 37, new int[]{3, 7, 9, 3}, 10, 2.68f, 0.1f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),
         SANDSTRIDERS("sandstriders", 22, new int[]{2, 4, 6, 2}, 14, 0.66f, 0.0f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),
         LEGS_OF_THE_SEVENTH_SIN("legs_of_the_seventh_sin", 45, new int[]{4, 8, 10, 4}, 10, 3.6f, 0.1f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),
+        CROWN_OF_THE_STAGNANT_KING("crown_of_the_stagnant_king", 31, new int[]{1, 4, 6, 1}, 18, 0.0f, 0.0f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),
+        MAW_OF_FENRATH("maw_of_fenrath", 38, new int[]{3, 7, 9, 3}, 10, 2.8f, 0.1f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),
+        MASK_OF_SHADEYN("mask_of_shadeyn", 42, new int[]{3, 7, 9, 3}, 10, 3.2f, 0.1f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),
         // </generated-unique-armor>
         // <generated-armor> by scripts/make_armor_data.py from scripts/armor_catalog.py: the class sets
         SENTINEL("sentinel", 20, new int[]{2, 5, 6, 2}, 10, 0.64f, 0.0f, () -> MaterialRegistry.item(Material.GLACIAL_IRON, MaterialForm.INGOT)),

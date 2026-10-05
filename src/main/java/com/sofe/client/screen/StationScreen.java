@@ -27,7 +27,7 @@ public class StationScreen extends Screen {
     private int scroll;
 
     public StationScreen(StationRecipe.Kind kind) {
-        super(Component.translatable(kind == StationRecipe.Kind.IMPERIAL_FORGE ? "gui.sofe.station.forge" : "gui.sofe.station.alembic"));
+        super(Component.translatable(kind.titleKey()));
         this.kind = kind;
     }
 
@@ -36,7 +36,7 @@ public class StationScreen extends Screen {
         if (mc.level == null) return List.of();
         Set<String> known = ClientEconomyData.get().map(e -> e.blueprints()).orElse(Set.of());
         return StationService.all(mc.level.getRecipeManager(), kind).stream()
-                .filter(r -> kind == StationRecipe.Kind.ALEMBIC || known.contains(r.blueprint()))
+                .filter(r -> kind != StationRecipe.Kind.IMPERIAL_FORGE || known.contains(r.blueprint()))
                 .sorted(java.util.Comparator.comparing(r -> r.id().toString()))
                 .toList();
     }
@@ -105,6 +105,11 @@ public class StationScreen extends Screen {
                 g.drawString(this.font, "×" + ing.count(), x + 10, y + 13, enough ? MUTED : MISSING, false);
                 if (mouseX >= x && mouseX < x + 10 && mouseY >= y + 12 && mouseY < y + 22) hovered = stack;
                 x += 34;
+            }
+            if (r.dinars() > 0) {   // the Jeweler's fee
+                long have = com.sofe.client.ClientEconomyData.get().map(e -> e.dinars()).orElse(0L);
+                g.drawString(this.font, Component.translatable("gui.sofe.station.dinars", r.dinars()), x + 2, y + 13,
+                        have >= r.dinars() ? GOLD : MISSING, false);
             }
             if (mouseX >= l + 8 && mouseX < l + 24 && mouseY >= y + 3 && mouseY < y + 19) hovered = result;
             y += ROW;

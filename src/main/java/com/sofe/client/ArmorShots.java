@@ -26,8 +26,8 @@ import java.util.List;
 public final class ArmorShots {
     private static final String[] PIECES = {"helmet", "chestplate", "leggings", "boots"};
     private static final EquipmentSlot[] SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
-    private static final CameraType[] VIEWS = {CameraType.THIRD_PERSON_FRONT, CameraType.THIRD_PERSON_BACK};
-    private static final String[] VIEW_NAMES = {"front", "back"};
+    private static final CameraType[] VIEWS = {CameraType.THIRD_PERSON_FRONT, CameraType.THIRD_PERSON_BACK, CameraType.FIRST_PERSON};
+    private static final String[] VIEW_NAMES = {"front", "back", "first"};
     private static final int SETTLE = 12;
 
     private static List<String> sets;
@@ -70,6 +70,7 @@ public final class ArmorShots {
             return;
         }
         mc.options.setCameraType(VIEWS[view]);
+        mc.options.hideGui = VIEWS[view] != CameraType.FIRST_PERSON; // in first person the hand is part of the picture
         wait = SETTLE;
     }
 
@@ -96,6 +97,9 @@ public final class ArmorShots {
             if (unique != null && unique != Items.AIR && unique instanceof net.minecraft.world.item.ArmorItem armor) {
                 p.setItemSlot(armor.getEquipmentSlot(), new ItemStack(unique));
             }
+            // anything else by its id is held in the main hand (weapons, guns), to see how it is held
+            p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, unique != null && unique != Items.AIR
+                    && !(unique instanceof net.minecraft.world.item.ArmorItem) ? new ItemStack(unique) : ItemStack.EMPTY);
         });
     }
 

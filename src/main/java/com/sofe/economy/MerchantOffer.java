@@ -17,16 +17,27 @@ public record MerchantOffer(String key, String item, int count, int price, int m
     public record Buy(String item, int price) {
     }
 
-    /** All of one merchant's file. */
-    public record Catalog(String npc, String role, List<MerchantOffer> offers, List<Buy> buys) {
+    /**
+     * All of one merchant's file: its role, the empire whose Favor it gives and honours ("sulthari" by default), the
+     * boss a Bearer must have beaten before it trades (a liberated camp's merchants), its offers and what it buys.
+     */
+    public record Catalog(String npc, String role, String empire, String requires, List<MerchantOffer> offers, List<Buy> buys) {
         public Catalog {
             offers = List.copyOf(offers);
             buys = List.copyOf(buys);
         }
 
-        /** The offers a player in this act sees (Favor comes with Sprint 7). */
+        public Catalog(String npc, String role, List<MerchantOffer> offers, List<Buy> buys) {
+            this(npc, role, "sulthari", null, offers, buys);
+        }
+
+        /** The offers a player sees: those of their act and of their Favor rank with this merchant's empire. */
+        public List<MerchantOffer> available(int act, int favorRank) {
+            return offers.stream().filter(o -> act >= o.minAct() && favorRank >= o.minFavor()).toList();
+        }
+
         public List<MerchantOffer> available(int act) {
-            return offers.stream().filter(o -> act >= o.minAct()).toList();
+            return available(act, EconomyData.MAX_FAVOR_RANK);
         }
     }
 
@@ -50,6 +61,8 @@ public record MerchantOffer(String key, String item, int count, int price, int m
                 buys.add(new Buy(b.get("item").getAsString(), b.get("price").getAsInt()));
             }
         }
-        return new Catalog(npc, json.has("role") ? json.get("role").getAsString() : "quartermaster", offers, buys);
+        return new Catalog(npc, json.has("role") ? json.get("role").getAsString() : "quartermaster",
+                json.has("empire") ? json.get("empire").getAsString() : "sulthari",
+                json.has("requires") ? json.get("requires").getAsString() : null, offers, buys);
     }
 }

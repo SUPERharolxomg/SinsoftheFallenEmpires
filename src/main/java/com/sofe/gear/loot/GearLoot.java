@@ -46,6 +46,7 @@ public final class GearLoot {
     public static final RegistryObject<LootItemFunctionType> SET_BLUEPRINT = FUNCTIONS.register("set_blueprint", () -> new LootItemFunctionType(new SetBlueprint.Serializer()));
     public static final RegistryObject<LootItemFunctionType> MAKE_RELIC = FUNCTIONS.register("make_relic", () -> new LootItemFunctionType(new MakeRelic.Serializer()));
     public static final RegistryObject<Codec<GearDrops>> GEAR_DROPS = MODIFIERS.register("gear_drops", () -> GearDrops.CODEC);
+    public static final RegistryObject<Codec<AddItem>> ADD_ITEM = MODIFIERS.register("add_item", () -> AddItem.CODEC);
 
     private GearLoot() {
     }
@@ -114,7 +115,14 @@ public final class GearLoot {
 
         @Override
         protected ItemStack run(ItemStack stack, LootContext context) {
-            return BlueprintItem.of(blueprint);
+            if (blueprint != null) return BlueprintItem.of(blueprint);
+            var recipes = context.getLevel().getRecipeManager().getAllRecipesFor(com.sofe.registry.SoFERecipes.IMPERIAL_FORGE.get());
+            if (recipes.isEmpty()) return stack;
+            Player player = player(context);
+            var economy = player == null ? null : com.sofe.economy.EconomyCapability.get(player).orElse(null);
+            var unknown = recipes.stream().filter(r -> economy == null || !economy.knows(r.blueprint())).toList();
+            var pool = unknown.isEmpty() ? recipes : unknown;
+            return BlueprintItem.of(pool.get(context.getRandom().nextInt(pool.size())).blueprint());
         }
 
         @Override
@@ -126,12 +134,13 @@ public final class GearLoot {
             @Override
             public void serialize(JsonObject json, SetBlueprint function, JsonSerializationContext context) {
                 super.serialize(json, function, context);
-                json.addProperty("blueprint", function.blueprint);
+                if (function.blueprint != null) json.addProperty("blueprint", function.blueprint);
             }
 
             @Override
             public SetBlueprint deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
-                return new SetBlueprint(conditions, json.get("blueprint").getAsString());
+                // without "blueprint": one the Bearer does not know yet, chosen when the loot is rolled
+                return new SetBlueprint(conditions, json.has("blueprint") ? json.get("blueprint").getAsString() : null);
             }
         }
     }
@@ -221,6 +230,42 @@ public final class GearLoot {
         @Override
         public Codec<? extends IGlobalLootModifier> codec() {
             return GEAR_DROPS.get();
+        }
+    }
+
+    /**
+     * Adds an item to a loot table's roll (chosen by the conditions, e.g. forge:loot_table_id), at a chance and in a
+     * count range: Void Crystal in the End cities' chests (docs/Mundo.md).
+     */
+    public static class AddItem extends LootModifier {
+        public static final Codec<AddItem> CODEC = RecordCodecBuilder.create(i -> codecStart(i).and(i.group(
+                ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item),
+                Codec.DOUBLE.fieldOf("chance").forGetter(m -> m.chance),
+                Codec.INT.fieldOf("min").forGetter(m -> m.min),
+                Codec.INT.fieldOf("max").forGetter(m -> m.max)
+        )).apply(i, AddItem::new));
+
+        private final net.minecraft.world.item.Item item;
+        private final double chance;
+        private final int min, max;
+
+        AddItem(LootItemCondition[] conditions, net.minecraft.world.item.Item item, double chance, int min, int max) {
+            super(conditions);
+            this.item = item;
+            this.chance = chance;
+            this.min = min;
+            this.max = Math.max(min, max);
+        }
+
+        @Override
+        protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> loot, LootContext context) {
+            if (context.getRandom().nextDouble() < chance) loot.add(new ItemStack(item, min + context.getRandom().nextInt(max - min + 1)));
+            return loot;
+        }
+
+        @Override
+        public Codec<? extends IGlobalLootModifier> codec() {
+            return ADD_ITEM.get();
         }
     }
 }

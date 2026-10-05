@@ -75,6 +75,9 @@ public final class ZoneProtectionHandler {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (event.getItemStack().isEmpty()) return;
         BlockPos target = event.getHitVec().getBlockPos();
+        // the Void Gate's frames take their Eyes of Ender even inside the city
+        if (event.getItemStack().is(net.minecraft.world.item.Items.ENDER_EYE)
+                && event.getLevel().getBlockState(target).is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME)) return;
         if (!allowed(event.getLevel(), target, ZoneAction.USE_ITEM_ON_BLOCK, event.getEntity())
                 || !allowed(event.getLevel(), target.relative(event.getFace() == null ? net.minecraft.core.Direction.UP : event.getFace()),
                 ZoneAction.USE_ITEM_ON_BLOCK, event.getEntity())) {
@@ -125,6 +128,18 @@ public final class ZoneProtectionHandler {
 
     public static void onTrample(BlockEvent.FarmlandTrampleEvent event) {
         if (!allowed(event.getLevel(), event.getPos(), ZoneAction.BREAK, event.getEntity())) event.setCanceled(true);
+    }
+
+    /**
+     * Fire never takes hold in a city, camp, dungeon or arena: a fire that spreads or is lit there goes out at once
+     * (before it can burn anything). Fires the builders set (on the Citadel's towers) are placed without telling
+     * their neighbours, so they keep burning.
+     */
+    public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
+        if (!(event.getState().getBlock() instanceof net.minecraft.world.level.block.BaseFireBlock)) return;
+        if (!allowed(event.getLevel(), event.getPos(), ZoneAction.FIRE, null)) {
+            event.getLevel().setBlock(event.getPos(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+        }
     }
 
     /** Endermen, Void creatures and creepers leave the city alone. */

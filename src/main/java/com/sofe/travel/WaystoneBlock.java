@@ -39,6 +39,21 @@ public class WaystoneBlock extends Block {
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
+    /** Motes of aetherium rise from the plinth into the crystal, and now and then a spark leaves it. */
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        double cx = pos.getX() + 0.5, cz = pos.getZ() + 0.5, top = pos.getY() + 1.85;
+        for (int i = 0; i < 2; i++) {
+            double a = random.nextDouble() * Math.PI * 2, r = 0.7 + random.nextDouble() * 0.5;
+            double x = cx + Math.cos(a) * r, z = cz + Math.sin(a) * r, y = pos.getY() + 0.3 + random.nextDouble() * 0.6;
+            level.addParticle(net.minecraft.core.particles.ParticleTypes.ENCHANT, cx, top, cz, x - cx, y - top, z - cz);
+        }
+        if (random.nextInt(6) == 0) {
+            level.addParticle(net.minecraft.core.particles.ParticleTypes.END_ROD, cx + (random.nextDouble() - 0.5) * 0.2, top + 0.15,
+                    cz + (random.nextDouble() - 0.5) * 0.2, 0, 0.02, 0);
+        }
+    }
+
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof ServerPlayer player) WaystoneService.activate(player, pos);

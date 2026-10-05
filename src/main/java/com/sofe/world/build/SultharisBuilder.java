@@ -40,6 +40,7 @@ public final class SultharisBuilder {
             case "sulthari/forge" -> forge(level, structure, y);
             case "sulthari/bank" -> bank(level, structure, y);
             case "sulthari/homestead" -> homestead(level, structure);
+            case "sulthari/void_gate" -> voidGate(level, structure, y);
             default -> {
                 return false;
             }
@@ -547,6 +548,88 @@ public final class SultharisBuilder {
      * A round tower with a golden dome and the great lens on top. The tower keeps a sensible size
      * whatever the plot (at most 11 blocks across from the center), and the dome is a little flattened.
      */
+    /**
+     * The Void Gate under the Great Observatory (docs/Mundo.md, W5): a small Sulthari pavilion beside the Observatory,
+     * its door sealed until Envyris has fallen; inside, a ladder shaft goes down to a vault of deepslate, crying
+     * obsidian and amethyst where twelve empty End portal frames wait in a ring for twelve Eyes of Ender.
+     */
+    public static void voidGate(ServerLevel level, StructurePositions.Structure s, int y) {
+        int cx = s.x(), cz = s.z();
+        BlockState tile = Blocks.POLISHED_DEEPSLATE.defaultBlockState(), brick = Blocks.DEEPSLATE_TILES.defaultBlockState();
+        BlockState lapis = Blocks.LAPIS_BLOCK.defaultBlockState(), gold = Blocks.GOLD_BLOCK.defaultBlockState();
+        // the pavilion: a sandstone floor, four lapis-and-gold pillars, walls with a door on the south, a dome of slabs
+        for (int dx = -4; dx <= 4; dx++) {
+            for (int dz = -4; dz <= 4; dz++) {
+                set(level, cx + dx, y - 1, cz + dz, Math.abs(dx) == 4 || Math.abs(dz) == 4 ? Blocks.CUT_SANDSTONE.defaultBlockState() : SANDSTONE);
+                for (int dy = 0; dy <= 5; dy++) {
+                    boolean wall = Math.abs(dx) == 4 || Math.abs(dz) == 4;
+                    boolean corner = Math.abs(dx) == 4 && Math.abs(dz) == 4;
+                    BlockState state = Blocks.AIR.defaultBlockState();
+                    if (corner) state = dy % 2 == 0 ? lapis : gold;
+                    else if (wall && dy < 5) state = dy == 2 && Math.abs(dx) < 4 && Math.abs(dz) < 4 ? Blocks.AIR.defaultBlockState()
+                            : (dy == 4 ? Blocks.CHISELED_SANDSTONE.defaultBlockState() : Blocks.SMOOTH_SANDSTONE.defaultBlockState());
+                    else if (dy == 5) state = Blocks.SMOOTH_SANDSTONE_SLAB.defaultBlockState();
+                    set(level, cx + dx, y + dy, cz + dz, state);
+                }
+            }
+        }
+        for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) set(level, cx + dx, y + 6, cz + dz, lapis);   // the dome
+        set(level, cx, y + 7, cz, gold);
+        for (int dx : new int[]{-1, 0, 1}) for (int dy = 0; dy < 4; dy++) set(level, cx + dx, y + dy, cz + 4, Blocks.AIR.defaultBlockState());
+        StructureBuilder.placeGates(level, s, y);                                                                      // sealed until Envyris falls
+        set(level, cx - 3, y + 3, cz + 3, Blocks.SOUL_LANTERN.defaultBlockState().setValue(net.minecraft.world.level.block.LanternBlock.HANGING, false));
+        set(level, cx + 3, y + 3, cz + 3, Blocks.SOUL_LANTERN.defaultBlockState().setValue(net.minecraft.world.level.block.LanternBlock.HANGING, false));
+        // the vault, deep under the city
+        int floor = y - 26, top = floor + 7, pz = cz - 9;
+        for (int dx = -9; dx <= 9; dx++) {
+            for (int dz = -19; dz <= 3; dz++) {
+                for (int yy = floor - 1; yy <= top; yy++) {
+                    boolean shell = Math.abs(dx) == 9 || dz == -19 || dz == 3 || yy == floor - 1 || yy == top;
+                    BlockState state = shell ? (yy == floor - 1 ? ((dx + dz) % 3 == 0 ? Blocks.PURPUR_BLOCK.defaultBlockState() : tile) : brick)
+                            : Blocks.AIR.defaultBlockState();
+                    set(level, cx + dx, yy, cz + dz, state);
+                }
+            }
+        }
+        for (int[] c : new int[][]{{-8, -18}, {8, -18}, {-8, 2}, {8, 2}, {-8, -8}, {8, -8}}) {     // pillars of crying obsidian
+            for (int yy = floor; yy < top; yy++) set(level, cx + c[0], yy, cz + c[1], Blocks.CRYING_OBSIDIAN.defaultBlockState());
+            set(level, cx + c[0], top - 1, cz + c[1] + (c[1] < 0 ? 1 : -1), Blocks.SOUL_LANTERN.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.LanternBlock.HANGING, true));
+        }
+        for (int[] c : new int[][]{{-5, -13}, {5, -13}, {-5, -5}, {5, -5}}) {
+            set(level, cx + c[0], floor, cz + c[1], Blocks.AMETHYST_BLOCK.defaultBlockState());
+            set(level, cx + c[0], floor + 1, cz + c[1], Blocks.AMETHYST_CLUSTER.defaultBlockState());
+        }
+        // the ring of twelve frames, each facing the middle, all empty
+        for (int i = -1; i <= 1; i++) {
+            frame(level, cx + i, floor, pz - 2, Direction.SOUTH);
+            frame(level, cx + i, floor, pz + 2, Direction.NORTH);
+            frame(level, cx - 2, floor, pz + i, Direction.EAST);
+            frame(level, cx + 2, floor, pz + i, Direction.WEST);
+        }
+        // the shaft: three wide in the pavilion's middle, a ladder on its north wall, down to the vault
+        for (int yy = floor; yy < y; yy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    boolean wall = yy >= top && (Math.abs(dx) == 1 && Math.abs(dz) == 1);
+                    set(level, cx + dx, yy, cz + dz, wall ? brick : Blocks.AIR.defaultBlockState());
+                }
+            }
+            if (yy >= top) {
+                for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++)
+                    if (Math.abs(dx) == 2 || Math.abs(dz) == 2) set(level, cx + dx, yy, cz + dz, brick);
+            }
+            set(level, cx, yy, cz - 2, brick);
+            set(level, cx, yy, cz - 1, Blocks.LADDER.defaultBlockState().setValue(net.minecraft.world.level.block.LadderBlock.FACING, Direction.SOUTH));
+        }
+    }
+
+    private static void frame(ServerLevel level, int x, int y, int z, Direction facing) {
+        set(level, x, y, z, Blocks.END_PORTAL_FRAME.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.EndPortalFrameBlock.FACING, facing)
+                .setValue(net.minecraft.world.level.block.EndPortalFrameBlock.HAS_EYE, false));
+    }
+
     private static void observatory(ServerLevel level, StructurePositions.Structure s, int y) {
         int r = Math.min(11, Math.min(half(s.sizeX()), half(s.sizeZ())) - 2);
         // a round floor of tiles on the Observatory's terrace, open to the sky

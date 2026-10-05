@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * server's lists, which the server checks again on every action.
  */
 public record OpenMerchantPacket(String npc, long dinars, List<Offer> offers, List<Sellable> sellables, List<Sellable> buyback,
-                                 boolean moneyChanger) {
+                                 boolean moneyChanger, String empire, int favorRank, int favorPoints) {
 
     public record Offer(int index, ItemStack stack, int price, int left) {
     }
@@ -35,6 +35,9 @@ public record OpenMerchantPacket(String npc, long dinars, List<Offer> offers, Li
         buf.writeCollection(sellables, OpenMerchantPacket::writeSellable);
         buf.writeCollection(buyback, OpenMerchantPacket::writeSellable);
         buf.writeBoolean(moneyChanger);
+        buf.writeUtf(empire);
+        buf.writeVarInt(favorRank);
+        buf.writeVarInt(favorPoints);
     }
 
     private static void writeSellable(FriendlyByteBuf b, Sellable s) {
@@ -50,7 +53,8 @@ public record OpenMerchantPacket(String npc, long dinars, List<Offer> offers, Li
     public static OpenMerchantPacket decode(FriendlyByteBuf buf) {
         return new OpenMerchantPacket(buf.readUtf(), buf.readVarLong(),
                 buf.readList(b -> new Offer(b.readVarInt(), b.readItem(), b.readVarInt(), b.readVarInt())),
-                buf.readList(OpenMerchantPacket::readSellable), buf.readList(OpenMerchantPacket::readSellable), buf.readBoolean());
+                buf.readList(OpenMerchantPacket::readSellable), buf.readList(OpenMerchantPacket::readSellable), buf.readBoolean(),
+                buf.readUtf(), buf.readVarInt(), buf.readVarInt());
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {

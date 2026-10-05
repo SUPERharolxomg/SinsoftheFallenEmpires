@@ -30,7 +30,8 @@ import java.util.stream.Collectors;
  */
 public final class ClassConcord {
     public static final double RANGE = 32;
-    public static final double KNIGHT_ARMOR = 0.05, NECROMANCER_LIFE_STEAL = 0.03, SORCERESS_REGEN = 0.05,
+    public static final double KNIGHT_ARMOR = 0.05, NECROMANCER_LIFE_STEAL = 0.03, NECROMANCER_LAST_STAND_STEAL = 0.05,
+            NECROMANCER_LAST_STAND = 0.25, SORCERESS_REGEN = 0.05,
             THIEF_CRIT = 0.03, KING_HEALING = 0.05, PILLARS_DAMAGE = 0.10;
     private static final UUID ARMOR_ID = UUID.fromString("0f6c4d2a-91e3-4a7b-8f1d-5c2e7b3a9d10");
     private static final Map<UUID, Set<PlayerClass>> CURRENT = new HashMap<>();
@@ -96,8 +97,13 @@ public final class ClassConcord {
         float amount = event.getAmount();
         if (pillars(concord)) amount *= 1 + (float) PILLARS_DAMAGE;
         if (concord.contains(PlayerClass.THIEF) && player.getRandom().nextDouble() < THIEF_CRIT) amount *= 1.5f;
-        if (concord.contains(PlayerClass.NECROMANCER)) player.heal(amount * (float) NECROMANCER_LIFE_STEAL);
+        if (concord.contains(PlayerClass.NECROMANCER)) player.heal(amount * (float) lifeSteal(player.getHealth() / player.getMaxHealth()));
         event.setAmount(amount);
+    }
+
+    /** The Necromancer's Concord: 3% of the damage dealt heals, 5% for one below a quarter of their health. */
+    public static double lifeSteal(float healthFraction) {
+        return healthFraction < NECROMANCER_LAST_STAND ? NECROMANCER_LAST_STAND_STEAL : NECROMANCER_LIFE_STEAL;
     }
 
     public static void onLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {

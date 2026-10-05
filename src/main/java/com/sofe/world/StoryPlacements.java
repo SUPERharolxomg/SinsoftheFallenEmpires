@@ -69,6 +69,11 @@ public final class StoryPlacements extends SavedData {
         return dx * dx + dz * dz <= (long) distance * distance;
     }
 
+    /** Whether a story place has been built in this world. */
+    public static boolean isBuilt(MinecraftServer server, String structureId) {
+        return get(server).placed.contains("build:" + structureId);
+    }
+
     /** Places everything, wherever it is (used by GameTests and admin tools). */
     public static int placeAll(MinecraftServer server, StructurePositions.Layout layout) {
         return placeNear(server, layout, (x, z) -> true);
@@ -87,6 +92,7 @@ public final class StoryPlacements extends SavedData {
             if (data.placed.contains(key) || !near.test(structure.x(), structure.z())) continue;
             if (StructureBuilder.build(level, structure)) count++;
             data.placed.add(key);
+            com.sofe.world.build.RegionHealing.afterBuilt(server, structure.id()); // built after its region was liberated: heal it too
         }
         for (StructurePositions.Npc npc : layout.npcs()) {
             String key = "npc:" + npc.npc();
@@ -102,6 +108,16 @@ public final class StoryPlacements extends SavedData {
             placeBlock(level, entry.getValue(), SoFEBlocks.WAYSTONE.get().defaultBlockState());
             data.placed.add(key);
             count++;
+        }
+        for (StructurePositions.Npc npc : layout.npcs()) {
+            var station = switch (npc.npc()) {
+                case "kerem" -> SoFEBlocks.JEWELER.get();
+                case "nilufar" -> SoFEBlocks.PURIFIER.get();
+                case "dilara" -> SoFEBlocks.TEMPERING_ANVIL.get();
+                default -> null;
+            };
+            if (station == null || !near.test(npc.x(), npc.z()) || !data.placed.add("station:" + npc.npc())) continue;
+            placeBlock(level, new BlockPos(npc.x() + 2, 0, npc.z()), station.defaultBlockState());
         }
         layout.structure("sofe:sulthari/bank").ifPresent(bank -> {
             if (near.test(bank.x(), bank.z()) && data.placed.add("vault:sofe:sulthari/bank")) {

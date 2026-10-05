@@ -50,6 +50,12 @@ minecraft {
             }
             // ./gradlew runClient -PskillShots=all (or skill ids): casts each skill on zombies, screenshots it,
             // writes run/skillshots.log, then quits (SkillShots)
+            // ./gradlew runClient -PplaceShots=parsivan/baths,aureum/colosseum builds each story place in run/saves/shots_aetheris,
+            // screenshots it from above and from its door, then quits (PlaceShots)
+            if (project.hasProperty('placeShots')) {
+                property 'sofe.placeShots', project.property('placeShots')
+                args '--quickPlaySingleplayer', 'shots_aetheris'
+            }
             if (project.hasProperty('skillShots')) {
                 property 'sofe.skillShots', project.property('skillShots')
                 if (project.hasProperty('companion')) property 'sofe.companion', project.property('companion')
