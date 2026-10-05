@@ -1,0 +1,34 @@
+{
+  "item": "sofe:whisper_of_mirael",
+  "item_level": 47,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 45,
+  "affixes": [
+    {
+      "stat": "agility",
+      "value": 7
+    },
+    {
+      "stat": "charisma",
+      "value": 6
+    },
+    {
+      "stat": "dodge",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:invisibility",
+      "when": "crouching"
+    },
+    {
+      "on": "hit",
+      "do": "blind",
+      "chance": 0.1
+    }
+  ]
+}

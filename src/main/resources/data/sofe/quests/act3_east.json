@@ -1,0 +1,114 @@
+{
+  "type": "main",
+  "act": 3,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach_region",
+        "region": "parsivan"
+      },
+      "target": {
+        "x": 1600,
+        "z": 0
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act3/the_eastern_shadows"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:mirael"
+      },
+      "target": {
+        "x": 3600,
+        "z": -500
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:thessyn"
+      },
+      "target": {
+        "x": 5200,
+        "z": 700
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:luxara"
+      },
+      "target": {
+        "x": 9000,
+        "z": -5000
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act3/the_gardens"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "reach_region",
+        "region": "khemet"
+      },
+      "target": {
+        "x": 2000,
+        "z": 1700
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act3/laleh_at_rest"
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:dormiel"
+      },
+      "target": {
+        "x": 3208,
+        "z": 4000
+      }
+    },
+    {
+      "objective": {
+        "type": "defeat_boss",
+        "boss": "sofe:morthis"
+      },
+      "target": {
+        "x": 7994,
+        "z": 8500
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act3/the_marsh"
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 6000
+    },
+    {
+      "type": "open_dialogue",
+      "dialogue": "sofe:act3/the_sultans_diary"
+    },
+    {
+      "type": "advance_act",
+      "act": 4
+    }
+  ]
+}

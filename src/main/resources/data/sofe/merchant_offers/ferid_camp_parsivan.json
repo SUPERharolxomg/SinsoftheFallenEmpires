@@ -1,0 +1,109 @@
+{
+  "role": "alchemist",
+  "empire": "parsivan",
+  "requires": "sofe:luxara",
+  "offers": [
+    {
+      "sell": "sofe:minor_pomegranate_elixir",
+      "price": 15,
+      "stock": 3
+    },
+    {
+      "sell": "sofe:bearers_tonic",
+      "price": 24,
+      "stock": 3
+    },
+    {
+      "sell": "sofe:strong_pomegranate_elixir",
+      "price": 40,
+      "stock": 3,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:strong_bearers_tonic",
+      "price": 64,
+      "stock": 2,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:major_pomegranate_elixir",
+      "price": 90,
+      "stock": 2,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:major_bearers_tonic",
+      "price": 144,
+      "stock": 2,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:grand_pomegranate_elixir",
+      "price": 160,
+      "stock": 2,
+      "min_act": 4
+    },
+    {
+      "sell": "sofe:grand_bearers_tonic",
+      "price": 256,
+      "stock": 1,
+      "min_act": 4
+    },
+    {
+      "sell": "sofe:imperial_pomegranate_elixir",
+      "price": 260,
+      "stock": 1,
+      "min_act": 5
+    },
+    {
+      "sell": "sofe:imperial_bearers_tonic",
+      "price": 416,
+      "stock": 1,
+      "min_act": 5
+    },
+    {
+      "sell": "sofe:brass_flask",
+      "count": 2,
+      "price": 4,
+      "stock": 8
+    },
+    {
+      "sell": "sofe:pomegranate_seeds",
+      "count": 2,
+      "price": 5,
+      "stock": 4
+    },
+    {
+      "sell": "sofe:desert_lotus_seeds",
+      "count": 2,
+      "price": 6,
+      "stock": 4
+    },
+    {
+      "sell": "sofe:mountain_sage_seeds",
+      "count": 2,
+      "price": 4,
+      "stock": 4
+    },
+    {
+      "sell": "sofe:pomegranate",
+      "count": 2,
+      "price": 6,
+      "stock": 3
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:pomegranate",
+      "price": 1
+    },
+    {
+      "item": "sofe:desert_lotus",
+      "price": 2
+    },
+    {
+      "item": "sofe:mountain_sage",
+      "price": 1
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "style": "aureum",
+  "npc": "aureum_gladiator",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/aureum_bread_and_circuses",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/aureum_bread_and_circuses",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_gladiator",
+      "text": "dialogue.sofe.q.aureum_bread_and_circuses.reminder"
+    }
+  ]
+}

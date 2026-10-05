@@ -1,0 +1,24 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "nahrazel",
+      "text": "dialogue.sofe.act5.the_first_fallen.1"
+    },
+    {
+      "speaker": "nahrazel",
+      "text": "dialogue.sofe.act5.the_first_fallen.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.act5.the_first_fallen.2.answer1",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.act5.the_first_fallen.2.answer2",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

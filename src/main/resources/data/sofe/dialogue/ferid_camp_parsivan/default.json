@@ -1,0 +1,10 @@
+{
+  "style": "parsivan",
+  "npc": "ferid_camp_parsivan",
+  "lines": [
+    {
+      "speaker": "ferid_camp_parsivan",
+      "text": "dialogue.sofe.camp.ferid"
+    }
+  ]
+}

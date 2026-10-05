@@ -1,0 +1,28 @@
+{
+  "style": "nordrath",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "gularth",
+      "text": "dialogue.sofe.gularth.1"
+    },
+    {
+      "speaker": "gularth",
+      "text": "dialogue.sofe.gularth.other"
+    },
+    {
+      "speaker": "gularth",
+      "text": "dialogue.sofe.gularth.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.gularth.refuse",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.gularth.silent",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

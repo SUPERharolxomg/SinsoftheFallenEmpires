@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:ring_of_the_long_watch"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_dormiel"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_dormiel.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/enter_khemet"
+}

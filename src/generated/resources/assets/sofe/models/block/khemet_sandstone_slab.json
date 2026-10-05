@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "sofe:block/khemet_carved_sandstone",
+    "side": "sofe:block/khemet_carved_sandstone",
+    "top": "sofe:block/khemet_carved_sandstone"
+  }
+}

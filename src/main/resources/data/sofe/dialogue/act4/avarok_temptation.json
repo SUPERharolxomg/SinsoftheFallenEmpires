@@ -1,0 +1,43 @@
+{
+  "style": "aureum",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "avarok",
+      "text": "dialogue.sofe.avarok.1"
+    },
+    {
+      "speaker": "avarok",
+      "text": "dialogue.sofe.avarok.own",
+      "condition": {
+        "type": "class_is",
+        "class": "thief"
+      }
+    },
+    {
+      "speaker": "avarok",
+      "text": "dialogue.sofe.avarok.other",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "class_is",
+          "class": "thief"
+        }
+      }
+    },
+    {
+      "speaker": "avarok",
+      "text": "dialogue.sofe.avarok.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.avarok.refuse",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.avarok.silent",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

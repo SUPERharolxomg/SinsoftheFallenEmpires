@@ -1,0 +1,48 @@
+{
+  "type": "side",
+  "act": 3,
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 3200,
+        "z": 4000,
+        "radius": 24
+      },
+      "target": {
+        "x": 3200,
+        "z": 4000
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:bog_mummy",
+        "count": 6
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:bog_mummy",
+          "count": 6,
+          "radius": 10
+        }
+      ]
+    },
+    {
+      "objective": {
+        "type": "manual"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2200
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}

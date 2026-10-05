@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:ashbringer_of_the_first_fallen"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_nahrazel"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_nahrazel.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/boss_prython"
+}

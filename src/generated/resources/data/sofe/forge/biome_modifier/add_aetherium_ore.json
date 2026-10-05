@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#sofe:is_aetheris",
+  "features": "sofe:aetherium_ore",
+  "step": "underground_ores"
+}

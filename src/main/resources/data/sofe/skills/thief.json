@@ -19,12 +19,12 @@
     },
     "smoke_step": {
       "cost": 20,
-      "cooldown_s": 12,
+      "cooldown_s": 16,
       "duration_s": 3
     },
     "cutthroat": {
       "cost": 25,
-      "cooldown_s": 6,
+      "cooldown_s": 9,
       "damage": 6,
       "per_mark": 0.2,
       "range": 3.5
@@ -50,7 +50,7 @@
     },
     "thousand_cuts": {
       "cost": 40,
-      "cooldown_s": 20,
+      "cooldown_s": 30,
       "damage": 7,
       "targets": 6,
       "radius": 8

@@ -1,5 +1,6 @@
 {
   "role": "gambler",
+  "empire": "nordrath",
   "offers": [
     {
       "sell": "sofe:veiled_weapon",

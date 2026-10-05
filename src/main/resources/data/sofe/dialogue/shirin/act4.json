@@ -1,0 +1,35 @@
+{
+  "style": "aureum",
+  "npc": "shirin",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "shirin",
+      "text": "dialogue.sofe.shirin.act4"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.shirin.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "sorceress"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

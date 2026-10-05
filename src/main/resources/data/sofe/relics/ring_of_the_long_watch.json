@@ -1,0 +1,30 @@
+{
+  "item": "sofe:ring_of_the_long_watch",
+  "item_level": 53,
+  "droppable": true,
+  "slot": "jewelry",
+  "min_level": 51,
+  "affixes": [
+    {
+      "stat": "will",
+      "value": 7
+    },
+    {
+      "stat": "intellect",
+      "value": 5
+    }
+  ],
+  "effects": [
+    {
+      "on": "hit",
+      "do": "stun",
+      "chance": 0.08,
+      "s": 2
+    },
+    {
+      "on": "worn",
+      "do": "effect",
+      "effect": "minecraft:night_vision"
+    }
+  ]
+}

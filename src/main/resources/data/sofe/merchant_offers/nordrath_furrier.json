@@ -1,5 +1,6 @@
 {
   "role": "quartermaster",
+  "empire": "nordrath",
   "offers": [
     {
       "sell": "minecraft:leather",

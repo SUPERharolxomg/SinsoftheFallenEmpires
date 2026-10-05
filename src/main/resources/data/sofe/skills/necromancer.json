@@ -13,13 +13,15 @@
       "drain": 0.4
     },
     "clay_warden": {
-      "cooldown_s": 4,
+      "cooldown_s": 12,
       "souls": 1,
       "duration_s": 30,
       "max_wardens": 3,
       "health": 40,
       "golem_damage": 7,
-      "armor": 2
+      "armor": 2,
+      "cooldown_per_warden": 0.5,
+      "cooldown_per_rank": 0.08
     },
     "burial_wraps": {
       "cost": 15,
@@ -29,7 +31,7 @@
     },
     "scales_of_anubet": {
       "cost": 30,
-      "cooldown_s": 20,
+      "cooldown_s": 28,
       "threshold": 0.25,
       "damage": 8,
       "range": 16
@@ -44,7 +46,7 @@
       "range": 16
     },
     "canopic_jars": {
-      "cooldown_s": 15,
+      "cooldown_s": 20,
       "souls": 3,
       "heal": 8
     },
@@ -55,7 +57,7 @@
     },
     "boat_of_the_dead": {
       "cost": 50,
-      "cooldown_s": 30,
+      "cooldown_s": 40,
       "damage": 12,
       "distance": 16,
       "width": 3,
@@ -130,7 +132,7 @@
     },
     "raise_the_embalmed": {
       "cost": 20,
-      "cooldown_s": 6,
+      "cooldown_s": 12,
       "count": 2,
       "max_dead": 6,
       "duration_s": 20,

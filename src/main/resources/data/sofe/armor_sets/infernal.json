@@ -5,5 +5,35 @@
       "action": "ignite",
       "value": 4
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "fire",
+        "value": 0.05
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "fire",
+        "value": 0.08
+      }
+    ],
+    "leggings": [
+      {
+        "type": "resist",
+        "damage": "explosion",
+        "value": 0.1
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fire",
+        "value": 0.05
+      }
+    ]
+  }
 }

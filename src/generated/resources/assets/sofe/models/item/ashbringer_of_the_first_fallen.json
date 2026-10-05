@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "sofe:item/ashbringer_of_the_first_fallen"
+  }
+}

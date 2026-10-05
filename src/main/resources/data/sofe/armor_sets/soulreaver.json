@@ -10,5 +10,41 @@
       "type": "on_kill",
       "heal": 1.0
     }
-  ]
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "effect",
+        "effect": "minecraft:night_vision",
+        "amplifier": 0,
+        "when": "always"
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "wither",
+        "value": 0.1
+      },
+      {
+        "type": "resist",
+        "damage": "magic",
+        "value": 0.03
+      }
+    ],
+    "leggings": [
+      {
+        "type": "on_kill",
+        "heal": 1.0
+      }
+    ],
+    "boots": [
+      {
+        "type": "cleanse",
+        "effects": [
+          "minecraft:poison"
+        ]
+      }
+    ]
+  }
 }

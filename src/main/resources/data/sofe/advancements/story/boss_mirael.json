@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:whisper_of_mirael"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_mirael"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_mirael.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/enter_parsivan"
+}

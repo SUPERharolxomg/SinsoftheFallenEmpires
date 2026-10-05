@@ -1,0 +1,248 @@
+{
+  "role": "smith",
+  "empire": "khemet",
+  "requires": "sofe:morthis",
+  "offers": [
+    {
+      "sell": "sofe:brass_scimitar",
+      "price": 40,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:brass_longsword",
+      "price": 40,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:brass_chestplate",
+      "price": 55,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:brass_pickaxe",
+      "price": 30,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:glacial_iron_sword",
+      "price": 180,
+      "min_act": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:glacial_iron_pickaxe",
+      "price": 120,
+      "min_act": 2,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:imperial_halberd",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:city_hammer",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:war_hammer",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:serrated_dagger",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:hunting_knife",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:jousting_lance",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:explorer_machete",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:war_mace",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:chain_sword",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:crystal_trident",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:shadow_scythe",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:battle_greatsword",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:phlegm_mace",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:double_flail",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:hook_blade",
+      "price": 45,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:gravity_hammer",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:vortex_dagger",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:obsidian_ritual_dagger",
+      "price": 190,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:sulthari_shield",
+      "price": 60,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:nordrath_shield",
+      "price": 150,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:scout_chestplate",
+      "price": 30,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:bronze_chestplate",
+      "price": 40,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:gear_chestplate",
+      "price": 50,
+      "stock": 1
+    },
+    {
+      "sell": "sofe:cobalt_chestplate",
+      "price": 160,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:emerald_chestplate",
+      "price": 150,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:berserker_chestplate",
+      "price": 220,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:seafarer_chestplate",
+      "price": 160,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:scarab_chestplate",
+      "price": 320,
+      "stock": 1,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:embalmer_chestplate",
+      "price": 260,
+      "stock": 1,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:legion_chestplate",
+      "price": 420,
+      "stock": 1,
+      "min_act": 4
+    },
+    {
+      "sell": "sofe:scale_chestplate",
+      "price": 480,
+      "stock": 1,
+      "min_act": 4
+    },
+    {
+      "sell": "sofe:bearded_axe",
+      "price": 200,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:frost_spear",
+      "price": 210,
+      "stock": 1,
+      "min_act": 2
+    },
+    {
+      "sell": "sofe:khopesh",
+      "price": 300,
+      "stock": 1,
+      "min_act": 3
+    },
+    {
+      "sell": "sofe:gladius",
+      "price": 400,
+      "stock": 1,
+      "min_act": 4
+    }
+  ],
+  "buys": [
+    {
+      "item": "sofe:sulthari_brass_ingot",
+      "price": 3
+    },
+    {
+      "item": "sofe:glacial_iron_ingot",
+      "price": 6
+    }
+  ]
+}

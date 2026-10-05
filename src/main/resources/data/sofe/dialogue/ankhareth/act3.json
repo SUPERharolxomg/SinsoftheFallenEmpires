@@ -1,0 +1,35 @@
+{
+  "style": "parsivan",
+  "npc": "ankhareth",
+  "priority": 3,
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  },
+  "lines": [
+    {
+      "speaker": "ankhareth",
+      "text": "dialogue.sofe.ankhareth.act3"
+    },
+    {
+      "speaker": "player",
+      "text": "dialogue.sofe.ankhareth.hire",
+      "answers": [
+        {
+          "text": "dialogue.sofe.hire.yes",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_companion",
+              "bearer": "necromancer"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.hire.no",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

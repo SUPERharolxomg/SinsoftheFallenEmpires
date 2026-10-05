@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:crown_of_the_stagnant_king"
+    },
+    "title": {
+      "translate": "advancement.sofe.boss_morthis"
+    },
+    "description": {
+      "translate": "advancement.sofe.boss_morthis.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/enter_khemet"
+}

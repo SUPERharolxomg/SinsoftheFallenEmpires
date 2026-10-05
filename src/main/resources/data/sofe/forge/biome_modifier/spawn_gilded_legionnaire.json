@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "sofe:aureum_hills"
+  ],
+  "spawners": [
+    {
+      "type": "sofe:gilded_legionnaire",
+      "weight": 70,
+      "minCount": 2,
+      "maxCount": 3
+    }
+  ]
+}

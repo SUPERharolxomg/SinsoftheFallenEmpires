@@ -1,0 +1,10 @@
+{
+  "style": "khemet",
+  "npc": "ferid_camp_khemet",
+  "lines": [
+    {
+      "speaker": "ferid_camp_khemet",
+      "text": "dialogue.sofe.camp.ferid"
+    }
+  ]
+}

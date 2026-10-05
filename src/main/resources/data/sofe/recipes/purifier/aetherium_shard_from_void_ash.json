@@ -1,0 +1,15 @@
+{
+  "type": "sofe:purifier",
+  "ingredients": [
+    {
+      "item": "sofe:black_aetherium_shard",
+      "count": 2
+    },
+    {
+      "item": "sofe:void_ash",
+      "count": 4
+    }
+  ],
+  "result": "sofe:aetherium_shard",
+  "count": 1
+}

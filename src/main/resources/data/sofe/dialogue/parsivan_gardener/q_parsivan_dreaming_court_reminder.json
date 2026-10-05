@@ -1,0 +1,29 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_gardener",
+  "priority": 15,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/parsivan_dreaming_court",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/parsivan_dreaming_court",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.q.parsivan_dreaming_court.reminder"
+    }
+  ]
+}

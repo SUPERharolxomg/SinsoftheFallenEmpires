@@ -1,0 +1,28 @@
+{
+  "style": "aureum",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "envyris",
+      "text": "dialogue.sofe.envyris.1"
+    },
+    {
+      "speaker": "envyris",
+      "text": "dialogue.sofe.envyris.other"
+    },
+    {
+      "speaker": "envyris",
+      "text": "dialogue.sofe.envyris.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.envyris.refuse",
+          "next": -1
+        },
+        {
+          "text": "dialogue.sofe.envyris.silent",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

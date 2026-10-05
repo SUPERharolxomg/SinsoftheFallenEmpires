@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "zahir",
+  "lines": [
+    {
+      "speaker": "zahir",
+      "text": "dialogue.sofe.zahir.1"
+    },
+    {
+      "speaker": "zahir",
+      "text": "dialogue.sofe.zahir.2"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_gardener",
+  "priority": 25,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:side/parsivan_dreaming_court",
+        "step": 3
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:side/parsivan_dreaming_court",
+          "step": 4
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.q.parsivan_dreaming_court.choice.1"
+    },
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.q.parsivan_dreaming_court.choice.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.q.parsivan_dreaming_court.answer.awakened",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "parsivan",
+              "fate": "awakened"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/parsivan_dreaming_court"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.q.parsivan_dreaming_court.answer.asleep",
+          "next": 2,
+          "effects": [
+            {
+              "type": "set_fate",
+              "region": "parsivan",
+              "fate": "asleep"
+            },
+            {
+              "type": "advance_quest",
+              "quest": "sofe:side/parsivan_dreaming_court"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.q.parsivan_dreaming_court.reply.awakened",
+      "condition": {
+        "type": "fate_is",
+        "region": "parsivan",
+        "fate": "awakened"
+      }
+    },
+    {
+      "speaker": "parsivan_gardener",
+      "text": "dialogue.sofe.q.parsivan_dreaming_court.reply.asleep",
+      "condition": {
+        "type": "fate_is",
+        "region": "parsivan",
+        "fate": "asleep"
+      }
+    }
+  ]
+}

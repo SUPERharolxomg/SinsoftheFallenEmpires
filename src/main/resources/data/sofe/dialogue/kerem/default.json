@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "npc": "kerem",
+  "lines": [
+    {
+      "speaker": "kerem",
+      "text": "dialogue.sofe.kerem.1"
+    },
+    {
+      "speaker": "kerem",
+      "text": "dialogue.sofe.kerem.2"
+    }
+  ]
+}

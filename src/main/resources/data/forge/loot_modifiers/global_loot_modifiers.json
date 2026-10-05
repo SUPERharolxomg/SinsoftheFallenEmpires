@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "sofe:gear_drops"
+    "sofe:gear_drops",
+    "sofe:void_crystal_in_end_cities"
   ]
 }
