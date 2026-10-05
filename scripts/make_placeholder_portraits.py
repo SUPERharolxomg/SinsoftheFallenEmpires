@@ -75,6 +75,8 @@ if __name__ == "__main__":
     skins = default_skins()
     made = 0
     for s in sorted(speakers() - painted - {"player"}):
+        if os.path.exists(os.path.join(ASSETS, "geo", "entity", s + ".geo.json")):
+            continue  # a boss: its portrait is drawn from its model (make_temptations.portrait, model_portrait.py)
         own = os.path.join(ASSETS, "textures", "entity", "npc", s + ".png")
         if os.path.exists(own):
             img = Image.open(own).convert("RGBA")
@@ -83,7 +85,8 @@ if __name__ == "__main__":
         elif s in ("vorath", "unknown_voice"):
             head = None  # voices without a face
         else:
-            head = face(skins.get(s, "steve"))  # the NPC renderer's default too
+            base = s.split("_camp_")[0]  # a camp's copy of a merchant wears the original's face
+            head = face(skins.get(base, "steve"))  # the NPC renderer's default too
         portrait(s, head)
         made += 1
     print("placeholder portraits:", made)
