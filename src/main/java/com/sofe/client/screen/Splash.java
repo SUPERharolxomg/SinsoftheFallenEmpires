@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The final illustrations (docs/ArteFinal.md): {@code textures/gui/splash/<path>.png}, used wherever a screen asks for
+ * The final illustrations (docs/ArteFinal.md): {@code textures/gui/splash/<path>.jpg} (or .png), used wherever a screen asks for
  * one as soon as the file exists, and the screen's drawn stand-in otherwise. A resource pack can add or replace them.
  * {@code splash/dialogues.json} names the illustration behind a cinematic conversation.
  */
@@ -33,17 +33,42 @@ public final class Splash {
 
     /** The illustration at splash/&lt;path&gt;.png (for example "fate/khemet_rest"), if the game has it. */
     public static Optional<Image> find(String path) {
-        return FOUND.computeIfAbsent(path, p -> {
-            ResourceLocation texture = SoFEMod.id("textures/gui/splash/" + p + ".png");
-            var resource = Minecraft.getInstance().getResourceManager().getResource(texture);
-            if (resource.isEmpty()) return Optional.empty();
-            try (InputStream in = resource.get().open(); NativeImage image = NativeImage.read(in)) {
-                return Optional.of(new Image(texture, image.getWidth(), image.getHeight()));
-            } catch (Exception e) {
-                SoFEMod.LOGGER.warn("Could not read the illustration {}: {}", texture, e.getMessage());
-                return Optional.empty();
+        return FOUND.computeIfAbsent(path, p -> jpg(p).or(() -> png(p)));
+    }
+
+    /** A painting kept as JPG to keep the mod small: decoded here and given to the game as a texture of its own. */
+    private static Optional<Image> jpg(String path) {
+        var resource = Minecraft.getInstance().getResourceManager().getResource(SoFEMod.id("textures/gui/splash/" + path + ".jpg"));
+        if (resource.isEmpty()) return Optional.empty();
+        try (InputStream in = resource.get().open()) {
+            java.awt.image.BufferedImage picture = javax.imageio.ImageIO.read(in);
+            if (picture == null) return Optional.empty();
+            NativeImage image = new NativeImage(picture.getWidth(), picture.getHeight(), false);
+            for (int y = 0; y < picture.getHeight(); y++) {
+                for (int x = 0; x < picture.getWidth(); x++) {
+                    int argb = picture.getRGB(x, y); // NativeImage keeps ABGR
+                    image.setPixelRGBA(x, y, 0xFF000000 | (argb & 0xFF) << 16 | (argb & 0xFF00) | (argb >> 16) & 0xFF);
+                }
             }
-        });
+            ResourceLocation texture = SoFEMod.id("splash_jpg/" + path);
+            Minecraft.getInstance().getTextureManager().register(texture, new net.minecraft.client.renderer.texture.DynamicTexture(image));
+            return Optional.of(new Image(texture, image.getWidth(), image.getHeight()));
+        } catch (Exception e) {
+            SoFEMod.LOGGER.warn("Could not read the illustration {}.jpg: {}", path, e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    private static Optional<Image> png(String path) {
+        ResourceLocation texture = SoFEMod.id("textures/gui/splash/" + path + ".png");
+        var resource = Minecraft.getInstance().getResourceManager().getResource(texture);
+        if (resource.isEmpty()) return Optional.empty();
+        try (InputStream in = resource.get().open(); NativeImage image = NativeImage.read(in)) {
+            return Optional.of(new Image(texture, image.getWidth(), image.getHeight()));
+        } catch (Exception e) {
+            SoFEMod.LOGGER.warn("Could not read the illustration {}: {}", texture, e.getMessage());
+            return Optional.empty();
+        }
     }
 
     /** The illustration behind a cinematic conversation, from splash/dialogues.json. */
@@ -65,6 +90,8 @@ public final class Splash {
 
     /** Forgets what was found (a resource reload: packs may have added or removed illustrations). */
     public static void clear() {
+        FOUND.values().forEach(found -> found.filter(img -> img.texture().getPath().startsWith("splash_jpg/"))
+                .ifPresent(img -> Minecraft.getInstance().getTextureManager().release(img.texture())));
         FOUND.clear();
         dialogues = null;
     }
