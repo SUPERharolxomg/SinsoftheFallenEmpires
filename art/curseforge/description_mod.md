@@ -27,6 +27,10 @@ A modest PC is enough: Ryzen 3 3200G, GTX 1650, 8 GB of RAM (give the game 4 GB)
 
 **Beta (0.8.0).** The whole story can be played from the first act to the ending. Some of the story's illustrations are still drawn stand-ins, and the music uses Minecraft's tracks for now.
 
+## Support the project
+
+The mod is and will always be free and whole. If you enjoy it and want to help it grow (more illustrations, its own music), you can make a voluntary donation: [donate with PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).
+
 ---
 
 # Sins of the Fallen Empires (español)
@@ -46,3 +50,5 @@ En la Noche del Eclipse el sello bajo Sulthari se rompe, y cinco fragmentos del 
 - **Inglés y español.**
 
 Requisitos: Minecraft 1.20.1, Forge 47.4.23 o posterior, GeckoLib y Curios API. Recomendado: el modpack *Sins of the Fallen Empires*. **Beta 0.8.0.**
+
+**Apoya el proyecto:** el mod es y será siempre gratis y completo. Si te gusta y quieres ayudar a que crezca (más ilustraciones, música propia), puedes hacer una donación voluntaria: [donar con PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).
