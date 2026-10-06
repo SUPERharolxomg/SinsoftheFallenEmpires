@@ -33,6 +33,8 @@ REPAIR = {"knight": "() -> MaterialRegistry.item(Material.GLACIAL_IRON, Material
           "sorceress": "() -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD)",
           "thief": "() -> com.sofe.registry.ItemRegistry.FROSTPELT.get()",
           "king": "() -> MaterialRegistry.item(Material.SOLAR_GOLD, MaterialForm.INGOT)"}
+# a set may name its own repair material ("repair" in the catalog) instead of its class's
+REPAIRS = {"aetherium": "() -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD)"}
 CLASS_ORDER = ("knight", "necromancer", "sorceress", "thief", "king")
 
 
@@ -79,7 +81,7 @@ def main():
         dur, prot, ench, tough, kb = stats(s)
         end = ";" if i == len(new) - 1 else ","
         lines.append('        %s("%s", %d, new int[]{%s}, %d, %sf, %sf, %s)%s' % (
-            s["name"].upper(), s["name"], dur, ", ".join(map(str, prot)), ench, tough, kb, REPAIR[s["cls"]], end))
+            s["name"].upper(), s["name"], dur, ", ".join(map(str, prot)), ench, tough, kb, REPAIRS.get(s.get("repair"), REPAIR[s["cls"]]), end))
     lines.append("        // </generated-armor>")
     replace_block(os.path.join(JAVA, "gear", "SoFETiers.java"), "// <generated-armor>", "// </generated-armor>", "\n".join(lines))
     # the items, and every set piece in class order
@@ -124,6 +126,16 @@ def main():
                 f.write(json.dumps(base, indent=2) + "\n")
         with open(os.path.join(DATA, "armor_sets", s["name"] + ".json"), "w", encoding="utf-8") as f:
             f.write(json.dumps({"bonuses": s["bonus"]}, indent=2) + "\n")
+    # sets made at the Imperial Forge ("forge" in the catalog: what each piece costs), from a Blueprint of the piece
+    for s in SETS:
+        if not s.get("forge"):
+            continue
+        for p in PIECES:
+            recipe = collections.OrderedDict([("type", "sofe:imperial_forge"), ("blueprint", "sofe:%s_%s" % (s["name"], p)),
+                                              ("ingredients", [{"item": i, "count": c} for i, c in s["forge"][p]]),
+                                              ("result", "sofe:%s_%s" % (s["name"], p)), ("item_level", s["level"])])
+            with open(os.path.join(DATA, "recipes", "forge", "%s_%s.json" % (s["name"], p)), "w", encoding="utf-8") as f:
+                f.write(json.dumps(recipe, indent=2) + "\n")
     set_pieces.write_all()  # what each piece gives on its own
     print("armor data: %d sets (%d new)" % (len(SETS), len(new)))
 

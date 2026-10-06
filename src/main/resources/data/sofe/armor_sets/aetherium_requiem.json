@@ -1,0 +1,44 @@
+{
+  "bonuses": [
+    {
+      "type": "on_kill",
+      "heal": 2.0
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:regeneration",
+      "amplifier": 1,
+      "when": "low_health"
+    }
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "projectile",
+        "value": 0.06
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "all",
+        "value": 0.04
+      }
+    ],
+    "leggings": [
+      {
+        "type": "resist",
+        "damage": "explosion",
+        "value": 0.1
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.2
+      }
+    ]
+  }
+}

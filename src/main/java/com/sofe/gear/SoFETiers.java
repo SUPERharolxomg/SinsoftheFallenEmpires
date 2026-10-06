@@ -171,7 +171,12 @@ public final class SoFETiers {
         MIRAGE("mirage", 24, new int[]{1, 3, 5, 1}, 18, 0.0f, 0.0f, () -> MaterialRegistry.item(Material.SOLAR_GOLD, MaterialForm.INGOT)),
         LION_KING("lion_king", 36, new int[]{2, 6, 8, 2}, 14, 1.48f, 0.0f, () -> MaterialRegistry.item(Material.SOLAR_GOLD, MaterialForm.INGOT)),
         PEACOCK("peacock", 18, new int[]{1, 3, 5, 1}, 18, 0.0f, 0.0f, () -> MaterialRegistry.item(Material.SOLAR_GOLD, MaterialForm.INGOT)),
-        PHARAOH("pharaoh", 39, new int[]{3, 7, 9, 3}, 14, 1.68f, 0.0f, () -> MaterialRegistry.item(Material.SOLAR_GOLD, MaterialForm.INGOT));
+        PHARAOH("pharaoh", 39, new int[]{3, 7, 9, 3}, 14, 1.68f, 0.0f, () -> MaterialRegistry.item(Material.SOLAR_GOLD, MaterialForm.INGOT)),
+        AETHERIUM_AEGIS("aetherium_aegis", 48, new int[]{4, 8, 10, 4}, 10, 3.92f, 0.1f, () -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD)),
+        AETHERIUM_REQUIEM("aetherium_requiem", 44, new int[]{3, 7, 9, 3}, 14, 1.96f, 0.0f, () -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD)),
+        AETHERIUM_ASTROLABE("aetherium_astrolabe", 44, new int[]{2, 6, 8, 2}, 18, 0.0f, 0.0f, () -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD)),
+        AETHERIUM_SHADE("aetherium_shade", 44, new int[]{3, 7, 9, 3}, 14, 1.96f, 0.0f, () -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD)),
+        AETHERIUM_DOMINION("aetherium_dominion", 44, new int[]{3, 7, 9, 3}, 14, 1.96f, 0.0f, () -> MaterialRegistry.item(Material.AETHERIUM, MaterialForm.SHARD));
         // </generated-armor>
 
         private static final int[] DURABILITY = {13, 15, 16, 11}; // boots, leggings, chestplate, helmet (vanilla order)

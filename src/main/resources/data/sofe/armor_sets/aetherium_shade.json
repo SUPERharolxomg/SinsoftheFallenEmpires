@@ -1,0 +1,52 @@
+{
+  "bonuses": [
+    {
+      "type": "effect",
+      "effect": "minecraft:speed",
+      "amplifier": 1,
+      "when": "always"
+    },
+    {
+      "type": "effect",
+      "effect": "minecraft:invisibility",
+      "amplifier": 0,
+      "when": "crouching"
+    },
+    {
+      "type": "on_kill",
+      "effect": "minecraft:haste",
+      "amplifier": 1,
+      "duration": 160
+    }
+  ],
+  "pieces": {
+    "helmet": [
+      {
+        "type": "resist",
+        "damage": "projectile",
+        "value": 0.06
+      }
+    ],
+    "chestplate": [
+      {
+        "type": "resist",
+        "damage": "all",
+        "value": 0.04
+      }
+    ],
+    "leggings": [
+      {
+        "type": "resist",
+        "damage": "explosion",
+        "value": 0.1
+      }
+    ],
+    "boots": [
+      {
+        "type": "resist",
+        "damage": "fall",
+        "value": 0.2
+      }
+    ]
+  }
+}
