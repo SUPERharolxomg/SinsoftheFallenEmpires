@@ -1,0 +1,4 @@
+{
+  "_comment": "The illustration behind a cinematic conversation: dialogue id -> textures/gui/splash/<path>.png (docs/ArteFinal.md). A missing file shows the world instead.",
+  "sofe:act1/shard": "intro/night_of_the_eclipse"
+}
