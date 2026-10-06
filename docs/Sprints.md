@@ -427,7 +427,7 @@ See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
 - [ ] *(Rules)* Compatibility pass with popular mods (content, maps, waystones, graves, extra dimensions)
 - [ ] *(Rules)* Accessibility: rarity text labels, subtitles, shake/flash/particle options
 - [ ] *(Rules)* Server README: pre-generation, fair-play map settings, offline-mode UUID note
-- [ ] Performance optimization
+- [ ] Performance optimization: the pack's performance mods are in and checked ([Rendimiento.md](Rendimiento.md): Embeddium, Entity Culling, ImmediatelyFast, ModernFix, FerriteCore, Canary, Saturn, Memory Leak Fix, Dynamic FPS; `pack/config`; `scripts/pack_check.py` plays a production client with 4 GB and logs fps and memory); still to do: the bosses' rendering, and an hour on a PC like the target (Ryzen 3 3200G, GTX 1650, 8 GB)
 - [ ] Full testing pass
 - [ ] *(Annex)* Final title screen: logo, panorama, key art and main theme
 - [ ] *(Annex)* The Codex screen (lore, bestiary, splash art gallery) and the illustrated Codex Map

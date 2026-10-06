@@ -26,6 +26,7 @@ A Minecraft mod with a skill-based class system, an original dark fantasy story 
 - MrCrayfish's Furniture Mod: Refurbished (MIT) and its library Framework, for the furniture of city interiors
 - Supplementaries and its library Moonlight (flags and decorations) and Small Ships (ships that sail), allowed in non-commercial modpacks
 - JEI (Just Enough Items, MIT) for recipes and Xaero's Minimap for the map, in the pack
+- Performance mods for modest PCs (Embeddium, Entity Culling, ImmediatelyFast, ModernFix, FerriteCore, Canary, Saturn, Memory Leak Fix, Dynamic FPS), in the pack: see [docs/Rendimiento.md](docs/Rendimiento.md)
 - Optional: JourneyMap and Xaero's World Map integration
 - Git + GitHub, GitHub Actions (CI/CD)
 
