@@ -1,0 +1,106 @@
+{
+  "music.title": {
+    "sounds": [
+      {
+        "name": "minecraft:music.menu",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.sulthari": {
+    "sounds": [
+      {
+        "name": "minecraft:music.overworld.desert",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.ashen_wastes": {
+    "sounds": [
+      {
+        "name": "minecraft:music.overworld.deep_dark",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.nordrath": {
+    "sounds": [
+      {
+        "name": "minecraft:music.overworld.frozen_peaks",
+        "type": "event"
+      },
+      {
+        "name": "minecraft:music.overworld.snowy_slopes",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.volcanic_forges": {
+    "sounds": [
+      {
+        "name": "minecraft:music.nether.basalt_deltas",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.parsivan": {
+    "sounds": [
+      {
+        "name": "minecraft:music.overworld.flower_forest",
+        "type": "event"
+      },
+      {
+        "name": "minecraft:music.overworld.cherry_grove",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.khemet": {
+    "sounds": [
+      {
+        "name": "minecraft:music.overworld.badlands",
+        "type": "event"
+      },
+      {
+        "name": "minecraft:music.overworld.desert",
+        "type": "event"
+      }
+    ]
+  },
+  "music.region.aureum": {
+    "sounds": [
+      {
+        "name": "minecraft:music.overworld.meadow",
+        "type": "event"
+      },
+      {
+        "name": "minecraft:music.overworld.forest",
+        "type": "event"
+      }
+    ]
+  },
+  "music.boss": {
+    "sounds": [
+      {
+        "name": "minecraft:music.dragon",
+        "type": "event"
+      }
+    ]
+  },
+  "music.archsin": {
+    "sounds": [
+      {
+        "name": "minecraft:music.dragon",
+        "type": "event"
+      }
+    ]
+  },
+  "music.final": {
+    "sounds": [
+      {
+        "name": "minecraft:music.dragon",
+        "type": "event"
+      }
+    ]
+  }
+}

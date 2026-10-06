@@ -43,6 +43,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onInit);
+        MinecraftForge.EVENT_BUS.addListener(SoFEMusic::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onBackground);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onRender);
         if (ArmorShots.enabled() || SkillShots.enabled() || PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled()

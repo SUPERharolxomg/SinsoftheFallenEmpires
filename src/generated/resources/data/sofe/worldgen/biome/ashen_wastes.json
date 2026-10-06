@@ -11,6 +11,12 @@
     "fog_color": 7235168,
     "foliage_color": 7038550,
     "grass_color": 8222566,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": false,
+      "sound": "sofe:music.region.ashen_wastes"
+    },
     "particle": {
       "options": {
         "type": "minecraft:white_ash"
