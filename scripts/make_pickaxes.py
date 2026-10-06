@@ -36,7 +36,12 @@ def lum(c):
 
 
 def pickaxe(name, ramp):
-    img = Image.open(io.BytesIO(zipfile.ZipFile(JAR).read("assets/minecraft/textures/item/iron_pickaxe.png"))).convert("RGBA")
+    tool(name, ramp, "pickaxe")
+
+
+def tool(name, ramp, kind):
+    """Any vanilla iron tool (pickaxe, axe, shovel, hoe) with its head recolored."""
+    img = Image.open(io.BytesIO(zipfile.ZipFile(JAR).read("assets/minecraft/textures/item/iron_%s.png" % kind))).convert("RGBA")
     px = img.load()
     head = [(x, y) for y in range(16) for x in range(16)
             if px[x, y][3] > 0 and abs(px[x, y][0] - px[x, y][2]) < 12]  # the grays are the head, the browns the stick

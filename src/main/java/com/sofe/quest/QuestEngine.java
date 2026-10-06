@@ -196,6 +196,10 @@ public final class QuestEngine {
             com.sofe.player.PlayerClass.byId(e.bearer()).ifPresent(c -> com.sofe.companion.Companions.hire(player, c));
         } else if (effect instanceof QuestEffect.CompanionOrder e) {
             com.sofe.companion.Companions.order(player, e.order());
+        } else if (effect instanceof QuestEffect.AwardAdvancement e) {
+            com.sofe.story.SoFEAdvancements.award(player, e.advancement());
+        } else if (effect instanceof QuestEffect.PlayScene e) {
+            SceneService.play(player, e.scene(), e.then());
         } else if (effect instanceof QuestEffect.OpenClassSelect) {
             ClassSelectionHandler.openIfNeeded(player);
         } else if (effect instanceof QuestEffect.GiveItem e) {
@@ -246,7 +250,29 @@ public final class QuestEngine {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
         if (player.tickCount % POSITION_CHECK_TICKS != 0) return;
         event(player, new QuestEvent.At(player.getBlockX(), player.getBlockZ()));
+        checkCarried(player);
         wakeBosses(player);
+    }
+
+    /** Counts what the player carries toward an "obtain_item" step, if one is active (every second, and in tests). */
+    public static void checkCarried(ServerPlayer player) {
+        if (wantsItem(player)) event(player, new QuestEvent.Carries(carried(player)));
+    }
+
+    /** Whether an active quest step asks the player to carry an item (only then is the pack looked through). */
+    private static boolean wantsItem(ServerPlayer player) {
+        return StoryCapability.get(player).map(story -> story.quests().entrySet().stream().anyMatch(en -> !en.getValue().completed()
+                && StoryDataManager.quest(en.getKey()).flatMap(q -> q.step(en.getValue().step()))
+                .map(s -> s.objective() instanceof Objective.Obtain).orElse(false))).orElse(false);
+    }
+
+    private static java.util.Set<String> carried(ServerPlayer player) {
+        java.util.Set<String> ids = new java.util.HashSet<>();
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack s = player.getInventory().getItem(i);
+            if (!s.isEmpty()) ids.add(String.valueOf(ForgeRegistries.ITEMS.getKey(s.getItem())));
+        }
+        return ids;
     }
 
     /**

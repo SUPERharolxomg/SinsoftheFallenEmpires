@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "sofe:void_ink"
+    },
+    {
+      "item": "sofe:void_crystal"
+    },
+    {
+      "item": "sofe:aetherium_shard"
+    }
+  ],
+  "result": {
+    "item": "sofe:sealing_quill"
+  }
+}

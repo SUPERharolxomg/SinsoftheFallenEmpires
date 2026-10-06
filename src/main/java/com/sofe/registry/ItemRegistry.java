@@ -266,6 +266,14 @@ public final class ItemRegistry {
             () -> new GearItems.Pickaxe(SoFETiers.ORICHALCUM, 1, -2.8f, new Item.Properties().fireResistant()));
     public static final RegistryObject<Item> AETHERIUM_PICKAXE = ITEMS.register("aetherium_pickaxe",
             () -> new GearItems.Pickaxe(SoFETiers.AETHERIUM, 1, -2.8f, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> AETHERIUM_AXE = ITEMS.register("aetherium_axe",
+            () -> new net.minecraft.world.item.AxeItem(SoFETiers.AETHERIUM, 6.0f, -3.0f, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> AETHERIUM_SHOVEL = ITEMS.register("aetherium_shovel",
+            () -> new net.minecraft.world.item.ShovelItem(SoFETiers.AETHERIUM, 1.5f, -3.0f, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> AETHERIUM_HOE = ITEMS.register("aetherium_hoe",
+            () -> new net.minecraft.world.item.HoeItem(SoFETiers.AETHERIUM, -5, 0.0f, new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> AETHERIUM_MINING_HAMMER = ITEMS.register("aetherium_mining_hammer",
+            () -> new com.sofe.gear.Tools.MiningHammer(SoFETiers.AETHERIUM, 8, -3.3f, new Item.Properties().fireResistant()));
     public static final RegistryObject<Item> BRASS_MINING_HAMMER = ITEMS.register("brass_mining_hammer",
             () -> new com.sofe.gear.Tools.MiningHammer(SoFETiers.BRASS, 5, -3.4f, new Item.Properties()));
     public static final RegistryObject<Item> GLACIAL_MINING_HAMMER = ITEMS.register("glacial_mining_hammer",
@@ -384,15 +392,17 @@ public final class ItemRegistry {
             () -> new Item(new Item.Properties()));
     /** Held like a sword (handheld and large models). */
     private static final List<RegistryObject<Item>> A3_HANDHELD = List.of(
-            STAR_LAPIS_PICKAXE, SOLAR_GOLD_PICKAXE, ORICHALCUM_PICKAXE, AETHERIUM_PICKAXE, BRASS_MINING_HAMMER, GLACIAL_MINING_HAMMER,
-            BRASS_JAVELIN, GLACIAL_JAVELIN, AETHERIUM_JAVELIN, BRASS_THROWING_KNIFE, GLACIAL_THROWING_KNIFE, VENOM_THROWING_KNIFE,
-            EMBER_STAFF, FROST_STAFF, STORM_STAFF, VOID_STAFF, SOUL_STAFF, OATHBLADE,
-            AUREUM_WARMACE, LANCE_OF_THE_SCALE, BONE_WAND, SOUL_WAND, REAPER_SICKLE, EMBER_ORB,
-            FROST_ORB, STORM_ORB, SHADOW_CLAWS, VIPER_CLAWS, ROYAL_SCEPTER, SULTAN_SABER);
+            STAR_LAPIS_PICKAXE, SOLAR_GOLD_PICKAXE, ORICHALCUM_PICKAXE, AETHERIUM_PICKAXE, AETHERIUM_AXE, AETHERIUM_SHOVEL,
+            AETHERIUM_HOE, AETHERIUM_MINING_HAMMER, BRASS_MINING_HAMMER, GLACIAL_MINING_HAMMER, BRASS_JAVELIN, GLACIAL_JAVELIN,
+            AETHERIUM_JAVELIN, BRASS_THROWING_KNIFE, GLACIAL_THROWING_KNIFE, VENOM_THROWING_KNIFE, EMBER_STAFF, FROST_STAFF,
+            STORM_STAFF, VOID_STAFF, SOUL_STAFF, OATHBLADE, AUREUM_WARMACE, LANCE_OF_THE_SCALE,
+            BONE_WAND, SOUL_WAND, REAPER_SICKLE, EMBER_ORB, FROST_ORB, STORM_ORB,
+            SHADOW_CLAWS, VIPER_CLAWS, ROYAL_SCEPTER, SULTAN_SABER);
     /** Held bigger. */
     private static final List<RegistryObject<Item>> A3_LARGE = List.of(
-            BRASS_MINING_HAMMER, GLACIAL_MINING_HAMMER, BRASS_JAVELIN, GLACIAL_JAVELIN, AETHERIUM_JAVELIN, EMBER_STAFF,
-            FROST_STAFF, STORM_STAFF, VOID_STAFF, SOUL_STAFF, AUREUM_WARMACE, LANCE_OF_THE_SCALE);
+            AETHERIUM_MINING_HAMMER, BRASS_MINING_HAMMER, GLACIAL_MINING_HAMMER, BRASS_JAVELIN, GLACIAL_JAVELIN, AETHERIUM_JAVELIN,
+            EMBER_STAFF, FROST_STAFF, STORM_STAFF, VOID_STAFF, SOUL_STAFF, AUREUM_WARMACE,
+            LANCE_OF_THE_SCALE);
     /** Held barrel forward. */
     private static final List<RegistryObject<Item>> A3_GUNS = List.of(
             GEARWORK_DRILL, BRASS_PISTOL, GEARWORK_MUSKET, BLUNDERBUSS, ROYAL_FLINTLOCK);
@@ -788,6 +798,26 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> PHARAOH_CHESTPLATE = armor("pharaoh_chestplate", SoFETiers.Armor.PHARAOH, ArmorItem.Type.CHESTPLATE);
     public static final RegistryObject<Item> PHARAOH_LEGGINGS = armor("pharaoh_leggings", SoFETiers.Armor.PHARAOH, ArmorItem.Type.LEGGINGS);
     public static final RegistryObject<Item> PHARAOH_BOOTS = armor("pharaoh_boots", SoFETiers.Armor.PHARAOH, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> AETHERIUM_AEGIS_HELMET = armor("aetherium_aegis_helmet", SoFETiers.Armor.AETHERIUM_AEGIS, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> AETHERIUM_AEGIS_CHESTPLATE = armor("aetherium_aegis_chestplate", SoFETiers.Armor.AETHERIUM_AEGIS, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> AETHERIUM_AEGIS_LEGGINGS = armor("aetherium_aegis_leggings", SoFETiers.Armor.AETHERIUM_AEGIS, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> AETHERIUM_AEGIS_BOOTS = armor("aetherium_aegis_boots", SoFETiers.Armor.AETHERIUM_AEGIS, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> AETHERIUM_REQUIEM_HELMET = armor("aetherium_requiem_helmet", SoFETiers.Armor.AETHERIUM_REQUIEM, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> AETHERIUM_REQUIEM_CHESTPLATE = armor("aetherium_requiem_chestplate", SoFETiers.Armor.AETHERIUM_REQUIEM, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> AETHERIUM_REQUIEM_LEGGINGS = armor("aetherium_requiem_leggings", SoFETiers.Armor.AETHERIUM_REQUIEM, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> AETHERIUM_REQUIEM_BOOTS = armor("aetherium_requiem_boots", SoFETiers.Armor.AETHERIUM_REQUIEM, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> AETHERIUM_ASTROLABE_HELMET = armor("aetherium_astrolabe_helmet", SoFETiers.Armor.AETHERIUM_ASTROLABE, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> AETHERIUM_ASTROLABE_CHESTPLATE = armor("aetherium_astrolabe_chestplate", SoFETiers.Armor.AETHERIUM_ASTROLABE, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> AETHERIUM_ASTROLABE_LEGGINGS = armor("aetherium_astrolabe_leggings", SoFETiers.Armor.AETHERIUM_ASTROLABE, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> AETHERIUM_ASTROLABE_BOOTS = armor("aetherium_astrolabe_boots", SoFETiers.Armor.AETHERIUM_ASTROLABE, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> AETHERIUM_SHADE_HELMET = armor("aetherium_shade_helmet", SoFETiers.Armor.AETHERIUM_SHADE, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> AETHERIUM_SHADE_CHESTPLATE = armor("aetherium_shade_chestplate", SoFETiers.Armor.AETHERIUM_SHADE, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> AETHERIUM_SHADE_LEGGINGS = armor("aetherium_shade_leggings", SoFETiers.Armor.AETHERIUM_SHADE, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> AETHERIUM_SHADE_BOOTS = armor("aetherium_shade_boots", SoFETiers.Armor.AETHERIUM_SHADE, ArmorItem.Type.BOOTS);
+    public static final RegistryObject<Item> AETHERIUM_DOMINION_HELMET = armor("aetherium_dominion_helmet", SoFETiers.Armor.AETHERIUM_DOMINION, ArmorItem.Type.HELMET);
+    public static final RegistryObject<Item> AETHERIUM_DOMINION_CHESTPLATE = armor("aetherium_dominion_chestplate", SoFETiers.Armor.AETHERIUM_DOMINION, ArmorItem.Type.CHESTPLATE);
+    public static final RegistryObject<Item> AETHERIUM_DOMINION_LEGGINGS = armor("aetherium_dominion_leggings", SoFETiers.Armor.AETHERIUM_DOMINION, ArmorItem.Type.LEGGINGS);
+    public static final RegistryObject<Item> AETHERIUM_DOMINION_BOOTS = armor("aetherium_dominion_boots", SoFETiers.Armor.AETHERIUM_DOMINION, ArmorItem.Type.BOOTS);
     /** Every set piece, by class and level, for the creative tab. */
     private static final List<RegistryObject<Item>> SET_PIECES = List.of(
             BRONZE_HELMET, BRONZE_CHESTPLATE, BRONZE_LEGGINGS, BRONZE_BOOTS, SENTINEL_HELMET, SENTINEL_CHESTPLATE, SENTINEL_LEGGINGS, SENTINEL_BOOTS,
@@ -795,26 +825,29 @@ public final class ItemRegistry {
             WARLORD_HELMET, WARLORD_CHESTPLATE, WARLORD_LEGGINGS, WARLORD_BOOTS, SOLARI_HELMET, SOLARI_CHESTPLATE, SOLARI_LEGGINGS, SOLARI_BOOTS,
             DRAGONKNIGHT_HELMET, DRAGONKNIGHT_CHESTPLATE, DRAGONKNIGHT_LEGGINGS, DRAGONKNIGHT_BOOTS, LEGION_HELMET, LEGION_CHESTPLATE, LEGION_LEGGINGS, LEGION_BOOTS,
             SCALE_HELMET, SCALE_CHESTPLATE, SCALE_LEGGINGS, SCALE_BOOTS, INFERNAL_HELMET, INFERNAL_CHESTPLATE, INFERNAL_LEGGINGS, INFERNAL_BOOTS,
-            GRAVEWARDEN_HELMET, GRAVEWARDEN_CHESTPLATE, GRAVEWARDEN_LEGGINGS, GRAVEWARDEN_BOOTS, PLAGUEBEARER_HELMET, PLAGUEBEARER_CHESTPLATE, PLAGUEBEARER_LEGGINGS, PLAGUEBEARER_BOOTS,
-            SOULREAVER_HELMET, SOULREAVER_CHESTPLATE, SOULREAVER_LEGGINGS, SOULREAVER_BOOTS, BONELORD_HELMET, BONELORD_CHESTPLATE, BONELORD_LEGGINGS, BONELORD_BOOTS,
-            EMBALMER_HELMET, EMBALMER_CHESTPLATE, EMBALMER_LEGGINGS, EMBALMER_BOOTS, SCARAB_HELMET, SCARAB_CHESTPLATE, SCARAB_LEGGINGS, SCARAB_BOOTS,
-            MUMMY_LORD_HELMET, MUMMY_LORD_CHESTPLATE, MUMMY_LORD_LEGGINGS, MUMMY_LORD_BOOTS, VOID_HELMET, VOID_CHESTPLATE, VOID_LEGGINGS, VOID_BOOTS,
-            ANUBIS_HELMET, ANUBIS_CHESTPLATE, ANUBIS_LEGGINGS, ANUBIS_BOOTS, LICH_HELMET, LICH_CHESTPLATE, LICH_LEGGINGS, LICH_BOOTS,
+            AETHERIUM_AEGIS_HELMET, AETHERIUM_AEGIS_CHESTPLATE, AETHERIUM_AEGIS_LEGGINGS, AETHERIUM_AEGIS_BOOTS, GRAVEWARDEN_HELMET, GRAVEWARDEN_CHESTPLATE, GRAVEWARDEN_LEGGINGS, GRAVEWARDEN_BOOTS,
+            PLAGUEBEARER_HELMET, PLAGUEBEARER_CHESTPLATE, PLAGUEBEARER_LEGGINGS, PLAGUEBEARER_BOOTS, SOULREAVER_HELMET, SOULREAVER_CHESTPLATE, SOULREAVER_LEGGINGS, SOULREAVER_BOOTS,
+            BONELORD_HELMET, BONELORD_CHESTPLATE, BONELORD_LEGGINGS, BONELORD_BOOTS, EMBALMER_HELMET, EMBALMER_CHESTPLATE, EMBALMER_LEGGINGS, EMBALMER_BOOTS,
+            SCARAB_HELMET, SCARAB_CHESTPLATE, SCARAB_LEGGINGS, SCARAB_BOOTS, MUMMY_LORD_HELMET, MUMMY_LORD_CHESTPLATE, MUMMY_LORD_LEGGINGS, MUMMY_LORD_BOOTS,
+            VOID_HELMET, VOID_CHESTPLATE, VOID_LEGGINGS, VOID_BOOTS, ANUBIS_HELMET, ANUBIS_CHESTPLATE, ANUBIS_LEGGINGS, ANUBIS_BOOTS,
+            LICH_HELMET, LICH_CHESTPLATE, LICH_LEGGINGS, LICH_BOOTS, AETHERIUM_REQUIEM_HELMET, AETHERIUM_REQUIEM_CHESTPLATE, AETHERIUM_REQUIEM_LEGGINGS, AETHERIUM_REQUIEM_BOOTS,
             WITCH_HELMET, WITCH_CHESTPLATE, WITCH_LEGGINGS, WITCH_BOOTS, ENCHANTRESS_HELMET, ENCHANTRESS_CHESTPLATE, ENCHANTRESS_LEGGINGS, ENCHANTRESS_BOOTS,
             FROST_WITCH_HELMET, FROST_WITCH_CHESTPLATE, FROST_WITCH_LEGGINGS, FROST_WITCH_BOOTS, OBSERVATORY_HELMET, OBSERVATORY_CHESTPLATE, OBSERVATORY_LEGGINGS, OBSERVATORY_BOOTS,
             EMERALD_HELMET, EMERALD_CHESTPLATE, EMERALD_LEGGINGS, EMERALD_BOOTS, PYROMANCER_HELMET, PYROMANCER_CHESTPLATE, PYROMANCER_LEGGINGS, PYROMANCER_BOOTS,
             CHRONOMANCER_HELMET, CHRONOMANCER_CHESTPLATE, CHRONOMANCER_LEGGINGS, CHRONOMANCER_BOOTS, TEMPEST_HELMET, TEMPEST_CHESTPLATE, TEMPEST_LEGGINGS, TEMPEST_BOOTS,
             ARCHMAGE_HELMET, ARCHMAGE_CHESTPLATE, ARCHMAGE_LEGGINGS, ARCHMAGE_BOOTS, ASTRAL_SAGE_HELMET, ASTRAL_SAGE_CHESTPLATE, ASTRAL_SAGE_LEGGINGS, ASTRAL_SAGE_BOOTS,
-            SCOUT_HELMET, SCOUT_CHESTPLATE, SCOUT_LEGGINGS, SCOUT_BOOTS, HUNTSMAN_HELMET, HUNTSMAN_CHESTPLATE, HUNTSMAN_LEGGINGS, HUNTSMAN_BOOTS,
-            GEAR_HELMET, GEAR_CHESTPLATE, GEAR_LEGGINGS, GEAR_BOOTS, SEAFARER_HELMET, SEAFARER_CHESTPLATE, SEAFARER_LEGGINGS, SEAFARER_BOOTS,
-            BERSERKER_HELMET, BERSERKER_CHESTPLATE, BERSERKER_LEGGINGS, BERSERKER_BOOTS, SHADOW_HELMET, SHADOW_CHESTPLATE, SHADOW_LEGGINGS, SHADOW_BOOTS,
-            WOLF_RAIDER_HELMET, WOLF_RAIDER_CHESTPLATE, WOLF_RAIDER_LEGGINGS, WOLF_RAIDER_BOOTS, FROST_STALKER_HELMET, FROST_STALKER_CHESTPLATE, FROST_STALKER_LEGGINGS, FROST_STALKER_BOOTS,
-            CORSAIR_HELMET, CORSAIR_CHESTPLATE, CORSAIR_LEGGINGS, CORSAIR_BOOTS, NIGHTBLADE_HELMET, NIGHTBLADE_CHESTPLATE, NIGHTBLADE_LEGGINGS, NIGHTBLADE_BOOTS,
+            AETHERIUM_ASTROLABE_HELMET, AETHERIUM_ASTROLABE_CHESTPLATE, AETHERIUM_ASTROLABE_LEGGINGS, AETHERIUM_ASTROLABE_BOOTS, SCOUT_HELMET, SCOUT_CHESTPLATE, SCOUT_LEGGINGS, SCOUT_BOOTS,
+            HUNTSMAN_HELMET, HUNTSMAN_CHESTPLATE, HUNTSMAN_LEGGINGS, HUNTSMAN_BOOTS, GEAR_HELMET, GEAR_CHESTPLATE, GEAR_LEGGINGS, GEAR_BOOTS,
+            SEAFARER_HELMET, SEAFARER_CHESTPLATE, SEAFARER_LEGGINGS, SEAFARER_BOOTS, BERSERKER_HELMET, BERSERKER_CHESTPLATE, BERSERKER_LEGGINGS, BERSERKER_BOOTS,
+            SHADOW_HELMET, SHADOW_CHESTPLATE, SHADOW_LEGGINGS, SHADOW_BOOTS, WOLF_RAIDER_HELMET, WOLF_RAIDER_CHESTPLATE, WOLF_RAIDER_LEGGINGS, WOLF_RAIDER_BOOTS,
+            FROST_STALKER_HELMET, FROST_STALKER_CHESTPLATE, FROST_STALKER_LEGGINGS, FROST_STALKER_BOOTS, CORSAIR_HELMET, CORSAIR_CHESTPLATE, CORSAIR_LEGGINGS, CORSAIR_BOOTS,
+            NIGHTBLADE_HELMET, NIGHTBLADE_CHESTPLATE, NIGHTBLADE_LEGGINGS, NIGHTBLADE_BOOTS, AETHERIUM_SHADE_HELMET, AETHERIUM_SHADE_CHESTPLATE, AETHERIUM_SHADE_LEGGINGS, AETHERIUM_SHADE_BOOTS,
             BRASS_HELMET, BRASS_CHESTPLATE, BRASS_LEGGINGS, BRASS_BOOTS, DESERT_EMIR_HELMET, DESERT_EMIR_CHESTPLATE, DESERT_EMIR_LEGGINGS, DESERT_EMIR_BOOTS,
             ROYAL_GUARD_HELMET, ROYAL_GUARD_CHESTPLATE, ROYAL_GUARD_LEGGINGS, ROYAL_GUARD_BOOTS, PEACOCK_HELMET, PEACOCK_CHESTPLATE, PEACOCK_LEGGINGS, PEACOCK_BOOTS,
             VIZIER_HELMET, VIZIER_CHESTPLATE, VIZIER_LEGGINGS, VIZIER_BOOTS, MIRAGE_HELMET, MIRAGE_CHESTPLATE, MIRAGE_LEGGINGS, MIRAGE_BOOTS,
             SULTAN_HELMET, SULTAN_CHESTPLATE, SULTAN_LEGGINGS, SULTAN_BOOTS, LION_KING_HELMET, LION_KING_CHESTPLATE, LION_KING_LEGGINGS, LION_KING_BOOTS,
-            PHARAOH_HELMET, PHARAOH_CHESTPLATE, PHARAOH_LEGGINGS, PHARAOH_BOOTS, GOLDEN_KING_HELMET, GOLDEN_KING_CHESTPLATE, GOLDEN_KING_LEGGINGS, GOLDEN_KING_BOOTS);
+            PHARAOH_HELMET, PHARAOH_CHESTPLATE, PHARAOH_LEGGINGS, PHARAOH_BOOTS, GOLDEN_KING_HELMET, GOLDEN_KING_CHESTPLATE, GOLDEN_KING_LEGGINGS, GOLDEN_KING_BOOTS,
+            AETHERIUM_DOMINION_HELMET, AETHERIUM_DOMINION_CHESTPLATE, AETHERIUM_DOMINION_LEGGINGS, AETHERIUM_DOMINION_BOOTS);
     // </generated-armor>
 
     // Sprint 6: the coins of the Royal Treasury, and the shape the Bronze Cannon is drawn with (neither in a tab)
@@ -868,6 +901,20 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal",
             () -> new Item(new Item.Properties().rarity(Rarity.RARE).fireResistant()));
     public static final RegistryObject<Item> VOID_INK = ITEMS.register("void_ink", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    /** The Sealing Quill (docs/Mundo.md, W5): forged with Void Ink, it opens the Inverted Throne; a soulbound story item. */
+    public static final RegistryObject<Item> SEALING_QUILL = ITEMS.register("sealing_quill",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()) {
+                @Override
+                public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.Level level, List<net.minecraft.network.chat.Component> tooltip,
+                                            net.minecraft.world.item.TooltipFlag flag) {
+                    tooltip.add(net.minecraft.network.chat.Component.translatable("item.sofe.sealing_quill.desc").withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+                }
+
+                @Override
+                public boolean isFoil(net.minecraft.world.item.ItemStack stack) {
+                    return true;
+                }
+            });
 
     /** The seven sin gems, each rough, cut and as an Oath Gem (com.sofe.gear.SinGem): "rough_wrath_ruby" and so on. */
     public static final java.util.Map<String, RegistryObject<Item>> SIN_GEMS = sinGems();
@@ -1067,7 +1114,7 @@ public final class ItemRegistry {
         List<Item> items = new ArrayList<>();
         potions().forEach(i -> items.add(i.get()));
         for (RegistryObject<Item> i : List.of(BEARERS_FLASK, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
-                RETURN_SCROLL, BLUEPRINT, CODEX_SHARD, DINAR)) {
+                RETURN_SCROLL, BLUEPRINT, CODEX_SHARD, SEALING_QUILL, DINAR)) {
             items.add(i.get());
         }
         veiled().forEach(i -> items.add(i.get()));
@@ -1094,7 +1141,7 @@ public final class ItemRegistry {
         List<RegistryObject<Item>> flat = new ArrayList<>(List.of(RETURN_SCROLL, CODEX_SHARD, INFERNAL_EMBER, WAILING_SOUL, DINAR,
                 BRASS_AMULET, BRASS_RING, SMALL_TALISMAN, LARGE_TALISMAN, BLUEPRINT, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
                 MINOR_POMEGRANATE_ELIXIR, BEARERS_TONIC, BEARERS_FLASK, DUNE_LEATHER, FROSTPELT, VOID_ASH,
-                MOONSILK, SUNREED_PAPYRUS, VOID_CRYSTAL, VOID_INK));
+                MOONSILK, SUNREED_PAPYRUS, VOID_CRYSTAL, VOID_INK, SEALING_QUILL));
         flat.addAll(SIN_GEMS.values());
         flat.addAll(armorPieces());
         flat.addAll(potions());

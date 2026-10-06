@@ -240,7 +240,7 @@ Free mode means: SoFE items, ores, gear and classes work (a class is picked with
 1. A world that was **not created with Begin the Journey** (a world the player already had, or one from a modpack). It does not have the map of Aetheris, so the story cannot happen there.
 2. A SoFE journey where **another mod breaks the story** (see the table below).
 
-The player always gets a message saying why: *"This world is in SoFE free mode: <reason>."* The server option `freeModeInOtherWorlds = false` turns SoFE content off in those worlds instead.
+The player always gets a message saying why: *"This world is in SoFE free mode: <reason>."* In free mode the mod's items, gear, ores and stations work; the story, the seals, the lairs and the journey's rules wait (`FreeMode`). Nothing is saved: once the cause is gone, the story goes on. (A server that wants no SoFE content at all in other worlds simply does not install the mod there.)
 
 ### Other mods in a SoFE journey
 
@@ -258,9 +258,9 @@ The player always gets a message saying why: *"This world is in SoFE free mode: 
 
 ### How SoFE detects it
 
-- **Integrity check** every time a journey is loaded: the world still uses the SoFE generator, the saved region layout is there, and every story boss, NPC and structure is registered. If anything fails, the world switches to free mode and the reason is logged.
+- **Integrity check** every time a journey is loaded: the world still uses the SoFE generator, the saved region layout is there, the story's data is loaded and every story boss is registered. If anything fails, the world switches to free mode and the reason is logged (`Journey integrity check passed` otherwise).
 - **Incompatible list:** `data/sofe/compat/incompatible_mods.json` lists mod IDs known to break the story. If one is installed, the title screen warns the player before *Begin the Journey*, and the journey is created in free mode.
-- **Adjustments instead of free mode** for mods that only need a switch: grave mods turn off the SoFE corpse, and the `keepInventory` game rule also skips the corpse.
+- **Adjustments instead of free mode** for mods that only need a switch: grave mods (Corpse, Gravestone, Corail Tombstone, You're in Grave Danger) turn off the SoFE corpse on their own, and the `keepInventory` game rule also skips the corpse.
 - A server can force the story anyway with `allowIncompatibleMods = true`, at its own risk.
 
 ### Map layout versions
@@ -326,9 +326,9 @@ Commands, permission level 2 (operators):
 
 ## G13. Accessibility
 
-- Item rarity is shown with **text and color**, never color alone (colorblind players).
-- **Subtitles** for dialogue and for boss audio cues that warn of attacks.
-- Options to reduce screen shake, flashes and particle density.
+- Item rarity is shown with **text and color**, never color alone (colorblind players): the rarity's name heads every gear tooltip, and gear lying on the ground has its rarity written over it as well as the colour of its beam (client option `rarityLabels`, on).
+- **Subtitles:** the dialogue is all text, there are no voices; a boss's signature attack writes its name on screen as it winds up, and its shape is drawn on the floor; the mod's sounds are vanilla sounds, so Minecraft's own subtitles name them.
+- **Calmer screens:** the client option `reduceMotion` (also on with Minecraft's *Hide Lightning Flashes*) stills the story's scenes: no flickering fire, no scrolling skylines, few embers. The mod's darkness, distortion and particles are vanilla effects, so Minecraft's *Darkness Pulsing*, *Distortion Effects* and *Particles* options tone them down too. There is no screen shake.
 - Language follows the Minecraft setting (English and Spanish from 1.0).
 
 ---

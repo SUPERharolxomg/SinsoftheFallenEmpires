@@ -22,6 +22,12 @@ def pick_recipe(ing):
     return {"type": "shaped", "pattern": ["GGG", " S ", " S "], "key": {"G": ing, "S": "minecraft:stick"}}
 
 
+def aetherium_recipe(pattern):
+    """The Aetherium tier (docs/Mundo.md, W4): aetherium shards, a Void Crystal, and Orichalcum for the haft."""
+    key = {"A": "sofe:aetherium_shard", "V": "sofe:void_crystal", "O": "sofe:orichalcum_ingot", "B": "sofe:aetherium_block"}
+    return {"type": "shaped", "pattern": pattern, "key": {k: v for k, v in key.items() if any(k in row for row in pattern)}}
+
+
 def hammer_recipe(block, ing):
     return {"type": "shaped", "pattern": ["GBG", " S ", " S "], "key": {"G": ing, "B": block, "S": "minecraft:stick"}}
 
@@ -35,7 +41,16 @@ ITEMS = [
     item("orichalcum_pickaxe", "new GearItems.Pickaxe(SoFETiers.ORICHALCUM, 1, -2.8f, %s.fireResistant())" % P, "Orichalcum Pickaxe", "Pico de Oricalco",
          "handheld", ("pickaxe", "orichalcum"), gear=False, recipe=pick_recipe("sofe:orichalcum_ingot")),
     item("aetherium_pickaxe", "new GearItems.Pickaxe(SoFETiers.AETHERIUM, 1, -2.8f, %s.fireResistant())" % P, "Aetherium Pickaxe", "Pico de Aeterio",
-         "handheld", ("pickaxe", "aetherium"), gear=False, recipe=pick_recipe("sofe:aetherium_shard")),
+         "handheld", ("pickaxe", "aetherium"), gear=False, recipe=aetherium_recipe(["AVA", " O ", " O "])),
+    item("aetherium_axe", "new net.minecraft.world.item.AxeItem(SoFETiers.AETHERIUM, 6.0f, -3.0f, %s.fireResistant())" % P, "Aetherium Axe",
+         "Hacha de Aeterio", "handheld", ("tool", "axe", "aetherium"), gear=False, recipe=aetherium_recipe(["AV", "AO", " O"])),
+    item("aetherium_shovel", "new net.minecraft.world.item.ShovelItem(SoFETiers.AETHERIUM, 1.5f, -3.0f, %s.fireResistant())" % P, "Aetherium Shovel",
+         "Pala de Aeterio", "handheld", ("tool", "shovel", "aetherium"), gear=False, recipe=aetherium_recipe(["A", "V", "O"])),
+    item("aetherium_hoe", "new net.minecraft.world.item.HoeItem(SoFETiers.AETHERIUM, -5, 0.0f, %s.fireResistant())" % P, "Aetherium Hoe",
+         "Azada de Aeterio", "handheld", ("tool", "hoe", "aetherium"), gear=False, recipe=aetherium_recipe(["AV", " O", " O"])),
+    item("aetherium_mining_hammer", "new com.sofe.gear.Tools.MiningHammer(SoFETiers.AETHERIUM, 8, -3.3f, %s.fireResistant())" % P,
+         "Aetherium Mining Hammer", "Martillo de Minería de Aeterio", "large", ("mining_hammer", "aetherium"), gear=False,
+         recipe=aetherium_recipe(["ABA", " V ", " O "])),
     item("brass_mining_hammer", "new com.sofe.gear.Tools.MiningHammer(SoFETiers.BRASS, 5, -3.4f, %s)" % P, "Brass Mining Hammer",
          "Martillo de Minería de Latón", "large", ("mining_hammer", "brass"), gear=False,
          recipe=hammer_recipe("sofe:sulthari_brass_block", "sofe:sulthari_brass_ingot")),

@@ -35,6 +35,8 @@ public final class StoryProgress {
     private int act = FIRST_ACT;
     private final Map<String, QuestState> quests = new HashMap<>();
     private final Set<String> bosses = new HashSet<>();
+    /** The Relics a boss has given this Bearer: one of each, never again (docs/Jugabilidad.md, G9). */
+    private final Set<String> relics = new HashSet<>();
     private final Map<Region, String> fates = new EnumMap<>(Region.class);
     private String trackedQuest;
 
@@ -103,6 +105,29 @@ public final class StoryProgress {
 
     public Set<String> bosses() {
         return Set.copyOf(bosses);
+    }
+
+    /** Records a Relic given by a boss; false when the Bearer already had it. */
+    public boolean receiveRelic(String relic) {
+        return relics.add(relic);
+    }
+
+    public boolean hasRelic(String relic) {
+        return relics.contains(relic);
+    }
+
+    public Set<String> relics() {
+        return Set.copyOf(relics);
+    }
+
+    public void loadRelics(Set<String> received) {
+        relics.clear();
+        relics.addAll(received);
+    }
+
+    /** The campaign is over for this Bearer once Nahrazel has fallen to them (the post-game, UC-33). */
+    public boolean finishedCampaign() {
+        return bosses.contains("sofe:nahrazel");
     }
 
     /** A region's fate is set once (docs/Jugabilidad.md, "Fates and epilogues"). */

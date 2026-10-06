@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    " V ",
+    " O "
+  ],
+  "key": {
+    "A": {
+      "item": "sofe:aetherium_shard"
+    },
+    "V": {
+      "item": "sofe:void_crystal"
+    },
+    "O": {
+      "item": "sofe:orichalcum_ingot"
+    },
+    "B": {
+      "item": "sofe:aetherium_block"
+    }
+  },
+  "result": {
+    "item": "sofe:aetherium_mining_hammer",
+    "count": 1
+  }
+}

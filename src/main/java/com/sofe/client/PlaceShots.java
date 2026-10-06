@@ -37,7 +37,8 @@ public final class PlaceShots {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.getSingleplayerServer() == null) return;
         mc.options.pauseOnLostFocus = false;
-        if (mc.screen != null) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
+        if (mc.screen != null && !(mc.screen instanceof com.sofe.client.screen.CrownedInAshScreen)
+                && !(mc.screen instanceof com.sofe.client.screen.EndingScreen)) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
         if (places == null) {
             places = new ArrayList<>(Arrays.asList(System.getProperty("sofe.placeShots").split(",")));
             mc.options.hideGui = true;
@@ -49,8 +50,10 @@ public final class PlaceShots {
         if (place >= 0) {
             String name = places.get(place).replace('/', '_').replace(':', '_');
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
+            logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
-            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")) {
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
+                    && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")) {
                 look(mc, places.get(place), view);
                 wait = places.get(place).endsWith("/city") ? SETTLE * 4 : SETTLE; // a capital's far side takes a while to load
                 return;
@@ -63,8 +66,21 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("at:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") ? 30 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
+    }
+
+    /** One line of run/placeshots_perf.log per screenshot: frames per second and the memory in use (docs/Rendimiento.md). */
+    private static void logPerformance(Minecraft mc, String shot) {
+        Runtime rt = Runtime.getRuntime();
+        long usedMb = (rt.totalMemory() - rt.freeMemory()) >> 20, maxMb = rt.maxMemory() >> 20;
+        String line = String.format("%s fps=%d memory=%d/%dMB chunks=%s%n", shot, mc.getFps(), usedMb, maxMb, mc.levelRenderer.getChunkStatistics());
+        try {
+            java.nio.file.Files.writeString(mc.gameDirectory.toPath().resolve("placeshots_perf.log"), line,
+                    java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
+        } catch (java.io.IOException e) {
+            com.sofe.SoFEMod.LOGGER.warn("Could not write placeshots_perf.log", e);
+        }
     }
 
     private static void build(Minecraft mc, String piece) {
@@ -129,6 +145,58 @@ public final class PlaceShots {
             });
             return;
         }
+        if (piece.startsWith("scene:")) { // scene:<bearer>:<second>, "Crowned in Ash" for that Bearer at that second
+            String[] v = piece.split(":");
+            ClientClassData.set(com.sofe.player.PlayerClass.byId(v[1]));
+            server.execute(() -> { // a spectator is drawn as a ghostly head: the scene needs the whole Bearer
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p != null) p.setGameMode(GameType.CREATIVE);
+            });
+            mc.setScreen(new com.sofe.client.screen.CrownedInAshScreen((int) (Float.parseFloat(v[2]) * 20) - 30));
+            return;
+        }
+        if (piece.equals("loot")) { // loot: gear of each rarity on the ground, its beam and its rarity label (accessibility)
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                var level = p.serverLevel();
+                level.setDayTime(18000);
+                net.minecraft.core.BlockPos at = new net.minecraft.core.BlockPos(0, 220, 0);
+                for (int dx = -6; dx <= 6; dx++) for (int dz = -4; dz <= 4; dz++) {
+                    level.setBlockAndUpdate(at.offset(dx, -1, dz), net.minecraft.world.level.block.Blocks.POLISHED_DEEPSLATE.defaultBlockState());
+                }
+                var rarities = new com.sofe.gear.Rarity[]{com.sofe.gear.Rarity.TEMPERED, com.sofe.gear.Rarity.IMPERIAL};
+                for (int i = 0; i < rarities.length; i++) {
+                    var stack = com.sofe.gear.GearMaker.rollItem("sofe:glacial_iron_sword", 30, rarities[i], p, level.random);
+                    var relic = com.sofe.gear.GearMaker.relic("vorath_wrath", p);
+                    var item = (i == 0 ? stack : stack).orElse(null);
+                    if (item == null) continue;
+                    var e = new net.minecraft.world.entity.item.ItemEntity(level, at.getX() - 2.5 + i * 2.5, at.getY(), at.getZ() + 0.5, item, 0, 0, 0);
+                    e.setNeverPickUp();
+                    e.setUnlimitedLifetime();
+                    level.addFreshEntity(e);
+                    if (i == rarities.length - 1 && relic.isPresent()) {
+                        var r = new net.minecraft.world.entity.item.ItemEntity(level, at.getX() + 2.5, at.getY(), at.getZ() + 0.5, relic.get(), 0, 0, 0);
+                        r.setNeverPickUp();
+                        r.setUnlimitedLifetime();
+                        level.addFreshEntity(r);
+                    }
+                }
+                p.teleportTo(level, at.getX() + 0.5, at.getY() + 0.6, at.getZ() + 4.5, 180, 8);
+            });
+            return;
+        }
+        if (piece.startsWith("ending:")) { // ending:<bearer>:<card>, the ending's card for that Bearer, a second and a half in
+            String[] v = piece.split(":");
+            ClientClassData.set(com.sofe.player.PlayerClass.byId(v[1]));
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p != null) p.setGameMode(GameType.CREATIVE);
+            });
+            mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2])));
+            return;
+        }
         if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)
             String[] v = piece.split(":");
             server.execute(() -> {
@@ -166,8 +234,15 @@ public final class PlaceShots {
                 for (int dx = -8; dx <= 8; dx++) for (int dz = -8; dz <= 8; dz++) {
                     level.setBlockAndUpdate(at.offset(dx, -1, dz), net.minecraft.world.level.block.Blocks.POLISHED_DEEPSLATE.defaultBlockState());
                 }
-                var type = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getValue(net.minecraft.resources.ResourceLocation.tryParse("sofe:" + piece.substring(piece.indexOf(':') + 1)));
+                String name = piece.substring(piece.indexOf(':') + 1);
+                boolean corrupted = name.equals("corrupted_zombie"); // boss:corrupted_zombie, a vanilla zombie of Act V, by night
+                var type = corrupted ? net.minecraft.world.entity.EntityType.ZOMBIE
+                        : net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getValue(net.minecraft.resources.ResourceLocation.tryParse("sofe:" + name));
                 if (type == null || !(type.create(level) instanceof net.minecraft.world.entity.Mob mob)) return;
+                if (corrupted) {
+                    com.sofe.mob.MobTraits.apply(mob, 5);
+                    level.setDayTime(18000);
+                }
                 mob.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, 0, 0);
                 mob.setYHeadRot(0);
                 mob.setYBodyRot(0);

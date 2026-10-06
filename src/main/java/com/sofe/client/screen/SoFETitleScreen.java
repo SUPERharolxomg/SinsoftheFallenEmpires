@@ -93,6 +93,15 @@ public class SoFETitleScreen extends Screen {
         y += 24;
         addRenderableWidget(Button.builder(Component.translatable("menu.quit"),
                 b -> this.minecraft.stop()).bounds(x, y, w, 20).build());
+        // Essential and the like put their menus on the vanilla title screen: a way to it (docs/Rendimiento.md, compatibility)
+        var titleMods = com.sofe.client.TitleScreenHandler.titleMods();
+        if (!titleMods.isEmpty()) {
+            Component label = Component.translatable("menu.sofe.classic_menu", net.minecraftforge.fml.ModList.get().getModContainerById(titleMods.get(0))
+                    .map(m -> m.getModInfo().getDisplayName()).orElse(titleMods.get(0)));
+            int bw = this.font.width(label) + 16;
+            addRenderableWidget(Button.builder(label, b -> com.sofe.client.TitleScreenHandler.openVanillaTitle(this.minecraft))
+                    .bounds(this.width - bw - 6, this.height - 26, bw, 20).build());
+        }
 
         findLatestWorld();
     }
@@ -138,6 +147,11 @@ public class SoFETitleScreen extends Screen {
         int subtitleY = buttonsTop - 16;
         int[] logo = renderLogo(graphics, 6, subtitleY - 4);
         graphics.drawCenteredString(this.font, Component.translatable("menu.sofe.subtitle"), this.width / 2, subtitleY, PARCHMENT);
+        var breaking = com.sofe.world.FreeMode.incompatibleInstalled();
+        if (!breaking.isEmpty()) { // a mod that breaks the story: say so before a journey begins
+            graphics.drawCenteredString(this.font, Component.translatable("menu.sofe.incompatible", String.join(", ", breaking)),
+                    this.width / 2, this.height - 36, 0xFF6060);
+        }
 
         if (splash != null) {
             // The vanilla splash draws at (width / 2 + 123, 69); move it onto the logo's lower right corner

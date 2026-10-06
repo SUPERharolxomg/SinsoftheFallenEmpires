@@ -1,0 +1,20 @@
+{
+  "type": "sofe:imperial_forge",
+  "blueprint": "sofe:aetherium_aegis_leggings",
+  "ingredients": [
+    {
+      "item": "sofe:orichalcum_ingot",
+      "count": 4
+    },
+    {
+      "item": "sofe:aetherium_shard",
+      "count": 7
+    },
+    {
+      "item": "sofe:void_crystal",
+      "count": 2
+    }
+  ],
+  "result": "sofe:aetherium_aegis_leggings",
+  "item_level": 98
+}

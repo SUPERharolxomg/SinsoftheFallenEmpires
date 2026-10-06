@@ -1,0 +1,12 @@
+{
+  "item": "sofe:aetherium_requiem_helmet",
+  "slot": "armor",
+  "classes": [
+    "necromancer"
+  ],
+  "min_item_level": 98,
+  "requires": {
+    "attribute": "strength",
+    "value": 84
+  }
+}

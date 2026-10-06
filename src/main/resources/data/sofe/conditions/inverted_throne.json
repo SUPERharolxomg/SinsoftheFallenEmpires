@@ -1,4 +1,13 @@
 {
-  "type": "boss_defeated",
-  "boss": "sofe:prython"
+  "type": "all_of",
+  "conditions": [
+    {
+      "type": "boss_defeated",
+      "boss": "sofe:prython"
+    },
+    {
+      "type": "item_owned",
+      "item": "sofe:sealing_quill"
+    }
+  ]
 }

@@ -1,0 +1,20 @@
+{
+  "type": "sofe:imperial_forge",
+  "blueprint": "sofe:aetherium_aegis_boots",
+  "ingredients": [
+    {
+      "item": "sofe:orichalcum_ingot",
+      "count": 2
+    },
+    {
+      "item": "sofe:aetherium_shard",
+      "count": 4
+    },
+    {
+      "item": "sofe:void_crystal",
+      "count": 1
+    }
+  ],
+  "result": "sofe:aetherium_aegis_boots",
+  "item_level": 98
+}

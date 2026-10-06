@@ -234,9 +234,51 @@ public abstract class SoFEBossEntity extends Monster {
     public boolean signatureNow(ServerLevel level, net.minecraft.world.entity.LivingEntity target, List<ServerPlayer> fighters) {
         Signature sig = signature();
         if (sig == null) return false;
+        markEchoes(target, fighters);
         signatureWindup(level, target, 1, fighters);
         signatureStrike(level, target, fighters);
+        strikeEchoes(level, fighters);
         return true;
+    }
+
+    // --- with more Bearers, the signature reaches more of them (docs/Anexos.md, A5: "some attacks start targeting
+    // several players at once"): each Bearer but the target, up to three, gets a mark of its own under their feet
+
+    /** The marks' reach, their blow (times the boss's attack, less than the signature's) and how many at most. */
+    public static final double ECHO_RADIUS = 2.5, ECHO_DAMAGE = 1.2;
+    public static final int MAX_ECHOES = 3;
+    private final List<net.minecraft.world.phys.Vec3> signatureEchoes = new java.util.ArrayList<>();
+    private static final net.minecraft.core.particles.DustParticleOptions ECHO_MOTE =
+            new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.85f, 0.1f, 0.12f), 1.3f);
+
+    /** Where the signature's echoes will fall: under the Bearers farthest from its target, an echo boss marks none. */
+    private void markEchoes(net.minecraft.world.entity.LivingEntity target, List<ServerPlayer> fighters) {
+        signatureEchoes.clear();
+        if (isEcho() || fighters.size() < 2) return;
+        fighters.stream().filter(p -> p != target && p.isAlive())
+                .sorted(java.util.Comparator.comparingDouble((ServerPlayer p) -> target == null ? 0 : -p.distanceToSqr(target)))
+                .limit(MAX_ECHOES).forEach(p -> signatureEchoes.add(p.position()));
+    }
+
+    /** The marks of the echoes still to fall (tests). */
+    public List<net.minecraft.world.phys.Vec3> signatureEchoes() {
+        return List.copyOf(signatureEchoes);
+    }
+
+    private void drawEchoes(ServerLevel level) {
+        for (var at : signatureEchoes) Signatures.drawRing(level, at, ECHO_RADIUS, ECHO_MOTE);
+    }
+
+    private void strikeEchoes(ServerLevel level, List<ServerPlayer> fighters) {
+        for (var at : signatureEchoes) {
+            for (ServerPlayer p : Signatures.ring(at, ECHO_RADIUS, fighters)) Signatures.strike(this, p, signatureDamage(ECHO_DAMAGE), at, 0.6, 0.3);
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION, at.x, at.y + 0.3, at.z, 1, 0, 0, 0, 0);
+            level.sendParticles(ECHO_MOTE, at.x, at.y + 0.5, at.z, 24, ECHO_RADIUS / 2, 0.3, ECHO_RADIUS / 2, 0);
+        }
+        if (!signatureEchoes.isEmpty()) {
+            level.playSound(null, blockPosition(), net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE, net.minecraft.sounds.SoundSource.HOSTILE, 0.8f, 1.3f);
+        }
+        signatureEchoes.clear();
     }
 
     /** Whether the boss is in the middle of its signature attack. */
@@ -254,8 +296,13 @@ public abstract class SoFEBossEntity extends Monster {
             if (elapsed <= sig.windup()) {
                 getNavigation().stop();
                 if (target != null) getLookControl().setLookAt(target, 60, 60);
+                if (elapsed == 1) markEchoes(target, fighters);
+                if (elapsed % 3 == 0) drawEchoes(level);
                 signatureWindup(level, target, elapsed, fighters);
-                if (elapsed == sig.windup()) signatureStrike(level, target, fighters);
+                if (elapsed == sig.windup()) {
+                    signatureStrike(level, target, fighters);
+                    strikeEchoes(level, fighters);
+                }
             }
             if (signatureTicks == 0) entityData.set(SIGNING, false);
             return;
@@ -535,6 +582,7 @@ public abstract class SoFEBossEntity extends Monster {
         signatureTicks = 0;
         signatureCooldown = 160;
         signatureTarget = null;
+        signatureEchoes.clear();
         entityData.set(SIGNING, false);
         setEnrage(Attributes.ATTACK_DAMAGE, ENRAGE_DAMAGE, 0, AttributeModifier.Operation.MULTIPLY_TOTAL);
         setEnrage(Attributes.MOVEMENT_SPEED, ENRAGE_SPEED, 0, AttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -606,7 +654,7 @@ public abstract class SoFEBossEntity extends Monster {
                 .withParameter(LootContextParams.ORIGIN, player.position()).withParameter(LootContextParams.DAMAGE_SOURCE, player.damageSources().playerAttack(player))
                 .withParameter(LootContextParams.KILLER_ENTITY, player).withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .withLuck(player.getLuck()).create(LootContextParamSets.ENTITY);
-        for (ItemStack stack : table.getRandomItems(params)) {
+        for (ItemStack stack : onlyNewRelics(player, table.getRandomItems(params))) {
             if (!player.getInventory().add(stack)) player.drop(stack, false);
         }
         onCredited(player, first);
@@ -650,7 +698,7 @@ public abstract class SoFEBossEntity extends Monster {
                 .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .withLuck(player.getLuck())
                 .create(LootContextParamSets.ENTITY);
-        List<ItemStack> loot = table.getRandomItems(params);
+        List<ItemStack> loot = onlyNewRelics(player, table.getRandomItems(params));
         if (usesRewardCoffer()) {
             RewardCoffer.place(level, arenaCenterPos(), index, count, player, loot);
             player.displayClientMessage(Component.translatable("message.sofe.coffer.waiting").withStyle(ChatFormatting.GOLD), false);
@@ -659,6 +707,21 @@ public abstract class SoFEBossEntity extends Monster {
         for (ItemStack stack : loot) {
             if (!player.getInventory().add(stack)) player.drop(stack, false);
         }
+    }
+
+    /**
+     * A Relic a boss has already given this Bearer does not drop again (docs/Jugabilidad.md, G9: the Echo fights of the
+     * post-game give gems, materials and Dinars, not a second copy); the first one is recorded.
+     */
+    public static List<ItemStack> onlyNewRelics(ServerPlayer player, List<ItemStack> loot) {
+        var story = StoryCapability.get(player).orElse(null);
+        if (story == null) return loot;
+        List<ItemStack> kept = new java.util.ArrayList<>();
+        for (ItemStack stack : loot) {
+            var relic = com.sofe.gear.GearNbt.relic(stack);
+            if (relic.isEmpty() || story.receiveRelic(relic.get())) kept.add(stack);
+        }
+        return kept;
     }
 
     /** The shared drops are replaced by personal loot. */

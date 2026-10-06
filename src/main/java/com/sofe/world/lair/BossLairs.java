@@ -37,6 +37,10 @@ import java.util.Optional;
  * a while after it was raised (a lost fight, a reset). Bearers who have all beaten it walk through an empty
  * arena. The floor is looked for from the Bearer's own height, so a boss room inside a hall gets its boss on
  * the floor, not on the roof.
+ * <p>
+ * After the campaign (UC-33) a Bearer who has beaten Nahrazel can call the Echo of any boss they have beaten: kneeling
+ * (crouching) in the middle of its lair for a few seconds raises it again, whole, for a fight that gives gems,
+ * materials and Dinars once more, but no Relic they already have (SoFEBossEntity.onlyNewRelics).
  */
 public final class BossLairs {
     public static final ResourceLocation FILE = SoFEMod.id("boss_lairs.json");
@@ -57,6 +61,11 @@ public final class BossLairs {
             return y != Integer.MIN_VALUE;
         }
     }
+
+    /** How near the middle a Bearer kneels to call an Echo, and for how many checks (of {@link #CHECK_TICKS}). */
+    public static final double ECHO_CALL_RADIUS = 4;
+    public static final int ECHO_KNEEL_CHECKS = 3;
+    private static final Map<java.util.UUID, Integer> KNEELING = new HashMap<>();
 
     private static volatile List<Lair> lairs = List.of();
     private static final Map<String, Long> LAST_RAISED = new HashMap<>();
@@ -90,7 +99,54 @@ public final class BossLairs {
         if (event.phase != TickEvent.Phase.END || event.getServer().getTickCount() % CHECK_TICKS != 0) return;
         if (!SoFEWorld.isJourney(event.getServer())) return;
         ServerLevel level = event.getServer().overworld();
-        for (Lair lair : lairs) wake(level, lair);
+        for (Lair lair : lairs) {
+            wake(level, lair);
+            kneel(level, lair, level.players());
+        }
+    }
+
+    /** Counts the Bearers kneeling in a lair's middle; one who has knelt long enough calls its boss's Echo. */
+    public static Optional<Entity> kneel(ServerLevel level, Lair lair, List<? extends ServerPlayer> players) {
+        for (ServerPlayer p : players) {
+            boolean kneeling = p.isCrouching() && p.isAlive() && !p.isSpectator()
+                    && sq(p.getX() - lair.x() - 0.5) + sq(p.getZ() - lair.z() - 0.5) <= sq(ECHO_CALL_RADIUS)
+                    && (!lair.hasHeight() || Math.abs(p.getY() - lair.y()) <= 12)
+                    && StoryCapability.get(p).map(s -> s.finishedCampaign() && s.hasDefeated(lair.boss())).orElse(false);
+            if (!kneeling) {
+                if (KNEELING.containsKey(p.getUUID()) && sq(p.getX() - lair.x() - 0.5) + sq(p.getZ() - lair.z() - 0.5) <= sq(ECHO_CALL_RADIUS * 3)) {
+                    KNEELING.remove(p.getUUID());
+                }
+                continue;
+            }
+            int knelt = KNEELING.merge(p.getUUID(), 1, Integer::sum);
+            if (knelt < ECHO_KNEEL_CHECKS) {
+                name(lair).ifPresent(n -> p.displayClientMessage(Component.translatable("message.sofe.echo_kneel", n).withStyle(ChatFormatting.LIGHT_PURPLE), true));
+                continue;
+            }
+            KNEELING.remove(p.getUUID());
+            Optional<Entity> echo = callEcho(level, lair, p);
+            if (echo.isPresent()) return echo;
+        }
+        return Optional.empty();
+    }
+
+    /** Raises the Echo of a lair's boss for this Bearer, if none stands there and it did not just rise. */
+    public static Optional<Entity> callEcho(ServerLevel level, Lair lair, ServerPlayer caller) {
+        Optional<Entity> boss = raise(level, lair, (int) Math.floor(caller.getY()));
+        boss.ifPresent(b -> level.players().stream()
+                .filter(p -> sq(p.getX() - lair.x()) + sq(p.getZ() - lair.z()) <= sq(lair.radius() + 16))
+                .forEach(p -> p.displayClientMessage(Component.translatable("message.sofe.echo_rises", b.getDisplayName())
+                        .withStyle(ChatFormatting.DARK_PURPLE), true)));
+        if (boss.isPresent() && !level.players().contains(caller)) {
+            caller.displayClientMessage(Component.translatable("message.sofe.echo_rises", boss.get().getDisplayName()), true);
+        }
+        return boss;
+    }
+
+    private static Optional<Component> name(Lair lair) {
+        ResourceLocation id = ResourceLocation.tryParse(lair.boss());
+        if (id == null || !ForgeRegistries.ENTITY_TYPES.containsKey(id)) return Optional.empty();
+        return Optional.of(ForgeRegistries.ENTITY_TYPES.getValue(id).getDescription());
     }
 
     /** Raises the boss of this lair if a Bearer who still has to beat it is inside; returns the boss raised. */
@@ -109,6 +165,14 @@ public final class BossLairs {
         if (inside.isEmpty()) return Optional.empty();
         boolean someoneOwes = inside.stream().anyMatch(p -> !StoryCapability.get(p).map(s -> s.hasDefeated(lair.boss())).orElse(false));
         if (!someoneOwes) return Optional.empty();
+        Optional<Entity> raised = raise(level, lair, (int) Math.floor(inside.get(0).getY()));
+        raised.ifPresent(boss -> inside.forEach(p -> p.displayClientMessage(Component.translatable("message.sofe.lair_awakens", boss.getDisplayName())
+                .withStyle(ChatFormatting.DARK_RED), true)));
+        return raised;
+    }
+
+    /** The boss of a lair, risen in its middle, unless one stands there already or it rose a moment ago. */
+    private static Optional<Entity> raise(ServerLevel level, Lair lair, int fromY) {
         ResourceLocation id = ResourceLocation.tryParse(lair.boss());
         if (id == null || !ForgeRegistries.ENTITY_TYPES.containsKey(id)) return Optional.empty(); // a boss of a later sprint, or a typo
         EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(id);
@@ -119,13 +183,11 @@ public final class BossLairs {
         long now = level.getGameTime();
         Long last = LAST_RAISED.get(lair.boss());
         if (last != null && now >= last && now - last < RESPAWN_TICKS) return Optional.empty();
-        BlockPos at = floor(level, lair.x(), lair.hasHeight() ? lair.y() : (int) Math.floor(inside.get(0).getY()), lair.z());
+        BlockPos at = floor(level, lair.x(), lair.hasHeight() ? lair.y() : fromY, lair.z());
         Entity boss = type.spawn(level, at, MobSpawnType.EVENT);
         if (boss == null) return Optional.empty();
         if (boss instanceof Mob mob) mob.setPersistenceRequired();
         LAST_RAISED.put(lair.boss(), now);
-        inside.forEach(p -> p.displayClientMessage(Component.translatable("message.sofe.lair_awakens", boss.getDisplayName())
-                .withStyle(ChatFormatting.DARK_RED), true));
         return Optional.of(boss);
     }
 
@@ -153,6 +215,7 @@ public final class BossLairs {
     /** For GameTests: forget when each lair last raised its boss. */
     public static void forget() {
         LAST_RAISED.clear();
+        KNEELING.clear();
     }
 
     public static void onAddReloadListeners(AddReloadListenerEvent event) {

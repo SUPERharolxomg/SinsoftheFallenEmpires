@@ -1,0 +1,85 @@
+COMO INICIAR MINECRAFT EN ESTE PROYECTO
+
+Abre una terminal en la carpeta del proyecto y ejecuta:
+
+    .\gradlew.bat runClient --console=plain
+
+Esto inicia el cliente de Minecraft Forge para esta mod.
+
+Si quieres arrancar el servidor en su lugar:
+
+    .\gradlew.bat runServer --console=plain
+
+Importante:
+- Debes estar en la carpeta raíz del proyecto.
+- Requiere Java 17 o compatible, tal como está configurado en build.gradle.
+
+También puedes ejecutar desde PowerShell en la raíz:
+
+    cd "C:\Users\David\SinsoftheFallenEmpires"
+    .\gradlew.bat runClient --console=plain
+
+
+IR AL ACTO II (NORDRATH) DENTRO DEL JUEGO
+
+Escribe los comandos en el chat (tecla T). Necesitas trucos activados.
+El comando /tp te deja a 200 bloques de altura sobre el lugar: así nunca quedas enterrado ni falla
+porque haya agua. Antes, para bajar planeando sin daño:
+
+    /effect give @s minecraft:slow_falling 60 0 true
+
+O ponte en creativo (/gamemode creative) y baja volando. Al acercarte, la ciudad se construye
+(el juego se congela unos segundos la primera vez).
+
+Skarnhold, la ciudad de los clanes (piedra de viaje en la plaza):
+
+    /tp @s -5 200 -2374
+
+Forja de Nordrath (Kaleth, Ley I):
+
+    /tp @s -1200 200 -2960
+
+Arena de Nordrath (Serath, Ley II):
+
+    /tp @s 1200 200 -2962
+
+Entrada de las Cavernas (Fenrath abajo; los Salones del Festín de Gularth al fondo):
+
+    /tp @s -606 200 -2394
+
+Ciudadela Ardiente (Vorath, Archipecado de la Ira):
+
+    /tp @s 6 200 -4444
+
+Campamento del Camino de Ceniza (se libera al vencer a Vorath):
+
+    /tp @s 300 200 -4194
+
+Ojo: Nordrath está sellado hasta el Acto II. Si no has llegado a ese acto, el Velo del
+Sello te devuelve, salvo que estés en modo creativo o seas operador (en un mundo de un
+jugador con trucos activados ya lo eres). Para cambiar a creativo: /gamemode creative
+
+
+IR A LAS CAPITALES (ACTOS III Y IV)
+
+Igual que arriba: primero /effect give @s minecraft:slow_falling 60 0 true (o modo creativo).
+
+Isfaran, la corte de Parsivan (Acto III):
+
+    /tp @s 7209 200 -391
+
+Neferet, la ciudad de Khemet (Acto III):
+
+    /tp @s 6809 200 3209
+
+Aurelion, la capital de Aureum (Acto IV), con su Coliseo al noreste:
+
+    /tp @s -5391 200 2809
+
+El Coliseo de Shadeyn (el jefe), fuera de la ciudad:
+
+    /tp @s -5923 200 7000
+
+Ojo: cada lugar se construye una sola vez, la primera vez que alguien llega cerca, y el
+servidor se congela unos segundos mientras lo construye. Un mundo creado antes de este
+cambio conserva las ciudades viejas: para ver las nuevas, crea un mundo nuevo.

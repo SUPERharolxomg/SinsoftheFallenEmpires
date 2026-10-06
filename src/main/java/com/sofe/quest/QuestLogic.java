@@ -68,6 +68,7 @@ public final class QuestLogic {
         if (objective instanceof Objective.LearnSkills l && event instanceof QuestEvent.SkillsLearned s) return Math.max(count, Math.min(s.total(), l.count()));
         if (objective instanceof Objective.ReachLevel l && event instanceof QuestEvent.LevelReached r && r.level() >= l.level()) return 1;
         if (objective instanceof Objective.DefeatBoss b && event instanceof QuestEvent.BossDefeated d && b.boss().equals(d.boss())) return 1;
+        if (objective instanceof Objective.Obtain o && event instanceof QuestEvent.Carries c && c.items().contains(o.item())) return 1;
         return count;
     }
 

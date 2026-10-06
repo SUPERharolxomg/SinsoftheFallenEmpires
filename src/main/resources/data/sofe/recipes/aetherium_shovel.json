@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "V",
+    "O"
+  ],
+  "key": {
+    "A": {
+      "item": "sofe:aetherium_shard"
+    },
+    "V": {
+      "item": "sofe:void_crystal"
+    },
+    "O": {
+      "item": "sofe:orichalcum_ingot"
+    }
+  },
+  "result": {
+    "item": "sofe:aetherium_shovel",
+    "count": 1
+  }
+}

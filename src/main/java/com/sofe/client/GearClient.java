@@ -117,6 +117,22 @@ public final class GearClient {
         return com.sofe.gear.GearBonuses.meetsRequirements(gear, level, GearClient::attribute);
     }
 
+    /** How near a Bearer must be to read the rarity over gear on the ground (accessibility: not colour alone). */
+    private static final double LABEL_RANGE = 16;
+
+    /** The rarity's name over an item on the ground, facing the camera, in the rarity's colour. */
+    private static void rarityLabel(Minecraft mc, PoseStack pose, MultiBufferSource buffers, Vec3 at, com.sofe.gear.Rarity rarity) {
+        net.minecraft.network.chat.Component name = net.minecraft.network.chat.Component.translatable(rarity.translationKey());
+        pose.pushPose();
+        pose.translate(at.x, at.y, at.z);
+        pose.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
+        pose.scale(-0.025f, -0.025f, 0.025f);
+        var font = mc.font;
+        font.drawInBatch(name, -font.width(name) / 2f, 0, 0xFF000000 | rarity.color(), false, pose.last().pose(), buffers,
+                net.minecraft.client.gui.Font.DisplayMode.NORMAL, 0x60000000, 0xF000F0);
+        pose.popPose();
+    }
+
     /** A colored beam over Tempered or better gear lying on the ground, so it is seen from afar. */
     public static void onRenderLevel(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
@@ -137,6 +153,9 @@ public final class GearClient {
             pose.translate(at.x - camera.x - 0.5, at.y - camera.y, at.z - camera.z - 0.5);
             BeaconRenderer.renderBeaconBeam(pose, buffers, BEAM, event.getPartialTick(), 1f, mc.level.getGameTime(), 0, 12, color, 0.08f, 0.12f);
             pose.popPose();
+            if (com.sofe.config.SoFEConfig.CLIENT.rarityLabels.get() && entity.distanceToSqr(mc.player) <= LABEL_RANGE * LABEL_RANGE) {
+                rarityLabel(mc, pose, buffers, at.subtract(camera).add(0, 0.85, 0), gear.get().rarity());
+            }
             any = true;
         }
         if (any) buffers.endBatch();

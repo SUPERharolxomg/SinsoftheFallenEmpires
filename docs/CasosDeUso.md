@@ -311,7 +311,7 @@ Every use case of *Sins of the Fallen Empires* in one place. Story and terms: [R
 
 ### UC-34: Open a world that is not a SoFE journey
 - **Actor:** Player
-- **Flow:** the player opens a vanilla or modpack world → a message explains that the campaign needs a new journey → with `freeModeInOtherWorlds = true`, mod items and ores work and a class can be picked with an Altar item; no story, locks or bosses.
+- **Flow:** the player opens a vanilla or modpack world → a message explains that the campaign needs a new journey → mod items, gear, ores and stations work; no story, locks or bosses.
 - **Postcondition:** the world plays in free mode, or with SoFE content off.
 
 ### UC-40: Play a journey with other mods installed

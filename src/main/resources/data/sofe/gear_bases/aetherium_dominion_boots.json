@@ -1,0 +1,12 @@
+{
+  "item": "sofe:aetherium_dominion_boots",
+  "slot": "armor",
+  "classes": [
+    "king"
+  ],
+  "min_item_level": 98,
+  "requires": {
+    "attribute": "strength",
+    "value": 84
+  }
+}
