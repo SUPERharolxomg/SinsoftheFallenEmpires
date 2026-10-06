@@ -1,0 +1,20 @@
+{
+  "type": "sofe:imperial_forge",
+  "blueprint": "sofe:aetherium_aegis_chestplate",
+  "ingredients": [
+    {
+      "item": "sofe:orichalcum_ingot",
+      "count": 5
+    },
+    {
+      "item": "sofe:aetherium_shard",
+      "count": 8
+    },
+    {
+      "item": "sofe:void_crystal",
+      "count": 2
+    }
+  ],
+  "result": "sofe:aetherium_aegis_chestplate",
+  "item_level": 98
+}

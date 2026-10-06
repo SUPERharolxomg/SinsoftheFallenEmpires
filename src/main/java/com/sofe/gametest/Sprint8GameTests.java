@@ -145,4 +145,24 @@ public class Sprint8GameTests {
         helper.assertFalse(com.sofe.mob.MobTraits.corrupted(voidZombie), "the Void Zombie keeps its own look");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void aetheriumGearIsMadeFromOrichalcumAetheriumAndTheVoid(GameTestHelper helper) {
+        var recipes = helper.getLevel().getRecipeManager();
+        var crystal = ItemRegistry.VOID_CRYSTAL.get();
+        for (String tool : List.of("aetherium_pickaxe", "aetherium_axe", "aetherium_shovel", "aetherium_hoe", "aetherium_mining_hammer")) {
+            var recipe = recipes.byKey(SoFEMod.id(tool));
+            helper.assertTrue(recipe.isPresent(), "no recipe for " + tool);
+            var needs = recipe.get().getIngredients();
+            helper.assertTrue(needs.stream().anyMatch(in -> in.test(new ItemStack(crystal))), tool + " should need a Void Crystal");
+            helper.assertTrue(needs.stream().anyMatch(in -> in.test(com.sofe.registry.material.MaterialRegistry.item(
+                    com.sofe.registry.material.Material.ORICHALCUM, com.sofe.registry.material.MaterialForm.INGOT).getDefaultInstance())), tool + " should need Orichalcum");
+        }
+        for (String set : List.of("aetherium_aegis", "aetherium_requiem", "aetherium_astrolabe", "aetherium_shade", "aetherium_dominion")) {
+            for (String piece : List.of("helmet", "chestplate", "leggings", "boots")) {
+                helper.assertTrue(recipes.byKey(SoFEMod.id("forge/" + set + "_" + piece)).isPresent(), "the Imperial Forge cannot make " + set + "_" + piece);
+            }
+        }
+        helper.succeed();
+    }
 }

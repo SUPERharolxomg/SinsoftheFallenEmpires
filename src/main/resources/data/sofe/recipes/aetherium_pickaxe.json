@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "GGG",
-    " S ",
-    " S "
+    "AVA",
+    " O ",
+    " O "
   ],
   "key": {
-    "G": {
+    "A": {
       "item": "sofe:aetherium_shard"
     },
-    "S": {
-      "item": "minecraft:stick"
+    "V": {
+      "item": "sofe:void_crystal"
+    },
+    "O": {
+      "item": "sofe:orichalcum_ingot"
     }
   },
   "result": {

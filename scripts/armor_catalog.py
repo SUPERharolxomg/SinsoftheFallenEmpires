@@ -58,6 +58,10 @@ def on_kill(**kw):
 
 
 # name: class, level, weight, style, (en, es), head names (en, es) or None, palette, parts, bonuses, (bonus en, bonus es), repair
+# what each piece of an Aetherium set costs at the Imperial Forge
+AETHERIUM_FORGE = {p: [("sofe:orichalcum_ingot", o), ("sofe:aetherium_shard", a), ("sofe:void_crystal", v)]
+                   for p, o, a, v in (("helmet", 3, 5, 1), ("chestplate", 5, 8, 2), ("leggings", 4, 7, 2), ("boots", 2, 4, 1))}
+
 SETS = [
     # ------------------------------------------------------------------- the knight: Aureum plate
     dict(name="bronze", cls="knight", level=6, weight="heavy", style="plate", names=("Bronze", "de Bronce"),
@@ -358,6 +362,44 @@ SETS = [
          bonus=[{"type": "cleanse", "effects": ["minecraft:wither"]}, eff("regeneration", 0, "low_health")],
          text=("Full set: wither does not take hold, and you regenerate while below half health",
                "Set completo: la descomposición no te afecta, y te regeneras con menos de media vida")),
+    # ------------------------------------------------------------------- Act V: the Aetherium tier, one set per class (docs/Mundo.md, W4)
+    # pale aetherium crystal shot with the violet of the Void Crystal, made at the Imperial Forge from Orichalcum,
+    # aetherium shards and Void Crystal (AETHERIUM_FORGE, below)
+    dict(name="aetherium_aegis", repair="aetherium", forge=AETHERIUM_FORGE, cls="knight", level=98, weight="heavy", style="plate", names=("Aetherium Aegis", "de la Égida de Aeterio"),
+         pal={"plate": (206, 230, 240), "trim": (128, 82, 214), "cloth": (58, 36, 108), "gem": (206, 156, 255)},
+         parts=heavy([great_helm("plate", "trim"), halo("gem")], mark="star", big=1.4, cape_mat="cloth", extra=[crystals("gem")]),
+         bonus=[eff("resistance", 1), answer("reflect", 0.2)],
+         text=("Full set: Resistance II, and a fifth of melee damage returns to the attacker",
+               "Set completo: Resistencia II, y un quinto del daño cuerpo a cuerpo vuelve al atacante")),
+    dict(name="aetherium_requiem", repair="aetherium", forge=AETHERIUM_FORGE, cls="necromancer", level=98, weight="medium", style="robe", names=("Aetherium Requiem", "del Réquiem de Aeterio"),
+         head=("Aetherium Cowl", "Capucha de Aeterio"),
+         pal={"cloth": (44, 30, 78), "cloth2": (206, 230, 240), "plate": (206, 230, 240), "trim": (150, 214, 236), "gem": (190, 120, 255)},
+         parts=robe([hood_deep("cloth"), lich_crown("plate", "gem")], mark="eye_emblem",
+                    extra=[shoulder_orbs("gem", "trim"), high_collar("cloth", "trim")]),
+         bonus=[on_kill(heal=2.0), eff("regeneration", 1, "low_health")],
+         text=("Full set: each kill heals you one heart, and Regeneration II while below half health",
+               "Set completo: cada muerte te cura un corazón, y Regeneración II con menos de media vida")),
+    dict(name="aetherium_astrolabe", repair="aetherium", forge=AETHERIUM_FORGE, cls="sorceress", level=98, weight="light", style="robe", names=("Aetherium Astrolabe", "del Astrolabio de Aeterio"),
+         head=("Aetherium Hat", "Sombrero de Aeterio"),
+         pal={"cloth": (222, 236, 248), "cloth2": (128, 82, 214), "trim": (128, 82, 214), "gem": (150, 236, 255)},
+         parts=robe([wizard_hat("cloth", "trim", "gem"), halo("gem")], mark="star", extra=[crystals("gem"), cape("cloth2")]),
+         bonus=[eff("speed"), eff("slow_falling", 0, "crouching"), eff("night_vision")],
+         text=("Full set: move faster, see in the dark, and fall softly while crouching",
+               "Set completo: te mueves más rápido, ves en la oscuridad y caes suavemente agachado")),
+    dict(name="aetherium_shade", repair="aetherium", forge=AETHERIUM_FORGE, cls="thief", level=98, weight="medium", style="leather", names=("Aetherium Shade", "de la Sombra de Aeterio"),
+         head=("Aetherium Hood", "Capucha de Aeterio"),
+         pal={"leather": (52, 40, 86), "cloth": (206, 230, 240), "trim": (150, 214, 236), "gem": (206, 156, 255)},
+         parts=leather([hood_deep("leather", "cloth")], extra=[crystals("gem")], coat=True),
+         bonus=[eff("speed", 1), eff("invisibility", 0, "crouching"), on_kill(effect="minecraft:haste", amplifier=1, duration=160)],
+         text=("Full set: Speed II, you fade from sight while crouching, and each kill quickens your hands",
+               "Set completo: Velocidad II, te desvaneces agachado, y cada muerte acelera tus manos")),
+    dict(name="aetherium_dominion", repair="aetherium", forge=AETHERIUM_FORGE, cls="king", level=98, weight="medium", style="royal", names=("Aetherium Dominion", "del Dominio de Aeterio"),
+         head=("Aetherium Crown", "Corona de Aeterio"),
+         pal={"cloth": (206, 230, 240), "cloth2": (88, 52, 160), "trim": (232, 196, 90), "gem": (190, 120, 255), "fur": (240, 240, 248)},
+         parts=royal([crown("trim", "gem"), halo("gem")], mark="sun", extra=[ermine_cape("cloth2", "fur"), shoulder_orbs("gem", "trim")]),
+         bonus=[{"type": "absorption", "every": 300}, eff("strength", 0, "low_health"), eff("hero_of_the_village")],
+         text=("Full set: honored, a shield of absorption every 15 seconds, and Strength while below half health",
+               "Set completo: honrado, un escudo de absorción cada 15 segundos, y Fuerza con menos de media vida")),
 ]
 
 # the unique armor pieces (droppable Relics): one piece each, with its own model

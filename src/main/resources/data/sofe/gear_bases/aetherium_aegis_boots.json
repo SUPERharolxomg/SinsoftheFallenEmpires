@@ -1,0 +1,12 @@
+{
+  "item": "sofe:aetherium_aegis_boots",
+  "slot": "armor",
+  "classes": [
+    "knight"
+  ],
+  "min_item_level": 98,
+  "requires": {
+    "attribute": "strength",
+    "value": 159
+  }
+}

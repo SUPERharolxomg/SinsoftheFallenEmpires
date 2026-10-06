@@ -215,8 +215,9 @@ def bomb(name, kind):
 
 
 def mining_hammer(name, kind):
-    metal = BRASS if kind == "brass" else ICE
-    hw.hammer(name, metal, DARK_WOOD, LEATHER, band=GOLD if kind == "brass" else STEEL, long=10, half=8.5)
+    metal = {"brass": BRASS, "glacial": ICE, "aetherium": pal((200, 210, 245))}[kind]
+    band = {"brass": GOLD, "glacial": STEEL, "aetherium": pal((150, 90, 230))}[kind]  # the Void Crystal's violet
+    hw.hammer(name, metal, DARK_WOOD if kind != "aetherium" else pal((70, 190, 100)), LEATHER, band=band, long=10, half=8.5)
 
 
 def drill(name):
@@ -421,6 +422,8 @@ if __name__ == "__main__":
         n = i["id"]
         if kind == "pickaxe":
             mp.pickaxe(n, PICK_RAMPS[args[0]])
+        elif kind == "tool":
+            mp.tool(n, PICK_RAMPS[args[1]], args[0])
         elif kind == "bow":
             bow(n, args[0], None)
             for k in range(3):
