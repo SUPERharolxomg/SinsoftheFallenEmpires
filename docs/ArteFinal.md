@@ -171,3 +171,595 @@ Any tool works as long as every piece gets the **same style reference**. Three g
 | **Stable Diffusion XL or FLUX, local** (Fooocus or ComfyUI) | Free | Unlimited images on the development PC (RTX 4060) | Fooocus "Image Prompt" with the reference image |
 
 Before publishing check the tool's terms for the plan used, and say on the mod's page that the illustrations were made with AI (CurseForge and Modrinth allow it).
+
+## Ready to paste
+
+Every illustration still missing, with its whole message for the image AI (ChatGPT, or any other). For each one:
+
+1. Open a new chat and attach the style reference (`art/concepts/style_reference_bearers.png`).
+2. Copy the message in the box and send it.
+3. Save the picture as PNG with the name shown, in `src/main/resources/assets/sofe/textures/gui/splash/<folder>/` (or hand it over to be put in place).
+
+This list is written by `scripts/make_art_prompts.py` from the tables above; run it again and the pieces already in the game leave it.
+
+58 to go.
+
+### 1. `fate/sulthari_bazaar.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ottoman brass city at dawn, a crowded night bazaar of lanterns and silk awnings still busy at sunrise, merchants and families, scaffolding on a great observatory dome being repaired with gold tiles in the background, warm gold and red.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 2. `fate/sulthari_observatory.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ottoman brass city at dawn, a gleaming rebuilt observatory with a huge brass telescope lens pointed at the pale sky, below it a poor market of patched canvas tents among ash and rubble.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 3. `fate/sulthari_unsettled.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ottoman brass city at grey dawn, half-repaired domes and walls, a brass tramway running again through damaged streets, a council hall with lit windows, muted colors.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. This is the version where nothing was settled: greyer and dimmer than a hopeful dawn, the sun weak behind clouds. Landscape format.
+```
+
+### 4. `fate/nordrath_peace.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Norse clans gathered around one great bonfire in a snowy hall at dawn, axes laid down in a pile, a forge glowing in the background hammering plowshares, ice blue and warm firelight.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 5. `fate/nordrath_war.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Snowy mountain pass at dawn, ghostly armored Norse warriors still fighting in the distance under the mountain, living clansmen watching from the pass with torches and banners, blood red and ice blue.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 6. `fate/nordrath_unsettled.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Abandoned burning citadel now covered in snow, separate Norse holds on distant hills each with its own small fire, grey dawn, lonely and cold.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. This is the version where nothing was settled: greyer and dimmer than a hopeful dawn, the sun weak behind clouds. Landscape format.
+```
+
+### 7. `fate/parsivan_awakened.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian palace hanging gardens at dawn, courtiers in purple and turquoise silks waking on cushions, some weeping, gates thrown open, common people walking in among fountains and flowers.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 8. `fate/parsivan_asleep.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian palace gardens at dawn, courtiers asleep and smiling on silk cushions overgrown by roses and vines, violet petals drifting, travelers passing quietly on a path.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 9. `fate/parsivan_unsettled.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian hanging gardens grown wild at grey dawn, some sleepers, some wandering figures, tangled vines over turquoise domes, uncertain hazy light.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. This is the version where nothing was settled: greyer and dimmer than a hopeful dawn, the sun weak behind clouds. Landscape format.
+```
+
+### 10. `fate/khemet_guardians.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Egyptian desert town at dawn guarded by tall translucent turquoise spirit warriors with jackal-like helms standing at the gates, children sleeping safely inside.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 11. `fate/khemet_unsettled.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Half-dried marsh beside pyramids at grey dawn, faint lost spirits drifting among dead reeds and catacomb entrances, muted sand colors.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. This is the version where nothing was settled: greyer and dimmer than a hopeful dawn, the sun weak behind clouds. Landscape format.
+```
+
+### 12. `fate/aureum_law.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman marble forum at dawn, a magistrate reading a scroll aloud from a rostrum to a large crowd of all classes, royal blue banners, gold light on columns.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 13. `fate/aureum_shared.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman marble city street at dawn, chests of gold coins being handed out to crowds, bread and market stalls, cheerful noise, slightly worn marble, gold and royal blue.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 14. `fate/aureum_unsettled.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman forum at grey dawn busy with traders and orators, a great court building with closed bronze doors, a sealed golden vault door in shadow, muted colors.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. This is the version where nothing was settled: greyer and dimmer than a hopeful dawn, the sun weak behind clouds. Landscape format.
+```
+
+### 15. `epilogue/cassian_full.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman marble fortress-chapel at dawn with a great bronze scale emblem over open gates, knights of many different peoples in blue and gold training in the courtyard, an empty sunlit rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 16. `epilogue/cassian_unfinished.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ruined Roman marble chapel at grey dawn, broken scale emblem fallen, a single torch at an empty gate, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 17. `epilogue/ankhareth_full.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Colossal Egyptian underworld gate opening at dawn, a procession of glowing peaceful souls walking through it into golden light, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 18. `epilogue/ankhareth_unfinished.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Egyptian underworld gate at grey dawn, a few souls passing, one empty place in the procession, cold turquoise light, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 19. `epilogue/shirin_full.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian observatory terrace at dawn under a sky of glowing drawn constellation lines forming a new star map, one bright new star, violet and silver, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 20. `epilogue/shirin_unfinished.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian gardens at grey dawn, a faint ghostly woman's silhouette among the flowers, a star map in the sky with one dark gap, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 21. `epilogue/rurik_full.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Norse village being rebuilt at dawn, new timber longhouses, carts of gold delivered to clan chiefs, smoke from chimneys, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 22. `epilogue/rurik_unfinished.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Burned Norse village at grey dawn, ash and charred beams, a lone hall with one candle and a pile of gold inside, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 23. `epilogue/azhar_full.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ottoman throne hall at dawn with an empty throne, a round table of leaders of five different peoples, the sealed glowing book beneath the throne, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 24. `epilogue/azhar_unfinished.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Vast empty Ottoman throne hall at grey dawn, empty chairs around a round table, a faint glow from a sealed book beneath the throne, an empty rise in the foreground center.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 25. `crowned/knight.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman marble city burning under a black eclipse sun with a fiery ring, knights in blue and gold kneeling before an empty dark throne on a dais, melted bronze scales, embers and ash.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 26. `crowned/necromancer.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Egyptian necropolis burning under a black eclipse sun, endless rows of mummified dead standing guard with glowing teal eyes before an empty throne on a dais, ash falling.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 27. `crowned/sorceress.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian palace burning under a black eclipse sun, stars falling burning from the sky, a dreaming court bowing before an empty throne on a dais, violet and fire.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 28. `crowned/thief.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Norse mountain hall burning under a black eclipse sun, mountains of gold coins, chained clansmen carrying sacks, an empty throne on a dais, embers.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 29. `crowned/king.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ottoman brass city burning under a black eclipse sun, crowds bowing in ash-covered squares, melted crowns at the foot of an empty golden throne on a dais, the observatory in flames.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Leave an empty, lit spot in the center of the lower third: no character standing there. Landscape format.
+```
+
+### 30. `boss/vorath.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Colossal demon warlord of wrath with cracked horns and molten armor, red glowing eyes, giant flaming axe, in a burning volcanic citadel full of ghostly endless warriors.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 31. `boss/luxara.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Beautiful terrifying winged sorceress demon of lust in pink and violet silks, bat wings, mirror shards orbiting her, hypnotic pink eyes, in moonlit Persian gardens full of sleepers.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 32. `boss/morthis.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Enormous bloated pharaoh demon of sloth seated in a stagnant swamp, rotting gold mask and wrappings, green glowing eyes, mummies rising from the mud around him.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 33. `boss/avarok.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Huge demon of greed made of gold coins and chains, a gaping sack-like belly, yellow glowing eyes, clawed hands grabbing, in a colossal marble vault overflowing with gold.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 34. `boss/gularth.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Monstrous gluttonous demon with a cleaver and a vast maw, devouring the stone floor, orange glowing eyes, in an underground feast hall of rotten banquet tables.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 35. `boss/envyris.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Gaunt green-eyed demoness of envy on a shadowy throne in ruined Aureum, mirror-like shadow copies of heroes around her, emerald glow, scythe.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 36. `boss/prython.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Radiant fallen angel of pride with golden wings and a cracked halo, a sword of false sunlight, standing atop an upside-down white spire in the sky above a burning Ottoman city.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 37. `boss/nahrazel.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Colossal ash titan, the first fallen devil, seven glowing sin colors in cracks across his body, seated on an inverted throne in a cavern beneath the city, giant open book of light with seven locks before him.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 38. `boss/kaleth.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Corrupted Norse warrior guardian with a burning greatsword, cracked iron armor, torn shackles, in a volcanic forge.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 39. `boss/serath.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Pale blood-drinking warrior maiden in red-stained Norse armor, pools of blood, a snowy arena.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 40. `boss/mirael.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Veiled ghostly whisperer in violet silks half invisible, misty Persian bathhouse with turquoise pools.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 41. `boss/thessyn.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Spider-bodied weaver in silk robes spinning webs across a caravanserai on the Silk Road, poison green glow.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 42. `boss/dormiel.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Sleeping lantern-bearing guardian in Egyptian wrappings, clouds of drowsy dust, nightmare shapes, catacombs.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 43. `boss/goldarc.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman guardian in gold-coin armor with a huge golden shield, coins flying, marble treasury.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 44. `boss/nixara.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Hollow masked merchant with an empty coat, false gold and scales, market stalls over trapdoors.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 45. `boss/fenrath.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Wolf-like devourer with a cavernous acid-dripping maw, icy caverns.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 46. `boss/shadeyn.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Gladiator guardian with a shattered mirror blade, mirrored shadow copies, ruined colosseum sand.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 47. `boss/solrath.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: False prophet in white and gold robes with a spear of false sunlight, pillars of holy light, an Ottoman temple.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 48. `empire/sulthari.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Ottoman brass city on a plateau behind walls of glowing cyan aetherium, domes and minarets, the Great Observatory, the last free city at dusk.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 49. `empire/nordrath.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Norse tundra and fjords under a red sky, volcanic forges, longhouses and runestones veined with black aetherium.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 50. `empire/parsivan.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Persian hanging gardens and turquoise domes overgrown and dreaming, violet mist, black aetherium cracks.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 51. `empire/khemet.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Egyptian river valley with pyramids and catacombs, a stagnant green marsh, black aetherium veins in the sand.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 52. `empire/aureum.png`
+
+```text
+Create a wide landscape illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Roman marble republic in ruins, aqueducts and a colosseum, gold everywhere and violet corruption.
+
+Rules: no text, no letters, no logos. Keep the bottom quarter of the image dark and quiet (ground, shadow or mist), because subtitles will go there. Landscape format.
+```
+
+### 53. `map/codex_map.png`
+
+```text
+Create a square illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Antique illustrated fantasy map on parchment, Sulthari at the center, Nordrath to the north, Parsivan north-east, Khemet south-east, Aureum to the west, a southern sea between Aureum and Khemet, small painted cities, mountains, rivers, no text.
+
+Rules: no text, no letters, no logos. Square format.
+```
+
+### 54. `hero/cassian.png`
+
+```text
+Create a tall portrait-format illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Portrait card of a Roman-Byzantine knight in blue and gold plate with a scale emblem shield, noble scarred face.
+
+Rules: no text, no letters, no logos. Portrait format.
+```
+
+### 55. `hero/ankhareth.png`
+
+```text
+Create a tall portrait-format illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Portrait card of an Egyptian necromancer in turquoise and gold with a jackal mask and floating soul lights.
+
+Rules: no text, no letters, no logos. Portrait format.
+```
+
+### 56. `hero/shirin.png`
+
+```text
+Create a tall portrait-format illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Portrait card of a Persian sorceress in violet and silver with an astrolabe and constellation runes.
+
+Rules: no text, no letters, no logos. Portrait format.
+```
+
+### 57. `hero/rurik.png`
+
+```text
+Create a tall portrait-format illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Portrait card of a Norse rogue with a fur hood, twin axes and a single gold coin.
+
+Rules: no text, no letters, no logos. Portrait format.
+```
+
+### 58. `hero/azhar.png`
+
+```text
+Create a tall portrait-format illustration in exactly the style of the attached image (dark epic fantasy digital painting, painterly, dramatic rim lighting, volumetric light and mist, rich colors against deep shadows).
+
+Scene: Portrait card of an Ottoman sultan in red and gold with a turban crown and a scepter.
+
+Rules: no text, no letters, no logos. Portrait format.
+```
