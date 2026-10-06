@@ -37,7 +37,8 @@ public final class PlaceShots {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.getSingleplayerServer() == null) return;
         mc.options.pauseOnLostFocus = false;
-        if (mc.screen != null && !(mc.screen instanceof com.sofe.client.screen.CrownedInAshScreen)) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
+        if (mc.screen != null && !(mc.screen instanceof com.sofe.client.screen.CrownedInAshScreen)
+                && !(mc.screen instanceof com.sofe.client.screen.EndingScreen)) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
         if (places == null) {
             places = new ArrayList<>(Arrays.asList(System.getProperty("sofe.placeShots").split(",")));
             mc.options.hideGui = true;
@@ -52,7 +53,7 @@ public final class PlaceShots {
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
             if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
-                    && !places.get(place).startsWith("scene:")) {
+                    && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:")) {
                 look(mc, places.get(place), view);
                 wait = places.get(place).endsWith("/city") ? SETTLE * 4 : SETTLE; // a capital's far side takes a while to load
                 return;
@@ -65,7 +66,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") ? 30 : places.get(place).startsWith("at:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") ? 30 : places.get(place).startsWith("at:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -152,6 +153,16 @@ public final class PlaceShots {
                 if (p != null) p.setGameMode(GameType.CREATIVE);
             });
             mc.setScreen(new com.sofe.client.screen.CrownedInAshScreen((int) (Float.parseFloat(v[2]) * 20) - 30));
+            return;
+        }
+        if (piece.startsWith("ending:")) { // ending:<bearer>:<card>, the ending's card for that Bearer, a second and a half in
+            String[] v = piece.split(":");
+            ClientClassData.set(com.sofe.player.PlayerClass.byId(v[1]));
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p != null) p.setGameMode(GameType.CREATIVE);
+            });
+            mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2])));
             return;
         }
         if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)

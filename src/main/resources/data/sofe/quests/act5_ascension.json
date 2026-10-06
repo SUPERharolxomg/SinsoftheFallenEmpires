@@ -73,8 +73,13 @@
       "amount": 30000
     },
     {
-      "type": "open_dialogue",
-      "dialogue": "sofe:act5/the_ending"
+      "type": "award_advancement",
+      "advancement": "story/the_seal_rewritten"
+    },
+    {
+      "type": "play_scene",
+      "scene": "the_ending",
+      "then": "sofe:act5/after_the_ending"
     }
   ]
 }

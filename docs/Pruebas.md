@@ -33,7 +33,7 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] Cinematic mode shows the letterbox bars and blocks movement; conversation mode does not
 - [ ] Every dialogue line is a lang key present in `en_us` and `es_es`
 - [ ] A region fate can be set only once and is stored per player
-- [ ] The ending shows one slide per region matching that player's fates, and the Bearer epilogue matches their personal quests
+- [x] The ending shows one slide per region matching that player's fates, and the Bearer epilogue matches their personal quests (`EpilogueTest`, `Sprint8GameTests`)
 - [ ] The `fate_is` condition reads the player's fate
 - [ ] Every quest and dialogue file parses, and every quest, step, line, answer and speaker name has a lang key (`StoryDataFilesTest`)
 - [ ] The Journal lists active and completed quests, the act and the fates; tracking a quest moves the Quest Compass
@@ -51,7 +51,7 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] All 10 Broken Oaths can be defeated
 - [ ] Envyris copies the player's actual class skills
 - [ ] Choosing the King switches the Council to Grand Vizier Ozhan's scenes
-- [ ] The epilogue shown matches the player's Bearer
+- [x] The epilogue shown matches the player's Bearer (`EpilogueTest`)
 - [ ] Dungeons generate without crashes
 - [ ] No crash on dimension transitions
 

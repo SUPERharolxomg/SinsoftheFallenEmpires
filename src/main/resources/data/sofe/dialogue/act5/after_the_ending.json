@@ -1,0 +1,14 @@
+{
+  "style": "sulthari",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.act5.after_the_ending.1"
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.act5.after_the_ending.2"
+    }
+  ]
+}

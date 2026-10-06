@@ -30,8 +30,8 @@ Small extra dimensions are used only where the story needs them:
 
 | Dimension | Used for |
 |-----------|----------|
-| `sofe:inverted_throne` | The Inverted Throne under Sulthari, Act V |
-| `sofe:codex_interior` | Nahrazel's phase 3 and the ending inside the Codex |
+| ~~`sofe:inverted_throne`~~ | Not needed: the Inverted Throne is built beneath Sulthari, reached by a winding stair |
+| ~~`sofe:codex_interior`~~ | Not needed: Nahrazel's third phase turns his arena to the Codex's pages, and the ending inside the Codex is a scene (`EndingScreen`) |
 | `sofe:echo` | Instanced Echo fights for late joiners (one instance per player) |
 
 **The Nether and the End are part of the campaign.** They open with the story, follow the same locks and give materials the player needs (see [W5](#w5-the-nether-and-the-end)).
