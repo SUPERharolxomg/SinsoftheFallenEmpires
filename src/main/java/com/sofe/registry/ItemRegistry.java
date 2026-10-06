@@ -868,6 +868,20 @@ public final class ItemRegistry {
     public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal",
             () -> new Item(new Item.Properties().rarity(Rarity.RARE).fireResistant()));
     public static final RegistryObject<Item> VOID_INK = ITEMS.register("void_ink", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    /** The Sealing Quill (docs/Mundo.md, W5): forged with Void Ink, it opens the Inverted Throne; a soulbound story item. */
+    public static final RegistryObject<Item> SEALING_QUILL = ITEMS.register("sealing_quill",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()) {
+                @Override
+                public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.Level level, List<net.minecraft.network.chat.Component> tooltip,
+                                            net.minecraft.world.item.TooltipFlag flag) {
+                    tooltip.add(net.minecraft.network.chat.Component.translatable("item.sofe.sealing_quill.desc").withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+                }
+
+                @Override
+                public boolean isFoil(net.minecraft.world.item.ItemStack stack) {
+                    return true;
+                }
+            });
 
     /** The seven sin gems, each rough, cut and as an Oath Gem (com.sofe.gear.SinGem): "rough_wrath_ruby" and so on. */
     public static final java.util.Map<String, RegistryObject<Item>> SIN_GEMS = sinGems();
@@ -1067,7 +1081,7 @@ public final class ItemRegistry {
         List<Item> items = new ArrayList<>();
         potions().forEach(i -> items.add(i.get()));
         for (RegistryObject<Item> i : List.of(BEARERS_FLASK, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
-                RETURN_SCROLL, BLUEPRINT, CODEX_SHARD, DINAR)) {
+                RETURN_SCROLL, BLUEPRINT, CODEX_SHARD, SEALING_QUILL, DINAR)) {
             items.add(i.get());
         }
         veiled().forEach(i -> items.add(i.get()));
@@ -1094,7 +1108,7 @@ public final class ItemRegistry {
         List<RegistryObject<Item>> flat = new ArrayList<>(List.of(RETURN_SCROLL, CODEX_SHARD, INFERNAL_EMBER, WAILING_SOUL, DINAR,
                 BRASS_AMULET, BRASS_RING, SMALL_TALISMAN, LARGE_TALISMAN, BLUEPRINT, BRASS_FLASK, POMEGRANATE, DESERT_LOTUS,
                 MINOR_POMEGRANATE_ELIXIR, BEARERS_TONIC, BEARERS_FLASK, DUNE_LEATHER, FROSTPELT, VOID_ASH,
-                MOONSILK, SUNREED_PAPYRUS, VOID_CRYSTAL, VOID_INK));
+                MOONSILK, SUNREED_PAPYRUS, VOID_CRYSTAL, VOID_INK, SEALING_QUILL));
         flat.addAll(SIN_GEMS.values());
         flat.addAll(armorPieces());
         flat.addAll(potions());

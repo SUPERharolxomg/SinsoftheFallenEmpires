@@ -80,6 +80,8 @@ class QuestLogicTest {
         assertEquals(1, QuestLogic.progress(new Objective.ReachRegion("nordrath"), 0, new QuestEvent.EnteredRegion("nordrath")));
         assertEquals(1, QuestLogic.progress(new Objective.DefeatBoss("sofe:vorath"), 0, new QuestEvent.BossDefeated("sofe:vorath")));
         assertEquals(0, QuestLogic.progress(new Objective.Manual(), 0, new QuestEvent.Talked("ozhan")));
+        assertEquals(1, QuestLogic.progress(new Objective.Obtain("sofe:sealing_quill"), 0, new QuestEvent.Carries(java.util.Set.of("sofe:sealing_quill", "minecraft:torch"))));
+        assertEquals(0, QuestLogic.progress(new Objective.Obtain("sofe:sealing_quill"), 0, new QuestEvent.Carries(java.util.Set.of("sofe:void_ink"))));
         assertTrue(QuestLogic.matches("sofe:void_*", "sofe:void_wretch"));
         assertFalse(QuestLogic.matches("sofe:void_wretch", "sofe:void_stalker"));
     }

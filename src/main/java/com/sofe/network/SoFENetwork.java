@@ -103,6 +103,12 @@ public final class SoFENetwork {
                 .decoder(TrackQuestPacket::decode)
                 .consumerMainThread(TrackQuestPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(ScenePackets.Play.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ScenePackets.Play::encode).decoder(ScenePackets.Play::decode).consumerMainThread(ScenePackets.Play::handle).add();
+        CHANNEL.messageBuilder(ScenePackets.Done.class, nextId++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(ScenePackets.Done::encode).decoder(ScenePackets.Done::decode).consumerMainThread(ScenePackets.Done::handle).add();
+        CHANNEL.messageBuilder(CorruptedPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CorruptedPacket::encode).decoder(CorruptedPacket::decode).consumerMainThread(CorruptedPacket::handle).add();
     }
 
     private static void registerCombat() {

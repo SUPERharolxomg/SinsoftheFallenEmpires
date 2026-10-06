@@ -16,6 +16,7 @@ LANG = os.path.join("src", "main", "resources", "assets", "sofe", "lang")
 SPIRE_TOP, THRONE_FLOOR = 200, -20   # EmpireBuilder.SPIRE_TOP and THRONE_FLOOR
 
 TEMPLE, SPIRE, THRONE = (700, 700), (-700, 700), (-700, 1050)
+VOID_GATE = (-48, -96)   # sofe:sulthari/void_gate, beside the Great Observatory
 
 
 def places():
@@ -43,7 +44,9 @@ def places():
     conditions = {
         "temple_of_sulthari": {"type": "act_reached", "act": 5},
         "celestial_spire": {"type": "boss_defeated", "boss": "sofe:solrath"},
-        "inverted_throne": {"type": "boss_defeated", "boss": "sofe:prython"},
+        # the Throne opens only to a Bearer who carries the Sealing Quill (docs/Mundo.md, W5)
+        "inverted_throne": {"type": "all_of", "conditions": [{"type": "boss_defeated", "boss": "sofe:prython"},
+                                                             {"type": "item_owned", "item": "sofe:sealing_quill"}]},
     }
     for cid, cond in conditions.items():
         with open(os.path.join(DATA, "conditions", cid + ".json"), "w", encoding="utf-8") as f:
@@ -64,18 +67,26 @@ QUEST = {
          "on_start": [{"type": "open_dialogue", "dialogue": "sofe:act5/the_siege"}]},
         {"objective": {"type": "defeat_boss", "boss": "sofe:prython"}, "target": {"x": SPIRE[0], "z": SPIRE[1]},
          "on_start": [{"type": "open_dialogue", "dialogue": "sofe:act5/the_spire"}]},
-        {"objective": {"type": "defeat_boss", "boss": "sofe:nahrazel"}, "target": {"x": THRONE[0], "z": THRONE[1]},
+        {"objective": {"type": "obtain_item", "item": "sofe:sealing_quill"}, "target": {"x": VOID_GATE[0], "z": VOID_GATE[1]},
          "on_start": [{"type": "open_dialogue", "dialogue": "sofe:act5/the_inverted_throne"}]},
+        {"objective": {"type": "defeat_boss", "boss": "sofe:nahrazel"}, "target": {"x": THRONE[0], "z": THRONE[1]},
+         "on_start": [{"type": "open_dialogue", "dialogue": "sofe:act5/the_quill_forged"}]},
     ],
     "rewards": [{"type": "give_xp", "amount": 30000}, {"type": "open_dialogue", "dialogue": "sofe:act5/the_ending"}],
 }
 QUEST_TEXT = (("The Ascension", "La Ascensión"), [
     ("Defeat Solrath in the Temple of Sulthari", "Derrota a Solrath en el Templo de Sulthari"),
     ("Climb the Celestial Spire and defeat Prython", "Sube a la Aguja Celestial y derrota a Prython"),
+    ("Cross the Void Gate and forge the Sealing Quill with Void Ink", "Cruza la Puerta del Vacío y forja la Pluma Selladora con Tinta del Vacío"),
     ("Descend to the Inverted Throne and defeat Nahrazel", "Desciende al Trono Invertido y derrota a Nahrazel")])
 
 # dialogue id: (style, [(speaker, en, es, answers or None)], on_end)
 REFUSE = [("I refuse.", "Me niego."), ("(Say nothing, and raise your weapon.)", "(No dices nada y alzas tu arma.)")]
+# Prython's offer can be taken: "Crowned in Ash", the secret bad ending (docs/Jugabilidad.md), then the offer again
+OFFER = [("I refuse.", "Me niego."),
+         ("(Take the crown.)", "(Tomas la corona.)", [
+             {"type": "award_advancement", "advancement": "secret/crowned_in_ash"},
+             {"type": "play_scene", "scene": "crowned_in_ash", "then": "sofe:act5/prythons_offer"}])]
 DIALOGUES = {
     "act5/the_siege": ("sulthari", [
         ("narrator", "Sulthari burns. Over the Great Observatory a spire of white light hangs upside down from the sky, and the Void pours from its tip into the streets.",
@@ -99,12 +110,23 @@ DIALOGUES = {
          "Mira abajo. Desde aquí, cada imperio de Aetheris cabe en tu mano. ¿Por qué devolvérselo a los débiles?", REFUSE)], None),
     "act5/prythons_offer": ("void", [
         ("prython", "Enough. Hand me the six fragments, and I will crown you over all of Aetheris. No Council. No Law. Only you.",
-         "Basta. Entrégame los seis fragmentos, y te coronaré sobre toda Aetheris. Sin Consejo. Sin Ley. Solo tú.", REFUSE)], None),
+         "Basta. Entrégame los seis fragmentos, y te coronaré sobre toda Aetheris. Sin Consejo. Sin Ley. Solo tú.", OFFER)], None),
     "act5/the_inverted_throne": ("void", [
         ("narrator", "Prython falls, and the Spire falls with him: it turns over in the sky and sinks, point first, through the city and into the earth.",
          "Prython cae, y la Aguja cae con él: se da la vuelta en el cielo y se hunde, punta primero, a través de la ciudad y dentro de la tierra.", None),
         ("narrator", "Where it went down, a stair winds into the dark. At the bottom is the Inverted Throne, and on it, the one the Codex was made to hold.",
-         "Donde se hundió, una escalera se enrosca hacia la oscuridad. Al fondo está el Trono Invertido, y en él, aquel para quien se hizo el Códice.", None)], None),
+         "Donde se hundió, una escalera se enrosca hacia la oscuridad. Al fondo está el Trono Invertido, y en él, aquel para quien se hizo el Códice.", None)],
+        [{"type": "open_dialogue", "dialogue": "sofe:act5/the_sealing_quill"}]),
+    "act5/the_sealing_quill": ("void", [
+        ("nilufar", "The stair will not open for you, Bearer. A seal is a page, and his was written from the other side.",
+         "La escalera no se abrirá para ti, Portador. Un sello es una página, y el suyo se escribió desde el otro lado.", None),
+        ("nilufar", "Go through the Void Gate, into the Outer Void. Bring back its crystal, and the ink the Alembic draws from it.",
+         "Cruza la Puerta del Vacío, hacia el Vacío Exterior. Trae su cristal, y la tinta que el Alambique saca de él.", None),
+        ("nilufar", "A feather, the ink, a crystal of the Void and a shard of clean aetherium: that is the Sealing Quill. Only with it will the Throne let you down.",
+         "Una pluma, la tinta, un cristal del Vacío y un fragmento de aetherio limpio: esa es la Pluma Selladora. Solo con ella te dejará bajar el Trono.", None)], None),
+    "act5/the_quill_forged": ("void", [
+        ("narrator", "The Quill drinks the Void Ink, and its nib glows like the edge of a page about to burn. Beneath Sulthari, the stair to the Inverted Throne lies open.",
+         "La Pluma bebe la Tinta del Vacío, y su punta brilla como el borde de una página a punto de arder. Bajo Sulthari, la escalera al Trono Invertido está abierta.", None)], None),
     "act5/the_first_fallen": ("void", [
         ("nahrazel", "Seven fragments. You carried every one of them to my door. Thank you, Bearer.",
          "Siete fragmentos. Los trajiste todos hasta mi puerta. Gracias, Portador.", None),
@@ -114,6 +136,74 @@ DIALOGUES = {
          "El Primer Caído se deshace como ceniza al viento. Por un momento el Códice se cierra contigo dentro de sus páginas, y allí tu propio pecado te espera una última vez.", None),
         ("narrator", "You turn it down. You wake among the ruins of the Inverted Throne, and above you, through the broken city, the black aetherium of Aetheris begins to run clear.",
          "Lo rechazas. Despiertas entre las ruinas del Trono Invertido, y sobre ti, a través de la ciudad rota, el aetherio negro de Aetheris empieza a aclararse.", None)], None),
+}
+
+# "Crowned in Ash" (CrownedInAshScreen): four lines for each Bearer, ruling a burning Aetheris
+CROWNED = {
+    "knight": [
+        ("The Order of the Scale kneels before you. You melted its scales into your crown.",
+         "La Orden de la Balanza se arrodilla ante ti. Fundiste sus balanzas para hacer tu corona."),
+        ("The courts of Aureum judge in your name now, and every sentence is the same.",
+         "Los tribunales de Aureum juzgan ahora en tu nombre, y todas las sentencias son la misma."),
+        ("Your wrath is the only Law left, and no one has lived to break it.",
+         "Tu ira es la única Ley que queda, y nadie ha vivido para romperla."),
+        ("Cassian sits on a throne of ash, and the scale in his hand weighs nothing at all.",
+         "Cassian se sienta en un trono de ceniza, y la balanza en su mano no pesa nada.")],
+    "necromancer": [
+        ("The gates of the underworld stand open, and no soul is allowed through them.",
+         "Las puertas del inframundo están abiertas, y a ninguna alma se le permite cruzarlas."),
+        ("The dead of Khemet stand in rows forever, guarding a king who never walks.",
+         "Los muertos de Khemet forman filas para siempre, guardando a un rey que nunca camina."),
+        ("Among them is your master, still waiting for the journey you promised him.",
+         "Entre ellos está tu maestro, esperando todavía el viaje que le prometiste."),
+        ("Ankhareth rules the dead of Aetheris, and none of them will ever rest.",
+         "Ankhareth reina sobre los muertos de Aetheris, y ninguno descansará jamás.")],
+    "sorceress": [
+        ("The stars of Parsivan burn out one by one, until only your light is left in the sky.",
+         "Las estrellas de Parsivan se apagan una a una, hasta que solo tu luz queda en el cielo."),
+        ("The court dreams of you now, and only of you.",
+         "La corte sueña ahora contigo, y solo contigo."),
+        ("Laleh's voice still calls from the Gardens. You stopped listening long ago.",
+         "La voz de Laleh aún llama desde los Jardines. Dejaste de escucharla hace mucho."),
+        ("Shirin draws the new map of the sky, and her sister's name is not on it.",
+         "Shirin dibuja el nuevo mapa del cielo, y el nombre de su hermana no está en él.")],
+    "thief": [
+        ("All the gold of Aetheris fills your vaults. The Nordrath clans dig it for you, in chains.",
+         "Todo el oro de Aetheris llena tus cámaras. Los clanes de Nordrath lo excavan para ti, encadenados."),
+        ("Your village was never rebuilt. There was no profit in it.",
+         "Tu aldea nunca se reconstruyó. No había ganancia en ello."),
+        ("You count your coins every night, and every night one is missing.",
+         "Cuentas tus monedas cada noche, y cada noche falta una."),
+        ("Rurik owns everything, and keeps nothing worth keeping.",
+         "Rurik lo posee todo, y no guarda nada que valga la pena.")],
+    "king": [
+        ("Emperor of Aetheris. Every crown of every empire was melted into yours.",
+         "Emperador de Aetheris. Cada corona de cada imperio se fundió en la tuya."),
+        ("There is no Council now, and no Pact: only your word, carved in every square.",
+         "Ya no hay Consejo, ni Pacto: solo tu palabra, tallada en cada plaza."),
+        ("Sulthari kneels in the ash of its own Observatory, and calls it glory.",
+         "Sulthari se arrodilla en la ceniza de su propio Observatorio, y lo llama gloria."),
+        ("Azhar sits beneath the false sun, and the Codex beneath his throne lies open.",
+         "Azhar se sienta bajo el sol falso, y el Códice bajo su trono yace abierto.")],
+}
+SCENE_TEXT = {
+    "scene.sofe.crowned_in_ash": ("Crowned in Ash", "Coronado en Ceniza"),
+    "scene.sofe.crowned_in_ash.title": ("Crowned in Ash", "Coronado en Ceniza"),
+    "scene.sofe.crowned_in_ash.wake": ("You blink. The wind on the Spire. Prython's hand is still held out to you.",
+                                       "Parpadeas. El viento en la Aguja. La mano de Prython sigue tendida hacia ti."),
+    "advancement.sofe.crowned_in_ash": ("Crowned in Ash", "Coronado en Ceniza"),
+    "advancement.sofe.crowned_in_ash.desc": ("Wear Pride's crown, for a moment.", "Lleva la corona de la Soberbia, por un momento."),
+    "item.sofe.sealing_quill": ("Sealing Quill", "Pluma Selladora"),
+    "item.sofe.sealing_quill.desc": ("Ink from the other side of the seal. It opens the Inverted Throne.",
+                                     "Tinta del otro lado del sello. Abre el Trono Invertido."),
+}
+# the hidden advancement: no hint, no message in the chat (docs/Jugabilidad.md: its only trace)
+SECRET_ADVANCEMENT = {
+    "display": {"icon": {"item": "minecraft:golden_helmet"}, "title": {"translate": "advancement.sofe.crowned_in_ash"},
+                "description": {"translate": "advancement.sofe.crowned_in_ash.desc"}, "frame": "challenge",
+                "show_toast": True, "announce_to_chat": False, "hidden": True},
+    "criteria": {"done": {"trigger": "minecraft:impossible"}},
+    "parent": "sofe:story/boss_solrath",
 }
 
 
@@ -132,10 +222,13 @@ def story():
             lang[k] = (en, es)
             if answers:
                 line["answers"] = []
-                for j, (aen, aes) in enumerate(answers, 1):
+                for j, answer in enumerate(answers, 1):
                     ak = "%s.answer%d" % (k, j)
-                    lang[ak] = (aen, aes)
-                    line["answers"].append({"text": ak, "next": -1})
+                    lang[ak] = answer[:2]
+                    a = {"text": ak, "next": -1}
+                    if len(answer) > 2:
+                        a["effects"] = answer[2]
+                    line["answers"].append(a)
             out.append(line)
         d = {"style": style, "cinematic": True, "lines": out}
         if on_end:
@@ -149,11 +242,19 @@ def story():
     d["on_end"] = [{"type": "start_quest", "quest": "sofe:act5_ascension"}]
     with open(path, "w", encoding="utf-8") as f:
         f.write(json.dumps(d, ensure_ascii=False, indent=2) + "\n")
+    for hero, lines in CROWNED.items():
+        for i, line in enumerate(lines, 1):
+            lang["scene.sofe.crowned_in_ash.%s.%d" % (hero, i)] = line
+    lang.update(SCENE_TEXT)
+    os.makedirs(os.path.join(DATA, "advancements", "secret"), exist_ok=True)
+    with open(os.path.join(DATA, "advancements", "secret", "crowned_in_ash.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps(SECRET_ADVANCEMENT, indent=2) + "\n")
     for id, name in (("solrath", ("Solrath", "Solrath")), ("prython", ("Prython", "Prython")), ("nahrazel", ("Nahrazel", "Nahrazel"))):
         lang["npc.sofe." + id] = name
     for cid, hint in (("temple_of_sulthari", ("The Temple opens in Act V", "El Templo se abre en el Acto V")),
                       ("celestial_spire", ("Defeat Solrath to climb the Celestial Spire", "Derrota a Solrath para subir a la Aguja Celestial")),
-                      ("inverted_throne", ("Defeat Prython to descend to the Inverted Throne", "Derrota a Prython para descender al Trono Invertido"))):
+                      ("inverted_throne", ("Defeat Prython and carry the Sealing Quill to descend to the Inverted Throne",
+                                           "Derrota a Prython y lleva la Pluma Selladora para descender al Trono Invertido"))):
         lang["message.sofe.gate." + cid] = hint
     for f, i in (("en_us", 0), ("es_es", 1)):
         p = os.path.join(LANG, f + ".json")

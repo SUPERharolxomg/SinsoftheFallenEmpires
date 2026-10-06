@@ -24,4 +24,8 @@ public sealed interface QuestEvent {
 
     record BossDefeated(String boss) implements QuestEvent {
     }
+
+    /** The ids of the items the player carries, sent every second while a quest asks for one. */
+    record Carries(java.util.Set<String> items) implements QuestEvent {
+    }
 }

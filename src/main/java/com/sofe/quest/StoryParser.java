@@ -66,6 +66,7 @@ public final class StoryParser {
             case "reach_level" -> new Objective.ReachLevel(json.get("level").getAsInt());
             case "defeat_boss" -> new Objective.DefeatBoss(str(json, "boss", null));
             case "manual" -> new Objective.Manual();
+            case "obtain_item" -> new Objective.Obtain(str(json, "item", null));
             default -> throw new IllegalArgumentException("unknown objective type \"" + type + "\"");
         };
     }
@@ -93,6 +94,8 @@ public final class StoryParser {
                 case "play_sound" -> new QuestEffect.PlaySound(str(effect, "sound", null),
                         effect.has("volume") ? effect.get("volume").getAsFloat() : 1f, effect.has("pitch") ? effect.get("pitch").getAsFloat() : 1f);
                 case "particles" -> new QuestEffect.Particles(str(effect, "particle", null), effect.has("count") ? effect.get("count").getAsInt() : 20);
+                case "award_advancement" -> new QuestEffect.AwardAdvancement(str(effect, "advancement", null));
+                case "play_scene" -> new QuestEffect.PlayScene(str(effect, "scene", null), effect.has("then") ? str(effect, "then", null) : null);
                 default -> throw new IllegalArgumentException("unknown effect type \"" + type + "\"");
             });
         }

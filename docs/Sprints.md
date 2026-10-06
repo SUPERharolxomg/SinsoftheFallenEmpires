@@ -410,16 +410,16 @@ See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
 ## Sprint 8 — Act V: The Ascension & Polish (Weeks 21-24)
 - [x] Sulthari under siege; Ozhan revealed as Solrath, the False Prophet (Law X), in the Temple of Sulthari: pillars of holy light, holy bolts, and in his second phase the beaten Broken Oaths raised as echoes (`SolrathEntity`; echoes are weaker and give nothing)
 - [x] Prython (Pride) at the Celestial Spire, using the mechanics of the six previous Archsins in turn (`SinPowers`), his Pride turning blows back in the second phase; his offer at the edge of defeat
-- [ ] Prython's offer: refusal, and the secret "Crowned in Ash" bad ending with one animation per Bearer and a hidden advancement
+- [x] Prython's offer: refusal, and the secret "Crowned in Ash" bad ending with one animation per Bearer and a hidden advancement: taking the crown plays a scene on that player's screen only (`CrownedInAshScreen`, `SceneService`, "play_scene" and "award_advancement" effects): their own Bearer, in their own skin and gear, crowned before a throne as the city of their empire burns under a false sun (Aureum's temples, Khemet's pyramids, Parsivan's domes and falling stars, Nordrath's longhouses, Sulthari's minarets), their people kneeling, four lines of their own; then the offer comes again. The hidden advancement `sofe:secret/crowned_in_ash` shows no hint and says nothing in the chat; nobody can hurt a Bearer weighing the offer or watching the scene. `-PplaceShots=scene:<bearer>:<second>` screenshots it
 - [ ] Aetherium-tier gear (Orichalcum + Raw Aetherium + Void Crystal)
-- [ ] Sealing Quill quest: Void Ink from the Outer Void, required to open the Inverted Throne
+- [x] Sealing Quill quest: Void Ink from the Outer Void, required to open the Inverted Throne: after Prython, Sister Nilufar sends the Bearer through the Void Gate (`act5/the_sealing_quill`); the Quill is crafted from a feather, Void Ink, a Void Crystal and an aetherium shard; carrying it finishes the step ("obtain_item" objective); the Inverted Throne's gate asks for Prython beaten and the Quill carried; soulbound, and the Council gives it back if lost
 - [x] The Spire inverts and sinks to the Inverted Throne (built beneath Sulthari, reached by a winding stair; a dimension of its own is not needed)
 - [ ] Dimensions `sofe:inverted_throne` and `sofe:codex_interior`
 - [x] Nahrazel, the First Fallen: colossus of ash, seven sins at once (and the Archsins raised as echoes), rewriting the seal inside the Codex (the arena turns to its pages; seven Seals hold him until they are broken) (`NahrazelEntity`, `SealGlyph`)
 - [x] Write and translate (en/es) the Act V dialogue (`scripts/make_act5_story.py`); epilogues still to come
 - [ ] Ending inside the Codex, the region fate slides and the Bearer epilogues (full and unfinished versions), plus the eighth-lock sequel hook
-- [ ] Implement multiplayer boss scaling
-- [ ] *(Rules)* Act V traits for vanilla mobs (corrupted zombies, arrow volleys, charged creepers)
+- [x] Implement multiplayer boss scaling: health +60% per extra player (Sprint 7.5), and with two Bearers or more every signature attack also marks up to three of the others, farthest from its target first, with a ring of its own that strikes for less as the blow falls (`SoFEBossEntity.markEchoes`; not for echo bosses)
+- [x] *(Rules)* Act V traits for vanilla mobs (corrupted zombies, arrow volleys, charged creepers): faster zombies, two-arrow volleys and charged creepers came in Sprint 7 (`MobTraits`); now Act V's vanilla zombies, husks and drowned are corrupted, with violet eyes that glow in the dark (`CorruptedEyesLayer`, sent to the players who see them)
 - [ ] Add sound effects and ambient music
 - [ ] Localization (English + Spanish)
 - [ ] *(Rules)* Post-game: all regions open, repeatable Echo fights

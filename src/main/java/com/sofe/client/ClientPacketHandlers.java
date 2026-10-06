@@ -47,6 +47,15 @@ public final class ClientPacketHandlers {
         Minecraft.getInstance().setScreen(new com.sofe.client.screen.StationScreen(kind));
     }
 
+    /** A scene of the story on this player's screen (SceneService); one the client does not know ends at once. */
+    public static void playScene(String scene) {
+        if ("crowned_in_ash".equals(scene)) {
+            Minecraft.getInstance().setScreen(new com.sofe.client.screen.CrownedInAshScreen());
+        } else {
+            com.sofe.network.SoFENetwork.sendToServer(new com.sofe.network.ScenePackets.Done());
+        }
+    }
+
     public static void openClassSelect() {
         if (ClientClassData.get().isEmpty()) {
             Minecraft.getInstance().setScreen(new ClassSelectScreen());

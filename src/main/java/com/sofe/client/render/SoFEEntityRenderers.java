@@ -102,6 +102,15 @@ public final class SoFEEntityRenderers {
             EntityRenderer<? extends net.minecraft.world.entity.player.Player> renderer = event.getSkin(skin);
             if (renderer instanceof PlayerRenderer player) player.addLayer(new OutfitLayer(player));
         }
+        for (var type : java.util.List.of(net.minecraft.world.entity.EntityType.ZOMBIE, net.minecraft.world.entity.EntityType.HUSK,
+                net.minecraft.world.entity.EntityType.DROWNED)) {
+            if (event.getRenderer(type) instanceof net.minecraft.client.renderer.entity.AbstractZombieRenderer<?, ?> zombie) addCorruptedEyes(zombie);
+        }
+    }
+
+    private static <T extends net.minecraft.world.entity.monster.Zombie, M extends net.minecraft.client.model.ZombieModel<T>> void addCorruptedEyes(
+            net.minecraft.client.renderer.entity.AbstractZombieRenderer<T, M> renderer) {
+        renderer.addLayer(new CorruptedEyesLayer<>(renderer));
     }
 
     static ResourceLocation outfit(PlayerClass playerClass) {

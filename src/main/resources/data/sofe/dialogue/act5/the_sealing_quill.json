@@ -1,0 +1,18 @@
+{
+  "style": "void",
+  "cinematic": true,
+  "lines": [
+    {
+      "speaker": "nilufar",
+      "text": "dialogue.sofe.act5.the_sealing_quill.1"
+    },
+    {
+      "speaker": "nilufar",
+      "text": "dialogue.sofe.act5.the_sealing_quill.2"
+    },
+    {
+      "speaker": "nilufar",
+      "text": "dialogue.sofe.act5.the_sealing_quill.3"
+    }
+  ]
+}

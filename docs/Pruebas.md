@@ -112,7 +112,7 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 
 ## Multiplayer
 
-- [ ] Boss health scales with player count and damage does not
+- [x] Boss health scales with player count and damage does not (`Sprint75GameTests`); with more players the signature marks the others too (`Sprint8GameTests`)
 - [ ] A mob spawning in Nordrath gets a level in 5-12; near a player in Act IV it is at least level 20
 - [ ] Level scaling multiplies health and damage as configured and survives a world reload
 - [ ] Vanilla mob traits appear only from their act; mobs from other mods get scaling but no traits; free mode worlds are untouched
@@ -153,8 +153,8 @@ How *Sins of the Fallen Empires* is tested. Use cases referenced here are in [Ca
 - [ ] With a grave mod installed, the SoFE corpse is off and no items are duplicated
 - [ ] A mod on the incompatible list makes the new journey start in free mode, with a warning
 - [ ] If the SoFE world generator is replaced, the world switches to free mode on load and logs the reason
-- [ ] The Inverted Throne gate stays closed without the Sealing Quill
-- [ ] Accepting Prython's offer plays the bad ending and returns the player to before the choice
+- [x] The Inverted Throne gate stays closed without the Sealing Quill (`Sprint8GameTests`)
+- [x] Accepting Prython's offer plays the bad ending and returns the player to before the choice (`Sprint8GameTests`)
 - [ ] A late joiner plays the prologue in `sofe:echo` and arrives in Act I
 - [ ] A disconnected participant finds their Reward Coffer on return
 - [ ] `/sofe progress set act` grants the credit of earlier acts and updates locks at once

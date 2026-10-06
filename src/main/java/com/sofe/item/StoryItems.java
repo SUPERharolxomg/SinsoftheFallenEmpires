@@ -15,15 +15,25 @@ import java.util.Set;
 
 /**
  * The Council of Sulthari gives back the story items a Bearer has lost (docs/Anexos.md, A6, "Recovery"; UC-21): the
- * Bearer's Flask, and a Codex Shard for every Archsin they have beaten, from the story's own credit, never from the
- * items. What the Bearer still carries is not given twice.
+ * Bearer's Flask, a Codex Shard for every Archsin they have beaten and the Sealing Quill once its step of the Act V
+ * quest is behind them, from the story's own credit, never from the items. What the Bearer still carries is not given
+ * twice.
  */
 public final class StoryItems {
     /** Which Archsin's fall gives which Shard (Prython's Pride Shard; Nahrazel gives none). */
     public static final Map<String, Sin> SHARDS = Map.of("sofe:vorath", Sin.WRATH, "sofe:luxara", Sin.LUST, "sofe:morthis", Sin.SLOTH,
             "sofe:gularth", Sin.GLUTTONY, "sofe:avarok", Sin.GREED, "sofe:envyris", Sin.ENVY, "sofe:prython", Sin.PRIDE);
 
+    /** The Act V quest, and its step (from 0) that asks for the Sealing Quill. */
+    public static final String ASCENSION = "sofe:act5_ascension";
+    public static final int QUILL_STEP = 2;
+
     private StoryItems() {
+    }
+
+    /** Whether the Bearer forged the Sealing Quill: the quest has gone past the step that asked for it. */
+    public static boolean owedQuill(com.sofe.story.StoryProgress story) {
+        return story.quest(ASCENSION).map(s -> s.completed() || s.step() > QUILL_STEP).orElse(false);
     }
 
     /** The Shards a Bearer is owed by their victories. */
@@ -38,11 +48,12 @@ public final class StoryItems {
     /** Gives back what is missing; returns what was given. */
     public static List<ItemStack> restore(ServerPlayer player) {
         List<ItemStack> given = new ArrayList<>();
-        boolean hasFlask = false;
+        boolean hasFlask = false, hasQuill = false;
         Set<Sin> carried = EnumSet.noneOf(Sin.class);
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             ItemStack s = player.getInventory().getItem(i);
             if (s.is(ItemRegistry.BEARERS_FLASK.get())) hasFlask = true;
+            if (s.is(ItemRegistry.SEALING_QUILL.get())) hasQuill = true;
             if (s.is(ItemRegistry.CODEX_SHARD.get())) CodexShardItem.sin(s).ifPresent(carried::add);
         }
         if (!hasFlask) {
@@ -53,6 +64,9 @@ public final class StoryItems {
         Set<String> defeated = StoryCapability.get(player).map(p -> p.bosses()).orElse(Set.of());
         for (Sin sin : owedShards(defeated)) {
             if (!carried.contains(sin)) given.add(CodexShardItem.of(sin));
+        }
+        if (!hasQuill && StoryCapability.get(player).map(StoryItems::owedQuill).orElse(false)) {
+            given.add(new ItemStack(ItemRegistry.SEALING_QUILL.get()));
         }
         for (ItemStack s : given) {
             ItemStack copy = s.copy();
