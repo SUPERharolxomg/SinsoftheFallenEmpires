@@ -3378,5 +3378,21 @@
   "codex.sofe.beast.prython.title": "Lord of the Celestial Spire, above Sulthari",
   "codex.sofe.beast.prython.lore": "On the Celestial Spire he wields the sins of all six before him, and offers the Bearer the rule of Aetheris.",
   "codex.sofe.beast.nahrazel.title": "Sealed in the Void Codex, beneath Sulthari",
-  "codex.sofe.beast.nahrazel.lore": "A colossus of ash, all seven sins at once, on the Inverted Throne beneath Sulthari. The Codex was made to hold him."
+  "codex.sofe.beast.nahrazel.lore": "A colossus of ash, all seven sins at once, on the Inverted Throne beneath Sulthari. The Codex was made to hold him.",
+  "tip.sofe.title": "Did you know?",
+  "tip.sofe.1": "Every road to an Archsin is guarded by a Broken Oath.",
+  "tip.sofe.2": "Black aetherium is not lost: the Purifier in Sulthari turns it clear again.",
+  "tip.sofe.3": "A Waystone you have touched is a road home. Waystones do not work in a fight.",
+  "tip.sofe.4": "Each Broken Oath fights against the Law it once kept.",
+  "tip.sofe.5": "Five empires signed the Pact. Only Sulthari still stands.",
+  "tip.sofe.6": "The seal of a region holds until its act: the Veil sends back whoever tries.",
+  "tip.sofe.7": "A boss rises for every Bearer who has not beaten it yet.",
+  "tip.sofe.8": "Your Bearer's Flask refills in Sulthari, and when an elite falls.",
+  "tip.sofe.9": "In a Pact, Bearers share experience and find better loot together.",
+  "tip.sofe.10": "Every hero carries the temptation of one sin. The Archsins know which.",
+  "tip.sofe.11": "A Relic is given once. An Echo fight gives gems, materials and Dinars.",
+  "tip.sofe.12": "The choices of the side quests decide what becomes of each empire.",
+  "tip.sofe.13": "Lost a story item? The Council of Sulthari can give it back.",
+  "tip.sofe.14": "The Codex remembers.",
+  "gui.sofe.journal": "Journal"
 }

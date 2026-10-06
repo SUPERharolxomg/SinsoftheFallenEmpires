@@ -11,7 +11,8 @@ import net.minecraftforge.event.TickEvent;
  * opens too (titleshot_classic.png); then the game quits.
  */
 public final class TitleShot {
-    private static int ticks;
+    private static int ticks, inWorld, menuTicks, loadingTicks;
+    private static boolean loadingShot;
 
     private TitleShot() {
     }
@@ -48,6 +49,17 @@ public final class TitleShot {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
+        if ("menus".equals(System.getProperty("sofe.titleShot"))) { // -Dsofe.titleShot=menus: a loading screen, then the pause menu
+            if (++menuTicks == 160 && mc.level == null) mc.createWorldOpenFlows().loadLevel(mc.screen, ShotsWorld.AETHERIS);
+            if (mc.screen != null && com.sofe.client.screen.ThemedMenus.isLoading(mc.screen) && !loadingShot && ++loadingTicks == 8) {
+                loadingShot = true;
+                Screenshot.grab(mc.gameDirectory, "loading.png", mc.getMainRenderTarget(), m -> { });
+            }
+            if (mc.level != null && ++inWorld == 200) mc.setScreen(new net.minecraft.client.gui.screens.PauseScreen(true));
+            if (inWorld == 230) Screenshot.grab(mc.gameDirectory, "pause.png", mc.getMainRenderTarget(), m -> { });
+            if (inWorld == 240) mc.stop();
+            return;
+        }
         if (mc.screen == null || mc.getOverlay() != null) return;
         ticks++;
         if (ticks == 100) {
