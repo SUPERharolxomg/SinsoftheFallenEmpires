@@ -29,6 +29,10 @@ Tested for a Ryzen 3 3200G, a GTX 1650 and 8 GB of RAM:
 
 Install the same mods on the server except the client-only ones (Embeddium, Entity Culling, ImmediatelyFast, Dynamic FPS, Xaero's Minimap), and set `level-type=sofe\:aetheris` in `server.properties` before the first start.
 
+## Support the project
+
+The mod is and will always be free and whole. If you enjoy it and want to help it grow (more illustrations, its own music), you can make a voluntary donation: [donate with PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).
+
 ---
 
 # Sins of the Fallen Empires (modpack, español)
@@ -40,3 +44,5 @@ Todo lo necesario para jugar *Sins of the Fallen Empires* en un clic: el mod, lo
 3. Empieza la Noche del Eclipse en Sulthari: elige a tu Portador.
 
 **PC modesto** (Ryzen 3 3200G, GTX 1650, 8 GB): dale **4 GB** de memoria al juego, conecta el monitor a la tarjeta gráfica y usa distancia de renderizado 10.
+
+**Apoya el proyecto:** el mod es y será siempre gratis y completo. Si te gusta y quieres ayudar a que crezca (más ilustraciones, música propia), puedes hacer una donación voluntaria: [donar con PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).
