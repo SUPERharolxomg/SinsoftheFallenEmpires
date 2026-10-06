@@ -338,3 +338,112 @@ BEARER_LINES_34 = {
     "king": {3: ("Khemet called to Sulthari for a hundred years. We had stopped listening.", "Khemet llamó a Sulthari durante cien años. Habíamos dejado de escuchar."),
              4: ("A Republic does not need a king. Perhaps that is the lesson Sulthari needs.", "Una República no necesita un rey. Quizá esa sea la lección que necesita Sulthari.")},
 }
+
+
+# The people of the three capitals (CapitalCity.FOLK): their lines while the Archsin rules (their default) and once
+# it has fallen. They live in the houses of Isfaran, Neferet and Aurelion.
+CAPITAL_FOLK = {
+    "parsivan": {
+        "isfaran_perfumer": (("Perfumer Golnar", "Golnar la perfumista"), 4, [
+            ("Every perfume I make smells of her now: honey, roses, something sweeter underneath. I cannot make it stop.",
+             "Cada perfume que hago huele a ella ahora: miel, rosas, algo más dulce debajo. No puedo hacer que pare."),
+            ("If a scent makes you forget why you came, Bearer, walk the other way.",
+             "Si un aroma te hace olvidar a qué viniste, Portador, camina en la otra dirección.")], [
+            ("I made a perfume of rain and ink this morning. Nobody wanted it more than me.",
+             "Esta mañana hice un perfume de lluvia y tinta. Nadie lo quería más que yo.")]),
+        "isfaran_guard": (("Gate Guard Arash", "Arash, guardia de la puerta"), 4, [
+            ("I keep the gate, but half the court never comes out of the gardens. I am guarding an empty city.",
+             "Guardo la puerta, pero la mitad de la corte nunca sale de los jardines. Estoy custodiando una ciudad vacía."),
+            ("The ones who leave smile at me as if I were a dream. I am not. I am cold and my feet hurt.",
+             "Los que salen me sonríen como si yo fuera un sueño. No lo soy. Tengo frío y me duelen los pies.")], [
+            ("People come through the gate again, arguing about prices. I have never loved arguing so much.",
+             "La gente vuelve a cruzar la puerta, discutiendo precios. Nunca me habían gustado tanto las discusiones.")]),
+        "isfaran_astronomer": (("Astronomer Darius", "Darius el astrónomo"), 4, [
+            ("The stars over Isfaran have stopped moving in my charts. Either the sky is asleep, or I am.",
+             "Las estrellas sobre Isfaran dejaron de moverse en mis cartas. O el cielo duerme, o duermo yo."),
+            ("Laleh of the Observatory came here once. She said the gardens were a door, and someone left it open.",
+             "Laleh, la del Observatorio, vino una vez. Dijo que los jardines eran una puerta, y que alguien la dejó abierta.")], [
+            ("The sky turns again. I wept over a chart, and the ink ran into a new constellation.",
+             "El cielo vuelve a girar. Lloré sobre una carta, y la tinta corrió formando una constelación nueva.")]),
+        "isfaran_child": (("Little Parisa", "La pequeña Parisa"), 4, [
+            ("My mother sleeps in the garden and won't come home. She says it's nicer there. It isn't. I checked.",
+             "Mi mamá duerme en el jardín y no quiere volver a casa. Dice que allá es más bonito. No lo es. Fui a ver."),
+            ("Are you the one who wakes people up? Can you wake her first?", "¿Tú eres quien despierta a la gente? ¿Puedes despertarla a ella primero?")], [
+            ("Mama is home! She burned the rice. It was the best rice ever.", "¡Mamá está en casa! Quemó el arroz. Fue el mejor arroz del mundo.")]),
+        "isfaran_carpet_weaver": (("Weaver Roshan", "Roshan el tejedor"), 4, [
+            ("My carpets used to tell stories. Now every pattern I weave turns into the same face.",
+             "Mis alfombras contaban historias. Ahora cada dibujo que tejo se convierte en el mismo rostro."),
+            ("Bring me moonsilk, if the caravans ever run again. I want to weave something that is mine.",
+             "Tráeme seda lunar, si las caravanas vuelven a andar. Quiero tejer algo que sea mío.")], [
+            ("The new carpet tells your story, Bearer. I left a knot loose at the end. Stories should not be finished.",
+             "La alfombra nueva cuenta tu historia, Portador. Dejé un nudo suelto al final. Las historias no deberían terminarse.")]),
+    },
+    "khemet": {
+        "neferet_priest": (("Priest Khaemwaset", "Khaemwaset el sacerdote"), 4, [
+            ("We say the morning prayers to an empty sky. The sun still rises; it simply does not seem to care.",
+             "Rezamos las oraciones de la mañana a un cielo vacío. El sol aún sale; simplemente parece que no le importa."),
+            ("Morthis sleeps on a throne in the marsh, and all of Khemet yawns with him.",
+             "Morthis duerme en un trono del pantano, y todo Khemet bosteza con él.")], [
+            ("The temple was full at dawn. People came to pray and stayed to work. That is the best prayer.",
+             "El templo estaba lleno al amanecer. La gente vino a rezar y se quedó a trabajar. Esa es la mejor oración.")]),
+        "neferet_boatman": (("Boatman Hapi", "Hapi el barquero"), 4, [
+            ("The canal barely moves. My boat sits in it like a fly in honey.", "El canal apenas se mueve. Mi barca se queda en él como una mosca en miel."),
+            ("My cousin Ani rows the dead. I row the living. Lately our passengers look the same.",
+             "Mi primo Ani rema a los muertos. Yo remo a los vivos. Últimamente nuestros pasajeros se parecen.")], [
+            ("The water runs! I nearly fell in. Tell Ani the river remembers how to be a river.",
+             "¡El agua corre! Casi me caigo. Dile a Ani que el río recuerda cómo ser un río.")]),
+        "neferet_potter": (("Potter Tiye", "Tiye la alfarera"), 4, [
+            ("I have not finished a jar in a month. I sit at the wheel and watch it turn, and that seems like enough.",
+             "No he terminado un cántaro en un mes. Me siento ante el torno y lo miro girar, y eso parece suficiente."),
+            ("That is the sin, Bearer. It never feels like a sin. It feels like rest.", "Ese es el pecado, Portador. Nunca se siente como pecado. Se siente como descanso.")], [
+            ("Twelve jars since yesterday! My hands hurt. I had forgotten that hurting hands are happy hands.",
+             "¡Doce cántaros desde ayer! Me duelen las manos. Había olvidado que las manos que duelen son manos felices.")]),
+        "neferet_child": (("Little Amun", "El pequeño Amun"), 4, [
+            ("I climbed the small pyramid. From the top you can see the marsh. It looks like a sleeping animal.",
+             "Subí a la pirámide pequeña. Desde arriba se ve el pantano. Parece un animal dormido."),
+            ("My grandpa says the kings are awake under the sand, waiting. I don't think waiting is fun.",
+             "Mi abuelo dice que los reyes están despiertos bajo la arena, esperando. No creo que esperar sea divertido.")], [
+            ("The marsh doesn't look like an animal anymore. Just a marsh. A bit smelly. I like it better.",
+             "El pantano ya no parece un animal. Solo un pantano. Un poco apestoso. Me gusta más así.")]),
+        "neferet_guard": (("Temple Guard Ramose", "Ramose, guardia del templo"), 4, [
+            ("The mummies of the marsh walk to our walls at night and stop, as if they forgot why they came.",
+             "Las momias del pantano caminan hasta nuestras murallas de noche y se detienen, como si olvidaran a qué venían."),
+            ("I do not know if that is a mercy or a warning.", "No sé si eso es una misericordia o una advertencia.")], [
+            ("No mummies last night. I slept, and I did not feel guilty about it. That is how I knew it was over.",
+             "Anoche no vino ninguna momia. Dormí, y no me sentí culpable. Así supe que había terminado.")]),
+    },
+    "aureum": {
+        "aurelion_magistrate": (("Magistrate Cassia", "Casia la magistrada"), 5, [
+            ("I judge cases where both sides envy each other so much that neither wants to win, only to see the other lose.",
+             "Juzgo casos donde ambas partes se envidian tanto que ninguna quiere ganar, solo ver perder a la otra."),
+            ("The law was written for greed. Nobody wrote one for envy.", "La ley se escribió para la codicia. Nadie escribió una para la envidia.")], [
+            ("A man thanked his neighbour in my court today. I adjourned for an hour to recover.",
+             "Hoy un hombre le dio las gracias a su vecino en mi tribunal. Suspendí la sesión una hora para recuperarme.")]),
+        "aurelion_legionary": (("Legionary Marcus", "Marco el legionario"), 5, [
+            ("My cohort was sent to guard the Treasury. Half of them never came back. The other half came back gilded.",
+             "Mi cohorte fue enviada a custodiar el Tesoro. La mitad nunca volvió. La otra mitad volvió dorada."),
+            ("If you see a golden legionary, Bearer, do not look him in the eye. It was one of us.",
+             "Si ves un legionario dorado, Portador, no lo mires a los ojos. Era uno de los nuestros.")], [
+            ("I marched past the Treasury today. Only stone and coins. I saluted anyway.",
+             "Hoy marché frente al Tesoro. Solo piedra y monedas. Saludé de todas formas.")]),
+        "aurelion_baker": (("Baker Fulvia", "Fulvia la panadera"), 5, [
+            ("People buy bread only to see if their neighbour's loaf is bigger. I bake them all the same, and still they quarrel.",
+             "La gente compra pan solo para ver si la hogaza del vecino es más grande. Las horneo todas iguales, y aun así se pelean."),
+            ("Envy is a hunger bread does not fill.", "La envidia es un hambre que el pan no llena.")], [
+            ("Today two customers shared a loaf. Shared! I gave them a second one for free.",
+             "Hoy dos clientes compartieron una hogaza. ¡La compartieron! Les regalé otra.")]),
+        "aurelion_child": (("Little Lucius", "El pequeño Lucio"), 5, [
+            ("I wanted to be a gladiator. Now the gladiators are shadows. I want to be a baker.",
+             "Quería ser gladiador. Ahora los gladiadores son sombras. Quiero ser panadero."),
+            ("Bakers don't turn into shadows, right?", "Los panaderos no se convierten en sombras, ¿verdad?")], [
+            ("I'm going to be a baker AND a gladiator. A gladiator who bakes. Nobody has thought of that.",
+             "Voy a ser panadero Y gladiador. Un gladiador que hornea. A nadie se le había ocurrido.")]),
+        "aurelion_sculptor": (("Sculptor Varus", "Varo el escultor"), 5, [
+            ("They paid me to carve the Senate's faces in gold. Every statue I finish, someone pays me to make the next one taller.",
+             "Me pagaron para tallar los rostros del Senado en oro. Cada estatua que termino, alguien me paga para que la siguiente sea más alta."),
+            ("I am carving a very small statue now, of my daughter. Nobody will envy it. That is the point.",
+             "Ahora estoy tallando una estatua muy pequeña, de mi hija. Nadie la envidiará. De eso se trata.")], [
+            ("The Senate asked for a statue of you, Bearer. I said I would carve it life-sized, no taller. They agreed!",
+             "El Senado pidió una estatua tuya, Portador. Dije que la tallaría a tamaño real, ni un palmo más. ¡Aceptaron!")]),
+    },
+}

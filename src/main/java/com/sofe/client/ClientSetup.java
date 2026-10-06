@@ -42,7 +42,11 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
-        if (ArmorShots.enabled() || SkillShots.enabled() || PlaceShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ShotsWorld::onClientTick);
+        if (ArmorShots.enabled() || SkillShots.enabled() || PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled()) {
+            MinecraftForge.EVENT_BUS.addListener(ShotsWorld::onClientTick);
+        }
+        if (DeathKeysCheck.enabled()) MinecraftForge.EVENT_BUS.addListener(DeathKeysCheck::onClientTick);
+        if (ProtectCheck.enabled()) MinecraftForge.EVENT_BUS.addListener(ProtectCheck::onClientTick);
         if (PlaceShots.enabled()) MinecraftForge.EVENT_BUS.addListener(PlaceShots::onClientTick);
         if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
         if (SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(SkillShots::onClientTick);
@@ -65,6 +69,7 @@ public final class ClientSetup {
     private static void registerOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAbove(VanillaGuiOverlay.TITLE_TEXT.id(), "region_title", RegionTitleOverlay::render);
         event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "combat", CombatHudOverlay::render);
+        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "pact", com.sofe.client.hud.PactHudOverlay::render);
         event.registerAbove(VanillaGuiOverlay.BOSS_EVENT_PROGRESS.id(), "quest_compass", QuestCompassOverlay::render);
     }
 
@@ -77,6 +82,7 @@ public final class ClientSetup {
         ClientLockData.clear();
         ClientBearers.clear();
         ClientEconomyData.clear();
+        ClientPactData.clear();
     }
 
     /** The empire shields switch to their raised model while blocking, as the vanilla shield does. */

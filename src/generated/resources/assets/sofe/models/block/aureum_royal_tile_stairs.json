@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "sofe:block/aureum_royal_tiles",
+    "side": "sofe:block/aureum_royal_tiles",
+    "top": "sofe:block/aureum_royal_tiles"
+  }
+}

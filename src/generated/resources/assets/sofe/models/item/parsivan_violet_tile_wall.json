@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "sofe:block/parsivan_violet_tiles"
+  }
+}

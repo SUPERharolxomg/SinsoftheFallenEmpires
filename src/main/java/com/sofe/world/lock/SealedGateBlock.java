@@ -40,9 +40,18 @@ public class SealedGateBlock extends Block {
                 .findFirst();
     }
 
-    /** Whether the player may pass: an operator bypassing locks, or the gate's condition passes. */
+    /**
+     * Whether the player may pass: an operator bypassing locks, or the gate's condition passes; with gateMode =
+     * pact_escort, also a player whose Pact member beside them (within 8 blocks) meets it.
+     */
     public static boolean canPass(ServerPlayer player, StructurePositions.Gate gate) {
-        if (LockAccess.bypasses(player)) return true;
+        if (LockAccess.bypasses(player) || meets(player, gate)) return true;
+        if (!"pact_escort".equalsIgnoreCase(com.sofe.config.SoFEConfig.SERVER.gateMode.get())) return false;
+        return com.sofe.pact.Pacts.together(player).stream()
+                .anyMatch(m -> m != player && m.distanceToSqr(player) <= 64 && meets(m, gate));
+    }
+
+    private static boolean meets(ServerPlayer player, StructurePositions.Gate gate) {
         ResourceLocation id = ResourceLocation.tryParse(gate.condition());
         return id != null && ConditionManager.get(id).map(c -> c.test(PlayerProgressView.of(player))).orElse(false);
     }

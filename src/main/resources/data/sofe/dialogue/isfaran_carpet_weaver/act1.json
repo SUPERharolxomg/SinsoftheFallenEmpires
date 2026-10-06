@@ -1,0 +1,14 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_carpet_weaver",
+  "lines": [
+    {
+      "speaker": "isfaran_carpet_weaver",
+      "text": "dialogue.sofe.isfaran_carpet_weaver.act1.1"
+    },
+    {
+      "speaker": "isfaran_carpet_weaver",
+      "text": "dialogue.sofe.isfaran_carpet_weaver.act1.2"
+    }
+  ]
+}

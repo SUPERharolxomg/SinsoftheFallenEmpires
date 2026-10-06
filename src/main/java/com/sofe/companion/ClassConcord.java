@@ -24,9 +24,10 @@ import java.util.stream.Collectors;
 
 /**
  * Class Concord (docs/Anexos.md, A5): when Bearers of different classes fight together, every different class
- * among them gives each of them a small passive; all five together are the Five Pillars. Until the Pact of
- * Sprint 7.5 exists, the group is the Bearer, their companion and the other Bearers within 32 blocks. A Bearer
- * alone has no Concord. The bonuses are plain values here, so they are unit tested.
+ * among them gives each of them a small passive; all five together are the Five Pillars (+10% damage and one more
+ * Flask charge). The group is the Bearer's Pact members together (within 48 blocks) and their companion; a Bearer
+ * with no Pact counts the Bearers within 32 blocks. A Bearer alone has no Concord. The bonuses are plain values
+ * here, so they are unit tested.
  */
 public final class ClassConcord {
     public static final double RANGE = 32;
@@ -58,7 +59,10 @@ public final class ClassConcord {
         Set<PlayerClass> classes = EnumSet.noneOf(PlayerClass.class);
         int members = 1;
         ClassState.classOf(player).ifPresent(classes::add);
-        for (ServerPlayer other : player.serverLevel().getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(RANGE), p -> p != player)) {
+        java.util.List<ServerPlayer> group = com.sofe.pact.Pacts.of(player).isPresent() ? com.sofe.pact.Pacts.together(player)
+                : player.serverLevel().getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(RANGE));
+        for (ServerPlayer other : group) {
+            if (other == player) continue;
             members++;
             ClassState.classOf(other).ifPresent(classes::add);
         }
@@ -69,6 +73,7 @@ public final class ClassConcord {
         }
         Set<PlayerClass> concord = concord(members, classes);
         Set<PlayerClass> before = CURRENT.put(player.getUUID(), concord);
+        if (pillars(concord) != (before != null && pillars(before))) com.sofe.economy.EconomyHandler.sync(player); // the Flask's extra charge
         if (!concord.equals(before) && !concord.isEmpty()) {
             String names = concord.stream().map(c -> Component.translatable(c.translationKey()).getString()).collect(Collectors.joining(", "));
             player.displayClientMessage(Component.translatable(pillars(concord) ? "message.sofe.concord.pillars" : "message.sofe.concord", names)

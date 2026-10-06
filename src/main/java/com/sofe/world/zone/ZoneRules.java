@@ -5,16 +5,16 @@ import java.util.Optional;
 
 /**
  * Decides whether a block may change, as a chain of rules (docs/Arquitectura.md, Chain of
- * Responsibility): a bypassing player may do anything; the Homestead allows everything even when it
- * sits inside a bigger zone; any other zone applies its own kind's rule; outside every zone, yes.
+ * Responsibility): the Homestead allows everything even when it sits inside a bigger zone; any other
+ * zone applies its own kind's rule; outside every zone, yes. No one gets round the rules: not an
+ * operator, not a player in creative, not a mob.
  */
 public final class ZoneRules {
 
     private ZoneRules() {
     }
 
-    public static boolean allowed(List<ProtectedZone> zones, int x, int y, int z, ZoneAction action, boolean bypass) {
-        if (bypass) return true;
+    public static boolean allowed(List<ProtectedZone> zones, int x, int y, int z, ZoneAction action) {
         if (zoneAt(zones, x, y, z, ProtectedZone.Kind.HOMESTEAD).isPresent()) return true;
         for (ProtectedZone zone : zones) {
             if (zone.contains(x, y, z) && !zone.kind().allows(action)) return false;

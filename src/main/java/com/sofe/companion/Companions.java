@@ -41,8 +41,8 @@ public final class Companions {
 
     /**
      * Hires a Bearer if the rules allow it: not the player's own hero, not one already travelling with them, and not one
-     * played by a Bearer of their group (within 32 blocks; the Pact of Sprint 7.5 will take its place). On a large server
-     * many players may share a class, so the rest of the server does not count: every player has their own companion.
+     * played by a member of their Pact (docs/Anexos.md, A5: companions are for playing alone). Without a Pact, the Bearers
+     * within 32 blocks count. On a large server many players share a class, so the rest of the server does not count.
      */
     public static boolean hire(ServerPlayer player, PlayerClass bearer) {
         if (ClassState.classOf(player).map(bearer::equals).orElse(false)) {
@@ -54,7 +54,9 @@ public final class Companions {
             tell(player, Component.translatable("message.sofe.companion.already", Component.translatable(current.get().heroKey())));
             return false;
         }
-        for (ServerPlayer other : player.serverLevel().getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(ClassConcord.RANGE))) {
+        java.util.List<ServerPlayer> group = com.sofe.pact.Pacts.of(player).isPresent() ? com.sofe.pact.Pacts.online(player)
+                : player.serverLevel().getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(ClassConcord.RANGE));
+        for (ServerPlayer other : group) {
             boolean played = other != player && ClassState.classOf(other).map(bearer::equals).orElse(false);
             if (played) {
                 tell(player, Component.translatable("message.sofe.companion.taken", Component.translatable(bearer.heroKey())));
@@ -139,5 +141,18 @@ public final class Companions {
 
     private static void tell(ServerPlayer player, Component message) {
         player.displayClientMessage(message.copy().withStyle(ChatFormatting.AQUA), true);
+    }
+
+    /**
+     * When a player joins a Pact, a companion that is the hero of another member goes home: the Pact plays its Bearers
+     * itself.
+     */
+    public static void onPactChanged(ServerPlayer joined) {
+        for (ServerPlayer member : com.sofe.pact.Pacts.online(joined)) {
+            Optional<PlayerClass> hired = hired(member);
+            if (hired.isEmpty()) continue;
+            boolean played = com.sofe.pact.Pacts.online(member).stream().anyMatch(o -> o != member && ClassState.classOf(o).map(hired.get()::equals).orElse(false));
+            if (played) order(member, "dismiss");
+        }
     }
 }

@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_legionary",
+  "lines": [
+    {
+      "speaker": "aurelion_legionary",
+      "text": "dialogue.sofe.aurelion_legionary.act1.1"
+    },
+    {
+      "speaker": "aurelion_legionary",
+      "text": "dialogue.sofe.aurelion_legionary.act1.2"
+    }
+  ]
+}

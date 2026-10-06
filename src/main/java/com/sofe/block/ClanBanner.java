@@ -18,19 +18,32 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * A great banner of the clans: a timber bar against a wall, from which a cloth three blocks wide
- * and six long hangs and moves in the wind (drawn by ClanBannerRenderer). FACING is the side the
- * cloth faces, away from the wall it hangs on. Vanilla banners are one block; the concept art of
- * Skarnhold has banners as tall as a tower.
+ * A great banner: a bar against a wall, from which a cloth three blocks wide and six long hangs and
+ * moves in the wind (drawn by ClanBannerRenderer). FACING is the side the cloth faces, away from the
+ * wall it hangs on. Vanilla banners are one block; the concept art of Skarnhold has banners as tall
+ * as a tower. The clans of Nordrath have theirs, and so do Parsivan, Khemet and Aureum, each cloth
+ * with the empire's emblem (textures/entity/&lt;cloth&gt;.png, scripts/make_clan_banner.py and
+ * scripts/make_empire_banners.py).
  */
 public class ClanBanner extends HorizontalDirectionalBlock implements EntityBlock {
     public static final int WIDTH = 3, LENGTH = 6;
+    private final net.minecraft.resources.ResourceLocation cloth;
     private static final VoxelShape BAR_NS = Block.box(-8, 12, 0, 24, 16, 4);
     private static final VoxelShape BAR_EW = Block.box(0, 12, -8, 4, 16, 24);
 
     public ClanBanner(Properties properties) {
+        this(properties, "clan_banner");
+    }
+
+    public ClanBanner(Properties properties, String cloth) {
         super(properties);
+        this.cloth = com.sofe.SoFEMod.id("textures/entity/" + cloth + ".png");
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH));
+    }
+
+    /** The texture of the cloth. */
+    public net.minecraft.resources.ResourceLocation cloth() {
+        return cloth;
     }
 
     @Override
@@ -59,7 +72,8 @@ public class ClanBanner extends HorizontalDirectionalBlock implements EntityBloc
     }
 
     public static BlockEntityType<Entity> type() {
-        return BlockEntityType.Builder.of(Entity::new, SoFEBlocks.CLAN_BANNER.get()).build(null);
+        return BlockEntityType.Builder.of(Entity::new, SoFEBlocks.CLAN_BANNER.get(), SoFEBlocks.PARSIVAN_BANNER.get(),
+                SoFEBlocks.KHEMET_BANNER.get(), SoFEBlocks.AUREUM_BANNER.get()).build(null);
     }
 
     public static class Entity extends BlockEntity {

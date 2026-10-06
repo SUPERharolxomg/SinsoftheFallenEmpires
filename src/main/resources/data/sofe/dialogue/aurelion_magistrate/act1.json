@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_magistrate",
+  "lines": [
+    {
+      "speaker": "aurelion_magistrate",
+      "text": "dialogue.sofe.aurelion_magistrate.act1.1"
+    },
+    {
+      "speaker": "aurelion_magistrate",
+      "text": "dialogue.sofe.aurelion_magistrate.act1.2"
+    }
+  ]
+}

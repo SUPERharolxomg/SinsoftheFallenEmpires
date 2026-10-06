@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/kinship_chest_bottom",
+    "side": "sofe:block/kinship_chest_side",
+    "top": "sofe:block/kinship_chest_top"
+  }
+}

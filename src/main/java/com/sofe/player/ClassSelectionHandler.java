@@ -60,8 +60,18 @@ public final class ClassSelectionHandler {
             SoFEMod.LOGGER.warn("{} tried to choose a Bearer outside a journey", player.getGameProfile().getName());
             return;
         }
+        if (SoFEConfig.SERVER.uniqueBearersPerServer.get() && !data(player).hasClass()
+                && com.sofe.pact.TakenBearers.get(player.server).takenByOther(chosen, player.getUUID())) {
+            // each Bearer once on this server: this one is someone else's; the selection opens again
+            player.sendSystemMessage(Component.translatable("message.sofe.bearer_taken", Component.translatable(chosen.heroKey()))
+                    .withStyle(ChatFormatting.RED));
+            sync(player);
+            SoFENetwork.sendTo(player, new OpenClassSelectPacket());
+            return;
+        }
         PlayerClassCapability.get(player).ifPresent(data -> {
             if (data.choose(chosen) == PlayerClassData.ChoiceResult.CHOSEN) {
+                if (SoFEConfig.SERVER.uniqueBearersPerServer.get()) com.sofe.pact.TakenBearers.get(player.server).take(chosen, player.getUUID());
                 SoFEMod.LOGGER.info("{} became the {}", player.getGameProfile().getName(), chosen.id());
                 player.sendSystemMessage(Component.translatable("gui.sofe.class_select.chosen",
                         Component.translatable(chosen.heroKey()), Component.translatable(chosen.translationKey()))
@@ -75,6 +85,10 @@ public final class ClassSelectionHandler {
             giveFlask(player);
             QuestEngine.onBearerChosen(player);
         });
+    }
+
+    private static PlayerClassData data(ServerPlayer player) {
+        return PlayerClassCapability.get(player).orElseGet(PlayerClassData::new);
     }
 
     /** Every Bearer receives the Bearer's Flask in Act I (docs/Pociones.md), bound to them. */

@@ -1,0 +1,14 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_astronomer",
+  "lines": [
+    {
+      "speaker": "isfaran_astronomer",
+      "text": "dialogue.sofe.isfaran_astronomer.act1.1"
+    },
+    {
+      "speaker": "isfaran_astronomer",
+      "text": "dialogue.sofe.isfaran_astronomer.act1.2"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "style": "khemet",
+  "npc": "neferet_potter",
+  "lines": [
+    {
+      "speaker": "neferet_potter",
+      "text": "dialogue.sofe.neferet_potter.act1.1"
+    },
+    {
+      "speaker": "neferet_potter",
+      "text": "dialogue.sofe.neferet_potter.act1.2"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "style": "khemet",
+  "npc": "neferet_guard",
+  "lines": [
+    {
+      "speaker": "neferet_guard",
+      "text": "dialogue.sofe.neferet_guard.act1.1"
+    },
+    {
+      "speaker": "neferet_guard",
+      "text": "dialogue.sofe.neferet_guard.act1.2"
+    }
+  ]
+}
