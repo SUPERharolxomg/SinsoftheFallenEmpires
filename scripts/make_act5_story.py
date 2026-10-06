@@ -72,7 +72,9 @@ QUEST = {
         {"objective": {"type": "defeat_boss", "boss": "sofe:nahrazel"}, "target": {"x": THRONE[0], "z": THRONE[1]},
          "on_start": [{"type": "open_dialogue", "dialogue": "sofe:act5/the_quill_forged"}]},
     ],
-    "rewards": [{"type": "give_xp", "amount": 30000}, {"type": "open_dialogue", "dialogue": "sofe:act5/the_ending"}],
+    # the ending (EndingScreen): the Codex, the fates of the regions, the Bearer's epilogue, the eighth lock; then the post-game
+    "rewards": [{"type": "give_xp", "amount": 30000}, {"type": "award_advancement", "advancement": "story/the_seal_rewritten"},
+                {"type": "play_scene", "scene": "the_ending", "then": "sofe:act5/after_the_ending"}],
 }
 QUEST_TEXT = (("The Ascension", "La Ascensión"), [
     ("Defeat Solrath in the Temple of Sulthari", "Derrota a Solrath en el Templo de Sulthari"),
@@ -131,11 +133,11 @@ DIALOGUES = {
         ("nahrazel", "Seven fragments. You carried every one of them to my door. Thank you, Bearer.",
          "Siete fragmentos. Los trajiste todos hasta mi puerta. Gracias, Portador.", None),
         ("nahrazel", "Now open it.", "Ahora ábrela.", REFUSE)], None),
-    "act5/the_ending": ("void", [
-        ("narrator", "The First Fallen breaks like ash in the wind. For a moment the Codex closes with you inside its pages, and there your own sin waits for you one last time.",
-         "El Primer Caído se deshace como ceniza al viento. Por un momento el Códice se cierra contigo dentro de sus páginas, y allí tu propio pecado te espera una última vez.", None),
-        ("narrator", "You turn it down. You wake among the ruins of the Inverted Throne, and above you, through the broken city, the black aetherium of Aetheris begins to run clear.",
-         "Lo rechazas. Despiertas entre las ruinas del Trono Invertido, y sobre ti, a través de la ciudad rota, el aetherio negro de Aetheris empieza a aclararse.", None)], None),
+    "act5/after_the_ending": ("sulthari", [
+        ("council_elder", "Bearer. The Council will carve your name above the door of the Observatory, whether you like it or not.",
+         "Portador. El Consejo grabará tu nombre sobre la puerta del Observatorio, te guste o no.", None),
+        ("council_elder", "Aetheris is open to you, all of it. And if you miss the fighting: kneel in the middle of any arena where a great one fell, and its Echo will rise to meet you again.",
+         "Aetheris está abierta para ti, entera. Y si echas de menos la lucha: arrodíllate en el centro de cualquier arena donde cayó uno de los grandes, y su Eco se alzará para enfrentarte de nuevo.", None)], None),
 }
 
 # "Crowned in Ash" (CrownedInAshScreen): four lines for each Bearer, ruling a burning Aetheris
@@ -197,6 +199,105 @@ SCENE_TEXT = {
     "item.sofe.sealing_quill.desc": ("Ink from the other side of the seal. It opens the Inverted Throne.",
                                      "Tinta del otro lado del sello. Abre el Trono Invertido."),
 }
+# the ending (EndingScreen, com.sofe.story.Epilogue): every line in English and Spanish
+ENDING = {
+    "codex.1": ("The First Fallen breaks like ash in the wind, and the Codex closes over you. Its pages are made of light.",
+                "El Primer Caído se deshace como ceniza al viento, y el Códice se cierra sobre ti. Sus páginas están hechas de luz."),
+    "codex.2": ("One by one, under the Sealing Quill, the seven locks turn: Wrath, Lust, Sloth, Gluttony, Greed, Envy, Pride.",
+                "Una a una, bajo la Pluma Selladora, giran las siete cerraduras: Ira, Lujuria, Pereza, Gula, Avaricia, Envidia, Soberbia."),
+    "codex.sin.knight": ("On the last page your own wrath waits for you. \"Strike once more,\" it says, \"and no one will ever wrong you again.\"",
+                         "En la última página te espera tu propia ira. \"Golpea una vez más\", dice, \"y nadie volverá a hacerte daño.\""),
+    "codex.sin.necromancer": ("On the last page your own sloth waits for you. \"Lie down,\" it says. \"The dead have waited this long; they can wait forever.\"",
+                              "En la última página te espera tu propia pereza. \"Túmbate\", dice. \"Los muertos han esperado tanto; pueden esperar para siempre.\""),
+    "codex.sin.sorceress": ("On the last page your own longing waits for you, in Laleh's voice. \"Stay,\" it says. \"Here, I never left.\"",
+                            "En la última página te espera tu propio anhelo, con la voz de Laleh. \"Quédate\", dice. \"Aquí nunca me fui.\""),
+    "codex.sin.thief": ("On the last page your own greed waits for you. \"Keep one page,\" it says. \"Just one. Who would ever know?\"",
+                        "En la última página te espera tu propia avaricia. \"Quédate una página\", dice. \"Solo una. ¿Quién lo sabría?\""),
+    "codex.sin.king": ("On the last page your own pride waits for you, wearing your crown. \"You sealed a god,\" it says. \"Who is left to rule you?\"",
+                       "En la última página te espera tu propia soberbia, con tu corona puesta. \"Sellaste a un dios\", dice. \"¿Quién queda para gobernarte?\""),
+    "codex.refuse": ("You turn the page. The last lock closes, and the light goes out.",
+                     "Pasas la página. La última cerradura se cierra, y la luz se apaga."),
+    "wake": ("You wake among the ruins of the Inverted Throne. Above you, through the broken city, the black aetherium of Aetheris begins to run clear.",
+             "Despiertas entre las ruinas del Trono Invertido. Sobre ti, a través de la ciudad rota, el aetherio negro de Aetheris empieza a aclararse."),
+    "title.fates": ("What became of Aetheris", "Lo que fue de Aetheris"),
+    "title.bearer": ("The Bearer", "El Portador"),
+    "unsettled": ("Nothing was settled here", "Aquí no se decidió nada"),
+    # one slide per region and fate, and one for a region whose choice was never made
+    "sulthari.bazaar": ("The Low Bazaar thrives. Its stalls stay open through the night, and the Observatory's dome is mended with the merchants' own coin, slowly, one tile at a time.",
+                        "El Bazar Bajo prospera. Sus puestos abren toda la noche, y la cúpula del Observatorio se repara con las monedas de los mercaderes, despacio, teja a teja."),
+    "sulthari.observatory": ("The Great Observatory is rebuilt first. Its lens turns to the sky again, while the Low Bazaar trades among ash and canvas for years.",
+                             "El Gran Observatorio se reconstruye primero. Su lente vuelve a mirar al cielo, mientras el Bazar Bajo comercia entre ceniza y lona durante años."),
+    "sulthari.unsettled": ("Sulthari rebuilds as it always has: the Council argues, the brass tramways run again, and no one agrees on what to mend first.",
+                           "Sulthari se reconstruye como siempre: el Consejo discute, los tranvías de latón vuelven a correr, y nadie se pone de acuerdo en qué reparar primero."),
+    "nordrath.peace": ("The warriors of the endless war lay down their axes at last. The clans meet at Skarnhold around one fire, and the cold forges burn for plows.",
+                       "Los guerreros de la guerra sin fin por fin bajan sus hachas. Los clanes se reúnen en Skarnhold alrededor de un solo fuego, y las forjas frías arden para hacer arados."),
+    "nordrath.war": ("The endless war goes on beneath the mountains. Its dead fight on, the clans sing of them, and send their sons to watch the passes.",
+                     "La guerra sin fin continúa bajo las montañas. Sus muertos siguen luchando, los clanes les cantan, y envían a sus hijos a vigilar los pasos."),
+    "nordrath.unsettled": ("Snow covers Vorath's citadel. The clans keep to their own holds, each waiting to see who moves first.",
+                           "La nieve cubre la ciudadela de Vorath. Los clanes se quedan en sus fortalezas, cada uno esperando a ver quién se mueve primero."),
+    "parsivan.awakened": ("The Dreaming Court wakes. It weeps for the years it lost, then opens the Gardens to anyone who will tend them.",
+                          "La Corte Durmiente despierta. Llora los años que perdió, y luego abre los Jardines a cualquiera que quiera cuidarlos."),
+    "parsivan.asleep": ("The Dreaming Court sleeps on, smiling. The Gardens bloom over it, and the travelers who pass lower their voices.",
+                        "La Corte Durmiente sigue dormida, sonriendo. Los Jardines florecen sobre ella, y los viajeros que pasan bajan la voz."),
+    "parsivan.unsettled": ("The Gardens grow wild. Some of the court wakes and some does not, and no one is sure which of them is dreaming.",
+                           "Los Jardines crecen salvajes. Parte de la corte despierta y parte no, y nadie está seguro de quién sueña."),
+    "khemet.rest": ("The souls of Khemet are guided below at last. The Catacombs fall silent, and the living plant reeds where the marsh was.",
+                    "Las almas de Khemet por fin son guiadas al inframundo. Las Catacumbas callan, y los vivos plantan juncos donde estaba la ciénaga."),
+    "khemet.guardians": ("The souls of Khemet stand guard over the living. No raider crosses the sands, and no child of Khemet walks alone at night.",
+                         "Las almas de Khemet montan guardia sobre los vivos. Ningún saqueador cruza las arenas, y ningún niño de Khemet camina solo de noche."),
+    "khemet.unsettled": ("The marsh dries slowly. In the Catacombs the souls still wander, waiting for someone to tell them where to go.",
+                         "La ciénaga se seca despacio. En las Catacumbas las almas siguen vagando, esperando a que alguien les diga adónde ir."),
+    "aureum.law": ("The courts of Aureum sit again. The Law is read aloud in the forum, and for the first time in an age it is read to everyone.",
+                   "Los tribunales de Aureum vuelven a reunirse. La Ley se lee en voz alta en el foro, y por primera vez en una era se lee para todos."),
+    "aureum.shared": ("The gold of the courts is shared out in the streets. Aureum is poorer and louder, and its people eat.",
+                      "El oro de los tribunales se reparte en las calles. Aureum es más pobre y más ruidosa, y su gente come."),
+    "aureum.unsettled": ("The forum fills again with traders and orators. The courts stay shut, and the gold stays where Avarok left it.",
+                         "El foro vuelve a llenarse de mercaderes y oradores. Los tribunales siguen cerrados, y el oro sigue donde lo dejó Avarok."),
+    # the Bearers' epilogues (README, 2.7): full, and the sadder one for unfinished Bearer quests
+    "bearer.cassian.full": ("Cassian refounds the Order of the Scale in Aureum. Its doors are open now to anyone, from any empire, who swears to weigh before striking.",
+                            "Cassian refunda la Orden de la Balanza en Aureum. Sus puertas están abiertas ahora a cualquiera, de cualquier imperio, que jure pesar antes de golpear."),
+    "bearer.cassian.unfinished": ("Cassian returns to Aureum alone. The Order of the Scale stays a ruin, and every night he guards its gate, waiting for brothers who do not come.",
+                                  "Cassian regresa solo a Aureum. La Orden de la Balanza sigue en ruinas, y cada noche él guarda su puerta, esperando a hermanos que no llegan."),
+    "bearer.ankhareth.full": ("Ankhareth opens the gates of Khemet's underworld and walks with the souls on their last journey. His master walks beside him, and does not look back.",
+                              "Ankhareth abre las puertas del inframundo de Khemet y camina con las almas en su último viaje. Su maestro camina a su lado, y no mira atrás."),
+    "bearer.ankhareth.unfinished": ("Ankhareth opens the gates, but his master is not among the souls that pass. He stays at the threshold, calling a name no one answers.",
+                                    "Ankhareth abre las puertas, pero su maestro no está entre las almas que pasan. Se queda en el umbral, llamando un nombre que nadie responde."),
+    "bearer.shirin.full": ("Shirin frees Laleh, who dies in peace in her arms. She writes a new map of the sky, and names a star for her sister.",
+                           "Shirin libera a Laleh, que muere en paz en sus brazos. Escribe un nuevo mapa del cielo, y le pone a una estrella el nombre de su hermana."),
+    "bearer.shirin.unfinished": ("Laleh never finds peace. Her voice still drifts through the Gardens, and on Shirin's new map of the sky there is one star she cannot bring herself to name.",
+                                 "Laleh nunca encuentra la paz. Su voz aún flota por los Jardines, y en el nuevo mapa del cielo de Shirin hay una estrella a la que no se atreve a poner nombre."),
+    "bearer.rurik.full": ("Rurik returns the gold of the Vaults to the Nordrath clans and rebuilds his village with his own hands. He keeps a single coin.",
+                          "Rurik devuelve el oro de las Cámaras a los clanes de Nordrath y reconstruye su aldea con sus propias manos. Se queda una sola moneda."),
+    "bearer.rurik.unfinished": ("Rurik keeps the gold. His village stays ash, and every night he counts his coins in an empty hall by the light of one candle.",
+                                "Rurik se queda el oro. Su aldea sigue en cenizas, y cada noche cuenta sus monedas en una sala vacía a la luz de una vela."),
+    "bearer.azhar.full": ("Azhar refuses to be emperor of Aetheris and calls a new Pact between equals. Beneath his own seat, sealed, the Codex sleeps.",
+                          "Azhar se niega a ser emperador de Aetheris y convoca un nuevo Pacto entre iguales. Bajo su propio asiento, sellado, duerme el Códice."),
+    "bearer.azhar.unfinished": ("Azhar refuses the throne, but no one answers his call for a new Pact. He keeps the sealed Codex beneath his seat, and watches it alone.",
+                                "Azhar rechaza el trono, pero nadie responde a su llamada a un nuevo Pacto. Guarda el Códice sellado bajo su asiento, y lo vigila solo."),
+    # the sequel hook, and the credits
+    "eighth.1": ("The seal has eight locks, not seven.", "El sello tiene ocho cerraduras, no siete."),
+    "eighth.2": ("On the last page of the Codex one lock is still dark. No one knows which sin it holds.",
+                 "En la última página del Códice una cerradura sigue a oscuras. Nadie sabe qué pecado guarda."),
+    "credits.title": ("Sins of the Fallen Empires", "Sins of the Fallen Empires"),
+    "credits.by": ("A mod by %s", "Un mod de %s"),
+    "credits.thanks": ("Thank you for playing.", "Gracias por jugar."),
+    "skip": ("Space: next   Esc: skip", "Espacio: siguiente   Esc: saltar"),
+}
+POSTGAME_TEXT = {
+    "message.sofe.echo_kneel": ("Keep kneeling to call the Echo of %s", "Sigue arrodillado para llamar al Eco de %s"),
+    "message.sofe.echo_rises": ("The Echo of %s rises", "El Eco de %s se alza"),
+    "advancement.sofe.the_seal_rewritten": ("The Seal Rewritten", "El Sello Reescrito"),
+    "advancement.sofe.the_seal_rewritten.desc": ("Close the Codex on the First Fallen and see what became of Aetheris",
+                                                 "Cierra el Códice sobre el Primer Caído y mira lo que fue de Aetheris"),
+}
+SEAL_ADVANCEMENT = {
+    "display": {"icon": {"item": "sofe:sealing_quill"}, "title": {"translate": "advancement.sofe.the_seal_rewritten"},
+                "description": {"translate": "advancement.sofe.the_seal_rewritten.desc"}, "frame": "challenge",
+                "show_toast": True, "announce_to_chat": True, "hidden": False},
+    "criteria": {"done": {"trigger": "minecraft:impossible"}},
+    "parent": "sofe:story/boss_nahrazel",
+}
+
 # the hidden advancement: no hint, no message in the chat (docs/Jugabilidad.md: its only trace)
 SECRET_ADVANCEMENT = {
     "display": {"icon": {"item": "minecraft:golden_helmet"}, "title": {"translate": "advancement.sofe.crowned_in_ash"},
@@ -246,6 +347,14 @@ def story():
         for i, line in enumerate(lines, 1):
             lang["scene.sofe.crowned_in_ash.%s.%d" % (hero, i)] = line
     lang.update(SCENE_TEXT)
+    for k, v in ENDING.items():
+        lang["ending.sofe." + k] = v
+    lang.update(POSTGAME_TEXT)
+    with open(os.path.join(DATA, "advancements", "story", "the_seal_rewritten.json"), "w", encoding="utf-8") as f:
+        f.write(json.dumps(SEAL_ADVANCEMENT, indent=2) + "\n")
+    old = os.path.join(DATA, "dialogue", "act5", "the_ending.json")
+    if os.path.exists(old):
+        os.remove(old)  # the ending is a scene now (EndingScreen)
     os.makedirs(os.path.join(DATA, "advancements", "secret"), exist_ok=True)
     with open(os.path.join(DATA, "advancements", "secret", "crowned_in_ash.json"), "w", encoding="utf-8") as f:
         f.write(json.dumps(SECRET_ADVANCEMENT, indent=2) + "\n")

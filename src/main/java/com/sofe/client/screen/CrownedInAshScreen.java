@@ -18,6 +18,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Locale;
 
+import static com.sofe.client.screen.SceneArt.*;
+
 /**
  * "Crowned in Ash", the secret bad ending of Prython's offer (docs/Jugabilidad.md): the player's own Bearer, in
  * their own skin and gear, crowned before a throne while the city of their empire burns under a false sun. Each of
@@ -101,10 +103,10 @@ public class CrownedInAshScreen extends Screen {
         int w = width, h = height;
         sky(g, w, h, t);
         falseSun(g, w / 2, (int) (h * 0.26f), Math.max(14, h / 9), t);
-        skyline(g, w, h, t, 0.62f, 0.35f, 0xFF2A0C08, 7); // far
+        skyline(g, City.of(bearer), w, h, t, 0.62f, 0.35f, 0xFF2A0C08, 7); // far
         flamesOnSkyline(g, w, h, t);
         if (bearer == PlayerClass.SORCERESS) fallingStars(g, w, h, t);
-        skyline(g, w, h, t, 0.74f, 0.9f, 0xFF140504, 13); // near
+        skyline(g, City.of(bearer), w, h, t, 0.74f, 0.9f, 0xFF140504, 13); // near
         int floor = (int) (h * 0.78f);
         g.fill(0, floor, w, h, 0xFF0C0302);
         int cx = w / 2;
@@ -128,23 +130,6 @@ public class CrownedInAshScreen extends Screen {
         g.pose().popPose();
     }
 
-    private static int argb(float alpha, int rgb) {
-        return (Mth.clamp((int) (alpha * 255), 0, 255) << 24) | (rgb & 0xFFFFFF);
-    }
-
-    private static int lerpColor(int a, int b, float f) {
-        int r = (int) Mth.lerp(f, (a >> 16) & 255, (b >> 16) & 255), gr = (int) Mth.lerp(f, (a >> 8) & 255, (b >> 8) & 255);
-        int bl = (int) Mth.lerp(f, a & 255, b & 255);
-        return 0xFF000000 | r << 16 | gr << 8 | bl;
-    }
-
-    /** A cheap hash in [0, 1) for scattering things the same way every frame. */
-    private static float rand(int i, int salt) {
-        int x = i * 374761393 + salt * 668265263;
-        x = (x ^ (x >>> 13)) * 1274126177;
-        return ((x ^ (x >>> 16)) & 0xFFFFFF) / (float) 0x1000000;
-    }
-
     private void sky(GuiGraphics g, int w, int h, float t) {
         float pulse = 0.5f + 0.5f * Mth.sin(t * 1.3f);
         int top = 0xFF120404, bottom = lerpColor(0xFF7A1A08, 0xFFA83A0C, pulse);
@@ -162,73 +147,6 @@ public class CrownedInAshScreen extends Screen {
         disc(g, cx, cy, corona, 0xC0FFD070);
         disc(g, cx, cy, r + 2, 0xFFFFF0C0);
         disc(g, cx, cy, r, 0xFF060000);
-    }
-
-    private static void disc(GuiGraphics g, int cx, int cy, int r, int color) {
-        for (int dy = -r; dy <= r; dy++) {
-            int half = (int) Math.sqrt(r * r - dy * dy);
-            g.fill(cx - half, cy + dy, cx + half, cy + dy + 1, color);
-        }
-    }
-
-    /** The skyline of the Bearer's empire, scrolling slowly (parallax): base at {@code baseY} of the height. */
-    private void skyline(GuiGraphics g, int w, int h, float t, float baseY, float speed, int color, int salt) {
-        int base = (int) (h * baseY);
-        int unit = Math.max(4, h / 60);
-        int offset = (int) (t * speed * unit) % (unit * 40);
-        g.fill(0, base, w, h, color);
-        for (int x = -unit * 40 - offset, i = 0; x < w + unit * 20; i++) {
-            int width = unit * (3 + (int) (rand(i, salt) * 5));
-            int height = unit * (3 + (int) (rand(i, salt + 1) * (salt > 10 ? 6 : 9)));
-            building(g, x, base, width, height, unit, color, rand(i, salt + 2));
-            x += width + unit * (int) (rand(i, salt + 3) * 3);
-        }
-    }
-
-    private void building(GuiGraphics g, int x, int base, int w, int h, int unit, int color, float kind) {
-        switch (bearer) {
-            case KNIGHT -> { // Aureum: temples with pediments, the Colosseum's arches
-                g.fill(x, base - h, x + w, base, color);
-                if (kind < 0.5f) triangle(g, x - unit / 2, base - h, w + unit, unit * 2, color);
-                else for (int a = x + unit / 2; a < x + w - unit / 2; a += unit) g.fill(a, base - h + unit, a + unit / 2, base - h + unit * 2, 0x30FF6020);
-            }
-            case NECROMANCER -> { // Khemet: pyramids and obelisks
-                if (kind < 0.6f) triangle(g, x, base, w * 2, h, color);
-                else {
-                    g.fill(x + w / 2 - unit / 2, base - h - unit * 2, x + w / 2 + unit / 2, base, color);
-                    triangle(g, x + w / 2 - unit / 2, base - h - unit * 2, unit, unit, color);
-                }
-            }
-            case SORCERESS -> { // Parsivan: domes and minarets
-                g.fill(x, base - h, x + w, base, color);
-                domeShape(g, x + w / 2, base - h, w / 2, color);
-                if (kind < 0.4f) g.fill(x + w + unit / 2, base - h - unit * 4, x + w + unit, base, color);
-            }
-            case THIEF -> { // Nordrath: longhouses under steep roofs
-                g.fill(x, base - h / 2, x + w, base, color);
-                triangle(g, x - unit / 2, base - h / 2, w + unit, h, color);
-            }
-            default -> { // Sulthari: domes, minarets and the Great Observatory
-                g.fill(x, base - h, x + w, base, color);
-                if (kind < 0.5f) domeShape(g, x + w / 2, base - h, w / 2, color);
-                else g.fill(x + w / 3, base - h - unit * 5, x + w / 3 + unit / 2 + 1, base - h, color);
-            }
-        }
-    }
-
-    /** A triangle standing on (x, base), {@code w} wide and {@code h} high. */
-    private static void triangle(GuiGraphics g, int x, int base, int w, int h, int color) {
-        for (int i = 0; i < h; i++) {
-            int half = (int) (w / 2f * (1 - i / (float) h));
-            g.fill(x + w / 2 - half, base - i - 1, x + w / 2 + half, base - i, color);
-        }
-    }
-
-    private static void domeShape(GuiGraphics g, int cx, int base, int r, int color) {
-        for (int i = 0; i < r; i++) {
-            int half = (int) Math.sqrt(r * r - i * i);
-            g.fill(cx - half, base - i - 1, cx + half, base - i, color);
-        }
     }
 
     /** The city burns: tongues of fire flickering along the far skyline. */

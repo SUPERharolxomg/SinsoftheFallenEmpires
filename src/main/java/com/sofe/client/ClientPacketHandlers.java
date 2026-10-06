@@ -51,6 +51,8 @@ public final class ClientPacketHandlers {
     public static void playScene(String scene) {
         if ("crowned_in_ash".equals(scene)) {
             Minecraft.getInstance().setScreen(new com.sofe.client.screen.CrownedInAshScreen());
+        } else if ("the_ending".equals(scene)) {
+            Minecraft.getInstance().setScreen(new com.sofe.client.screen.EndingScreen());
         } else {
             com.sofe.network.SoFENetwork.sendToServer(new com.sofe.network.ScenePackets.Done());
         }

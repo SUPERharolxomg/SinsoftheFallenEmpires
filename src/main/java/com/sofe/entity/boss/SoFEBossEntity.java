@@ -654,7 +654,7 @@ public abstract class SoFEBossEntity extends Monster {
                 .withParameter(LootContextParams.ORIGIN, player.position()).withParameter(LootContextParams.DAMAGE_SOURCE, player.damageSources().playerAttack(player))
                 .withParameter(LootContextParams.KILLER_ENTITY, player).withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .withLuck(player.getLuck()).create(LootContextParamSets.ENTITY);
-        for (ItemStack stack : table.getRandomItems(params)) {
+        for (ItemStack stack : onlyNewRelics(player, table.getRandomItems(params))) {
             if (!player.getInventory().add(stack)) player.drop(stack, false);
         }
         onCredited(player, first);
@@ -698,7 +698,7 @@ public abstract class SoFEBossEntity extends Monster {
                 .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .withLuck(player.getLuck())
                 .create(LootContextParamSets.ENTITY);
-        List<ItemStack> loot = table.getRandomItems(params);
+        List<ItemStack> loot = onlyNewRelics(player, table.getRandomItems(params));
         if (usesRewardCoffer()) {
             RewardCoffer.place(level, arenaCenterPos(), index, count, player, loot);
             player.displayClientMessage(Component.translatable("message.sofe.coffer.waiting").withStyle(ChatFormatting.GOLD), false);
@@ -707,6 +707,21 @@ public abstract class SoFEBossEntity extends Monster {
         for (ItemStack stack : loot) {
             if (!player.getInventory().add(stack)) player.drop(stack, false);
         }
+    }
+
+    /**
+     * A Relic a boss has already given this Bearer does not drop again (docs/Jugabilidad.md, G9: the Echo fights of the
+     * post-game give gems, materials and Dinars, not a second copy); the first one is recorded.
+     */
+    public static List<ItemStack> onlyNewRelics(ServerPlayer player, List<ItemStack> loot) {
+        var story = StoryCapability.get(player).orElse(null);
+        if (story == null) return loot;
+        List<ItemStack> kept = new java.util.ArrayList<>();
+        for (ItemStack stack : loot) {
+            var relic = com.sofe.gear.GearNbt.relic(stack);
+            if (relic.isEmpty() || story.receiveRelic(relic.get())) kept.add(stack);
+        }
+        return kept;
     }
 
     /** The shared drops are replaced by personal loot. */

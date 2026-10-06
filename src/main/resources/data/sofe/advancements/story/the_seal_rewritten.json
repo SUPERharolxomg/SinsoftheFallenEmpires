@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "sofe:sealing_quill"
+    },
+    "title": {
+      "translate": "advancement.sofe.the_seal_rewritten"
+    },
+    "description": {
+      "translate": "advancement.sofe.the_seal_rewritten.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "sofe:story/boss_nahrazel"
+}

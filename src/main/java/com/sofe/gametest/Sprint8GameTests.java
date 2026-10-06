@@ -165,4 +165,57 @@ public class Sprint8GameTests {
         }
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void beatingNahrazelPlaysTheEndingThenTheCouncilSpeaks(GameTestHelper helper) {
+        ServerPlayer player = bearer(helper, "sofe_test_ending");
+        story(player).start(StoryItems.ASCENSION);
+        story(player).update(StoryItems.ASCENSION, new StoryProgress.QuestState(StoryItems.QUILL_STEP + 1, 0, false));
+        QuestEngine.bossDefeated(player, "sofe:nahrazel");
+        helper.assertTrue(story(player).quest(StoryItems.ASCENSION).map(StoryProgress.QuestState::completed).orElse(false), "the Ascension did not end");
+        helper.assertTrue(story(player).finishedCampaign(), "beating Nahrazel should finish the campaign");
+        helper.assertTrue(SceneService.watching(player).map("the_ending"::equals).orElse(false), "the ending did not play: " + SceneService.watching(player));
+        SceneService.done(player);
+        helper.assertTrue(DialogueService.current(player).map(c -> c.startsWith("sofe:act5/after_the_ending#")).orElse(false),
+                "after the ending the Council should speak: " + DialogueService.current(player));
+        DialogueService.close(player);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void aRelicIsGivenOnceAndNeverAgain(GameTestHelper helper) {
+        ServerPlayer player = bearer(helper, "sofe_test_relic");
+        var relic = com.sofe.gear.GearMaker.relic("vorath_wrath", player).orElseThrow();
+        var gem = new ItemStack(ItemRegistry.VOID_CRYSTAL.get());
+        var first = com.sofe.entity.boss.SoFEBossEntity.onlyNewRelics(player, List.of(relic.copy(), gem.copy()));
+        helper.assertTrue(first.size() == 2, "the first fight should give the Relic");
+        var again = com.sofe.entity.boss.SoFEBossEntity.onlyNewRelics(player, List.of(relic.copy(), gem.copy()));
+        helper.assertTrue(again.size() == 1 && again.get(0).is(ItemRegistry.VOID_CRYSTAL.get()), "an Echo fight gave the same Relic again");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void kneelingInALairCallsItsEchoAfterTheCampaign(GameTestHelper helper) {
+        com.sofe.world.lair.BossLairs.forget();
+        Vec3 middle = helper.absoluteVec(new Vec3(4.5, 2, 4.5));
+        var lair = new com.sofe.world.lair.BossLairs.Lair("sofe:kaleth", (int) Math.floor(middle.x), (int) Math.floor(middle.z), 12);
+        ServerPlayer player = bearer(helper, "sofe_test_kneel");
+        player.moveTo(middle.x, middle.y, middle.z, 0, 0);
+        player.setPose(net.minecraft.world.entity.Pose.CROUCHING);
+        story(player).defeat("sofe:kaleth");
+        var players = List.of(player);
+        for (int i = 0; i < com.sofe.world.lair.BossLairs.ECHO_KNEEL_CHECKS; i++) {
+            helper.assertTrue(com.sofe.world.lair.BossLairs.kneel(helper.getLevel(), lair, players).isEmpty(), "an Echo rose before the campaign was over");
+        }
+        story(player).defeat("sofe:nahrazel");
+        java.util.Optional<net.minecraft.world.entity.Entity> echo = java.util.Optional.empty();
+        for (int i = 0; i < com.sofe.world.lair.BossLairs.ECHO_KNEEL_CHECKS && echo.isEmpty(); i++) {
+            echo = com.sofe.world.lair.BossLairs.kneel(helper.getLevel(), lair, players);
+        }
+        helper.assertTrue(echo.isPresent() && echo.get() instanceof KalethEntity, "kneeling should call Kaleth's Echo");
+        helper.assertFalse(((KalethEntity) echo.get()).isEcho(), "a called Echo is a whole fight, with its rewards");
+        echo.get().discard();
+        com.sofe.world.lair.BossLairs.forget();
+        helper.succeed();
+    }
 }
