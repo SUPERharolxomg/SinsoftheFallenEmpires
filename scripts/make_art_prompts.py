@@ -63,13 +63,13 @@ def message(folder, name, prompt):
 def main():
     doc = io.open(DOC, encoding="utf-8").read()
     body = doc.split("\n" + MARK)[0].rstrip() + "\n"
-    todo = [(f, n, p) for f, n, p in pieces(body) if not os.path.exists(os.path.join(SPLASH, f, n))]
+    todo = [(f, n, p) for f, n, p in pieces(body) if not any(os.path.exists(os.path.join(SPLASH, f, n[:-4] + ext)) for ext in (".png", ".jpg"))]
     out = [MARK, "",
            "Every illustration still missing, with its whole message for the image AI (ChatGPT, or any other). For each one:",
            "",
            "1. Open a new chat and attach the style reference (`art/concepts/style_reference_bearers.png`).",
            "2. Copy the message in the box and send it.",
-           "3. Save the picture as PNG with the name shown, in `src/main/resources/assets/sofe/textures/gui/splash/<folder>/` (or hand it over to be put in place).",
+           "3. Hand the picture over to be put in place, or save it yourself as JPG (quality 90, 1920×1080) with the name shown (`.jpg` instead of `.png`) in `src/main/resources/assets/sofe/textures/gui/splash/<folder>/`.",
            "",
            "This list is written by `scripts/make_art_prompts.py` from the tables above; run it again and the pieces already in the game leave it.",
            "",
