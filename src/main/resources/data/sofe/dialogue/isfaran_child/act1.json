@@ -1,0 +1,14 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_child",
+  "lines": [
+    {
+      "speaker": "isfaran_child",
+      "text": "dialogue.sofe.isfaran_child.act1.1"
+    },
+    {
+      "speaker": "isfaran_child",
+      "text": "dialogue.sofe.isfaran_child.act1.2"
+    }
+  ]
+}

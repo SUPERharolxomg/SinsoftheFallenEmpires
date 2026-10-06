@@ -39,6 +39,9 @@ BLOCKS = [
     ("aureum_marble_bricks", "CUBE", "STONE_BRICKS", "QUARTZ", "Imperial Marble Bricks", "Ladrillos de Mármol Imperial", None),
     ("aureum_marble_pillar", "PILLAR", "QUARTZ_PILLAR", "QUARTZ", "Imperial Marble Pillar", "Columna de Mármol Imperial", None),
     ("aureum_gold_mosaic", "CUBE", "GOLD_BLOCK", "GOLD", "Aureum Gold Mosaic", "Mosaico de Oro de Aureum", None),
+    # the roofs of the concepts: Aureum's royal blue and Parsivan's violet domes and roofs
+    ("aureum_royal_tiles", "CUBE", "BLUE_TERRACOTTA", "COLOR_BLUE", "Aureum Royal Tiles", "Tejas Reales de Aureum", None),
+    ("parsivan_violet_tiles", "CUBE", "PURPLE_TERRACOTTA", "COLOR_PURPLE", "Parsivan Violet Tiles", "Azulejos Violeta de Parsivan", None),
     ("corrupted_aureum_marble_bricks", "CUBE", "STONE_BRICKS", "COLOR_BLACK", "Cracked Imperial Marble", "Mármol Imperial Agrietado", "aureum_marble_bricks"),
     ("corrupted_aureum_marble_pillar", "PILLAR", "QUARTZ_PILLAR", "COLOR_BLACK", "Cracked Marble Pillar", "Columna de Mármol Agrietada", "aureum_marble_pillar"),
 ]
@@ -47,6 +50,8 @@ FAMILIES = [
     ("parsivan_white_plaster", "parsivan_white_plaster", "Parsivan Plaster", "Yeso de Parsivan"),
     ("khemet_carved_sandstone", "khemet_sandstone", "Khemet Sandstone", "Arenisca de Khemet"),
     ("aureum_marble_bricks", "aureum_marble_brick", "Imperial Marble Brick", "Ladrillo de Mármol Imperial"),
+    ("aureum_royal_tiles", "aureum_royal_tile", "Aureum Royal Tile", "Teja Real de Aureum"),
+    ("parsivan_violet_tiles", "parsivan_violet_tile", "Parsivan Violet Tile", "Azulejo Violeta de Parsivan"),
 ]
 
 
@@ -472,6 +477,42 @@ def gold_mosaic(name):
     t.save(name)
 
 
+def royal_tiles(name):
+    """Roof tiles in royal blue: rows of rounded tiles, each lit on top and shadowed below, a gold glint here and there."""
+    blue = (38, 64, 168)
+    t = Tex(blue, 121, 0.04)
+    for y in range(16):
+        row = y // 4
+        off = 0 if row % 2 == 0 else 2
+        for x in range(16):
+            k = (x + off) % 4
+            f = (1.22, 1.08, 0.94, 0.72)[k] * (1.1 if y % 4 == 0 else 0.8 if y % 4 == 3 else 1.0)
+            t.put(x, y, mul(blue, f))
+    rnd = random.Random(122)
+    for _ in range(3):
+        t.put(rnd.randrange(16), rnd.randrange(0, 16, 4), mix(GOLD, WHITE, 0.2))
+    t.save(name)
+
+
+def violet_tiles(name):
+    """Parsivan's violet glazed tiles: the turquoise tiles' grid in violet, an amethyst star in each, white grout."""
+    violet = (118, 52, 160)
+    t = Tex(violet, 131, 0.05)
+    for y in range(16):
+        for x in range(16):
+            if x % 8 == 0 or y % 8 == 0:
+                t.put(x, y, (226, 214, 236))
+            elif x % 8 == 1 or y % 8 == 1:
+                t.shade(x, y, 1.18)
+            elif x % 8 == 7 or y % 8 == 7:
+                t.shade(x, y, 0.82)
+    for cx, cy in ((4, 4), (12, 4), (4, 12), (12, 12)):
+        for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1), (0, 2), (0, -2), (2, 0), (-2, 0)):
+            t.put(cx + dx, cy + dy, TURQ)
+        t.put(cx, cy, GOLD)
+    t.save(name)
+
+
 ART = {
     "parsivan_turquoise_tiles": lambda n: parsivan_tiles(n),
     "corrupted_parsivan_turquoise_tiles": lambda n: parsivan_tiles(n, faded=True),
@@ -491,6 +532,8 @@ ART = {
     "aureum_marble_pillar": lambda n: marble_pillar(n),
     "corrupted_aureum_marble_pillar": lambda n: marble_pillar(n, cracked=True),
     "aureum_gold_mosaic": gold_mosaic,
+    "aureum_royal_tiles": royal_tiles,
+    "parsivan_violet_tiles": violet_tiles,
 }
 
 if __name__ == "__main__":

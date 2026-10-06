@@ -49,6 +49,9 @@ import java.util.UUID;
  */
 public abstract class SoFEBossEntity extends Monster {
     private static final UUID DIFFICULTY_ID = UUID.fromString("7d0a3c2e-5b6f-4f7e-9a1d-2c3b4e5f6a71");
+    private static final UUID PLAYERS_ID = UUID.fromString("3e9f1b72-4c58-4d6a-b0e2-8a7c5d1f9b34");
+    /** How many players the boss's health is scaled for (docs/Anexos.md, A5: +60% per extra player, never more damage). */
+    private int scaledFor = 1;
     public static final int RESET_AFTER_TICKS = 600;
     /** Favor its fall earns with the empire it held (docs/Anexos.md: Favor comes from liberating a region, too). */
     public static final int BOSS_FAVOR = 150, ARCHSIN_FAVOR = 400;
@@ -355,6 +358,7 @@ public abstract class SoFEBossEntity extends Monster {
                 return;
             }
             emptyTicks = 0;
+            scaleFor(fighters.size());
             updatePhase(level, fighters);
             fightTick(level, fighters);
             signatureTick(level, fighters);
@@ -492,7 +496,33 @@ public abstract class SoFEBossEntity extends Monster {
     }
 
     /** Back to full health, as if the fight never happened. */
+    /**
+     * More players in the arena, more health (its share of health kept): it only grows during a fight, so leaving the
+     * arena never heals or weakens the boss, and it comes back to one player's when the fight resets.
+     */
+    public void scaleFor(int players) {
+        if (isEcho() || players <= scaledFor) return;
+        scaledFor = players;
+        applyPlayerScale();
+    }
+
+    private void applyPlayerScale() {
+        var health = getAttribute(Attributes.MAX_HEALTH);
+        if (health == null) return;
+        float share = getHealth() / Math.max(1, getMaxHealth());
+        health.removeModifier(PLAYERS_ID);
+        double bonus = com.sofe.pact.PactRules.bossHealthMultiplier(scaledFor, com.sofe.config.SoFEConfig.SERVER.bossHealthPerPlayer.get()) - 1;
+        if (bonus > 0) health.addPermanentModifier(new AttributeModifier(PLAYERS_ID, "SoFE boss players", bonus, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        setHealth(getMaxHealth() * share);
+    }
+
+    public int scaledFor() {
+        return scaledFor;
+    }
+
     public void reset() {
+        scaledFor = 1;
+        applyPlayerScale();
         setHealth(getMaxHealth());
         participants.clear();
         presence.clear();
@@ -548,6 +578,10 @@ public abstract class SoFEBossEntity extends Monster {
             ServerPlayer player = level.getServer().getPlayerList().getPlayer(id); // after a respawn this is the new player
             if (player == null) player = lastSeen.get(id);
             if (player == null) continue;
+            if (player.hasDisconnected()) { // gone from the game: their reward waits for their return (UC-32)
+                com.sofe.pact.OwedRewards.get(level.getServer()).owe(id, net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(getType()).toString());
+                continue;
+            }
             boolean first = !StoryCapability.get(player).map(s -> s.hasDefeated(bossId())).orElse(false);
             QuestEngine.bossDefeated(player, bossId());
             QuestEngine.favorHere(player, this instanceof ArchsinEntity ? ARCHSIN_FAVOR : BOSS_FAVOR);
@@ -556,6 +590,28 @@ public abstract class SoFEBossEntity extends Monster {
             com.sofe.economy.EconomyHandler.refillFlask(player); // an elite fell: the Flask refills
         }
         SoFEMod.LOGGER.info("{} fell; {} participant(s) credited", bossId(), participants.size());
+    }
+
+    /**
+     * The reward of a fight this player won while they were away: credit, Favor, their own loot (straight into the
+     * inventory, the arena's coffers are long gone) and the Archsin's Shard. Called on a boss made for it, never spawned.
+     */
+    public void creditLate(ServerLevel level, ServerPlayer player) {
+        boolean first = !StoryCapability.get(player).map(s -> s.hasDefeated(bossId())).orElse(false);
+        QuestEngine.bossDefeated(player, bossId());
+        QuestEngine.favorHere(player, this instanceof ArchsinEntity ? ARCHSIN_FAVOR : BOSS_FAVOR);
+        moveTo(player.getX(), player.getY(), player.getZ());
+        LootTable table = level.getServer().getLootData().getLootTable(getLootTable());
+        LootParams params = new LootParams.Builder(level).withParameter(LootContextParams.THIS_ENTITY, this)
+                .withParameter(LootContextParams.ORIGIN, player.position()).withParameter(LootContextParams.DAMAGE_SOURCE, player.damageSources().playerAttack(player))
+                .withParameter(LootContextParams.KILLER_ENTITY, player).withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
+                .withLuck(player.getLuck()).create(LootContextParamSets.ENTITY);
+        for (ItemStack stack : table.getRandomItems(params)) {
+            if (!player.getInventory().add(stack)) player.drop(stack, false);
+        }
+        onCredited(player, first);
+        com.sofe.economy.EconomyHandler.refillFlask(player);
+        player.sendSystemMessage(Component.translatable("message.sofe.boss.late_credit", getDisplayName()).withStyle(ChatFormatting.GOLD));
     }
 
     /** When the fight ends, won (the boss died) or lost (it reset): give back what was taken, undo what was done. */

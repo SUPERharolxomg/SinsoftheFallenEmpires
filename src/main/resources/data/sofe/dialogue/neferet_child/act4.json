@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "neferet_child",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "neferet_child",
+      "text": "dialogue.sofe.neferet_child.act4.1"
+    }
+  ]
+}

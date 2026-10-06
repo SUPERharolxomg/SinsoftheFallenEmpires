@@ -1,0 +1,8 @@
+{
+  "parent": "sofe:block/clan_banner",
+  "textures": {
+    "particle": "sofe:block/khemet_carved_sandstone",
+    "bar": "sofe:block/khemet_carved_sandstone",
+    "cap": "minecraft:block/gold_block"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "neferet_guard",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "neferet_guard",
+      "text": "dialogue.sofe.neferet_guard.act4.1"
+    }
+  ]
+}

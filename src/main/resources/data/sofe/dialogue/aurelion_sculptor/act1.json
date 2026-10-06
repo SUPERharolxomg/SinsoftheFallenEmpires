@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_sculptor",
+  "lines": [
+    {
+      "speaker": "aurelion_sculptor",
+      "text": "dialogue.sofe.aurelion_sculptor.act1.1"
+    },
+    {
+      "speaker": "aurelion_sculptor",
+      "text": "dialogue.sofe.aurelion_sculptor.act1.2"
+    }
+  ]
+}

@@ -168,7 +168,19 @@ public class JournalScreen extends Screen {
         }
         y += 10;
         g.drawString(this.font, Component.translatable("gui.sofe.journal.pact"), x, y, GOLD, false);
-        g.drawString(this.font, Component.translatable("gui.sofe.journal.no_pact"), x, y + 12, MUTED, false);
+        var members = com.sofe.client.ClientPactData.members();
+        if (members.isEmpty()) {
+            g.drawString(this.font, Component.translatable("gui.sofe.journal.no_pact"), x, y + 12, MUTED, false);
+            g.drawString(this.font, Component.translatable("gui.sofe.journal.pact_how"), x, y + 24, MUTED, false);
+            return;
+        }
+        int row = y + 12;
+        for (var m : members) {
+            Component line = Component.literal((m.leader() ? "★ " : "• ") + m.name() + "  ")
+                    .append(m.bearer().isEmpty() ? Component.literal("") : Component.translatable("class.sofe." + m.bearer()));
+            g.drawString(this.font, line, x, row, m.online() ? PARCHMENT : MUTED, false);
+            row += 10;
+        }
     }
 
     @Override

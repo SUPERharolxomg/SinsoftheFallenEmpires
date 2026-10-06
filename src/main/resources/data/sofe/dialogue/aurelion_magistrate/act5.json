@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_magistrate",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aurelion_magistrate",
+      "text": "dialogue.sofe.aurelion_magistrate.act5.1"
+    }
+  ]
+}

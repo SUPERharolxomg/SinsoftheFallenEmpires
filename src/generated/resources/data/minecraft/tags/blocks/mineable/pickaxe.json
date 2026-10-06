@@ -50,6 +50,8 @@
     "sofe:aureum_marble_bricks",
     "sofe:aureum_marble_pillar",
     "sofe:aureum_gold_mosaic",
+    "sofe:aureum_royal_tiles",
+    "sofe:parsivan_violet_tiles",
     "sofe:corrupted_aureum_marble_bricks",
     "sofe:corrupted_aureum_marble_pillar",
     "sofe:parsivan_white_plaster_stairs",
@@ -61,6 +63,12 @@
     "sofe:aureum_marble_brick_stairs",
     "sofe:aureum_marble_brick_slab",
     "sofe:aureum_marble_brick_wall",
+    "sofe:aureum_royal_tile_stairs",
+    "sofe:aureum_royal_tile_slab",
+    "sofe:aureum_royal_tile_wall",
+    "sofe:parsivan_violet_tile_stairs",
+    "sofe:parsivan_violet_tile_slab",
+    "sofe:parsivan_violet_tile_wall",
     "sofe:infernal_ember_ore",
     "sofe:wailing_soul_ore",
     "sofe:void_crystal_ore",
@@ -70,6 +78,7 @@
     "sofe:jeweler",
     "sofe:purifier",
     "sofe:tempering_anvil",
+    "sofe:kinship_chest",
     "sofe:reward_coffer"
   ]
 }

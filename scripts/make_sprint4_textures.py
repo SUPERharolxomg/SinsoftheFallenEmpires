@@ -154,7 +154,7 @@ OUTFITS = {
     "thief": ((70, 60, 50), (170, 40, 40)),           # dark leather, red sash
     "king": ((150, 30, 30), (232, 182, 74)),          # red kaftan, gold trim
 }
-for cls, (main, accent) in OUTFITS.items():
+for cls, (main, accent) in {}.items():  # the outfits are drawn by make_npc_skins.py now
     img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     m, a = main + (255,), accent + (255,)

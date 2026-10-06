@@ -52,6 +52,18 @@ minecraft {
             // writes run/skillshots.log, then quits (SkillShots)
             // ./gradlew runClient -PplaceShots=parsivan/baths,aureum/colosseum builds each story place in run/saves/shots_aetheris,
             // screenshots it from above and from its door, then quits (PlaceShots)
+            // ./gradlew runClient -PdeathCheck: the player dies, comes back, presses the skill tree and character keys;
+            // run/deathcheck.log tells what opened (DeathKeysCheck)
+            // ./gradlew runClient -PprotectCheck: in creative and as an operator, tries to take things from Sulthari;
+            // run/protectcheck.log tells what held (ProtectCheck)
+            if (project.hasProperty('protectCheck')) {
+                property 'sofe.protectCheck', 'true'
+                args '--quickPlaySingleplayer', 'shots_aetheris'
+            }
+            if (project.hasProperty('deathCheck')) {
+                property 'sofe.deathCheck', 'true'
+                args '--quickPlaySingleplayer', 'shots_aetheris'
+            }
             if (project.hasProperty('placeShots')) {
                 property 'sofe.placeShots', project.property('placeShots')
                 args '--quickPlaySingleplayer', 'shots_aetheris'
@@ -94,6 +106,11 @@ repositories {
         content { includeGroup('top.theillusivec4.curios') }
     }
     maven {
+        name = 'JEI'
+        url = 'https://maven.blamejared.com'
+        content { includeGroup('mezz.jei') }
+    }
+    maven {
         name = 'CurseMaven'
         url = 'https://cursemaven.com'
         content { includeGroup('curse.maven') }
@@ -118,6 +135,12 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:supplementaries-412082:${supplementaries_file}")
     runtimeOnly fg.deobf("curse.maven:moonlight-499980:${moonlight_file}")
     runtimeOnly fg.deobf("curse.maven:small-ships-450659:${smallships_file}")
+
+    // In the pack: JEI (recipes of every item, the stations' recipes included) and Xaero's Minimap
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") { transitive = false } // the mod jar holds its libraries
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}") { transitive = false } // the mod jar holds its libraries
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}") { transitive = false } // the mod jar holds its libraries
+    runtimeOnly fg.deobf("curse.maven:xaeros-minimap-263420:${xaero_minimap_file}")
 
     // Unit tests for pure game logic (no Minecraft classes)
     testImplementation platform("org.junit:junit-bom:${junit_version}")

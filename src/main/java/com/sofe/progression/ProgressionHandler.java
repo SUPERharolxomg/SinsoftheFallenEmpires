@@ -44,7 +44,11 @@ public final class ProgressionHandler {
         MobLevels.levelOf(victim).ifPresent(level -> {
             double baseHealth = victim.getAttribute(Attributes.MAX_HEALTH) != null
                     ? victim.getAttribute(Attributes.MAX_HEALTH).getBaseValue() : 20;
-            addXp(player, MobExperience.forKill(level, baseHealth));
+            long xp = MobExperience.forKill(level, baseHealth);
+            // the Pact members together share it, with a bonus for each extra member (docs/Anexos.md, A5)
+            java.util.List<ServerPlayer> together = com.sofe.pact.Pacts.together(player);
+            long share = com.sofe.pact.PactRules.xpShare(xp, together.size(), com.sofe.config.SoFEConfig.SERVER.pactXpBonus.get());
+            for (ServerPlayer member : together) addXp(member, share);
         });
     }
 

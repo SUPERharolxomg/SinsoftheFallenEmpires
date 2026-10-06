@@ -39,7 +39,8 @@ public class ClanBannerRenderer implements BlockEntityRenderer<ClanBanner.Entity
         pose.translate(0, 0.875, -0.40);
         Matrix4f matrix = pose.last().pose();
         Matrix3f normal = pose.last().normal();
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
+        ResourceLocation texture = banner.getBlockState().getBlock() instanceof ClanBanner block ? block.cloth() : TEXTURE;
+        VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(texture));
         float half = ClanBanner.WIDTH / 2f, length = ClanBanner.LENGTH;
         for (int i = 0; i < STRIPS; i++) {
             float v0 = i / (float) STRIPS, v1 = (i + 1) / (float) STRIPS;

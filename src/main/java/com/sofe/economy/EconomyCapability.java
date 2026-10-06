@@ -47,7 +47,7 @@ public final class EconomyCapability {
         if (event.getObject() instanceof Player) {
             Provider provider = new Provider();
             event.addCapability(KEY, provider);
-            event.addListener(provider.optional::invalidate);
+            // no invalidation listener: a dead player's data must survive invalidateCaps so reviveCaps can copy it to the respawned one
         }
     }
 

@@ -121,6 +121,8 @@ public final class SoFEBlocks {
     public static final RegistryObject<Block> AUREUM_MARBLE_PILLAR = register("aureum_marble_pillar", Shape.PILLAR, null, true,
             () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.QUARTZ_PILLAR).mapColor(MapColor.QUARTZ)));
     public static final RegistryObject<Block> AUREUM_GOLD_MOSAIC = cube("aureum_gold_mosaic", () -> new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).mapColor(MapColor.GOLD)));
+    public static final RegistryObject<Block> AUREUM_ROYAL_TILES = cube("aureum_royal_tiles", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BLUE_TERRACOTTA).mapColor(MapColor.COLOR_BLUE)));
+    public static final RegistryObject<Block> PARSIVAN_VIOLET_TILES = cube("parsivan_violet_tiles", () -> new Block(BlockBehaviour.Properties.copy(Blocks.PURPLE_TERRACOTTA).mapColor(MapColor.COLOR_PURPLE)));
     public static final RegistryObject<Block> CORRUPTED_AUREUM_MARBLE_BRICKS = cube("corrupted_aureum_marble_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).mapColor(MapColor.COLOR_BLACK)));
     public static final RegistryObject<Block> CORRUPTED_AUREUM_MARBLE_PILLAR = register("corrupted_aureum_marble_pillar", Shape.PILLAR, null, true,
             () -> new net.minecraft.world.level.block.RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.QUARTZ_PILLAR).mapColor(MapColor.COLOR_BLACK)));
@@ -142,6 +144,18 @@ public final class SoFEBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS)));
     public static final RegistryObject<Block> AUREUM_MARBLE_BRICK_WALL = register("aureum_marble_brick_wall", Shape.WALL, AUREUM_MARBLE_BRICKS, true,
             () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).forceSolidOn()));
+    public static final RegistryObject<Block> AUREUM_ROYAL_TILE_STAIRS = register("aureum_royal_tile_stairs", Shape.STAIRS, AUREUM_ROYAL_TILES, true,
+            () -> new StairBlock(() -> AUREUM_ROYAL_TILES.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.BLUE_TERRACOTTA)));
+    public static final RegistryObject<Block> AUREUM_ROYAL_TILE_SLAB = register("aureum_royal_tile_slab", Shape.SLAB, AUREUM_ROYAL_TILES, true,
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.BLUE_TERRACOTTA)));
+    public static final RegistryObject<Block> AUREUM_ROYAL_TILE_WALL = register("aureum_royal_tile_wall", Shape.WALL, AUREUM_ROYAL_TILES, true,
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.BLUE_TERRACOTTA).forceSolidOn()));
+    public static final RegistryObject<Block> PARSIVAN_VIOLET_TILE_STAIRS = register("parsivan_violet_tile_stairs", Shape.STAIRS, PARSIVAN_VIOLET_TILES, true,
+            () -> new StairBlock(() -> PARSIVAN_VIOLET_TILES.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.PURPLE_TERRACOTTA)));
+    public static final RegistryObject<Block> PARSIVAN_VIOLET_TILE_SLAB = register("parsivan_violet_tile_slab", Shape.SLAB, PARSIVAN_VIOLET_TILES, true,
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.PURPLE_TERRACOTTA)));
+    public static final RegistryObject<Block> PARSIVAN_VIOLET_TILE_WALL = register("parsivan_violet_tile_wall", Shape.WALL, PARSIVAN_VIOLET_TILES, true,
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.PURPLE_TERRACOTTA).forceSolidOn()));
     // </generated-empire-blocks>
 
     // --- Sealed Gates (docs/Mundo.md, W2): dungeon and arena doors with their own condition
@@ -183,12 +197,18 @@ public final class SoFEBlocks {
                     BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE).lightLevel(s -> 9).noOcclusion()));
     public static final RegistryObject<Block> TEMPERING_ANVIL = register("tempering_anvil", Shape.CUBE_SIDES, null, true,
             () -> new com.sofe.crafting.TemperingAnvilBlock(BlockBehaviour.Properties.copy(Blocks.ANVIL).sound(SoundType.ANVIL).noOcclusion()));
+    /** A chest at a dungeon's door that opens for two or more Bearers together (docs/Anexos.md, A5). */
+    public static final RegistryObject<Block> KINSHIP_CHEST = register("kinship_chest", Shape.CUBE_SIDES, null, false,
+            () -> new com.sofe.block.KinshipChest(BlockBehaviour.Properties.copy(Blocks.CHEST)
+                    .strength(-1.0f, 3_600_000.0f).noLootTable().lightLevel(s -> 6)));
     public static final RegistryObject<Block> REWARD_COFFER = register("reward_coffer", Shape.CUBE_SIDES, null, false,
             () -> new com.sofe.entity.boss.RewardCoffer.Block(BlockBehaviour.Properties.copy(Blocks.CHEST)
                     .strength(-1.0f, 3_600_000.0f).noLootTable().lightLevel(s -> 8)));
 
     public static final net.minecraftforge.registries.DeferredRegister<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITIES =
             net.minecraftforge.registries.DeferredRegister.create(net.minecraftforge.registries.ForgeRegistries.BLOCK_ENTITY_TYPES, com.sofe.SoFEMod.MOD_ID);
+    public static final RegistryObject<net.minecraft.world.level.block.entity.BlockEntityType<com.sofe.block.KinshipChest.Entity>> KINSHIP_CHEST_ENTITY =
+            BLOCK_ENTITIES.register("kinship_chest", com.sofe.block.KinshipChest::type);
     public static final RegistryObject<net.minecraft.world.level.block.entity.BlockEntityType<com.sofe.entity.boss.RewardCoffer.Entity>> REWARD_COFFER_ENTITY =
             BLOCK_ENTITIES.register("reward_coffer", com.sofe.entity.boss.RewardCoffer::type);
 
@@ -197,6 +217,19 @@ public final class SoFEBlocks {
             () -> new com.sofe.block.ClanBanner(BlockBehaviour.Properties.copy(Blocks.RED_BANNER).noOcclusion().noLootTable()));
     public static final RegistryObject<Item> CLAN_BANNER_ITEM = ItemRegistry.ITEMS.register("clan_banner",
             () -> new BlockItem(CLAN_BANNER.get(), new Item.Properties()));
+    /** The great banners of the empires, the same block with each empire's cloth. */
+    public static final RegistryObject<Block> PARSIVAN_BANNER = BlockRegistry.BLOCKS.register("parsivan_banner",
+            () -> new com.sofe.block.ClanBanner(BlockBehaviour.Properties.copy(Blocks.PURPLE_BANNER).noOcclusion().noLootTable(), "parsivan_banner"));
+    public static final RegistryObject<Item> PARSIVAN_BANNER_ITEM = ItemRegistry.ITEMS.register("parsivan_banner",
+            () -> new BlockItem(PARSIVAN_BANNER.get(), new Item.Properties()));
+    public static final RegistryObject<Block> KHEMET_BANNER = BlockRegistry.BLOCKS.register("khemet_banner",
+            () -> new com.sofe.block.ClanBanner(BlockBehaviour.Properties.copy(Blocks.BLUE_BANNER).noOcclusion().noLootTable(), "khemet_banner"));
+    public static final RegistryObject<Item> KHEMET_BANNER_ITEM = ItemRegistry.ITEMS.register("khemet_banner",
+            () -> new BlockItem(KHEMET_BANNER.get(), new Item.Properties()));
+    public static final RegistryObject<Block> AUREUM_BANNER = BlockRegistry.BLOCKS.register("aureum_banner",
+            () -> new com.sofe.block.ClanBanner(BlockBehaviour.Properties.copy(Blocks.BLUE_BANNER).noOcclusion().noLootTable(), "aureum_banner"));
+    public static final RegistryObject<Item> AUREUM_BANNER_ITEM = ItemRegistry.ITEMS.register("aureum_banner",
+            () -> new BlockItem(AUREUM_BANNER.get(), new Item.Properties()));
     public static final RegistryObject<net.minecraft.world.level.block.entity.BlockEntityType<com.sofe.block.ClanBanner.Entity>> CLAN_BANNER_ENTITY =
             BLOCK_ENTITIES.register("clan_banner", com.sofe.block.ClanBanner::type);
 
@@ -236,6 +269,9 @@ public final class SoFEBlocks {
             if (ENTRIES.get(i).inCreativeTab()) items.add(ITEMS.get(i).get());
         }
         items.add(CLAN_BANNER_ITEM.get());
+        items.add(PARSIVAN_BANNER_ITEM.get());
+        items.add(KHEMET_BANNER_ITEM.get());
+        items.add(AUREUM_BANNER_ITEM.get());
         return items;
     }
 }

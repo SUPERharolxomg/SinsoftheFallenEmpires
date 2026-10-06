@@ -1,0 +1,15 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_guard",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "isfaran_guard",
+      "text": "dialogue.sofe.isfaran_guard.act4.1"
+    }
+  ]
+}

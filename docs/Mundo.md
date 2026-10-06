@@ -118,15 +118,17 @@ A wall alone can be bypassed: flying with elytra above the build limit, ender pe
 
 Story structures are **protected zones**. When a structure is generated, its bounding box is stored in `ProtectedZoneData` (world SavedData) with a rule set:
 
-| Zone | Break blocks | Place blocks | Doors and chests | Unlocks |
-|------|--------------|--------------|------------------|---------|
-| Sulthari city | No | No | Shops and houses open; vaults and palace locked by quest | Story missions |
+| Zone | Break blocks | Place blocks | Take what it holds | Unlocks |
+|------|--------------|--------------|--------------------|---------|
+| Cities (Sulthari, Skarnhold, the capitals) | No | No | No; doors, shops, stations and the Personal Vault work; vaults and palace locked by quest | Story missions |
 | **Bearer's Homestead** (plot outside the walls) | Yes | Yes | Yes | Start |
-| Liberated camp | No | No | Yes | When its Archsin falls |
-| Dungeon | No (except marked breakable walls) | No | Chests yes, doors by progress | Previous Broken Oath or quest step |
-| Boss arena | No | No | — | All Broken Oaths of that Archsin |
+| Liberated camp | No | No | No; its merchants and Vault work | When its Archsin falls |
+| Dungeon | No (except marked breakable walls) | No | No; Reward Coffers work, doors by progress | Previous Broken Oath or quest step |
+| Boss arena | No | No | No | All Broken Oaths of that Archsin |
 
-Protection covers every way of changing blocks: player breaking/placing, explosions (only the protected blocks are removed from the explosion), pistons pushing in from outside, fire spread, fluids, and mob griefing (endermen, Void creatures).
+Protection covers every way of changing a place: player breaking/placing, explosions (only the protected blocks are removed from the explosion), pistons pushing in from outside, fire spread, fluids, and mob griefing (endermen, Void creatures). **Nothing can be taken** from a place either (`ZoneAction.TAKE`): its chests, barrels, furnaces and the drawers of the furniture mods do not open, the plants stay in their pots, the books on their lecterns, the berries on their vines, and its armor stands (the statues), item frames, paintings, boats and carts cannot be struck, stripped, shot or blown up. Only SoFE's own blocks (stations, the Personal Vault, Reward Coffers, Waystones), doors, gates, buttons, beds and seats can be used.
+
+**No one is let off** inside a protected place: not an operator, not a player in creative (unlike the Seal Veil, below, which creative players and `opsBypass` operators may cross for testing). To change a place while building the mod, turn `protectZones` off in the server config; commands such as `/setblock` and `/fill` are not stopped.
 
 **Sealed Gates.** Dungeon entrances, city vaults and arena doors use `sofe:sealed_gate`: the same per-player passage as the Veil, but on a single door with its own condition. Right-clicking it shows what is missing (*"Defeat Luxara to open the Catacombs of Khemet"*).
 
@@ -320,6 +322,26 @@ Act V    End materials: Aetherium gear, Void Ink ──► Sealing Quill ──�
 4. **Place at fixed coordinates** from `data/sofe/structure_positions.json` (see W1), and register the bounds as protected zones (W2, layer 3).
 
 Big landmarks (the Great Observatory, the Burning Citadel, the Celestial Spire) are single hand-made builds; ordinary houses and ruins come from pools so the map does not feel copied.
+
+### Flags and banners
+
+Each empire flies its own colours, as Skarnhold flies the clans' red knot (`EmpireFlags`): Supplementaries flags and vanilla banners in the empire's colour with its emblem in banner patterns, flagpoles with two flags round each capital's plaza and on the towers, and **great banners** (the clans' `ClanBanner` with the empire's cloth, three blocks wide and six long, moving in the wind) on the gates and the palaces:
+
+| Empire | Colours | Great banner (`scripts/make_empire_banners.py`) | Flag pattern |
+|--------|---------|------------------------------------------------|--------------|
+| Parsivan | Violet, turquoise, gold | A turquoise eight-pointed star under a white crescent | Violet, turquoise disk, white flower, gold border |
+| Khemet | Blue, gold | A golden ankh under the winged sun disk, a band of zigzags | Blue, gold sun over gold teeth, cyan border |
+| Aureum | Royal blue, gold | A golden crown in a laurel wreath, SPQA | Blue, gold lozenge with a blue flower, gold border |
+
+### The capitals
+
+Parsivan, Khemet and Aureum each have a capital built in code (`CapitalCity` and one class per city: `Isfaran`, `Neferet`, `Aurelion`), not from `.nbt` pieces: a square terrace at the middle height of the land under it (never below sea level + 3), walls with four gates (the south gate in the empire's own style), two crossing avenues and a central plaza, the empire's landmarks with furnished interiors, furnished houses on 13-block plots and roads out. Aureum, the last empire before Sulthari's siege, has the largest: 320 × 320 with its own Colosseum on a hill. Over the 14 blocks outside the walls the ground slopes from the terrace back to the land around, so a capital on a hill or by the sea has no trench or cliff at its gates.
+
+| Capital | Empire | Position | Landmarks |
+|---------|--------|----------|-----------|
+| Isfaran | Parsivan | 7200, -400 (224 × 224) | Palace with a violet dome, an iwan and four minarets, glowing pool, hanging gardens, domed kiosks, white gate with spires |
+| Neferet | Khemet | 6800, 3200 (256 × 256) | Temple behind pylons with golden ankhs, sphinxes, the Great Pyramid, the rock-cut royal tomb, river with quays and boats, pylon gate |
+| Aurelion | Aureum | -5400, 2800 (320 × 320) | Byzantine Imperial Palace under a golden dome, Colosseum on a hill, Pantheon, basilicas, temples, triumphal arch, aqueduct, gold-crested gatehouse, fields |
 
 ### Building blocks per empire
 

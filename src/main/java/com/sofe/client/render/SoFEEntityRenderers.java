@@ -228,10 +228,21 @@ public final class SoFEEntityRenderers {
             Map.entry("kerem", "kai"), Map.entry("nilufar", "alex"), Map.entry("zahir", "noor"),
             Map.entry("parsivan_poet", "alex"), Map.entry("parsivan_gardener", "efe"), Map.entry("parsivan_dancer", "sunny"),
             Map.entry("khemet_embalmer", "makena"), Map.entry("khemet_ferryman", "noor"), Map.entry("khemet_scribe", "zuri"),
-            Map.entry("aureum_senator", "ari"), Map.entry("aureum_gladiator", "steve"), Map.entry("aureum_widow", "kai"));
+            Map.entry("aureum_senator", "ari"), Map.entry("aureum_gladiator", "steve"), Map.entry("aureum_widow", "kai"),
+            Map.entry("isfaran_perfumer", "alex"), Map.entry("isfaran_guard", "zuri"), Map.entry("isfaran_astronomer", "noor"),
+            Map.entry("isfaran_child", "sunny"), Map.entry("isfaran_carpet_weaver", "efe"),
+            Map.entry("neferet_priest", "makena"), Map.entry("neferet_boatman", "zuri"), Map.entry("neferet_potter", "sunny"),
+            Map.entry("neferet_child", "kai"), Map.entry("neferet_guard", "steve"),
+            Map.entry("aurelion_magistrate", "alex"), Map.entry("aurelion_legionary", "steve"), Map.entry("aurelion_baker", "sunny"),
+            Map.entry("aurelion_child", "kai"), Map.entry("aurelion_sculptor", "ari"));
+
+    /** Every story NPC id with a skin, sorted (for the screenshot tools). */
+    public static java.util.List<String> npcIds() {
+        return DEFAULT_SKINS.keySet().stream().sorted().toList();
+    }
 
     /** "ferid_camp_parsivan" looks like Ferid. */
-    private static String skinId(String id) {
+    static String skinId(String id) {
         int camp = id.indexOf("_camp_");
         return camp > 0 ? id.substring(0, camp) : id;
     }
@@ -328,6 +339,7 @@ public final class SoFEEntityRenderers {
     static class NpcRenderer extends HumanoidMobRenderer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
         NpcRenderer(EntityRendererProvider.Context ctx) {
             super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
+            addLayer(new NpcAccessoryLayer(this));
             addLayer(new NpcOutfitLayer(this));
         }
 

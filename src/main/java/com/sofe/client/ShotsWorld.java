@@ -31,12 +31,13 @@ public final class ShotsWorld {
             idle = 0;
             return;
         }
-        String name = PlaceShots.enabled() ? AETHERIS : NAME;
+        boolean aetheris = PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled();
+        String name = aetheris ? AETHERIS : NAME;
         if (++idle < 60 || mc.getLevelSource().levelExists(name)) return;
         created = true;
         LevelSettings settings = new LevelSettings(name, GameType.CREATIVE, false, Difficulty.PEACEFUL, true, new GameRules(),
                 WorldDataConfiguration.DEFAULT);
-        if (PlaceShots.enabled()) {
+        if (aetheris) {
             mc.createWorldOpenFlows().createFreshLevel(name, settings, new WorldOptions(WorldOptions.randomSeed(), false, false),
                     registries -> registries.registryOrThrow(net.minecraft.core.registries.Registries.WORLD_PRESET)
                             .getHolderOrThrow(com.sofe.world.gen.SoFEWorldPresets.AETHERIS).value().createWorldDimensions());

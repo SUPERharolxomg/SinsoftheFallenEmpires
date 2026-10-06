@@ -1,0 +1,15 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_perfumer",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "isfaran_perfumer",
+      "text": "dialogue.sofe.isfaran_perfumer.act4.1"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_child",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "isfaran_child",
+      "text": "dialogue.sofe.isfaran_child.act4.1"
+    }
+  ]
+}

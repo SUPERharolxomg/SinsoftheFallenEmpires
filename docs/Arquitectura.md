@@ -268,7 +268,7 @@ sins-of-fallen-empires/
 | Lock conditions | **Specification** + **Composite** | `act_reached`, `boss_defeated`, … combined with `all_of` / `any_of` / `not`, loaded from JSON |
 | Region lookup | **Facade** | `RegionMap` hides biome source, JSON bounds and coordinates behind `regionAt(x, z)` |
 | Map mod integration | **Adapter** | One `MapIntegration` interface; JourneyMap and Xaero adapters load only if the mod is present |
-| Protection rules | **Chain of Responsibility** | Each rule (zone, homestead, bypass) can allow or deny a block change |
+| Protection rules | **Chain of Responsibility** | Each rule (homestead, zone) can allow or deny a change; no one bypasses them |
 
 ### Menu, merchants and multiplayer ([Anexos.md](Anexos.md))
 

@@ -129,6 +129,18 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onRespawn);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.Companions::onDeath);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onPlayerTick);
+        // Sprint 7.5: the Pact of the Empires (docs/Anexos.md, A5 and A6)
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.Pacts::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.Pacts::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.Pacts::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.OwedRewards::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, com.sofe.pact.PactHooks::onDeath);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.PactHooks::onAttack);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.PactHooks::onAttackEntity);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.PactHooks::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.PactHooks::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.PactHooks::onEquip);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.pact.PactHooks::onPickup);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onHurt);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onHeal);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.companion.ClassConcord::onLogout);
@@ -191,6 +203,11 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onFluid);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onTrample);
         MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onMobGriefing);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onAttackEntity);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onInteractEntity);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onInteractEntityAt);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onProjectileImpact);
+        MinecraftForge.EVENT_BUS.addListener(ZoneProtectionHandler::onLivingAttack);
 
         modBus.addListener(EntityRegistry::registerAttributes);
         modBus.addListener(EntityRegistry::registerSpawnPlacements);

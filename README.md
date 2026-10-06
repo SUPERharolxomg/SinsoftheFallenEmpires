@@ -25,7 +25,8 @@ A Minecraft mod with a skill-based class system, an original dark fantasy story 
 - GeckoLib (animated bosses) and Curios (extra equipment slots)
 - MrCrayfish's Furniture Mod: Refurbished (MIT) and its library Framework, for the furniture of city interiors
 - Supplementaries and its library Moonlight (flags and decorations) and Small Ships (ships that sail), allowed in non-commercial modpacks
-- Optional: JourneyMap and Xaero's Minimap / World Map integration
+- JEI (Just Enough Items, MIT) for recipes and Xaero's Minimap for the map, in the pack
+- Optional: JourneyMap and Xaero's World Map integration
 - Git + GitHub, GitHub Actions (CI/CD)
 
 ## 1.5 Game Structure
