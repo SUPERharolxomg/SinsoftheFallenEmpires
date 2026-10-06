@@ -70,30 +70,29 @@ public class SultharisLifeGameTests {
         helper.succeed();
     }
 
-    /** A beta tester killed the hens of Sulthari: the town's animals cannot be hurt by a player there, but at the homestead they can. */
+    /** In a town a Bearer may hunt its hens and harvest its fields, and sow them again; the rest of the town is protected. */
     @GameTest(template = "empty")
-    public static void theTownsAnimalsAreSafeButTheHomesteadsAreNot(GameTestHelper helper) {
+    public static void aTownsAnimalsAndFieldsAreTheBearers(GameTestHelper helper) {
         BlockPos city = helper.absolutePos(new BlockPos(1, 2, 1));
-        BlockPos plot = helper.absolutePos(new BlockPos(5, 2, 1));
+        helper.setBlock(new BlockPos(3, 1, 1), Blocks.FARMLAND);
+        helper.setBlock(new BlockPos(3, 2, 1), Blocks.WHEAT.defaultBlockState().setValue(net.minecraft.world.level.block.CropBlock.AGE, 7));
+        helper.setBlock(new BlockPos(4, 2, 1), Blocks.STONE);
         ProtectedZoneData zones = ProtectedZoneData.get(helper.getLevel().getServer());
-        String cityId = "sofe:test_town_" + city.asLong(), plotId = "sofe:test_farm_" + plot.asLong();
-        zones.add(new ProtectedZone(cityId, ProtectedZone.Kind.CITY, city.getX() - 1, city.getY() - 2, city.getZ() - 1, plot.getX() + 1, city.getY() + 3, city.getZ() + 1));
-        zones.add(new ProtectedZone(plotId, ProtectedZone.Kind.HOMESTEAD, plot.getX() - 1, plot.getY() - 2, plot.getZ() - 1, plot.getX() + 1, plot.getY() + 3, plot.getZ() + 1));
-        ServerPlayer hunter = player(helper, "sofe_test_hunter");
+        String cityId = "sofe:test_town_" + city.asLong();
+        zones.add(new ProtectedZone(cityId, ProtectedZone.Kind.CITY, city.getX() - 1, city.getY() - 2, city.getZ() - 1, city.getX() + 4, city.getY() + 3, city.getZ() + 1));
+        ServerPlayer farmer = player(helper, "sofe_test_farmer");
         try {
             var hen = helper.spawn(EntityType.CHICKEN, new BlockPos(1, 2, 1));
-            var farmHen = helper.spawn(EntityType.CHICKEN, new BlockPos(5, 2, 1));
             hen.setNoAi(true);
-            farmHen.setNoAi(true);
-            hen.hurt(hunter.damageSources().playerAttack(hunter), 2f);
-            farmHen.hurt(hunter.damageSources().playerAttack(hunter), 2f);
-            helper.assertTrue(hen.getHealth() == hen.getMaxHealth(), "a hen of the town was hurt");
-            helper.assertTrue(farmHen.getHealth() < farmHen.getMaxHealth(), "a hen of the homestead could not be hurt");
+            hen.hurt(farmer.damageSources().playerAttack(farmer), 2f);
+            helper.assertTrue(hen.getHealth() < hen.getMaxHealth(), "a hen of the town could not be hurt");
             hen.discard();
-            farmHen.discard();
+            farmer.gameMode.destroyBlock(helper.absolutePos(new BlockPos(3, 2, 1)));
+            helper.assertBlockNotPresent(Blocks.WHEAT, new BlockPos(3, 2, 1));
+            farmer.gameMode.destroyBlock(helper.absolutePos(new BlockPos(4, 2, 1)));
+            helper.assertBlockPresent(Blocks.STONE, new BlockPos(4, 2, 1));
         } finally {
             zones.remove(cityId);
-            zones.remove(plotId);
         }
         helper.succeed();
     }
