@@ -3378,5 +3378,21 @@
   "codex.sofe.beast.prython.title": "Señor de la Aguja Celestial, sobre Sulthari",
   "codex.sofe.beast.prython.lore": "En la Aguja Celestial empuña los pecados de los seis anteriores, y ofrece al Portador el dominio de Aetheris.",
   "codex.sofe.beast.nahrazel.title": "Sellado en el Códice del Vacío, bajo Sulthari",
-  "codex.sofe.beast.nahrazel.lore": "Un coloso de ceniza, los siete pecados a la vez, en el Trono Invertido bajo Sulthari. El Códice se hizo para contenerlo."
+  "codex.sofe.beast.nahrazel.lore": "Un coloso de ceniza, los siete pecados a la vez, en el Trono Invertido bajo Sulthari. El Códice se hizo para contenerlo.",
+  "tip.sofe.title": "¿Sabías que...?",
+  "tip.sofe.1": "Todo camino hacia un Archipecado lo guarda un Juramento Roto.",
+  "tip.sofe.2": "El aetherio negro no está perdido: el Purificador de Sulthari lo vuelve claro otra vez.",
+  "tip.sofe.3": "Una Piedra de Paso que has tocado es un camino a casa. No funcionan en combate.",
+  "tip.sofe.4": "Cada Juramento Roto lucha contra la Ley que antes guardaba.",
+  "tip.sofe.5": "Cinco imperios firmaron el Pacto. Solo Sulthari sigue en pie.",
+  "tip.sofe.6": "El sello de una región aguanta hasta su acto: el Velo devuelve a quien lo intente.",
+  "tip.sofe.7": "Un jefe se alza para cada Portador que aún no lo ha vencido.",
+  "tip.sofe.8": "El Frasco del Portador se rellena en Sulthari, y cuando cae un élite.",
+  "tip.sofe.9": "En un Pacto, los Portadores comparten experiencia y encuentran mejor botín juntos.",
+  "tip.sofe.10": "Cada héroe lleva la tentación de un pecado. Los Archipecados saben cuál.",
+  "tip.sofe.11": "Una Reliquia se da una sola vez. Un combate de Eco da gemas, materiales y Dinares.",
+  "tip.sofe.12": "Las decisiones de las misiones secundarias deciden qué será de cada imperio.",
+  "tip.sofe.13": "¿Perdiste un objeto de la historia? El Consejo de Sulthari puede devolvértelo.",
+  "tip.sofe.14": "El Códice recuerda.",
+  "gui.sofe.journal": "Diario"
 }
