@@ -182,8 +182,8 @@
   "sofe:aureum/colosseum": {
    "x": -6000,
    "z": 7000,
-   "size_x": 96,
-   "size_z": 80,
+   "size_x": 144,
+   "size_z": 120,
    "zone": "dungeon"
   },
   "sofe:aureum/shadow_throne": {
@@ -266,8 +266,8 @@
   "sofe:aureum/colosseum_floor": {
    "x": -6000,
    "z": 7000,
-   "size_x": 50,
-   "size_z": 40,
+   "size_x": 56,
+   "size_z": 44,
    "zone": "arena"
   },
   "sofe:aureum/throne_room": {
@@ -371,6 +371,27 @@
    "size_x": 32,
    "size_z": 32,
    "zone": "camp"
+  },
+  "sofe:parsivan/city": {
+   "x": 7200,
+   "z": -400,
+   "size_x": 224,
+   "size_z": 224,
+   "zone": "city"
+  },
+  "sofe:khemet/city": {
+   "x": 6800,
+   "z": 3200,
+   "size_x": 256,
+   "size_z": 256,
+   "zone": "city"
+  },
+  "sofe:aureum/city": {
+   "x": -5400,
+   "z": 2800,
+   "size_x": 320,
+   "size_z": 320,
+   "zone": "city"
   }
  },
  "waystones": {
@@ -435,7 +456,7 @@
    "z": 500
   },
   "sofe:aureum/colosseum": {
-   "x": -5947,
+   "x": -5923,
    "z": 7000
   },
   "sofe:aureum/shadow_throne": {
@@ -473,6 +494,18 @@
   "sofe:aureum/camp": {
    "x": -5600,
    "z": 1006
+  },
+  "sofe:parsivan/city": {
+   "x": 7209,
+   "z": -391
+  },
+  "sofe:khemet/city": {
+   "x": 6809,
+   "z": 3209
+  },
+  "sofe:aureum/city": {
+   "x": -5391,
+   "z": 2809
   }
  },
  "npcs": [
@@ -720,7 +753,7 @@
    "axis": "x"
   },
   "sofe:aureum/colosseum": {
-   "x": -5953,
+   "x": -5929,
    "z": 7000,
    "condition": "sofe:colosseum",
    "hint": "message.sofe.gate.colosseum",

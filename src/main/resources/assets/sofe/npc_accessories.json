@@ -1,0 +1,131 @@
+{
+ "aurelion_baker": [
+  "skirt"
+ ],
+ "aurelion_magistrate": [
+  "skirt"
+ ],
+ "aureum_senator": [
+  "skirt"
+ ],
+ "aureum_widow": [
+  "skirt"
+ ],
+ "bazaar_lampwright": [
+  "fez"
+ ],
+ "bazaar_spicer": [
+  "skirt"
+ ],
+ "bazaar_weaver": [
+  "skirt"
+ ],
+ "citizen_baker": [
+  "skirt"
+ ],
+ "citizen_pilgrim": [
+  "turban",
+  "beard",
+  "skirt"
+ ],
+ "citizen_scholar": [
+  "skirt"
+ ],
+ "citizen_storyteller": [
+  "fez",
+  "skirt"
+ ],
+ "citizen_water_carrier": [
+  "turban"
+ ],
+ "citizen_weaver": [
+  "skirt"
+ ],
+ "citizen_widow": [
+  "skirt"
+ ],
+ "council_elder": [
+  "turban",
+  "beard",
+  "cape",
+  "skirt"
+ ],
+ "isfaran_astronomer": [
+  "beard",
+  "cape",
+  "skirt"
+ ],
+ "isfaran_carpet_weaver": [
+  "turban"
+ ],
+ "isfaran_child": [
+  "skirt"
+ ],
+ "isfaran_perfumer": [
+  "skirt"
+ ],
+ "kasim": [
+  "cape",
+  "skirt"
+ ],
+ "kerem": [
+  "fez"
+ ],
+ "khemet_embalmer": [
+  "skirt"
+ ],
+ "khemet_scribe": [
+  "skirt"
+ ],
+ "neferet_potter": [
+  "skirt"
+ ],
+ "nilufar": [
+  "skirt"
+ ],
+ "nordrath_brewer": [
+  "beard"
+ ],
+ "nordrath_elder": [
+  "cape",
+  "skirt"
+ ],
+ "nordrath_gambler": [
+  "cape"
+ ],
+ "nordrath_raider": [
+  "beard"
+ ],
+ "nordrath_shieldmaiden": [
+  "cape"
+ ],
+ "nordrath_skald": [
+  "cape"
+ ],
+ "nordrath_widow": [
+  "skirt"
+ ],
+ "ozhan": [
+  "turban",
+  "beard",
+  "cape",
+  "skirt"
+ ],
+ "parsivan_dancer": [
+  "skirt"
+ ],
+ "parsivan_gardener": [
+  "turban"
+ ],
+ "parsivan_poet": [
+  "cape",
+  "skirt"
+ ],
+ "selim": [
+  "fez"
+ ],
+ "zahir": [
+  "cape",
+  "skirt"
+ ]
+}

@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "neferet_boatman",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "neferet_boatman",
+      "text": "dialogue.sofe.neferet_boatman.act4.1"
+    }
+  ]
+}

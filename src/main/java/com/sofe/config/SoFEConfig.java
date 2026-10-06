@@ -79,6 +79,11 @@ public final class SoFEConfig {
         public final ForgeConfigSpec.BooleanValue protectZones;
         public final ForgeConfigSpec.BooleanValue corpseSystem;
         public final ForgeConfigSpec.ConfigValue<String> relicBinding;
+        public final ForgeConfigSpec.IntValue pactMaxMembers;
+        public final ForgeConfigSpec.DoubleValue pactRange, pactXpBonus, pactFindBonus, pactFindBonusCap, bossHealthPerPlayer;
+        public final ForgeConfigSpec.BooleanValue revive, uniqueBearersPerServer;
+        public final ForgeConfigSpec.IntValue downedSeconds, reviveSeconds;
+        public final ForgeConfigSpec.ConfigValue<String> gateMode;
 
         private Server(ForgeConfigSpec.Builder builder) {
             builder.push("bearers");
@@ -86,16 +91,45 @@ public final class SoFEConfig {
                     .comment("In a SoFE journey, open the Bearer selection for players who have not chosen one yet.")
                     .translation("config.sofe.open_class_select_on_join")
                     .define("openClassSelectOnJoin", true);
+            uniqueBearersPerServer = builder
+                    .comment("Each Bearer (class) can be chosen by one player only on this server, as in the story.")
+                    .translation("config.sofe.unique_bearers_per_server")
+                    .define("uniqueBearersPerServer", false);
+            builder.pop();
+            builder.push("pact");
+            pactMaxMembers = builder.comment("Most players in a Pact of the Empires.").translation("config.sofe.pact_max_members")
+                    .defineInRange("maxMembers", com.sofe.pact.PactRules.MAX_MEMBERS, 2, 10);
+            pactRange = builder.comment("How near (blocks, same dimension) Pact members must be to count as together.")
+                    .translation("config.sofe.pact_range").defineInRange("togetherRange", com.sofe.pact.PactRules.TOGETHER_RANGE, 8, 256);
+            pactXpBonus = builder.comment("Extra kill XP per extra member together, split among them (0.10 = +10%).")
+                    .translation("config.sofe.pact_xp_bonus").defineInRange("xpBonusPerMember", com.sofe.pact.PactRules.XP_BONUS_PER_MEMBER, 0, 1);
+            pactFindBonus = builder.comment("Better rarity odds per ally together (0.05 = +5%).")
+                    .translation("config.sofe.pact_find_bonus").defineInRange("findBonusPerAlly", com.sofe.pact.PactRules.FIND_BONUS_PER_ALLY, 0, 1);
+            pactFindBonusCap = builder.comment("Cap of the rarity bonus.")
+                    .translation("config.sofe.pact_find_bonus_cap").defineInRange("findBonusCap", com.sofe.pact.PactRules.FIND_BONUS_CAP, 0, 2);
+            bossHealthPerPlayer = builder.comment("Extra boss health per extra player in its arena (0.6 = +60%); damage does not change.")
+                    .translation("config.sofe.boss_health_per_player").defineInRange("bossHealthPerPlayer", com.sofe.pact.PactRules.BOSS_HEALTH_PER_PLAYER, 0, 3);
+            revive = builder.comment("In a boss arena a player who falls is downed instead of dying, while an ally still stands; an ally revives them by crouching beside them.")
+                    .translation("config.sofe.revive").define("revive", true);
+            downedSeconds = builder.comment("How long a downed player can wait for help before dying.")
+                    .translation("config.sofe.downed_seconds").defineInRange("downedSeconds", 30, 5, 120);
+            reviveSeconds = builder.comment("How long an ally must crouch beside a downed player to raise them.")
+                    .translation("config.sofe.revive_seconds").defineInRange("reviveSeconds", 3, 1, 10);
             builder.pop();
             builder.push("world");
             opsBypass = builder
-                    .comment("Operators in creative or spectator mode pass through the Seal Veil and can build in protected zones.")
+                    .comment("Operators pass through the Seal Veil (protected places stay protected even for them).")
                     .translation("config.sofe.ops_bypass")
                     .define("opsBypass", true);
             protectZones = builder
-                    .comment("Stop players from breaking or placing blocks in the city of Sulthari and other protected places.")
+                    .comment("Keep the protected places (cities, camps, dungeons, arenas) as they were built: no one, not even an operator in creative, can break, place or take anything there. Turn off only to work on a place.")
                     .translation("config.sofe.protect_zones")
                     .define("protectZones", true);
+            gateMode = builder
+                    .comment("Who may pass a Sealed Gate: per_player (each needs its condition) or pact_escort (a Pact member who meets it",
+                            "lets the members beside them through).")
+                    .translation("config.sofe.gate_mode")
+                    .define("gateMode", "per_player");
             builder.pop();
             builder.push("death");
             corpseSystem = builder
@@ -106,7 +140,7 @@ public final class SoFEConfig {
             builder.pop();
             builder.push("items");
             relicBinding = builder
-                    .comment("Who may hold Relics and Imperial Legacy pieces: free (anyone), pact_only (Sprint 7.5) or soulbound.",
+                    .comment("Who may hold Relics and Imperial Legacy pieces: free (anyone), pact_only (the owner and their Pact) or soulbound.",
                             "Story items (the Bearer's Flask, Codex Shards) are always soulbound.")
                     .translation("config.sofe.relic_binding")
                     .define("relicBinding", "free");

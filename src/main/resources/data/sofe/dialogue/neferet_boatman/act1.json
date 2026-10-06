@@ -1,0 +1,14 @@
+{
+  "style": "khemet",
+  "npc": "neferet_boatman",
+  "lines": [
+    {
+      "speaker": "neferet_boatman",
+      "text": "dialogue.sofe.neferet_boatman.act1.1"
+    },
+    {
+      "speaker": "neferet_boatman",
+      "text": "dialogue.sofe.neferet_boatman.act1.2"
+    }
+  ]
+}

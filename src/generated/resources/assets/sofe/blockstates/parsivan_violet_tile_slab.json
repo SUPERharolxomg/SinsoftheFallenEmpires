@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "sofe:block/parsivan_violet_tile_slab"
+    },
+    "type=double": {
+      "model": "sofe:block/parsivan_violet_tiles"
+    },
+    "type=top": {
+      "model": "sofe:block/parsivan_violet_tile_slab_top"
+    }
+  }
+}

@@ -368,25 +368,44 @@ Skill tables in [Clases.md](Clases.md).
 - [x] *(Annex)* Kerem and Sister Nilufar as NPCs: Kerem the Cutter in the Bank beside his Jeweler's Bench (cut gems, buys rough ones), Sister Nilufar by the Void Gate beside her Purifier (aetherium, buys Black Aetherium and Void Ash); the Tempering Anvil stands by Dilara
 - [x] *(Annex)* Personal loot (Reward Coffer) for every Archsin and Broken Oath
 
+## Extra — The empire capitals
+
+- [x] Three capitals after the concept art, on a terrace whose shore slopes back to the land around (up a hill or down to the sea), with walls, four gates (the south one the empire's own), two avenues, a plaza, a bazaar, furnished houses (one in four with corrupted walls that heal with the region), roads out and five citizens (`CapitalCity`, one class per city):
+  - **Isfaran** (Parsivan, 7200, -400, 224 × 224, `Isfaran`): violet houses under stepped teal roofs, some domed; the palace on its terrace with a great violet dome on a drum of windows, teal domes, an iwan for its door and four minarets with purple flags; the pool glowing violet from below; hanging gardens with vines, glow berries and a pavilion on top; domed kiosks; the south gate between white towers with spires
+  - **Neferet** (Khemet, 6800, 3200, 256 × 256, `Neferet`): the river along the west wall with quays, palms and boats; the temple behind two pylons painted with golden ankhs, a hall of columns under a teal dome; an avenue of sphinxes and the Great Sphinx; the Great Pyramid capped in gold and a lesser one; the royal tomb cut into a massif of red rock; stepped pyramids; houses under little teal pyramids; a pylon gate
+  - **Aurelion** (Aureum, -5400, 2800, 320 × 320, `Aurelion`): marble streets and blue and gold avenues; the Imperial Palace, a Byzantine hall under a great golden dome with golden half-domes and bell towers, behind a portico under a blue pediment; the Colosseum on its own hill (`Colosseum`: three storeys of arches, the cavea, the emperor's box); the Pantheon with its oculus; two long basilicas; temples with columns all round; little round temples; the column of victory and a triumphal arch at the forum; the aqueduct on two storeys of arches coming from the west hills; a gatehouse crested with gold; fields outside the walls
+- [x] New roof blocks for the concepts: Aureum Royal Tiles and Parsivan Violet Tiles, each with stairs, slab and wall (`scripts/make_empire_blocks.py`)
+- [x] Interiors: every house has a rug in the empire's colours, a bed, a kitchen corner, a table with candles and chairs, storage, a trade (a loom in Isfaran, a cauldron in Neferet, shelves in Aurelion), a plant and a banner; the palaces, temples, basilicas and the Pantheon have carpets, thrones on daises, statues (armor stands that cannot be stripped), braziers, divans, banners and chandeliers
+- [x] The Colosseum of the Shadeyn fight grows to 144 × 120 (four storeys, the sand 56 × 44), built by the same `Colosseum` builder as Aurelion's, its marble cracked and its ground arches barred so the only way in is behind the Sealed Gate
+- [x] `./gradlew runClient -PplaceShots=at:x:y:z:yaw:pitch` takes a picture from any spot, for the insides of buildings
+- [x] Flags and great banners of the empires, as Skarnhold's: emblems in banner patterns on flags and banners, flagpoles round the plazas and on the towers, a great banner for each empire (`EmpireFlags`, `scripts/make_empire_banners.py`)
+- [x] Nothing can be taken from a protected place, by anyone: containers, pots, lecterns, berries, signs, armor stands, item frames, paintings, boats and carts are protected from players (even in creative or as operators), projectiles and explosions (`ZoneAction.TAKE`); checked with `./gradlew runClient -PprotectCheck`
+- [x] JEI and Xaero's Minimap in the pack (runtime dependencies in `build.gradle`; checked that the game loads, enters a world and opens the screens with them)
+- [x] Skins for the 66 story NPCs (`scripts/make_npc_skins.py`, `textures/entity/npc/`): clothes by empire and trade, each person's skin, hair, beard, age and headwear; the Bearers in plain base looks so they never outshine a player (players keep their own skins; the class outfit is drawn the same on a player and on the hero NPC); `-PplaceShots=npcs:0,npcs:1` shows them all
+- [x] A Waystone in each capital; `CapitalsTest` checks their region, zone, Waystone and distance to the other places
+- [x] Fix: a Bearer kept nothing after dying (class, level, skills, attributes, story, Dinars, Favor, Waystones), so the skill tree and the character sheet would not open; the capabilities no longer invalidate their data before it is copied to the respawned player (checked with `./gradlew runClient -PdeathCheck`)
+
 ## Sprint 7.5 — Multiplayer & Co-op (Weeks 19-20)
 See [Anexos.md](Anexos.md#a5-co-op-bonus-pact-of-the-empires).
-- [ ] *(Annex)* `Pact` and `PactManager` (up to 5 players, `/sofe pact` commands)
-- [ ] *(Annex)* Shared XP and loot find bonus while within 48 blocks
-- [ ] *(Annex)* Class Concord and Five Pillars bonus
-- [ ] *(Annex)* Downed state and revive in boss arenas
-- [ ] *(Annex)* Kinship Chests in dungeons (2+ players)
-- [ ] *(Annex)* Echo shrines so late joiners get boss credit without changing the world (instanced in `sofe:echo`)
-- [ ] *(Annex)* Council of Sulthari recovery of lost story items
-- [ ] *(Annex)* `uniqueBearersPerServer` option and per-player story cutscenes
-- [ ] *(World)* `gateMode` option (`PER_PLAYER`, `PACT_ESCORT`)
-- [ ] *(Rules)* Instanced prologue for late joiners
-- [ ] *(Rules)* Disconnect rules during boss fights; boss edge cases (Envyris copies, Luxara charm, Avarok per player)
-- [ ] *(Rules)* `/sofe` admin commands
-- [ ] *(World)* JourneyMap plugin: region borders, locked shading, objective waypoints; check the Xaero API for basic waypoints
-- [ ] *(Annex)* One-copy-equipped rule for Relics
-- [ ] *(Annex)* Pact members' health on the HUD
-- [ ] *(Annex)* Test on a dedicated server with 4+ players
+- [x] *(Annex)* `Pact` and `PactManager` (up to 5 players, `/sofe pact` commands): `Pact`, `PactData` (saved with the world), `Pacts`; `/sofe pact invite|accept|decline|leave|kick|list`, the invitation with buttons in the chat, the leader passes on when they leave, a Pact of one dissolves
+- [x] *(Annex)* Shared XP and loot find bonus while within 48 blocks: kill XP split among the members together with +10% per extra member; +5% rarity per ally, up to +20% (`PactRules`, all values in the server config `[pact]`)
+- [x] *(Annex)* Class Concord and Five Pillars bonus: the group is the Pact together (or the Bearers near when there is no Pact); the Five Pillars add a Flask charge
+- [x] *(Annex)* Downed state and revive in boss arenas: a participant who would die is downed for 30 s while another stands; an ally crouching beside them for 3 s lifts them to 30% health (`PactHooks`)
+- [x] *(Annex)* Kinship Chests in dungeons (2+ players): beside the Waystone of every dungeon; each Bearer present takes their own share once (Dinars by act, often a rough sin gem), never gear the story needs (`KinshipChest`)
+- [x] *(Annex)* Echo shrines so late joiners get boss credit without changing the world: done by the lairs (`BossLairs`): a boss rises again for any Bearer who has not beaten it, the arena seals only for the fight and the healed land stays healed, so no separate `sofe:echo` dimension is needed
+- [x] *(Annex)* Council of Sulthari recovery of lost story items: `/sofe council restore` in Sulthari gives back the Flask and the Shard of every Archsin beaten, from the story's credit (`StoryItems`)
+- [x] *(Annex)* `uniqueBearersPerServer` option and per-player story cutscenes (`TakenBearers`; story scenes were already per player)
+- [x] *(World)* `gateMode` option (`PER_PLAYER`, `PACT_ESCORT`): with `pact_escort`, a Pact member who meets a Sealed Gate's condition lets the members within 8 blocks through
+- [x] *(Rules)* Instanced prologue for late joiners: the Act I quest is per player (its invasion spawns for the player who reaches it, the Brass Sentinel rises from its lair for whoever owes it), so a late joiner plays it in the real Sulthari
+- [x] *(Rules)* Disconnect rules during boss fights: a participant who leaves keeps their place; if the boss falls while they are away, their credit and loot wait for their return (`OwedRewards`, UC-32); boss health grows +60% per extra player in the arena and never shrinks mid-fight (damage unchanged)
+- [x] *(Rules)* `/sofe` admin commands: `/sofe progress <player> show|act|defeat`, `/sofe unstuck`, `/sofe item restore`, `/sofe pacts` (permission 2; changes are logged)
+- [x] *(World)* JourneyMap plugin: region borders, locked shading, objective waypoints; check the Xaero API for basic waypoints: Xaero's Minimap is in the pack; it has no stable waypoint API, so it maps the world without integration (as planned in Mundo.md W3); a JourneyMap plugin stays optional and unbuilt while JourneyMap is not in the pack
+- [x] *(Annex)* One-copy-equipped rule for Relics; `relicBinding = pact_only` (only the owner and their Pact may pick a bound Relic or Legacy up)
+- [x] *(Annex)* Pact members' health on the HUD (`PactHudOverlay`: name, Bearer, health, near/away/offline/downed) and the Pact in the Journal
+- [ ] *(Annex)* Test on a dedicated server with 4+ players (the mod loads and its 102 GameTests pass on a dedicated server; a session with real players is still to be played)
 - [ ] *(Annex, stretch)* Combo skills between two players
+- [x] *(Extra)* The character sheet fits its columns to the language in use (Spanish names no longer overlap)
+- [x] *(Extra)* Story NPCs: the great of each act embroidered after the user's reference of Ozhan (folds, embroidered hems and cuffs in the empire's pattern, frogging, sashes, capes, stern faces), and 3D parts for 41 of them: turbans, beards, capes and robe skirts (`NpcAccessoryLayer`, `scripts/make_npc_skins.py`)
 
 ## Sprint 8 — Act V: The Ascension & Polish (Weeks 21-24)
 - [x] Sulthari under siege; Ozhan revealed as Solrath, the False Prophet (Law X), in the Temple of Sulthari: pillars of holy light, holy bolts, and in his second phase the beaten Broken Oaths raised as echoes (`SolrathEntity`; echoes are weaker and give nothing)

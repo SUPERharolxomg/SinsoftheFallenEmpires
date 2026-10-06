@@ -53,6 +53,18 @@ final class EmpireBuilder {
                 return true;
             }
             case "nordrath/camp", "parsivan/camp", "khemet/camp", "aureum/camp" -> camp(level, s, y, piece.substring(0, piece.indexOf('/')));
+            case "parsivan/city" -> {
+                CapitalCity.build(level, s, CapitalCity.Empire.PARSIVAN);
+                return true;
+            }
+            case "khemet/city" -> {
+                CapitalCity.build(level, s, CapitalCity.Empire.KHEMET);
+                return true;
+            }
+            case "aureum/city" -> {
+                CapitalCity.build(level, s, CapitalCity.Empire.AUREUM);
+                return true;
+            }
             case "nordrath/caverns" -> {
                 caverns(level, s);
                 return true;
@@ -703,35 +715,18 @@ final class EmpireBuilder {
     }
 
     /**
-     * The Aureum Colosseum (Shadeyn): an ellipse of arches in two storeys, tiers of seats rising from a sand floor,
-     * the gate of the gladiators facing east.
+     * The Aureum Colosseum (Shadeyn), the greatest building of the empires: the Flavian amphitheatre of Aureum, four
+     * storeys of arches round a sand floor where Shadeyn waits, its marble cracked and veined with black gold. The arches
+     * of the ground storey are barred; the only way in is the gladiators' passage on the east, behind its Sealed Gate.
      */
     private static void colosseum(ServerLevel level, StructurePositions.Structure s, int y) {
         int ax = SultharisBuilder.half(s.sizeX()) - 1, az = SultharisBuilder.half(s.sizeZ()) - 1;
         SultharisBuilder.pad(level, s.x() - ax - 1, s.z() - az - 1, s.x() + ax + 1, s.z() + az + 1, y, Blocks.SAND.defaultBlockState());
-        int tiers = 9;
-        for (int dx = -ax; dx <= ax; dx++) {
-            for (int dz = -az; dz <= az; dz++) {
-                double e = Math.sqrt((dx * dx) / (double) (ax * ax) + (dz * dz) / (double) (az * az));
-                if (e > 1) continue;
-                int x = s.x() + dx, z = s.z() + dz;
-                boolean gate = dx > 0 && Math.abs(dz) <= 1;
-                double ring = (1 - e) * Math.min(ax, az); // blocks in from the outer wall
-                if (ring < 1.3) { // the outer wall: arches in two storeys
-                    for (int h = 0; h < 18; h++) {
-                        boolean arch = Math.floorMod(dx * 3 + dz * 5, 7) < 3 && (h >= 1 && h <= 5 || h >= 9 && h <= 13);
-                        if (gate && h < 5 || arch) continue;
-                        set(level, x, y + h, z, h == 7 || h == 15 ? b(SoFEBlocks.AUREUM_GOLD_MOSAIC) : marble(x, y + h, z, 0.35));
-                    }
-                } else if (ring < 1.3 + tiers && !gate) { // the seats, highest at the back
-                    int height = (int) Math.round((tiers - (ring - 1.3)) * 1.1);
-                    for (int h = 0; h < height; h++) set(level, x, y + h, z, marble(x, y + h, z, 0.3));
-                    set(level, x, y + height, z, b(SoFEBlocks.AUREUM_MARBLE_BRICK_SLAB));
-                }
-            }
-        }
-        spawner(level, s.x() + ax - 3, y, s.z() - 4, EntityType.SKELETON);
-        spawner(level, s.x() + ax - 3, y, s.z() + 4, EntityType.ZOMBIE);
+        Colosseum.build(level, s.x(), y, s.z(), ax, az, 28, 22, 4, java.util.EnumSet.of(Direction.EAST), true,
+                (x, yy, z) -> marble(x, yy, z, 0.35), (x, yy, z) -> pillar(x, yy, z, 0.3));
+        // beasts in the corridors by the gladiators' passage
+        spawner(level, s.x() + ax - 4, y, s.z() - 6, EntityType.SKELETON);
+        spawner(level, s.x() + ax - 4, y, s.z() + 6, EntityType.ZOMBIE);
         StructurePositions.get().gates().values().stream()
                 .filter(g -> Math.abs(g.x() - s.x()) <= ax + 2 && Math.abs(g.z() - s.z()) <= az + 2)
                 .forEach(g -> StructureBuilder.placeGate(level, g, y));

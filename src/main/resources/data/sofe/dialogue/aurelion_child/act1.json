@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_child",
+  "lines": [
+    {
+      "speaker": "aurelion_child",
+      "text": "dialogue.sofe.aurelion_child.act1.1"
+    },
+    {
+      "speaker": "aurelion_child",
+      "text": "dialogue.sofe.aurelion_child.act1.2"
+    }
+  ]
+}

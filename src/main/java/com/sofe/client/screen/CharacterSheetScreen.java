@@ -24,7 +24,11 @@ import java.util.Optional;
  * each while there are points to spend, and the values they produce, computed by the server.
  */
 public class CharacterSheetScreen extends Screen {
-    private static final int PANEL_W = 280, PANEL_H = 190;
+    private static final int PANEL_H = 190, VALUE_W = 28, BUTTON_W = 16, STAT_VALUE_W = 64, GAP = 12;
+    private static final String[] STATS = {"gui.sofe.character.health", "gui.sofe.character.resource", "gui.sofe.character.physical",
+            "gui.sofe.character.magic", "gui.sofe.character.crit", "gui.sofe.character.dodge", "gui.sofe.character.regen", "gui.sofe.character.dinars"};
+    /** The columns fit the longest words of the language in use (Spanish names are longer than English ones). */
+    private int nameW = 80, labelW = 100, panelW = 280;
     private static final int GOLD = 0xE8B64A, PARCHMENT = 0xE6DCC8, MUTED = 0xA89F8E, GEAR_GREEN = 0x6FD86A;
     private final Map<CharacterAttribute, Button> plus = new EnumMap<>(CharacterAttribute.class);
 
@@ -33,11 +37,19 @@ public class CharacterSheetScreen extends Screen {
     }
 
     private int left() {
-        return (this.width - PANEL_W) / 2;
+        return (this.width - panelW) / 2;
     }
 
     private int top() {
         return (this.height - PANEL_H) / 2;
+    }
+
+    private int valueX() {
+        return left() + 12 + nameW + 6;
+    }
+
+    private int statX() {
+        return valueX() + VALUE_W + BUTTON_W + GAP;
     }
 
     private int rowY(int index) {
@@ -47,11 +59,17 @@ public class CharacterSheetScreen extends Screen {
     @Override
     protected void init() {
         plus.clear();
+        nameW = 0;
+        for (CharacterAttribute a : CharacterAttribute.values()) nameW = Math.max(nameW, this.font.width(Component.translatable(a.translationKey())));
+        labelW = 0;
+        for (String key : STATS) labelW = Math.max(labelW, this.font.width(Component.translatable(key)));
+        int columns = 12 + nameW + 6 + VALUE_W + BUTTON_W + GAP + labelW + 8 + STAT_VALUE_W + 8;
+        panelW = Math.min(this.width - 8, Math.max(280, columns));
         CharacterAttribute[] attributes = CharacterAttribute.values();
         for (int i = 0; i < attributes.length; i++) {
             CharacterAttribute a = attributes[i];
             Button button = addRenderableWidget(Button.builder(Component.literal("+"), b -> SoFENetwork.sendToServer(new SpendAttributePacket(a)))
-                    .bounds(left() + 118, rowY(i) - 5, 16, 16)
+                    .bounds(valueX() + VALUE_W, rowY(i) - 5, BUTTON_W, 16)
                     .tooltip(Tooltip.create(Component.translatable(a.translationKey() + ".desc")))
                     .build());
             plus.put(a, button);
@@ -68,8 +86,8 @@ public class CharacterSheetScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(graphics);
         int l = left(), t = top();
-        graphics.fill(l - 2, t - 2, l + PANEL_W + 2, t + PANEL_H + 2, 0xFF000000 | GOLD);
-        graphics.fill(l, t, l + PANEL_W, t + PANEL_H, 0xF0181410);
+        graphics.fill(l - 2, t - 2, l + panelW + 2, t + PANEL_H + 2, 0xFF000000 | GOLD);
+        graphics.fill(l, t, l + panelW, t + PANEL_H, 0xF0181410);
 
         Optional<PlayerClass> playerClass = ClientClassData.get();
         Optional<SyncProgressPacket> progress = ClientProgressData.get();
@@ -90,14 +108,14 @@ public class CharacterSheetScreen extends Screen {
                 boolean primary = AttributeSheet.primary(c) == a;
                 graphics.drawString(this.font, Component.translatable(a.translationKey()), l + 12, rowY(i), primary ? GOLD : PARCHMENT, false);
                 // values raised by gear are green, Diablo II style; the tooltip says how much comes from gear
-                graphics.drawString(this.font, String.valueOf(base + gear), l + 96, rowY(i), gear > 0 ? GEAR_GREEN : 0xFFFFFF, false);
-                if (gear > 0 && mouseX >= l + 90 && mouseX < l + 116 && mouseY >= rowY(i) - 2 && mouseY < rowY(i) + 10) {
+                graphics.drawString(this.font, String.valueOf(base + gear), valueX(), rowY(i), gear > 0 ? GEAR_GREEN : 0xFFFFFF, false);
+                if (gear > 0 && mouseX >= valueX() - 4 && mouseX < valueX() + VALUE_W && mouseY >= rowY(i) - 2 && mouseY < rowY(i) + 10) {
                     graphics.renderTooltip(this.font, Component.translatable("gui.sofe.character.gear", gear), mouseX, mouseY);
                 }
             }
 
             SyncProgressPacket.Derived d = p.derived();
-            int x = l + 152, y = t + 50;
+            int x = statX(), y = t + 50;
             y = stat(graphics, x, y, "gui.sofe.character.health", String.format(Locale.ROOT, "%.1f", d.maxHealth()));
             y = stat(graphics, x, y, "gui.sofe.character.resource", Component.translatable(c.resource().translationKey()).getString() + " +" + d.maxResource());
             y = stat(graphics, x, y, "gui.sofe.character.physical", percent(d.physicalDamage() - 1));
@@ -113,7 +131,7 @@ public class CharacterSheetScreen extends Screen {
 
     private int stat(GuiGraphics graphics, int x, int y, String key, String value) {
         graphics.drawString(this.font, Component.translatable(key), x, y, MUTED, false);
-        graphics.drawString(this.font, value, x + 118 - this.font.width(value), y, PARCHMENT, false);
+        graphics.drawString(this.font, value, x + labelW + 8 + STAT_VALUE_W - this.font.width(value), y, PARCHMENT, false);
         return y + 16;
     }
 

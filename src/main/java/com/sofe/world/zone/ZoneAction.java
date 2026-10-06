@@ -11,5 +11,10 @@ public enum ZoneAction {
     FLUID,
     PISTON,
     /** Fire catching or spreading. */
-    FIRE
+    FIRE,
+    /**
+     * Taking or moving what a place holds: opening its chests, barrels and furniture drawers, the plant in a pot, the
+     * book on a lectern, glow berries, and the armor stands, item frames and paintings of its rooms.
+     */
+    TAKE
 }

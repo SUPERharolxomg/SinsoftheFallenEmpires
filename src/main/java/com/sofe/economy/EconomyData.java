@@ -186,7 +186,7 @@ public final class EconomyData {
         buyback.stream().limit(BUYBACK_SIZE).forEach(this.buyback::addLast);
         this.blueprints.clear();
         this.blueprints.addAll(blueprints);
-        this.flaskCharges = Math.max(0, Math.min(FLASK_MAX, flask));
+        this.flaskCharges = Math.max(0, Math.min(FLASK_MAX + 1, flask)); // +1: the Five Pillars
     }
 
     public void copyFrom(EconomyData other) {

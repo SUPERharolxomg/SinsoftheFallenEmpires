@@ -27,7 +27,8 @@ public final class EconomyHandler {
 
     public static int flaskMax(ServerPlayer player) {
         int archsins = StoryCapability.get(player).map(s -> (int) ARCHSINS.stream().filter(s::hasDefeated).count()).orElse(0);
-        return EconomyData.flaskMax(archsins);
+        int pillars = com.sofe.companion.ClassConcord.pillars(com.sofe.companion.ClassConcord.of(player)) ? 1 : 0; // the Five Pillars
+        return EconomyData.flaskMax(archsins) + pillars;
     }
 
     public static void sync(ServerPlayer player) {

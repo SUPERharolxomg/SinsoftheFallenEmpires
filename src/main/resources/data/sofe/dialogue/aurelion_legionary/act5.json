@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_legionary",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aurelion_legionary",
+      "text": "dialogue.sofe.aurelion_legionary.act5.1"
+    }
+  ]
+}

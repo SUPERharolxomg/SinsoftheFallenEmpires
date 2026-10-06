@@ -1,0 +1,14 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_baker",
+  "lines": [
+    {
+      "speaker": "aurelion_baker",
+      "text": "dialogue.sofe.aurelion_baker.act1.1"
+    },
+    {
+      "speaker": "aurelion_baker",
+      "text": "dialogue.sofe.aurelion_baker.act1.2"
+    }
+  ]
+}

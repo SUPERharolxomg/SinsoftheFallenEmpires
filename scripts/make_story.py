@@ -183,7 +183,8 @@ def bearers():
 def folk():
     """The refugees in the camps of Parsivan, Khemet and Aureum: their first lines while the Archsin rules, then
     once it has fallen; and what one of them says of the region's fate."""
-    for region, people in act34.FOLK.items():
+    folk_tables = [act34.FOLK, act34.CAPITAL_FOLK]
+    for region, people in [(r, p) for table in folk_tables for r, p in table.items()]:
         for npc, (names, freed_act, now, later) in people.items():
             say("npc.sofe." + npc, names)
             folder = os.path.join(DATA, "dialogue", npc)

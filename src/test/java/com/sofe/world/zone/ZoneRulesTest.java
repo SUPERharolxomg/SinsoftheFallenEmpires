@@ -17,25 +17,27 @@ class ZoneRulesTest {
 
     @Test
     void theCityCannotBeChangedButOutsideItCan() {
-        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.BREAK, false));
-        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.PLACE, false));
-        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.EXPLOSION, false));
-        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.MOB_GRIEFING, false));
-        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.FIRE, false));
-        assertTrue(ZoneRules.allowed(ZONES, 500, 70, 0, ZoneAction.BREAK, false));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.BREAK));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.PLACE));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.EXPLOSION));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.MOB_GRIEFING));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.FIRE));
+        assertTrue(ZoneRules.allowed(ZONES, 500, 70, 0, ZoneAction.BREAK));
     }
 
     @Test
     void theHomesteadAllowsEverythingEvenInsideTheCity() {
-        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.BREAK, false));
-        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.PLACE, false));
-        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.PISTON, false));
-        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.FIRE, false));
+        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.BREAK));
+        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.PLACE));
+        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.PISTON));
+        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.FIRE));
     }
 
     @Test
-    void bypassingPlayersMayBuildAnywhere() {
-        assertTrue(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.BREAK, true));
+    void nothingCanBeTakenFromTheCityButTheHomesteadIsTheBearers() {
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.TAKE));
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.USE_ITEM_ON_BLOCK));
+        assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.TAKE));
     }
 
     @Test

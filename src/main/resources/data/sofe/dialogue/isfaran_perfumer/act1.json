@@ -1,0 +1,14 @@
+{
+  "style": "parsivan",
+  "npc": "isfaran_perfumer",
+  "lines": [
+    {
+      "speaker": "isfaran_perfumer",
+      "text": "dialogue.sofe.isfaran_perfumer.act1.1"
+    },
+    {
+      "speaker": "isfaran_perfumer",
+      "text": "dialogue.sofe.isfaran_perfumer.act1.2"
+    }
+  ]
+}

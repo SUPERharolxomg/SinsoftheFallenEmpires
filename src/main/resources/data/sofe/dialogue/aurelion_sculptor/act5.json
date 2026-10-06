@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_sculptor",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aurelion_sculptor",
+      "text": "dialogue.sofe.aurelion_sculptor.act5.1"
+    }
+  ]
+}

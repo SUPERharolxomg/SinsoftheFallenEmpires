@@ -1,0 +1,15 @@
+{
+  "style": "khemet",
+  "npc": "neferet_priest",
+  "priority": 4,
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  },
+  "lines": [
+    {
+      "speaker": "neferet_priest",
+      "text": "dialogue.sofe.neferet_priest.act4.1"
+    }
+  ]
+}

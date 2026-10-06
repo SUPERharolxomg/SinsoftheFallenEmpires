@@ -108,6 +108,9 @@ public final class StoryPlacements extends SavedData {
             placeBlock(level, entry.getValue(), SoFEBlocks.WAYSTONE.get().defaultBlockState());
             data.placed.add(key);
             count++;
+            // a Kinship Chest beside the Waystone at every dungeon's door (docs/Anexos.md, A5)
+            boolean dungeon = layout.structure(entry.getKey()).map(st -> st.zone() == com.sofe.world.zone.ProtectedZone.Kind.DUNGEON).orElse(false);
+            if (dungeon) placeBlock(level, entry.getValue().offset(2, 0, 2), SoFEBlocks.KINSHIP_CHEST.get().defaultBlockState());
         }
         for (StructurePositions.Npc npc : layout.npcs()) {
             var station = switch (npc.npc()) {

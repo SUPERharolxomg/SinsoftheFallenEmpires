@@ -1,13 +1,17 @@
 package com.sofe.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.context.CommandContext;
 import com.sofe.SoFEMod;
 import com.sofe.world.zone.StructurePositions;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -25,7 +29,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 /**
- * Admin commands (permission level 2).
+ * The /sofe commands. Every player has {@code /sofe pact} (invite, accept, decline, leave, kick, list; UC-18) and
+ * {@code /sofe council restore} (the Council gives back lost story items, in Sulthari; UC-21). Operators (permission
+ * level 2) also have, UC-36: {@code /sofe progress <player> act|defeat|show}, {@code /sofe unstuck <player>},
+ * {@code /sofe item restore <player>}, {@code /sofe pacts} and {@code /sofe export}.
+ *
  *
  * <p>{@code /sofe export <piece>} saves a story place as it now stands in the world, so a build
  * improved by hand replaces the generated one in every new journey. Stand on the floor of the place:
@@ -42,12 +50,128 @@ public final class SoFECommands {
 
     public static void register(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-        dispatcher.register(Commands.literal("sofe").requires(source -> source.hasPermission(2))
-                .then(Commands.literal("export")
+        dispatcher.register(Commands.literal("sofe")
+                .then(Commands.literal("pact")
+                        .then(Commands.literal("invite").then(Commands.argument("player", EntityArgument.player())
+                                .executes(c -> ok(com.sofe.pact.Pacts.invite(c.getSource().getPlayerOrException(), EntityArgument.getPlayer(c, "player"))))))
+                        .then(Commands.literal("accept").executes(c -> ok(com.sofe.pact.Pacts.accept(c.getSource().getPlayerOrException()))))
+                        .then(Commands.literal("decline").executes(c -> ok(com.sofe.pact.Pacts.decline(c.getSource().getPlayerOrException()))))
+                        .then(Commands.literal("leave").executes(c -> ok(com.sofe.pact.Pacts.leave(c.getSource().getPlayerOrException()))))
+                        .then(Commands.literal("kick").then(Commands.argument("name", StringArgumentType.word())
+                                .executes(c -> ok(com.sofe.pact.Pacts.kick(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "name"))))))
+                        .then(Commands.literal("list").executes(c -> {
+                            com.sofe.pact.Pacts.list(c.getSource().getPlayerOrException());
+                            return 1;
+                        })))
+                .then(Commands.literal("council").then(Commands.literal("restore").executes(SoFECommands::councilRestore)))
+                .then(Commands.literal("progress").requires(src -> src.hasPermission(2))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.literal("show").executes(SoFECommands::progressShow))
+                                .then(Commands.literal("act").then(Commands.argument("act", IntegerArgumentType.integer(1, 5))
+                                        .executes(SoFECommands::progressAct)))
+                                .then(Commands.literal("defeat").then(Commands.argument("boss", StringArgumentType.greedyString())
+                                        .suggests((c, b) -> SharedSuggestionProvider.suggest(com.sofe.world.lair.BossLairs.lairs().stream()
+                                                .map(com.sofe.world.lair.BossLairs.Lair::boss), b))
+                                        .executes(SoFECommands::progressDefeat)))))
+                .then(Commands.literal("unstuck").requires(src -> src.hasPermission(2))
+                        .then(Commands.argument("player", EntityArgument.player()).executes(SoFECommands::unstuck)))
+                .then(Commands.literal("item").requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("restore").then(Commands.argument("player", EntityArgument.player())
+                                .executes(c -> restore(c.getSource(), EntityArgument.getPlayer(c, "player"))))))
+                .then(Commands.literal("pacts").requires(src -> src.hasPermission(2)).executes(SoFECommands::allPacts))
+                .then(Commands.literal("export").requires(src -> src.hasPermission(2))
                         .then(Commands.argument("piece", StringArgumentType.greedyString())
                                 .suggests((context, builder) -> SharedSuggestionProvider.suggest(StructurePositions.get().structures().keySet().stream()
                                         .map(id -> id.substring(id.indexOf(':') + 1)), builder))
                                 .executes(SoFECommands::export))));
+    }
+
+    private static int ok(boolean done) {
+        return done ? 1 : 0;
+    }
+
+    /** The Council gives back lost story items, to a Bearer standing in Sulthari (UC-21). */
+    private static int councilRestore(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer player = c.getSource().getPlayerOrException();
+        boolean inSulthari = com.sofe.world.SoFEWorld.regionMap(player.server)
+                .map(m -> m.regionAt(player.getBlockX(), player.getBlockZ()) == com.sofe.world.region.Region.SULTHARI).orElse(true);
+        if (!inSulthari) {
+            c.getSource().sendFailure(Component.translatable("command.sofe.council.away"));
+            return 0;
+        }
+        return restore(c.getSource(), player);
+    }
+
+    private static int restore(CommandSourceStack source, ServerPlayer player) {
+        var given = com.sofe.item.StoryItems.restore(player);
+        if (given.isEmpty()) {
+            source.sendSuccess(() -> Component.translatable("command.sofe.council.nothing", player.getDisplayName()), false);
+            return 0;
+        }
+        com.sofe.economy.EconomyHandler.sync(player);
+        source.sendSuccess(() -> Component.translatable("command.sofe.council.restored", player.getDisplayName(), given.size()), true);
+        SoFEMod.LOGGER.info("Story items restored to {}: {}", player.getGameProfile().getName(), given.size());
+        return given.size();
+    }
+
+    private static int progressShow(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer player = EntityArgument.getPlayer(c, "player");
+        var story = com.sofe.story.StoryCapability.get(player);
+        int level = com.sofe.progression.ProgressionCapability.get(player).map(p -> p.level()).orElse(0);
+        String cls = com.sofe.skill.ClassState.classOf(player).map(com.sofe.player.PlayerClass::id).orElse("-");
+        int act = story.map(s -> s.act()).orElse(0);
+        String bosses = String.join(", ", story.map(s -> s.bosses()).orElse(java.util.Set.of()));
+        c.getSource().sendSuccess(() -> Component.translatable("command.sofe.progress.show", player.getDisplayName(), cls, level, act, bosses), false);
+        return 1;
+    }
+
+    private static int progressAct(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer player = EntityArgument.getPlayer(c, "player");
+        int act = IntegerArgumentType.getInteger(c, "act");
+        boolean moved = com.sofe.story.StoryCapability.get(player).map(s -> s.advanceTo(act)).orElse(false);
+        com.sofe.quest.QuestEngine.sync(player);
+        com.sofe.progression.ProgressionHandler.sync(player);
+        c.getSource().sendSuccess(() -> Component.translatable(moved ? "command.sofe.progress.act" : "command.sofe.progress.act_not_moved",
+                player.getDisplayName(), act), true);
+        SoFEMod.LOGGER.info("{} set {} to act {} (moved: {})", c.getSource().getTextName(), player.getGameProfile().getName(), act, moved);
+        return moved ? 1 : 0;
+    }
+
+    private static int progressDefeat(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer player = EntityArgument.getPlayer(c, "player");
+        String boss = StringArgumentType.getString(c, "boss");
+        String id = boss.contains(":") ? boss : SoFEMod.MOD_ID + ":" + boss;
+        com.sofe.story.StoryCapability.get(player).ifPresent(s -> s.defeat(id));
+        com.sofe.quest.QuestEngine.sync(player);
+        c.getSource().sendSuccess(() -> Component.translatable("command.sofe.progress.defeat", player.getDisplayName(), id), true);
+        SoFEMod.LOGGER.info("{} credited {} with {}", c.getSource().getTextName(), player.getGameProfile().getName(), id);
+        return 1;
+    }
+
+    /** Sends a stuck player back to the plaza of Sulthari, on the ground. */
+    private static int unstuck(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer player = EntityArgument.getPlayer(c, "player");
+        ServerLevel level = player.server.overworld();
+        int x = StructurePositions.get().spawnX(), z = StructurePositions.get().spawnZ();
+        level.getChunk(x >> 4, z >> 4);
+        int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        player.teleportTo(level, x + 0.5, y, z + 0.5, player.getYRot(), 0);
+        c.getSource().sendSuccess(() -> Component.translatable("command.sofe.unstuck", player.getDisplayName()), true);
+        SoFEMod.LOGGER.info("{} sent {} back to Sulthari", c.getSource().getTextName(), player.getGameProfile().getName());
+        return 1;
+    }
+
+    private static int allPacts(CommandContext<CommandSourceStack> c) {
+        var data = com.sofe.pact.PactData.get(c.getSource().getServer());
+        if (data.all().isEmpty()) {
+            c.getSource().sendSuccess(() -> Component.translatable("command.sofe.pacts.none"), false);
+            return 0;
+        }
+        for (var pact : data.all()) {
+            String names = pact.members().stream().map(pact::name).collect(java.util.stream.Collectors.joining(", "));
+            c.getSource().sendSuccess(() -> Component.literal("- " + names), false);
+        }
+        return data.all().size();
     }
 
     private static int export(CommandContext<CommandSourceStack> context) {

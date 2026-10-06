@@ -46,6 +46,7 @@ public final class GearMaker {
     public static LootGenerator.Builder builder(Player player, int itemLevel) {
         LootGenerator.Builder b = LootGenerator.builder(GearDataManager.bases(), GearDataManager.affixes()).itemLevel(itemLevel);
         if (player != null) PlayerClassCapability.get(player).flatMap(PlayerClassData::get).map(PlayerClass::id).ifPresent(b::playerClass);
+        if (player instanceof net.minecraft.server.level.ServerPlayer server) b.findBonus(com.sofe.pact.Pacts.findBonus(server)); // allies near
         return b;
     }
 

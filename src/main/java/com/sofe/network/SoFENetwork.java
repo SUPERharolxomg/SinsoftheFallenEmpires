@@ -84,6 +84,8 @@ public final class SoFENetwork {
                 .decoder(BearerOfPacket::decode)
                 .consumerMainThread(BearerOfPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(SyncPactPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(SyncPactPacket::encode).decoder(SyncPactPacket::decode).consumerMainThread(SyncPactPacket::handle).add();
         CHANNEL.messageBuilder(SyncEconomyPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(SyncEconomyPacket::encode).decoder(SyncEconomyPacket::decode).consumerMainThread(SyncEconomyPacket::handle).add();
         CHANNEL.messageBuilder(OpenMerchantPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)

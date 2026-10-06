@@ -1,0 +1,15 @@
+{
+  "style": "aureum",
+  "npc": "aurelion_child",
+  "priority": 5,
+  "requires": {
+    "type": "act_reached",
+    "act": 5
+  },
+  "lines": [
+    {
+      "speaker": "aurelion_child",
+      "text": "dialogue.sofe.aurelion_child.act5.1"
+    }
+  ]
+}

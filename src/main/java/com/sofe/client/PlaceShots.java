@@ -42,7 +42,7 @@ public final class PlaceShots {
             places = new ArrayList<>(Arrays.asList(System.getProperty("sofe.placeShots").split(",")));
             mc.options.hideGui = true;
             mc.options.setCameraType(CameraType.FIRST_PERSON);
-            if (places.stream().anyMatch(pl -> pl.startsWith("boss"))) mc.options.fov().set(40); // close portraits of single creatures
+            if (places.stream().anyMatch(pl -> pl.startsWith("boss") || pl.startsWith("npc:"))) mc.options.fov().set(40); // close portraits of single creatures
         }
         if (++ticks < 200) return;
         if (wait-- > 0) return;
@@ -50,9 +50,9 @@ public final class PlaceShots {
             String name = places.get(place).replace('/', '_').replace(':', '_');
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
             view++;
-            if (view < 2) {
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")) {
                 look(mc, places.get(place), view);
-                wait = SETTLE;
+                wait = places.get(place).endsWith("/city") ? SETTLE * 4 : SETTLE; // a capital's far side takes a while to load
                 return;
             }
         }
@@ -63,11 +63,84 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("at:") ? SETTLE * 2
+                : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
     private static void build(Minecraft mc, String piece) {
         var server = mc.getSingleplayerServer();
+        if (piece.startsWith("npc:")) { // npc:<id>, one story NPC close up, from the front three-quarters
+            String[] parts = piece.substring(4).split(":");
+            String id = parts[0];
+            boolean back = parts.length > 1 && parts[1].equals("back");
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                var level = p.serverLevel();
+                level.setDayTime(6000);
+                int x0 = p.getBlockX() - 60, z0 = p.getBlockZ();
+                for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) {
+                    level.setBlockAndUpdate(new net.minecraft.core.BlockPos(x0 + dx, 219, z0 + dz), net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState());
+                }
+                var hero = java.util.Arrays.stream(com.sofe.player.PlayerClass.values()).filter(c -> c.npcId().equals(id)).findFirst(); // a hero, with their class outfit
+                var npc = hero.map(c -> new com.sofe.world.zone.StructurePositions.Npc(c.id(), "bearer", x0, z0, 0, null))
+                        .orElse(new com.sofe.world.zone.StructurePositions.Npc(id, "citizen", x0, z0, 0, null));
+                com.sofe.world.StoryPlacements.spawnNpc(level, npc).ifPresent(n -> {
+                    n.setNoAi(true);
+                    n.setYRot(20);
+                    n.setYHeadRot(20);
+                    n.setYBodyRot(20);
+                });
+                if (back) p.teleportTo(level, x0 + 0.5 + 1.5, 221.3, z0 + 0.5 - 2.6, 30, 15);
+                else p.teleportTo(level, x0 + 0.5 - 1.3, 221.0, z0 + 0.5 + 3.6, 200, 6);
+            });
+            return;
+        }
+        if (piece.startsWith("npcs:")) { // npcs:<page>, 33 story NPCs a page on three tiers in the sky, still, facing the camera
+            int page = Integer.parseInt(piece.substring(5));
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                var level = p.serverLevel();
+                level.setDayTime(6000);
+                java.util.List<String> ids = com.sofe.client.render.SoFEEntityRenderers.npcIds();
+                int x0 = p.getBlockX() + 60 + page * 40, z0 = p.getBlockZ();
+                for (int r = 0; r < 3; r++) {
+                    for (int dx = -12; dx <= 12; dx++) for (int dz = -1; dz <= 0; dz++) {
+                        for (int yy = 216; yy < 220 + r * 2; yy++) {
+                            level.setBlockAndUpdate(new net.minecraft.core.BlockPos(x0 + dx, yy, z0 - r * 2 + dz), net.minecraft.world.level.block.Blocks.SMOOTH_STONE.defaultBlockState());
+                        }
+                    }
+                    for (int i = 0; i < 11; i++) {
+                        int k = page * 33 + r * 11 + i;
+                        if (k >= ids.size()) break;
+                        com.sofe.world.StoryPlacements.spawnNpc(level, new com.sofe.world.zone.StructurePositions.Npc(ids.get(k), "citizen",
+                                x0 - 10 + i * 2, z0 - r * 2, 0, null)).ifPresent(n -> {
+                            n.setNoAi(true);
+                            n.setYRot(0);
+                            n.setYHeadRot(0);
+                            n.setYBodyRot(0);
+                        });
+                    }
+                }
+                p.teleportTo(level, x0 + 0.5, 221.5, z0 + 6.5, 180, 12);
+            });
+            return;
+        }
+        if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)
+            String[] v = piece.split(":");
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                p.serverLevel().setDayTime(6000);
+                p.teleportTo(p.serverLevel(), Double.parseDouble(v[1]) + 0.5, Double.parseDouble(v[2]), Double.parseDouble(v[3]) + 0.5,
+                        Float.parseFloat(v[4]), Float.parseFloat(v[5]));
+            });
+            return;
+        }
         if (piece.equals("death")) { // the player dies: the screenshots show the title and the spectator's view with its countdown
             mc.options.hideGui = false;
             server.execute(() -> {
@@ -228,7 +301,7 @@ public final class PlaceShots {
             StructurePositions.get().structure("sofe:" + piece).ifPresent(s -> {
                 p.serverLevel().getChunk(s.x() >> 4, s.z() >> 4);
                 int ground = p.serverLevel().getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, s.x(), s.z());
-                int reach = Math.max(s.sizeX(), s.sizeZ());
+                int reach = Math.min(Math.max(s.sizeX(), s.sizeZ()), 150); // a capital is wider than the render distance: closer, the near half shows
                 if (piece.endsWith("void_gate") && view == 1) { // down in the vault, looking at the ring of frames
                     p.teleportTo(p.serverLevel(), s.x() + 0.5, ground - 31, s.z() - 1.5, 180, 30); // the ground here is the dome (7 above the floor)
                     return;
@@ -238,7 +311,8 @@ public final class PlaceShots {
                     p.teleportTo(p.serverLevel(), x, y, z, -135, 38);
                 } else {
                     boolean east = s.x() < 0; // Aureum's doors face east, the others west
-                    double x = s.x() + (east ? 1 : -1) * (s.sizeX() / 2.0 + 14), y = ground + 6;
+                    double x = s.x() + (east ? 1 : -1) * (s.sizeX() / 2.0 + 14);
+                    double y = Math.max(ground, p.serverLevel().getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) x, s.z())) + 6; // above a hill outside
                     p.teleportTo(p.serverLevel(), x, y, s.z(), east ? 90 : -90, 12);
                 }
             });

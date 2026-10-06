@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "sofe:block/aureum_royal_tile_slab"
+    },
+    "type=double": {
+      "model": "sofe:block/aureum_royal_tiles"
+    },
+    "type=top": {
+      "model": "sofe:block/aureum_royal_tile_slab_top"
+    }
+  }
+}

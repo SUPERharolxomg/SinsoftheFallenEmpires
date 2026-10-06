@@ -28,7 +28,11 @@ import java.util.List;
 
 /**
  * Keeps the protected places of the story as they were built (docs/Mundo.md, W2 layer 3): players,
- * explosions, pistons, fluids and mobs cannot change them, except on the Bearer's Homestead.
+ * explosions, pistons, fluids and mobs cannot change them, except on the Bearer's Homestead. Nothing
+ * can be taken from them either: their chests, drawers, pots, lecterns, armor stands, item frames and
+ * paintings are part of the place. No one is let off: not an operator, not a player in creative.
+ * Only SoFE's own blocks (the stations, the Personal Vault, the Reward Coffers, the Waystones) and
+ * doors, gates, buttons, beds and seats can be used.
  * Also puts the world spawn in the plaza of Sulthari when a journey is created.
  */
 public final class ZoneProtectionHandler {
@@ -46,8 +50,7 @@ public final class ZoneProtectionHandler {
     private static boolean allowed(LevelAccessor level, BlockPos pos, ZoneAction action, Entity entity) {
         List<ProtectedZone> zones = zones(level);
         if (zones.isEmpty()) return true;
-        boolean bypass = entity instanceof Player player && LockAccess.bypasses(player);
-        return ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), action, bypass);
+        return ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), action);
     }
 
     private static void tell(Entity entity) {
@@ -71,10 +74,19 @@ public final class ZoneProtectionHandler {
         }
     }
 
-    /** Buckets, flint and steel, hoes and the like; opening doors, shops and chests still works. */
+    /**
+     * Buckets, flint and steel, hoes and the like; and with or without an item, whatever holds something (a chest, a
+     * drawer, a pot, a lectern, berries, a sign). Doors, gates, buttons, beds, seats and SoFE's blocks still work.
+     */
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getItemStack().isEmpty()) return;
         BlockPos target = event.getHitVec().getBlockPos();
+        if (holdsSomething(event.getLevel(), target) && !allowed(event.getLevel(), target, ZoneAction.TAKE, event.getEntity())) {
+            event.setCanceled(true);
+            event.setCancellationResult(net.minecraft.world.InteractionResult.FAIL);
+            tell(event.getEntity());
+            return;
+        }
+        if (event.getItemStack().isEmpty()) return;
         // the Void Gate's frames take their Eyes of Ender even inside the city
         if (event.getItemStack().is(net.minecraft.world.item.Items.ENDER_EYE)
                 && event.getLevel().getBlockState(target).is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME)) return;
@@ -85,11 +97,82 @@ public final class ZoneProtectionHandler {
         }
     }
 
-    /** Explosions still happen, but the protected blocks are taken out of them. */
+    /** Explosions still happen, but the protected blocks, armor stands, frames and paintings are taken out of them. */
     public static void onExplosion(ExplosionEvent.Detonate event) {
         List<ProtectedZone> zones = zones(event.getLevel());
         if (zones.isEmpty()) return;
-        event.getAffectedBlocks().removeIf(pos -> !ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), ZoneAction.EXPLOSION, false));
+        event.getAffectedBlocks().removeIf(pos -> !ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), ZoneAction.EXPLOSION));
+        event.getAffectedEntities().removeIf(e -> isFurnishing(e) && !ZoneRules.allowed(zones, e.getBlockX(), e.getBlockY(), e.getBlockZ(), ZoneAction.EXPLOSION));
+    }
+
+    /**
+     * A block that holds something someone could take or change: anything with an inventory (chests, barrels,
+     * furnaces, the drawers and cabinets of the furniture mods), pots, lecterns, jukeboxes, chiseled bookshelves,
+     * berries, cakes, composters, cauldrons, signs and note blocks. SoFE's own blocks are meant to be used.
+     */
+    static boolean holdsSomething(Level level, BlockPos pos) {
+        var state = level.getBlockState(pos);
+        var block = state.getBlock();
+        var id = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block);
+        if (id != null && id.getNamespace().equals(SoFEMod.MOD_ID)) return false;
+        var be = level.getBlockEntity(pos);
+        if (be instanceof net.minecraft.world.Container) return true;
+        if (be != null && be.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).isPresent()) return true;
+        return block instanceof net.minecraft.world.level.block.FlowerPotBlock || block instanceof net.minecraft.world.level.block.LecternBlock
+                || block instanceof net.minecraft.world.level.block.JukeboxBlock || block instanceof net.minecraft.world.level.block.CaveVines
+                || block instanceof net.minecraft.world.level.block.SweetBerryBushBlock || block instanceof net.minecraft.world.level.block.CakeBlock
+                || block instanceof net.minecraft.world.level.block.CandleCakeBlock || block instanceof net.minecraft.world.level.block.ComposterBlock
+                || block instanceof net.minecraft.world.level.block.SignBlock || block instanceof net.minecraft.world.level.block.NoteBlock
+                || block instanceof net.minecraft.world.level.block.ChiseledBookShelfBlock || block instanceof net.minecraft.world.level.block.BeehiveBlock
+                || block instanceof net.minecraft.world.level.block.AbstractCauldronBlock;
+    }
+
+    /** The furnishings that are entities: armor stands (the statues), item frames, paintings, boats and carts. */
+    static boolean isFurnishing(Entity entity) {
+        return entity instanceof net.minecraft.world.entity.decoration.ArmorStand || entity instanceof net.minecraft.world.entity.decoration.HangingEntity
+                || entity instanceof net.minecraft.world.entity.vehicle.Boat || entity instanceof net.minecraft.world.entity.vehicle.AbstractMinecart;
+    }
+
+    private static boolean furnishingProtected(Entity entity, Entity actor) {
+        return isFurnishing(entity) && !allowed(entity.level(), entity.blockPosition(), ZoneAction.TAKE, actor);
+    }
+
+    /** No one can strike down a statue, a frame, a painting, a boat or a cart in a protected place. */
+    public static void onAttackEntity(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
+        if (furnishingProtected(event.getTarget(), event.getEntity())) {
+            event.setCanceled(true);
+            tell(event.getEntity());
+        }
+    }
+
+    /** Nor take what a statue wears or a frame holds, or turn the frame (a boat can still be ridden). */
+    public static void onInteractEntity(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getTarget() instanceof net.minecraft.world.entity.vehicle.Boat) && furnishingProtected(event.getTarget(), event.getEntity())) {
+            event.setCanceled(true);
+            event.setCancellationResult(net.minecraft.world.InteractionResult.FAIL);
+        }
+    }
+
+    public static void onInteractEntityAt(PlayerInteractEvent.EntityInteractSpecific event) {
+        if (!(event.getTarget() instanceof net.minecraft.world.entity.vehicle.Boat) && furnishingProtected(event.getTarget(), event.getEntity())) {
+            event.setCanceled(true);
+            event.setCancellationResult(net.minecraft.world.InteractionResult.FAIL);
+        }
+    }
+
+    /** Arrows, tridents and fireballs do not break them either. */
+    public static void onProjectileImpact(net.minecraftforge.event.entity.ProjectileImpactEvent event) {
+        if (event.getRayTraceResult() instanceof net.minecraft.world.phys.EntityHitResult hit && furnishingProtected(hit.getEntity(), event.getProjectile())) {
+            event.setImpactResult(net.minecraftforge.event.entity.ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
+        }
+    }
+
+    /** Nor anything else that hurts a statue: fire, lava, a blow of a mob. */
+    public static void onLivingAttack(net.minecraftforge.event.entity.living.LivingAttackEvent event) {
+        if (event.getEntity() instanceof net.minecraft.world.entity.decoration.ArmorStand
+                && furnishingProtected(event.getEntity(), event.getSource().getEntity())) {
+            event.setCanceled(true);
+        }
     }
 
     /** A piston outside a zone cannot push or pull blocks in or out of it. */
@@ -97,7 +180,7 @@ public final class ZoneProtectionHandler {
         List<ProtectedZone> zones = zones(event.getLevel());
         if (zones.isEmpty() || !(event.getLevel() instanceof Level level)) return;
         BlockPos piston = event.getPos();
-        if (!ZoneRules.allowed(zones, piston.getX(), piston.getY(), piston.getZ(), ZoneAction.PISTON, false)) return; // a piston built into the zone works
+        if (!ZoneRules.allowed(zones, piston.getX(), piston.getY(), piston.getZ(), ZoneAction.PISTON)) return; // a piston built into the zone works
         PistonStructureResolver resolver = event.getStructureHelper();
         if (resolver == null || !resolver.resolve()) return;
         for (BlockPos pos : resolver.getToPush()) {
@@ -107,7 +190,7 @@ public final class ZoneProtectionHandler {
             }
         }
         for (BlockPos pos : resolver.getToDestroy()) {
-            if (!ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), ZoneAction.PISTON, false)) {
+            if (!ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), ZoneAction.PISTON)) {
                 event.setCanceled(true);
                 return;
             }
@@ -116,8 +199,8 @@ public final class ZoneProtectionHandler {
 
     private static boolean touchesZone(List<ProtectedZone> zones, BlockPos pos, net.minecraft.core.Direction direction) {
         BlockPos to = pos.relative(direction);
-        return !ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), ZoneAction.PISTON, false)
-                || !ZoneRules.allowed(zones, to.getX(), to.getY(), to.getZ(), ZoneAction.PISTON, false);
+        return !ZoneRules.allowed(zones, pos.getX(), pos.getY(), pos.getZ(), ZoneAction.PISTON)
+                || !ZoneRules.allowed(zones, to.getX(), to.getY(), to.getZ(), ZoneAction.PISTON);
     }
 
     public static void onFluid(BlockEvent.FluidPlaceBlockEvent event) {
