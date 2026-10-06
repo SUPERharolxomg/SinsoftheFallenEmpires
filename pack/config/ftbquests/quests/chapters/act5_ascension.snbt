@@ -10,7 +10,7 @@
 	quests: [
 		{
 			dependencies: [
-				"588D7904B6673463"
+				"195AF112C572A68F"
 			]
 			description: [
 				"{ftbquests.sofe.step_hint}"
@@ -76,8 +76,6 @@
 				"{ftbquests.sofe.step_hint}"
 			]
 			id: "6712A4923AF90BBC"
-			shape: "gear"
-			size: 1.5d
 			tasks: [
 				{
 					advancement: "sofe:quest/act5_ascension/step4"
@@ -88,6 +86,48 @@
 			]
 			title: "{quest.sofe.act5_ascension.step4}"
 			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6712A4923AF90BBC"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "1791AA406B6F83D1"
+			tasks: [
+				{
+					advancement: "sofe:quest/act5_ascension/step5"
+					criterion: ""
+					id: "528B5E4265C2471A"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act5_ascension.step5}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"1791AA406B6F83D1"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "2EBB0E64912365BD"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act5_ascension/step6"
+					criterion: ""
+					id: "3F6FEFF7A97AD706"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act5_ascension.step6}"
+			x: 7.5d
 			y: 0.0d
 		}
 	]

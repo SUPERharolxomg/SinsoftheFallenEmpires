@@ -74,12 +74,12 @@ public class Sprint8GameTests {
     public static void carryingTheQuillMovesTheAscensionToNahrazel(GameTestHelper helper) {
         ServerPlayer player = bearer(helper, "sofe_test_quill");
         story(player).start(StoryItems.ASCENSION);
-        story(player).update(StoryItems.ASCENSION, new StoryProgress.QuestState(StoryItems.QUILL_STEP, 0, false));
+        story(player).update(StoryItems.ASCENSION, new StoryProgress.QuestState(StoryItems.quillStep(), 0, false));
         QuestEngine.checkCarried(player);
-        helper.assertTrue(story(player).questStep(StoryItems.ASCENSION) == StoryItems.QUILL_STEP + 1, "the step moved without the Quill");
+        helper.assertTrue(story(player).questStep(StoryItems.ASCENSION) == StoryItems.quillStep() + 1, "the step moved without the Quill");
         player.getInventory().add(new ItemStack(ItemRegistry.SEALING_QUILL.get()));
         QuestEngine.checkCarried(player);
-        helper.assertTrue(story(player).questStep(StoryItems.ASCENSION) == StoryItems.QUILL_STEP + 2,
+        helper.assertTrue(story(player).questStep(StoryItems.ASCENSION) == StoryItems.quillStep() + 2,
                 "carrying the Quill should finish its step, at " + story(player).questStep(StoryItems.ASCENSION));
         helper.assertTrue(DialogueService.current(player).map(c -> c.startsWith("sofe:act5/the_quill_forged#")).orElse(false),
                 "the Nahrazel step should open with the Quill's scene: " + DialogueService.current(player));
@@ -170,7 +170,7 @@ public class Sprint8GameTests {
     public static void beatingNahrazelPlaysTheEndingThenTheCouncilSpeaks(GameTestHelper helper) {
         ServerPlayer player = bearer(helper, "sofe_test_ending");
         story(player).start(StoryItems.ASCENSION);
-        story(player).update(StoryItems.ASCENSION, new StoryProgress.QuestState(StoryItems.QUILL_STEP + 1, 0, false));
+        story(player).update(StoryItems.ASCENSION, new StoryProgress.QuestState(StoryItems.quillStep() + 1, 0, false));
         QuestEngine.bossDefeated(player, "sofe:nahrazel");
         helper.assertTrue(story(player).quest(StoryItems.ASCENSION).map(StoryProgress.QuestState::completed).orElse(false), "the Ascension did not end");
         helper.assertTrue(story(player).finishedCampaign(), "beating Nahrazel should finish the campaign");

@@ -123,4 +123,26 @@ public class DungeonGameTests {
         helper.assertTrue(story.quest(quest.id()).isPresent(), "the Barrow's quest did not begin");
         helper.succeed();
     }
+
+    /** A Bearer who had gone on before a Ruin came into the act is not asked twice: runes solved and bosses beaten move on. */
+    @GameTest(template = "empty")
+    public static void stepsAlreadyDoneMoveOnByThemselves(GameTestHelper helper) {
+        ServerPlayer hero = bearer(helper, "sofe_test_veteran_north");
+        StoryProgress story = StoryCapability.get(hero).orElseThrow();
+        story.advanceTo(2);
+        String act2 = "sofe:act2_north";
+        QuestEngine.startQuest(hero, act2);
+        QuestEngine.event(hero, new com.sofe.quest.QuestEvent.EnteredRegion("nordrath"));
+        helper.assertTrue(story.questStep(act2) == 2, "the Burnt Longhall's runes should come right after Nordrath");
+        story.solvePuzzle("sofe:nordrath_ruin");
+        QuestEngine.skipDone(hero);
+        helper.assertTrue(story.questStep(act2) == 3, "solved runes should move on to the guardian");
+        QuestEngine.advance(hero, act2); // the guardian
+        story.defeat("sofe:kaleth");
+        story.defeat("sofe:serath");
+        QuestEngine.skipDone(hero);
+        helper.assertTrue(story.questStep(act2) == 6, "Kaleth and Serath were beaten: Vorath should be next, is at " + story.questStep(act2));
+        com.sofe.quest.DialogueService.close(hero);
+        helper.succeed();
+    }
 }

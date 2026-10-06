@@ -41,7 +41,10 @@ public final class PuzzleData extends SavedData {
         return server.overworld().getDataStorage().computeIfAbsent(PuzzleData::load, PuzzleData::new, NAME);
     }
 
+    /** A puzzle placed over the stones of another takes its place: a stone belongs to one puzzle only. */
     void put(Placed p) {
+        placed.values().removeIf(other -> !other.id.equals(p.id) && (p.stones.contains(other.tablet) || other.stones.stream().anyMatch(
+                s -> p.stones.contains(s) || s.equals(p.tablet))));
         placed.put(p.id, p);
         setDirty();
     }

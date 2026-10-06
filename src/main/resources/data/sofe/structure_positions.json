@@ -462,6 +462,20 @@
    "size_x": 37,
    "size_z": 29,
    "zone": "dungeon"
+  },
+  "sofe:void/crypt": {
+   "x": 1050,
+   "z": 250,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:void/ruin": {
+   "x": -1050,
+   "z": 300,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
   }
  },
  "waystones": {
@@ -895,6 +909,12 @@
    "x": -6600,
    "z": -3003,
    "condition": "sofe:ruin_aureum",
+   "hint": "message.sofe.gate.ruin"
+  },
+  "sofe:void/ruin": {
+   "x": -1050,
+   "z": 297,
+   "condition": "sofe:ruin_void",
    "hint": "message.sofe.gate.ruin"
   }
  }

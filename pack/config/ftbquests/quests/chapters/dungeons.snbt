@@ -13,7 +13,8 @@
 			description: [
 				"{ftbquests.sofe.dungeon.crypt}"
 				""
-				"{ftbquests.sofe.dungeon.act1}"
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act1_eclipse}"
 			]
 			icon: "minecraft:chest"
 			id: "3EF020EB1FAA7A9D"
@@ -35,7 +36,8 @@
 			description: [
 				"{ftbquests.sofe.dungeon.ruin}"
 				""
-				"{ftbquests.sofe.dungeon.act1}"
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act1_eclipse}"
 			]
 			icon: "sofe:rune_stone"
 			id: "5B70007CD3B81EA2"
@@ -151,14 +153,15 @@
 			description: [
 				"{ftbquests.sofe.dungeon.ruin}"
 				""
-				"{quest.sofe.dungeon.nordrath_ruin.step1}"
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act2_north}"
 			]
 			icon: "sofe:rune_stone"
 			id: "069FBBBBED4261DC"
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/nordrath_ruin/step3"
+					advancement: "sofe:quest/act2_north/step3"
 					criterion: ""
 					id: "40BF16B706B49026"
 					type: "advancement"
@@ -291,14 +294,15 @@
 			description: [
 				"{ftbquests.sofe.dungeon.ruin}"
 				""
-				"{quest.sofe.dungeon.parsivan_ruin.step1}"
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act3_east}"
 			]
 			icon: "sofe:rune_stone"
 			id: "3AEB6409497E13CF"
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/parsivan_ruin/step3"
+					advancement: "sofe:quest/act3_east/step3"
 					criterion: ""
 					id: "35562E4EE63FC8A6"
 					type: "advancement"
@@ -407,14 +411,15 @@
 			description: [
 				"{ftbquests.sofe.dungeon.ruin}"
 				""
-				"{quest.sofe.dungeon.khemet_ruin.step1}"
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act3_east}"
 			]
 			icon: "sofe:rune_stone"
 			id: "288798D13E029D16"
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/khemet_ruin/step3"
+					advancement: "sofe:quest/act3_east/step9"
 					criterion: ""
 					id: "7A7D4DEFA422D2CE"
 					type: "advancement"
@@ -499,14 +504,15 @@
 			description: [
 				"{ftbquests.sofe.dungeon.ruin}"
 				""
-				"{quest.sofe.dungeon.aureum_ruin.step1}"
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act4_west}"
 			]
 			icon: "sofe:rune_stone"
 			id: "1E7467B636CC0E27"
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/aureum_ruin/step3"
+					advancement: "sofe:quest/act4_west/step3"
 					criterion: ""
 					id: "7AE559D45553BA2B"
 					type: "advancement"
@@ -635,6 +641,51 @@
 			title: "{puzzle.sofe.aureum_vaults.place}"
 			x: 9.0d
 			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.crypt}"
+				""
+				"{quest.sofe.dungeon.void_crypt.step1}"
+			]
+			icon: "minecraft:chest"
+			id: "6A7B24B88AA023B9"
+			size: 0.8d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/void_crypt/step2"
+					criterion: ""
+					id: "2385221E6693244C"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.void.crypt}"
+			x: 0.0d
+			y: 7.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.ruin}"
+				""
+				"{ftbquests.sofe.dungeon.in_act}"
+				"{quest.sofe.act5_ascension}"
+			]
+			icon: "sofe:rune_stone"
+			id: "32FD31D33EC31E46"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "sofe:quest/act5_ascension/step2"
+					criterion: ""
+					id: "74A2CAD1DD3F6CEB"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.void.ruin}"
+			x: 1.5d
+			y: 7.5d
 		}
 	]
 	title: "{ftbquests.sofe.chapter.dungeons}"

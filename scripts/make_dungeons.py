@@ -2,8 +2,11 @@
 
 - small: a Crypt in every region; medium: a Ruin with a rune puzzle before a Sealed Gate and a guardian behind it;
   large: the boss dungeons of the story, each sealed by a rune puzzle (but the Feast Halls, deep in the Caverns).
-- Sulthari's Crypt and Ruin are part of Act I (sofe:act1_eclipse); every other Crypt and Ruin is a dungeon quest that
-  begins by itself when a Bearer comes near it (type "dungeon", "starts_near").
+- Sulthari's Crypt and Ruin are part of Act I (sofe:act1_eclipse); every other Ruin is part of its act (Nordrath in
+  Act II, Parsivan and Khemet in Act III, Aureum in Act IV, the Void's Breach in Act V), right after the Bearer reaches
+  its land; every other Crypt is a dungeon quest that begins by itself when a Bearer comes near it (type "dungeon",
+  "starts_near"). Steps put into an act are marked "_dungeon"; the act's later steps, their texts and every
+  "quest_step" condition on them move along, once.
 
 Writes the puzzles (data/sofe/puzzles), the dungeon quests (data/sofe/quests/dungeon), the Act I quest, the chests'
 loot tables, the Ruins' gate conditions, the places and gates in structure_positions.json, and their English and
@@ -136,20 +139,28 @@ LARGE = [
 REGIONS = [
     ("sulthari", 1, (480, -420), (-560, -520), "sofe:sand_ghoul", "sofe:clockwork_scarab",
      ("The Wardens' Crypt", "La Cripta de los Guardianes"), ("The Wardens' Ruin", "La Ruina de los Guardianes"),
-     ("sand ghouls", "gules de arena"), ("Brass Scarab", "Escarabajo de Latón")),
+     ("sand ghouls", "gules de arena"), ("Brass Scarab", "el Escarabajo de Latón")),
     ("nordrath", 2, (760, -2050), (-1000, -3700), "sofe:draugr", "sofe:rime_wolf",
      ("The Barrow of the Drowned Jarl", "El Túmulo del Jarl Ahogado"), ("The Burnt Longhall", "El Salón Quemado"),
-     ("draugr", "draugr"), ("Rime Wolf", "Lobo de Escarcha")),
+     ("draugr", "draugr"), ("Rime Wolf", "el Lobo de Escarcha")),
     ("parsivan", 3, (2600, -1300), (6200, -2600), "sofe:mirage_dancer", "minecraft:evoker",
      ("The Tomb of the Silent Poet", "La Tumba del Poeta Silencioso"), ("The Abandoned Pavilion", "El Pabellón Abandonado"),
-     ("mirage dancers", "danzarinas del espejismo"), ("Court Sorcerer", "Hechicero de la Corte")),
+     ("mirage dancers", "danzarinas del espejismo"), ("Court Sorcerer", "el Hechicero de la Corte")),
     ("khemet", 3, (3000, 2500), (5600, 7200), "sofe:bog_mummy", "minecraft:wither_skeleton",
      ("The Embalmers' Pit", "El Pozo de los Embalsamadores"), ("The House of the Dead", "La Casa de los Muertos"),
-     ("bog mummies", "momias del pantano"), ("Tomb Guardian", "Guardián de la Tumba")),
+     ("bog mummies", "momias del pantano"), ("Tomb Guardian", "el Guardián de la Tumba")),
     ("aureum", 4, (-2600, -1500), (-6600, -3000), "sofe:gilded_legionnaire", "sofe:gladiator_shade",
      ("The Legion's Ossuary", "El Osario de la Legión"), ("The Fallen Senate", "El Senado Caído"),
-     ("gilded legionnaires", "legionarios dorados"), ("Shade of a Gladiator", "Sombra de Gladiador")),
+     ("gilded legionnaires", "legionarios dorados"), ("Shade of a Gladiator", "la Sombra de Gladiador")),
+    ("void", 5, (1050, 250), (-1050, 300), "sofe:void_*", "sofe:void_stalker",
+     ("The Hollow Tomb", "La Tumba Hueca"), ("The Breach of the Seal", "La Brecha del Sello"),
+     ("creatures of the Void", "criaturas del Vacío"), ("Void Stalker", "el Acechador del Vacío")),
 ]
+
+# where each Ruin goes in the story: the act, and the step it follows (None: the act begins with it)
+IN_ACT = {"nordrath": ("act2_north", ("reach_region", "nordrath")), "parsivan": ("act3_east", ("reach_region", "parsivan")),
+          "khemet": ("act3_east", ("reach_region", "khemet")), "aureum": ("act4_west", ("reach_region", "aureum")),
+          "void": ("act5_ascension", None)}
 
 RUIN_PUZZLES = {  # region: kind, row, solution or presses, riddle en, riddle es
     "sulthari": ("order", ["moon", "sun", "eye", "star"], ["sun", "eye", "star", "moon"],
@@ -166,6 +177,11 @@ RUIN_PUZZLES = {  # region: kind, row, solution or presses, riddle en, riddle es
     "khemet": ("lights", ["eye", "sun", "eye", "sun", "eye", "sun"], [0, 5],
                ["The eye of the sun must see every room of the house of the dead.", "Wake every rune, and the house will open its last door."],
                ["El ojo del sol debe ver cada sala de la casa de los muertos.", "Despierta cada runa y la casa abrirá su última puerta."]),
+    "void": ("order", ["moon", "flame", "eye", "star", "sun", "wave"], ["eye", "sun", "moon", "star", "wave", "flame"],
+             ["The seal was written in six runes before the Law was broken: the eye that watched, the sun that judged,",
+              "the moon that forgave, the star that remembered, the wave that carried the dead, and the flame that ends all."],
+             ["El sello se escribió en seis runas antes de que se rompiera la Ley: el ojo que vigilaba, el sol que juzgaba,",
+              "la luna que perdonaba, la estrella que recordaba, la ola que llevaba a los muertos y la llama que lo acaba todo."]),
     "aureum": ("order", ["sun", "moon", "eye", "wave", "star"], ["sun", "eye", "star", "moon", "wave"],
                ["The Senate votes by rank: the sun of the consul, the eye of the censor, the star of the augur,",
                 "the moon of the tribune; and the wave of the people, who always vote last."],
@@ -202,7 +218,13 @@ def reach(x, z, r=14):
     return {"objective": {"type": "reach", "x": x, "z": z, "radius": r}}
 
 
+LANGS = {}
+
+
 def main():
+    for code in ("en_us", "es_es"):
+        with open(os.path.join(LANG, code + ".json"), encoding="utf-8") as f:
+            LANGS[code] = json.load(f)
     positions_path = os.path.join(DATA, "structure_positions.json")
     with open(positions_path, encoding="utf-8") as f:
         positions = json.load(f)
@@ -229,27 +251,28 @@ def main():
                       {"objective": {"type": "solve_puzzle", "puzzle": "sofe:%s_ruin" % region}, "target": {"x": ruin[0], "z": ruin[1] + 2}},
                       guardian_step]
         if region == "sulthari":
-            act1(crypt_steps[1], ruin_steps[1], guardian_step, crypt_name, ruin_name, dead_name, guardian_name)
+            act1(mark(crypt_steps[1], "sulthari/crypt"), mark(ruin_steps[1], "sulthari/ruin"), mark(guardian_step, "sulthari/ruin"),
+                 crypt_name, ruin_name, dead_name, guardian_name)
             continue
-        xp = {2: 900, 3: 1600, 4: 2400}[act]
-        for size, steps, name, reward in (("crypt", crypt_steps, crypt_name, xp), ("ruin", ruin_steps, ruin_name, xp * 2)):
-            q = {"type": "dungeon", "act": act, "starts_near": {"x": (crypt if size == "crypt" else ruin)[0],
-                                                                 "z": (crypt if size == "crypt" else ruin)[1], "radius": 64},
-                 "steps": steps, "rewards": [{"type": "give_xp", "amount": reward}],
-                 "requires": {"type": "act_reached", "act": act}}
-            if size == "ruin":
-                q["rewards"].append({"type": "give_item", "item": "sofe:aetherium_shard", "count": 2})
-            dump(os.path.join(DATA, "quests", "dungeon", "%s_%s.json" % (region, size)), q)
-            key = "quest.sofe.dungeon.%s_%s" % (region, size)
-            text(key, name[0], name[1])
-            if size == "crypt":
-                text(key + ".step1", "Find %s." % name[0], "Encuentra %s." % lower(name[1]))
-                text(key + ".step2", "Drive out the %s inside it." % dead_name[0], "Expulsa a los %s de su interior." % dead_name[1])
-            else:
-                text(key + ".step1", "Find %s." % name[0], "Encuentra %s." % lower(name[1]))
-                text(key + ".step2", "Read the riddle tablet and wake the runes in the court.", "Lee la tablilla del acertijo y despierta las runas del patio.")
-                text(key + ".step3", "The runes woke its guardian: defeat the %s." % guardian_name[0],
-                     "Las runas despertaron a su guardián: derrota al %s." % guardian_name[1])
+        quest_name, after = IN_ACT[region]
+        into_act(quest_name, after, region, [mark(ruin_steps[1], region + "/ruin"), mark(guardian_step, region + "/ruin")], [
+            ("Find %s and wake the runes of its court." % ruin_name[0], de("Encuentra %s y despierta las runas de su patio." % lower(ruin_name[1]))),
+            ("The runes woke its guardian: defeat the %s." % guardian_name[0], de("Las runas despertaron a su guardián: derrota a %s." % guardian_name[1]))])
+        stale = os.path.join(DATA, "quests", "dungeon", "%s_ruin.json" % region)  # a Ruin is no longer a quest of its own
+        if os.path.exists(stale):
+            os.remove(stale)
+        for code in LANGS:
+            for k in [k for k in LANGS[code] if k.startswith("quest.sofe.dungeon.%s_ruin" % region)]:
+                del LANGS[code][k]
+        # the Crypt: a dungeon quest found on the way
+        q = {"type": "dungeon", "act": act, "starts_near": {"x": crypt[0], "z": crypt[1], "radius": 64}, "steps": crypt_steps,
+             "rewards": [{"type": "give_xp", "amount": {2: 900, 3: 1600, 4: 2400, 5: 3200}[act]}],
+             "requires": {"type": "act_reached", "act": act}}
+        dump(os.path.join(DATA, "quests", "dungeon", "%s_crypt.json" % region), q)
+        key = "quest.sofe.dungeon.%s_crypt" % region
+        text(key, crypt_name[0], crypt_name[1])
+        text(key + ".step1", "Find %s." % crypt_name[0], "Encuentra %s." % lower(crypt_name[1]))
+        text(key + ".step2", "Drive out the %s inside it." % dead_name[0], "Expulsa a los %s de su interior." % dead_name[1])
 
     dump(positions_path, positions, indent=1)  # the file's own layout
     loot()
@@ -259,6 +282,65 @@ def main():
 
 def lower(s):
     return s[0].lower() + s[1:]
+
+
+def mark(step, dungeon):
+    """A step that belongs to a dungeon (the quest book finds it by this; the mod ignores it)."""
+    return dict(step, _dungeon=dungeon)
+
+
+def into_act(quest_name, after, region, steps, texts):
+    """Puts a Ruin's steps into an act after the step that reaches its land (or first), once; later runs refresh them."""
+    path = os.path.join(DATA, "quests", quest_name + ".json")
+    with open(path, encoding="utf-8") as f:
+        q = json.load(f)
+    quest_id, key = "sofe:" + quest_name, "quest.sofe." + quest_name
+    there = [i for i, st in enumerate(q["steps"]) if st.get("_dungeon") == region + "/ruin"]
+    if there:
+        at = there[0]
+        q["steps"][at:at + len(there)] = steps
+    else:
+        if after is None:
+            at = 0
+        else:
+            at = next(i for i, st in enumerate(q["steps"]) if st["objective"]["type"] == after[0]
+                      and st["objective"].get("region") == after[1]) + 1
+        move_conditions(quest_id, at, len(steps))
+        for code in LANGS:  # the texts of the later steps move along, from the last
+            for n in range(len(q["steps"]), at, -1):
+                if "%s.step%d" % (key, n) in LANGS[code]:
+                    LANGS[code]["%s.step%d" % (key, n + len(steps))] = LANGS[code].pop("%s.step%d" % (key, n))
+        q["steps"][at:at] = steps
+    for j, (en, es) in enumerate(texts):
+        text("%s.step%d" % (key, at + j + 1), en, es)
+    dump(path, q)
+
+
+def move_conditions(quest_id, at, count):
+    """Every "quest_step" condition on the quest that points at or past the new steps moves along by their count."""
+    def walk(node):
+        changed = False
+        if isinstance(node, dict):
+            if node.get("type") == "quest_step" and node.get("quest") == quest_id and node.get("step", 0) - 1 >= at:
+                node["step"] += count
+                changed = True
+            for v in node.values():
+                changed |= walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                changed |= walk(v)
+        return changed
+    for folder in ("dialogue", "conditions", "quests"):
+        for root, _, files in os.walk(os.path.join(DATA, folder)):
+            for name in files:
+                if not name.endswith(".json"):
+                    continue
+                path = os.path.join(root, name)
+                with open(path, encoding="utf-8") as f:
+                    data = json.load(f)
+                if walk(data):
+                    dump(path, data)
+                    print("moved the steps of %s in %s" % (quest_id, os.path.relpath(path, DATA)))
 
 
 def de(s):
@@ -281,7 +363,7 @@ def act1(crypt_kill, ruin_puzzle, guardian, crypt_name, ruin_name, dead_name, gu
     text(k + ".step5", "In %s, read the riddle and wake the Wardens' runes." % ruin_name[0],
          "En %s, lee el acertijo y despierta las runas de los Guardianes." % lower(ruin_name[1]))
     text(k + ".step6", "The runes woke the ruin's guardian: defeat the %s." % guardian_name[0],
-         "Las runas despertaron al guardián de la ruina: derrota al %s." % guardian_name[1])
+         de("Las runas despertaron al guardián de la ruina: derrota a %s." % guardian_name[1]))
     text(k + ".step7", "Stop the Brass Sentinel in the Great Observatory.", "Detén al Centinela de Latón en el Gran Observatorio.")
     text("dialogue.sofe.act1.council.3",
          "The Brass Sentinel of the Great Observatory has woken. It kept the seal for three hundred years; now it obeys no one, and the Observatory has closed with it. "
@@ -333,8 +415,7 @@ def messages():
 def lang():
     for code, entries in (("en_us", EN), ("es_es", ES)):
         path = os.path.join(LANG, code + ".json")
-        with open(path, encoding="utf-8") as f:
-            data = json.load(f)
+        data = LANGS[code]
         data.update(entries)
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)

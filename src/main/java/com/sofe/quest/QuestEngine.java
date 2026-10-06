@@ -271,8 +271,31 @@ public final class QuestEngine {
         if (player.tickCount % POSITION_CHECK_TICKS != 0) return;
         event(player, new QuestEvent.At(player.getBlockX(), player.getBlockZ()));
         if (com.sofe.world.SoFEWorld.isJourney(player.server)) discover(player);
+        skipDone(player);
         checkCarried(player);
         wakeBosses(player);
+    }
+
+    /**
+     * A step already done before it came moves on by itself: a boss this Bearer has beaten, runes they have solved.
+     * When new steps come into an act (a Ruin before its bosses), a Bearer who had gone on is not asked twice.
+     */
+    public static void skipDone(ServerPlayer player) {
+        StoryProgress story = StoryCapability.get(player).orElse(null);
+        if (story == null) return;
+        for (var entry : story.quests().entrySet()) {
+            String id = entry.getKey();
+            for (int guard = 0; guard < 16; guard++) { // a few steps at once, never forever
+                var state = story.quest(id).filter(s -> !s.completed());
+                var step = state.flatMap(s -> StoryDataManager.quest(id).flatMap(q -> q.step(s.step())));
+                if (step.isEmpty()) break;
+                Objective o = step.get().objective();
+                boolean done = o instanceof Objective.DefeatBoss b && story.hasDefeated(b.boss())
+                        || o instanceof Objective.SolvePuzzle z && story.hasSolved(z.puzzle());
+                if (!done) break;
+                advance(player, id);
+            }
+        }
     }
 
     /** A dungeon quest begins by itself when a Bearer comes near its dungeon, once its act has come. */

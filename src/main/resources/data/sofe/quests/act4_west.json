@@ -20,6 +20,38 @@
     },
     {
       "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:aureum_ruin"
+      },
+      "target": {
+        "x": -6600,
+        "z": -2998
+      },
+      "_dungeon": "aureum/ruin"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gladiator_shade",
+        "count": 1
+      },
+      "target": {
+        "x": -6600,
+        "z": -3000
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:gladiator_shade",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ],
+      "_dungeon": "aureum/ruin"
+    },
+    {
+      "objective": {
         "type": "defeat_boss",
         "boss": "sofe:goldarc"
       },

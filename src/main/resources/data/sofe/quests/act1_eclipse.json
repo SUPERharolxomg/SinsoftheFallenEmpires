@@ -61,7 +61,8 @@
       "target": {
         "x": 480,
         "z": -420
-      }
+      },
+      "_dungeon": "sulthari/crypt"
     },
     {
       "objective": {
@@ -71,7 +72,8 @@
       "target": {
         "x": -560,
         "z": -518
-      }
+      },
+      "_dungeon": "sulthari/ruin"
     },
     {
       "objective": {
@@ -91,7 +93,8 @@
           "radius": 6,
           "elite": true
         }
-      ]
+      ],
+      "_dungeon": "sulthari/ruin"
     },
     {
       "objective": {

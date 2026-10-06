@@ -1,0 +1,23 @@
+{
+  "kind": "order",
+  "runes": [
+    "moon",
+    "flame",
+    "eye",
+    "star",
+    "sun",
+    "wave"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "eye",
+    "sun",
+    "moon",
+    "star",
+    "wave",
+    "flame"
+  ],
+  "x": -1050,
+  "z": 302,
+  "facing": "south"
+}

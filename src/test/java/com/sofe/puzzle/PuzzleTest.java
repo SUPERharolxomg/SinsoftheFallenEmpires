@@ -100,6 +100,7 @@ class PuzzleTest {
             if (!s.id().endsWith("/crypt") && !s.id().endsWith("/ruin")) continue;
             found++;
             String region = s.id().substring(s.id().indexOf(':') + 1, s.id().indexOf('/'));
+            if (region.equals("void")) region = "sulthari"; // the Void's dungeons of Act V lie round Sulthari
             assertEquals(Region.byId(region).orElseThrow(), map.regionAt(s.x(), s.z()), s.id() + " is not in " + region);
             for (StructurePositions.Structure other : layout.structures().values()) {
                 if (other == s) continue;
@@ -108,6 +109,6 @@ class PuzzleTest {
                 assertTrue(gap > 32, s.id() + " is too close to " + other.id());
             }
         }
-        assertEquals(10, found, "a crypt and a ruin in each of the five regions");
+        assertEquals(12, found, "a crypt and a ruin in each of the five regions and for the Void");
     }
 }

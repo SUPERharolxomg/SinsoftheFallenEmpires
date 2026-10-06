@@ -46,6 +46,8 @@ def key(quest_id):
 
 def advancements(all_quests):
     root = os.path.join(DATA, "advancements", "quest")
+    import shutil
+    shutil.rmtree(root, ignore_errors=True)  # a quest gone or shortened leaves nothing behind
     for quest_id, q in all_quests.items():
         folder = os.path.join(root, *quest_id.split(":", 1)[1].split("/"))
         os.makedirs(folder, exist_ok=True)
@@ -163,7 +165,7 @@ LANG_EN = {
     "ftbquests.sofe.dungeon.ruin": "Medium dungeon: wake the runes of its court to open its seal; its guardian wakes with them. Two chests behind the seal.",
     "ftbquests.sofe.dungeon.large": "Large dungeon: a boss of the story waits inside.",
     "ftbquests.sofe.dungeon.runes": "Wake the runes beside its Waystone to open its seal.",
-    "ftbquests.sofe.dungeon.act1": "Part of Act I: the Council sends you there.",
+    "ftbquests.sofe.dungeon.in_act": "A part of the story, in:",
     "ftbquests.sofe.step_hint": "The golden compass leads you there.",
     "ftbquests.sofe.side.hint": "Opens with its act. Talk to the townsfolk to find it.",
 }
@@ -207,7 +209,7 @@ LANG_ES = {
     "ftbquests.sofe.dungeon.ruin": "Mazmorra mediana: despierta las runas de su patio para abrir su sello; su guardián despierta con ellas. Dos cofres tras el sello.",
     "ftbquests.sofe.dungeon.large": "Mazmorra grande: dentro espera un jefe de la historia.",
     "ftbquests.sofe.dungeon.runes": "Despierta las runas junto a su Piedra de Paso para abrir su sello.",
-    "ftbquests.sofe.dungeon.act1": "Parte del Acto I: el Consejo te envía allí.",
+    "ftbquests.sofe.dungeon.in_act": "Parte de la historia, en:",
     "ftbquests.sofe.step_hint": "La brújula dorada te lleva hasta allí.",
     "ftbquests.sofe.side.hint": "Se abre con su acto. Habla con la gente de las ciudades para encontrarla.",
 }
@@ -256,7 +258,16 @@ def book(all_quests):
     return chapters
 
 
-REGIONS = [("sulthari", "act1_eclipse"), ("nordrath", None), ("parsivan", None), ("khemet", None), ("aureum", None)]
+REGIONS = ["sulthari", "nordrath", "parsivan", "khemet", "aureum", "void"]
+
+
+def marked(all_quests, dungeon):
+    """The advancement of the last step an act gives to a dungeon ("_dungeon" in the quest file), if one does."""
+    for quest_id, q in all_quests.items():
+        steps = [i for i, st in enumerate(q["steps"]) if st.get("_dungeon") == dungeon]
+        if steps:
+            return "sofe:quest/%s/step%d" % (quest_id.split(":", 1)[1], steps[-1] + 1), quest_id
+    return None
 
 
 def dungeons(all_quests):
@@ -266,17 +277,17 @@ def dungeons(all_quests):
         with open(f, encoding="utf-8") as fh:
             puzzles[os.path.basename(f)[:-5]] = json.load(fh)
     out = []
-    for row, (region, act1) in enumerate(REGIONS):
+    for row, region in enumerate(REGIONS):
         col = 0
         for size in ("crypt", "ruin"):
             quest_id = "sofe:dungeon/%s_%s" % (region, size)
             name = "dungeons/%s_%s" % (region, size)
-            if quest_id in all_quests:
+            if quest_id in all_quests:  # found on the way
                 done = "sofe:quest/dungeon/%s_%s/step%d" % (region, size, len(all_quests[quest_id]["steps"]))
                 desc = ["{ftbquests.sofe.dungeon.%s}" % size, "", "{%s.step1}" % key(quest_id)]
-            else:  # Sulthari's are steps of Act I
-                done = "sofe:quest/%s/step%d" % (act1, 4 if size == "crypt" else 6)
-                desc = ["{ftbquests.sofe.dungeon.%s}" % size, "", "{ftbquests.sofe.dungeon.act1}"]
+            else:  # a part of the story
+                done, act = marked(all_quests, "%s/%s" % (region, size))
+                desc = ["{ftbquests.sofe.dungeon.%s}" % size, "", "{ftbquests.sofe.dungeon.in_act}", "{%s}" % key(act)]
             out.append(quest(name, "{place.sofe.%s.%s}" % (region, size), col * 1.5, row * 1.5, by_advancement(name, done), desc,
                              icon="minecraft:chest" if size == "crypt" else "sofe:rune_stone", size=0.8 if size == "crypt" else 1.0))
             col += 1

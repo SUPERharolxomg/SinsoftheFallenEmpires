@@ -10,7 +10,7 @@
 	quests: [
 		{
 			dependencies: [
-				"4F1872CFBAEAF04C"
+				"683B89972D548075"
 			]
 			description: [
 				"{ftbquests.sofe.step_hint}"
@@ -156,8 +156,6 @@
 				"{ftbquests.sofe.step_hint}"
 			]
 			id: "588D7904B6673463"
-			shape: "gear"
-			size: 1.5d
 			tasks: [
 				{
 					advancement: "sofe:quest/act4_west/step8"
@@ -168,6 +166,48 @@
 			]
 			title: "{quest.sofe.act4_west.step8}"
 			x: 10.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"588D7904B6673463"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "6A0FA8748738D015"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step9"
+					criterion: ""
+					id: "39D3F6FAD876AC31"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step9}"
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6A0FA8748738D015"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "195AF112C572A68F"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step10"
+					criterion: ""
+					id: "1CD369C479888A08"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step10}"
+			x: 13.5d
 			y: 0.0d
 		}
 	]

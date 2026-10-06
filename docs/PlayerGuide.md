@@ -18,7 +18,10 @@ book (FTB Quests).
    with them. Defeat it.
 8. Stop the **Brass Sentinel** in the **Great Observatory** (north of the plaza).
 
-Then Act II opens the North and its dungeons, and so on until Act V.
+Then every act goes the same way: you reach a land, wake the runes of its **Ruin** and defeat its guardian, then
+break into the bosses' dungeons. Act II: the Burnt Longhall in Nordrath. Act III: the Abandoned Pavilion in Parsivan
+and the House of the Dead in Khemet. Act IV: the Fallen Senate in Aureum. Act V: the Breach of the Seal, where the Void
+broke through near Sulthari.
 
 ## Finding the way
 
@@ -40,8 +43,9 @@ Every region has dungeons of three sizes:
   (an elite). Behind the gate, a hall with two chests.
 - **Large, a boss's dungeon:** the bosses of the story, from Act II on. Most are sealed by a rune puzzle beside their Waystone.
 
-Outside Sulthari, a Crypt or a Ruin gives you a **dungeon quest** as soon as you come near it, once its act has come;
-the Journal lists them under *Dungeons*. Sulthari's are part of Act I.
+Every Ruin is part of its act's story. Outside Sulthari, a Crypt gives you a **dungeon quest** as soon as you come near
+it, once its act has come; the Journal lists them under *Dungeons*. Sulthari's Crypt is part of Act I, and the Void's
+own Crypt, the Hollow Tomb, opens in Act V.
 
 **Rune puzzles:** right-click the **Riddle Tablet** to read the riddle, then right-click the **Rune Stones** to press
 them. Each stone says its rune (Sun, Moon, Star, Flame, Wave, Eye) when pressed. Two kinds:

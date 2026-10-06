@@ -48,6 +48,8 @@ final class DungeonBuilder {
                     Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.BOG_MUMMY, () -> EntityType.HUSK);
             case "aureum" -> new Palette(b(SoFEBlocks.AUREUM_MARBLE_BRICKS), b(SoFEBlocks.AUREUM_GOLD_MOSAIC), b(SoFEBlocks.AUREUM_POLISHED_MARBLE),
                     Blocks.LANTERN.defaultBlockState(), EntityRegistry.GILDED_LEGIONNAIRE, () -> EntityType.SKELETON);
+            case "void" -> new Palette(Blocks.POLISHED_BLACKSTONE_BRICKS.defaultBlockState(), Blocks.CRYING_OBSIDIAN.defaultBlockState(),
+                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.VOID_ZOMBIE, EntityRegistry.VOID_SKELETON);
             default -> new Palette(b(SoFEBlocks.SULTHARI_SANDSTONE_BRICKS), b(SoFEBlocks.SULTHARI_BRASS_PLATING), b(SoFEBlocks.SULTHARI_GLAZED_TILES),
                     b(SoFEBlocks.SULTHARI_AETHERIUM_LAMP), EntityRegistry.SAND_GHOUL, EntityRegistry.SAND_GHOUL);
         };
