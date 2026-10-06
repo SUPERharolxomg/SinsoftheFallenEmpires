@@ -1,0 +1,4 @@
+# Sins of the Fallen Empires: Supplementaries client overrides for the pack (docs/Rendimiento.md).
+# The mod uses none of the blocks that moved to Amendments, so its suggestion screen is not shown.
+[general]
+	no_amendments_screen = true

@@ -80,6 +80,8 @@ public final class RegionEnforcer {
     /** Sends the player back and tells them why (the Void Rebuke). */
     private static void rebuke(ServerPlayer player, Region region) {
         SafePlace safe = SAFE.get(player.getUUID());
+        com.sofe.SoFEMod.LOGGER.info("The seal of {} sent {} back from {}, {}", region.id(), player.getGameProfile().getName(),
+                player.getBlockX(), player.getBlockZ());
         if (player.isPassenger()) player.stopRiding();
         player.stopFallFlying();
         if (safe != null && safe.dimension() == player.level().dimension()) {

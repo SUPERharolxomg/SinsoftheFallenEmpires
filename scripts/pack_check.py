@@ -9,6 +9,8 @@ Needs portablemc (pip install portablemc) and the mod's jar (./gradlew jar). Run
     python scripts/pack_check.py                      # aureum/city,parsivan/city,bosses with 4 GB
     python scripts/pack_check.py --memory 3G --shots khemet/city,npcs:0
     python scripts/pack_check.py --no-perf-mods       # the same without the performance mods, to compare
+    python scripts/pack_check.py --check compat --extra essential,ftb   # sealed regions against /home, /rtp...
+    python scripts/pack_check.py --check title --extra essential        # a screenshot of the title screen
 The instance lives in build/packcheck/instance: screenshots/, placeshots_perf.log and logs/latest.log.
 """
 import argparse
@@ -84,31 +86,58 @@ def prepare(instance, jars):
     opts.write_text("".join("%s:%s\n" % kv for kv in lines.items()), encoding="utf-8")
 
 
+# mods that players often add, to check the pack with them (--extra): where their jars come from
+EXTRA = {
+    "essential": ["https://cdn.modrinth.com/data/k2ZPuTBm/versions/soTLEi9f/Essential_1-5-0-1_forge_1-20-1.jar"],
+    "ftb": ["https://maven.ftb.dev/releases/dev/ftb/mods/ftb-essentials-forge/2001.2.4/ftb-essentials-forge-2001.2.4.jar",
+            "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-forge/2001.2.13/ftb-library-forge-2001.2.13.jar",
+            "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1MKTLiiG/architectury-9.2.14-forge.jar"],
+}
+
+
+def extra_jars(names):
+    import urllib.request
+    out = []
+    for name in [n for n in names.split(",") if n]:
+        for url in EXTRA[name]:
+            path = PACK / "extra" / url.rsplit("/", 1)[1]
+            if not path.exists():
+                path.parent.mkdir(parents=True, exist_ok=True)
+                req = urllib.request.Request(url, headers={"User-Agent": "SUPERharolxomg/SinsoftheFallenEmpires pack_check"})
+                path.write_bytes(urllib.request.urlopen(req).read())
+            out.append(path)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--memory", default="4G", help="what the game gets (-Xmx); 4G on a PC with 8 GB")
     ap.add_argument("--shots", default="aureum/city,parsivan/city,bosses")
     ap.add_argument("--no-perf-mods", action="store_true")
+    ap.add_argument("--check", default="places", choices=["places", "compat", "title"])
+    ap.add_argument("--extra", default="", help="other mods to add: " + ", ".join(EXTRA))
     args = ap.parse_args()
     from portablemc.forge import ForgeVersion
     from portablemc.standard import Context
 
     p = props()
     instance = PACK / ("instance_noperf" if args.no_perf_mods else "instance")
-    jars = mods(p, not args.no_perf_mods)
+    jars = mods(p, not args.no_perf_mods) + extra_jars(args.extra)
     prepare(instance, jars)
     print("%d mods in %s" % (len(jars), instance / "mods"))
 
     version = ForgeVersion("%s-%s" % (p["minecraft_version"], p["forge_version"]), context=Context(PACK / "mc", instance))
     version.set_auth_offline("SoFEPackCheck", None)
-    version.set_quick_play_singleplayer("shots_aetheris")
+    if args.check != "title":
+        version.set_quick_play_singleplayer("shots_aetheris")
     version.resolution = (1280, 720)
     env = version.install()
     # the JVM path comes first; the pack's memory and garbage collector right after it (docs/Rendimiento.md)
     env.jvm_args[1:1] = ["-Xms%s" % args.memory, "-Xmx%s" % args.memory, "-XX:+UseG1GC", "-XX:+ParallelRefProcEnabled",
-                         "-XX:MaxGCPauseMillis=200", "-Dsofe.placeShots=" + args.shots]
+                         "-XX:MaxGCPauseMillis=200",
+                         {"places": "-Dsofe.placeShots=" + args.shots, "compat": "-Dsofe.compatCheck=true", "title": "-Dsofe.titleShot=true"}[args.check]]
     env.run()
-    log = instance / "placeshots_perf.log"
+    log = instance / {"places": "placeshots_perf.log", "compat": "compatcheck.log", "title": "titleshot.log"}[args.check]
     print(log.read_text(encoding="utf-8") if log.exists() else "no placeshots_perf.log: see %s" % (instance / "logs" / "latest.log"))
 
 
