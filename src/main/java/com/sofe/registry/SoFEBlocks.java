@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 public final class SoFEBlocks {
 
     /** How the data generators make the block state and model. */
-    public enum Shape { CUBE, CUBE_SIDES, STAIRS, SLAB, WALL, PILLAR, HAND_MADE }
+    public enum Shape { CUBE, CUBE_SIDES, STAIRS, SLAB, WALL, PILLAR, HAND_MADE, RUNE }
 
     /**
      * @param base    for stairs, slabs and walls: the full block whose texture they use
@@ -61,6 +61,14 @@ public final class SoFEBlocks {
             () -> new WaystoneBlock(BlockBehaviour.Properties.copy(Blocks.LODESTONE).strength(-1f, 3600000f).lightLevel(s -> 10).noOcclusion()));
     public static final RegistryObject<Block> PERSONAL_VAULT = register("personal_vault", Shape.CUBE_SIDES, null, true,
             () -> new VaultBlock(BlockBehaviour.Properties.copy(Blocks.ENDER_CHEST)));
+
+    // --- the rune puzzles before the bosses (data/sofe/puzzles): placed by the story, never broken ---
+    public static final RegistryObject<Block> RUNE_STONE = register("rune_stone", Shape.RUNE, null, false,
+            () -> new com.sofe.puzzle.RuneStoneBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_DEEPSLATE).strength(-1f, 3600000f)
+                    .noLootTable().lightLevel(s -> s.getValue(com.sofe.puzzle.RuneStoneBlock.LIT) ? 11 : 3)));
+    public static final RegistryObject<Block> RIDDLE_TABLET = register("riddle_tablet", Shape.CUBE_SIDES, null, false,
+            () -> new com.sofe.puzzle.RiddleTabletBlock(BlockBehaviour.Properties.copy(Blocks.CHISELED_STONE_BRICKS).strength(-1f, 3600000f)
+                    .noLootTable().lightLevel(s -> 5)));
 
     // --- Sulthari building set (intact) ---
     public static final RegistryObject<Block> SULTHARI_SANDSTONE_BRICKS = cube("sulthari_sandstone_bricks",

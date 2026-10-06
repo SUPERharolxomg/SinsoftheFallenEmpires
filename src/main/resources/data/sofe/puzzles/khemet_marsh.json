@@ -1,0 +1,19 @@
+{
+  "kind": "lights",
+  "runes": [
+    "wave",
+    "eye",
+    "wave",
+    "eye"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    false,
+    true,
+    false
+  ],
+  "gate": "sofe:khemet/stagnant_marsh",
+  "boss": "sofe:morthis",
+  "anchor": "sofe:khemet/stagnant_marsh"
+}

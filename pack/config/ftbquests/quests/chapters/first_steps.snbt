@@ -159,6 +159,28 @@
 			x: 9.0d
 			y: 0.0d
 		}
+		{
+			dependencies: [
+				"77DC43A4276F590A"
+			]
+			description: [
+				"{ftbquests.sofe.first.runes.1}"
+				"{ftbquests.sofe.first.runes.2}"
+				"{ftbquests.sofe.first.runes.3}"
+			]
+			icon: "sofe:rune_stone"
+			id: "5379A06BC7566150"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "15E5AA95557CD092"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.runes}"
+			x: 10.5d
+			y: 0.0d
+		}
 	]
 	title: "{ftbquests.sofe.chapter.first_steps}"
 }

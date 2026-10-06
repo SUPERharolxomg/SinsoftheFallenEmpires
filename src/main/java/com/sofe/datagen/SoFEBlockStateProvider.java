@@ -71,6 +71,16 @@ public class SoFEBlockStateProvider extends BlockStateProvider {
                     itemModels().wallInventory(name, texture);
                 }
                 case HAND_MADE -> simpleBlockWithItem(block, models().getExistingFile(modLoc("block/" + name)));
+                case RUNE -> { // one face for each rune, dark or burning
+                    getVariantBuilder(block).forAllStates(state -> {
+                        String rune = com.sofe.puzzle.PuzzleDefinition.Rune.values()[state.getValue(com.sofe.puzzle.RuneStoneBlock.RUNE)].id();
+                        String model = name + "_" + rune + (state.getValue(com.sofe.puzzle.RuneStoneBlock.LIT) ? "_lit" : "");
+                        return net.minecraftforge.client.model.generators.ConfiguredModel.builder()
+                                .modelFile(models().cubeBottomTop(model, modLoc("block/" + model), modLoc("block/" + name + "_top"),
+                                        modLoc("block/" + name + "_top"))).build();
+                    });
+                    simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name + "_sun")));
+                }
             }
         }
     }

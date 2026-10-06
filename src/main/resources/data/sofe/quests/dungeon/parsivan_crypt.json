@@ -1,0 +1,44 @@
+{
+  "type": "dungeon",
+  "act": 3,
+  "starts_near": {
+    "x": 2600,
+    "z": -1300,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 2600,
+        "z": -1300,
+        "radius": 14
+      },
+      "target": {
+        "x": 2600,
+        "z": -1300
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:mirage_dancer",
+        "count": 6
+      },
+      "target": {
+        "x": 2600,
+        "z": -1300
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 1600
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}

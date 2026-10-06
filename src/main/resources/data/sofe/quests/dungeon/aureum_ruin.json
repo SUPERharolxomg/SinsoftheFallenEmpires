@@ -1,0 +1,68 @@
+{
+  "type": "dungeon",
+  "act": 4,
+  "starts_near": {
+    "x": -6600,
+    "z": -3000,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -6600,
+        "z": -3000,
+        "radius": 20
+      },
+      "target": {
+        "x": -6600,
+        "z": -3000
+      }
+    },
+    {
+      "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:aureum_ruin"
+      },
+      "target": {
+        "x": -6600,
+        "z": -2998
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gladiator_shade",
+        "count": 1
+      },
+      "target": {
+        "x": -6600,
+        "z": -3000
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:gladiator_shade",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 4800
+    },
+    {
+      "type": "give_item",
+      "item": "sofe:aetherium_shard",
+      "count": 2
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  }
+}

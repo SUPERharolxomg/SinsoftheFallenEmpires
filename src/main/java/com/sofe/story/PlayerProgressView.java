@@ -36,6 +36,11 @@ public final class PlayerProgressView implements ProgressView {
     }
 
     @Override
+    public boolean hasSolved(String puzzleId) {
+        return story.hasSolved(puzzleId);
+    }
+
+    @Override
     public int questStep(String questId) {
         return story.questStep(questId);
     }

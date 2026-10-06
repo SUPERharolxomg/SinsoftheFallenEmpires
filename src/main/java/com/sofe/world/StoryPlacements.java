@@ -125,6 +125,15 @@ public final class StoryPlacements extends SavedData {
             if (station == null || !near.test(npc.x(), npc.z()) || !data.placed.add("station:" + npc.npc())) continue;
             placeBlock(level, new BlockPos(npc.x() + 2, 0, npc.z()), station.defaultBlockState());
         }
+        // the rune puzzles before the seals and in the ruins (data/sofe/puzzles), in old worlds too
+        for (com.sofe.puzzle.PuzzleDefinition puzzle : com.sofe.quest.StoryDataManager.puzzles().values()) {
+            var at = com.sofe.puzzle.PuzzleService.origin(puzzle, layout);
+            if (at.isEmpty() || !near.test(at.get()[0], at.get()[1]) || data.placed.contains("puzzle:" + puzzle.id())) continue;
+            if (com.sofe.puzzle.PuzzleService.place(level, puzzle, layout)) {
+                data.placed.add("puzzle:" + puzzle.id());
+                count++;
+            }
+        }
         layout.structure("sofe:sulthari/bank").ifPresent(bank -> {
             if (near.test(bank.x(), bank.z()) && data.placed.add("vault:sofe:sulthari/bank")) {
                 placeBlock(level, new BlockPos(bank.x(), 0, bank.z()), SoFEBlocks.PERSONAL_VAULT.get().defaultBlockState());

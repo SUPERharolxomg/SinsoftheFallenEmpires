@@ -1,0 +1,21 @@
+{
+  "kind": "order",
+  "runes": [
+    "moon",
+    "flame",
+    "star",
+    "eye",
+    "sun"
+  ],
+  "riddle_lines": 3,
+  "solution": [
+    "eye",
+    "star",
+    "moon",
+    "sun",
+    "flame"
+  ],
+  "gate": "sofe:nordrath/burning_citadel",
+  "boss": "sofe:vorath",
+  "anchor": "sofe:nordrath/burning_citadel"
+}

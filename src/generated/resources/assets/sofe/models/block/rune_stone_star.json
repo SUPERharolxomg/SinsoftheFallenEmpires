@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "sofe:block/rune_stone_top",
+    "side": "sofe:block/rune_stone_star",
+    "top": "sofe:block/rune_stone_top"
+  }
+}

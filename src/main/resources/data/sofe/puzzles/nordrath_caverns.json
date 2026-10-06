@@ -1,0 +1,23 @@
+{
+  "kind": "lights",
+  "runes": [
+    "wave",
+    "moon",
+    "wave",
+    "moon",
+    "wave",
+    "moon"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    false,
+    false,
+    false,
+    true,
+    false
+  ],
+  "gate": "sofe:nordrath/caverns",
+  "boss": "sofe:fenrath",
+  "anchor": "sofe:nordrath/caverns"
+}

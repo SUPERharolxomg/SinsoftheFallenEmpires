@@ -1,0 +1,68 @@
+{
+  "type": "dungeon",
+  "act": 3,
+  "starts_near": {
+    "x": 6200,
+    "z": -2600,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 6200,
+        "z": -2600,
+        "radius": 20
+      },
+      "target": {
+        "x": 6200,
+        "z": -2600
+      }
+    },
+    {
+      "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:parsivan_ruin"
+      },
+      "target": {
+        "x": 6200,
+        "z": -2598
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "minecraft:evoker",
+        "count": 1
+      },
+      "target": {
+        "x": 6200,
+        "z": -2600
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "minecraft:evoker",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 3200
+    },
+    {
+      "type": "give_item",
+      "item": "sofe:aetherium_shard",
+      "count": 2
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "lit=false,rune=0": {
+      "model": "sofe:block/rune_stone_sun"
+    },
+    "lit=false,rune=1": {
+      "model": "sofe:block/rune_stone_moon"
+    },
+    "lit=false,rune=2": {
+      "model": "sofe:block/rune_stone_star"
+    },
+    "lit=false,rune=3": {
+      "model": "sofe:block/rune_stone_flame"
+    },
+    "lit=false,rune=4": {
+      "model": "sofe:block/rune_stone_wave"
+    },
+    "lit=false,rune=5": {
+      "model": "sofe:block/rune_stone_eye"
+    },
+    "lit=true,rune=0": {
+      "model": "sofe:block/rune_stone_sun_lit"
+    },
+    "lit=true,rune=1": {
+      "model": "sofe:block/rune_stone_moon_lit"
+    },
+    "lit=true,rune=2": {
+      "model": "sofe:block/rune_stone_star_lit"
+    },
+    "lit=true,rune=3": {
+      "model": "sofe:block/rune_stone_flame_lit"
+    },
+    "lit=true,rune=4": {
+      "model": "sofe:block/rune_stone_wave_lit"
+    },
+    "lit=true,rune=5": {
+      "model": "sofe:block/rune_stone_eye_lit"
+    }
+  }
+}

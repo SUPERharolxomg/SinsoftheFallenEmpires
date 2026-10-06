@@ -41,6 +41,10 @@ public sealed interface Objective {
     record Obtain(String item) implements Objective {
     }
 
+    /** Solving a rune puzzle (data/sofe/puzzles): its runes are pressed in the world. */
+    record SolvePuzzle(String puzzle) implements Objective {
+    }
+
     /** Done only by an "advance_quest" effect, usually from a dialogue answer. */
     record Manual() implements Objective {
     }

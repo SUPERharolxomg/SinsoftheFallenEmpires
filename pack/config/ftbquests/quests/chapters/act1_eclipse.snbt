@@ -74,8 +74,6 @@
 				"{ftbquests.sofe.step_hint}"
 			]
 			id: "47019F1A5E0B1922"
-			shape: "gear"
-			size: 1.5d
 			tasks: [
 				{
 					advancement: "sofe:quest/act1_eclipse/step4"
@@ -86,6 +84,68 @@
 			]
 			title: "{quest.sofe.act1_eclipse.step4}"
 			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"47019F1A5E0B1922"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "3AE424E7DC7EAE4A"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step5"
+					criterion: ""
+					id: "7E98B5B8F1A30898"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step5}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"3AE424E7DC7EAE4A"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "2659459C17FC6582"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step6"
+					criterion: ""
+					id: "25BBDFA866BA7324"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step6}"
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2659459C17FC6582"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "7920D605D1E9F751"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step7"
+					criterion: ""
+					id: "0D470BA9D1C4E89E"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step7}"
+			x: 9.0d
 			y: 0.0d
 		}
 	]

@@ -13,9 +13,12 @@ book (FTB Quests).
 4. Drive the Void creatures out of the **Lower District** (south-west of the plaza).
 5. Present yourself to **Grand Vizier Ozhan** at the entrance of the **palace** (south of the plaza, the great
    golden dome).
-6. Stop the **Brass Sentinel** in the **Great Observatory** (north of the plaza).
+6. Descend into **the Wardens' Crypt** (north-east of the city) and drive out its sand ghouls.
+7. In **the Wardens' Ruin** (north-west of the city), read the riddle and wake the runes: the ruin's guardian wakes
+   with them. Defeat it.
+8. Stop the **Brass Sentinel** in the **Great Observatory** (north of the plaza).
 
-Then Act II opens the North, and so on until Act V.
+Then Act II opens the North and its dungeons, and so on until Act V.
 
 ## Finding the way
 
@@ -26,7 +29,28 @@ Then Act II opens the North, and so on until Act V.
 - **Journal (U)**: every quest you have started; choose which one the compass follows. When you finish the one you
   follow, the compass goes back to the main story.
 - **Quest book** (modpack, FTB Quests: the book button in your inventory): *First steps*, one chapter per act with
-  every step in order, and the side quests. Each step ticks itself when you do it in the game.
+  every step in order, the dungeons of every region and the side quests. Each step ticks itself when you do it in the game.
+
+## Dungeons and rune puzzles
+
+Every region has dungeons of three sizes:
+
+- **Small, a Crypt:** one hall of the dead and a chest at the back.
+- **Medium, a Ruin:** a court with a rune puzzle that opens its Sealed Gate; solving it wakes the ruin's guardian
+  (an elite). Behind the gate, a hall with two chests.
+- **Large, a boss's dungeon:** the bosses of the story, from Act II on. Most are sealed by a rune puzzle beside their Waystone.
+
+Outside Sulthari, a Crypt or a Ruin gives you a **dungeon quest** as soon as you come near it, once its act has come;
+the Journal lists them under *Dungeons*. Sulthari's are part of Act I.
+
+**Rune puzzles:** right-click the **Riddle Tablet** to read the riddle, then right-click the **Rune Stones** to press
+them. Each stone says its rune (Sun, Moon, Star, Flame, Wave, Eye) when pressed. Two kinds:
+
+- *In order*: press the runes in the order the riddle tells. A wrong rune puts them all out; start again.
+- *Make them all burn*: pressing a rune turns it and its neighbours on or off. Make every rune burn at once.
+
+Once solved, the seal stays open for you; every Bearer near you when it is solved shares it. A Bearer who has already
+beaten a dungeon's boss never needs its runes again.
 
 ## Keys
 

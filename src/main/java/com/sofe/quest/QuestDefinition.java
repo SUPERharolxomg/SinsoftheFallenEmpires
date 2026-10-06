@@ -10,10 +10,19 @@ import java.util.Optional;
  * A quest from data/sofe/quests/*.json (docs/Jugabilidad.md, G3). Every text is a lang key:
  * quest.sofe.&lt;name&gt; for the title and quest.sofe.&lt;name&gt;.step&lt;n&gt; for each step.
  */
-public record QuestDefinition(String id, Type type, int act, List<Step> steps, List<QuestEffect> rewards, Condition requires) {
+public record QuestDefinition(String id, Type type, int act, List<Step> steps, List<QuestEffect> rewards, Condition requires,
+                              Discovery discovery) {
+
+    public QuestDefinition(String id, Type type, int act, List<Step> steps, List<QuestEffect> rewards, Condition requires) {
+        this(id, type, act, steps, rewards, requires, null);
+    }
+
+    /** A quest that begins by itself when a Bearer comes this close to a place (a dungeon found on the way). */
+    public record Discovery(int x, int z, int radius) {
+    }
 
     public enum Type {
-        MAIN, BEARER, SIDE;
+        MAIN, BEARER, SIDE, DUNGEON;
 
         public String translationKey() {
             return "quest.sofe.type." + name().toLowerCase(Locale.ROOT);

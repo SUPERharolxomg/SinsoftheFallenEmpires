@@ -1,0 +1,21 @@
+{
+  "kind": "order",
+  "runes": [
+    "sun",
+    "eye",
+    "star",
+    "flame",
+    "wave"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "sun",
+    "eye",
+    "flame",
+    "wave",
+    "star"
+  ],
+  "gate": "sofe:parsivan/silk_road",
+  "boss": "sofe:thessyn",
+  "anchor": "sofe:parsivan/silk_road"
+}

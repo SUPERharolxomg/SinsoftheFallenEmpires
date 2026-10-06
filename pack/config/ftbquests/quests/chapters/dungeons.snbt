@@ -1,0 +1,641 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dungeons"
+	group: ""
+	icon: "sofe:rune_stone"
+	id: "275C19EB26220373"
+	order_index: 6
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.crypt}"
+				""
+				"{ftbquests.sofe.dungeon.act1}"
+			]
+			icon: "minecraft:chest"
+			id: "3EF020EB1FAA7A9D"
+			size: 0.8d
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step4"
+					criterion: ""
+					id: "6B56F1C0159F0EFA"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.sulthari.crypt}"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.ruin}"
+				""
+				"{ftbquests.sofe.dungeon.act1}"
+			]
+			icon: "sofe:rune_stone"
+			id: "5B70007CD3B81EA2"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step6"
+					criterion: ""
+					id: "063FF7ED953E1428"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.sulthari.ruin}"
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.sulthari_inverted_throne}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "6E42291BE886380C"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_nahrazel"
+					criterion: ""
+					id: "5D7EDD5C42ECB611"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.sulthari_inverted_throne.place}"
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.sulthari_spire}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "6236ED1F93691114"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_prython"
+					criterion: ""
+					id: "1D43AFDC1DA58451"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.sulthari_spire.place}"
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.sulthari_temple}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "60618FB811B545C8"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_solrath"
+					criterion: ""
+					id: "7CEA3F5242DA1469"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.sulthari_temple.place}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.crypt}"
+				""
+				"{quest.sofe.dungeon.nordrath_crypt.step1}"
+			]
+			icon: "minecraft:chest"
+			id: "5FF433CB6C36D5C2"
+			size: 0.8d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/nordrath_crypt/step2"
+					criterion: ""
+					id: "59ADAE3D8528E90E"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.nordrath.crypt}"
+			x: 0.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.ruin}"
+				""
+				"{quest.sofe.dungeon.nordrath_ruin.step1}"
+			]
+			icon: "sofe:rune_stone"
+			id: "069FBBBBED4261DC"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/nordrath_ruin/step3"
+					criterion: ""
+					id: "40BF16B706B49026"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.nordrath.ruin}"
+			x: 1.5d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.nordrath_arena}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "40665D2C1961E40E"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_serath"
+					criterion: ""
+					id: "21FF741CEB1E5146"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.nordrath_arena.place}"
+			x: 3.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.nordrath_caverns}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "34AC7908E8E56A0C"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_fenrath"
+					criterion: ""
+					id: "6D2479394261B21A"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.nordrath_caverns.place}"
+			x: 4.5d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.nordrath_citadel}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "334D9747BEF4D6D1"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_vorath"
+					criterion: ""
+					id: "619CB0A65EFEFF44"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.nordrath_citadel.place}"
+			x: 6.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.nordrath_forge}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "5C736E11E6F63C4D"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_kaleth"
+					criterion: ""
+					id: "46A0886B8491B908"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.nordrath_forge.place}"
+			x: 7.5d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.crypt}"
+				""
+				"{quest.sofe.dungeon.parsivan_crypt.step1}"
+			]
+			icon: "minecraft:chest"
+			id: "23232FA0BA855DAC"
+			size: 0.8d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/parsivan_crypt/step2"
+					criterion: ""
+					id: "6E5B79B9E86BD189"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.parsivan.crypt}"
+			x: 0.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.ruin}"
+				""
+				"{quest.sofe.dungeon.parsivan_ruin.step1}"
+			]
+			icon: "sofe:rune_stone"
+			id: "3AEB6409497E13CF"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/parsivan_ruin/step3"
+					criterion: ""
+					id: "35562E4EE63FC8A6"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.parsivan.ruin}"
+			x: 1.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.parsivan_baths}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "54858A058CFD763D"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_mirael"
+					criterion: ""
+					id: "5CB183834D26C08A"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.parsivan_baths.place}"
+			x: 3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.parsivan_gardens}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "6599693454A0209D"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_luxara"
+					criterion: ""
+					id: "7D75B5BF6B9A4B89"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.parsivan_gardens.place}"
+			x: 4.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.parsivan_silk_road}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "7F9F9AABA9088C4F"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_thessyn"
+					criterion: ""
+					id: "157625E46AD9FBCF"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.parsivan_silk_road.place}"
+			x: 6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.crypt}"
+				""
+				"{quest.sofe.dungeon.khemet_crypt.step1}"
+			]
+			icon: "minecraft:chest"
+			id: "731BCB40C9969645"
+			size: 0.8d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/khemet_crypt/step2"
+					criterion: ""
+					id: "61ABDAD97C22322E"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.khemet.crypt}"
+			x: 0.0d
+			y: 4.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.ruin}"
+				""
+				"{quest.sofe.dungeon.khemet_ruin.step1}"
+			]
+			icon: "sofe:rune_stone"
+			id: "288798D13E029D16"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/khemet_ruin/step3"
+					criterion: ""
+					id: "7A7D4DEFA422D2CE"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.khemet.ruin}"
+			x: 1.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.khemet_catacombs}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "08A694D58DE9F757"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_dormiel"
+					criterion: ""
+					id: "69B5F3B69345B9EE"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.khemet_catacombs.place}"
+			x: 3.0d
+			y: 4.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.khemet_marsh}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "3213054CDCA880F9"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_morthis"
+					criterion: ""
+					id: "28452CA831F09566"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.khemet_marsh.place}"
+			x: 4.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.crypt}"
+				""
+				"{quest.sofe.dungeon.aureum_crypt.step1}"
+			]
+			icon: "minecraft:chest"
+			id: "0C8BD993C62FE57E"
+			size: 0.8d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/aureum_crypt/step2"
+					criterion: ""
+					id: "74B861627B061C88"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.aureum.crypt}"
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.ruin}"
+				""
+				"{quest.sofe.dungeon.aureum_ruin.step1}"
+			]
+			icon: "sofe:rune_stone"
+			id: "1E7467B636CC0E27"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "sofe:quest/dungeon/aureum_ruin/step3"
+					criterion: ""
+					id: "7AE559D45553BA2B"
+					type: "advancement"
+				}
+			]
+			title: "{place.sofe.aureum.ruin}"
+			x: 1.5d
+			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.aureum_colosseum}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "7C2EBF4AFCDD5D16"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_shadeyn"
+					criterion: ""
+					id: "51C4B5E5A6469689"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.aureum_colosseum.place}"
+			x: 3.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.aureum_market}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "40D61DE95F346A2C"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_nixara"
+					criterion: ""
+					id: "293097FD6E6AA338"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.aureum_market.place}"
+			x: 4.5d
+			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.aureum_shadow_throne}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "5411A59BBEF8CF87"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_envyris"
+					criterion: ""
+					id: "727BB37C649621D7"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.aureum_shadow_throne.place}"
+			x: 6.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.aureum_treasury}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "4244A841BBF772F9"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_goldarc"
+					criterion: ""
+					id: "755C4794E7E81517"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.aureum_treasury.place}"
+			x: 7.5d
+			y: 6.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.dungeon.large}"
+				""
+				"{puzzle.sofe.aureum_vaults}"
+				"{ftbquests.sofe.dungeon.runes}"
+			]
+			icon: "minecraft:wither_skeleton_skull"
+			id: "1C19D6EF780133DE"
+			shape: "gear"
+			size: 1.2d
+			tasks: [
+				{
+					advancement: "sofe:story/boss_avarok"
+					criterion: ""
+					id: "14F9384350428FCA"
+					type: "advancement"
+				}
+			]
+			title: "{puzzle.sofe.aureum_vaults.place}"
+			x: 9.0d
+			y: 6.0d
+		}
+	]
+	title: "{ftbquests.sofe.chapter.dungeons}"
+}

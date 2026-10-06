@@ -12,6 +12,7 @@ On the Night of the Eclipse the seal beneath Sulthari breaks, and five shards of
 - **Five Bearers**, each a hero with their own class, skill tree, story and temptation: the Knight, the Necromancer, the Sorceress, the Thief and the King.
 - **Nineteen great foes**, every one with its own 3D model, phases and signature attack: the Brass Sentinel, the Ten Broken Oaths, the Seven Archsins and Nahrazel, the First Fallen.
 - **Diablo-style gear:** rarities, affixes, sockets and sin gems, set bonuses, Relics, fifty-five 3D armor sets.
+- **Dungeons of three sizes** in every region, crypts, ruins and the bosses' lairs, each boss sealed behind a rune puzzle with its own riddle.
 - **Choices that matter:** the fate of every region, the epilogue of your Bearer, and a secret ending for those who say yes.
 - **Co-op:** the Pact of the Empires for up to five players, with bosses that grow for every Bearer.
 - **The Codex:** the story's lore, a bestiary and a gallery that open as you play.
@@ -53,6 +54,7 @@ En la Noche del Eclipse el sello bajo Sulthari se rompe, y cinco fragmentos del 
 - **Cinco Portadores**, cada uno con su clase, árbol de habilidades, historia y tentación.
 - **Diecinueve grandes enemigos** con modelo 3D, fases y ataque propio.
 - **Equipo al estilo Diablo:** rarezas, afijos, gemas, conjuntos, Reliquias y 55 armaduras 3D.
+- **Mazmorras de tres tamaños** en cada región, criptas, ruinas y las guaridas de los jefes, cada jefe sellado tras un acertijo de runas con su propio verso.
 - **Decisiones que importan:** el destino de cada región, el epílogo de tu Portador y un final secreto.
 - **Cooperativo** hasta cinco jugadores, y **el Códice** con lore, bestiario y galería.
 - **Inglés y español.**

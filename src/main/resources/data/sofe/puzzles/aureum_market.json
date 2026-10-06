@@ -1,0 +1,23 @@
+{
+  "kind": "lights",
+  "runes": [
+    "eye",
+    "star",
+    "eye",
+    "star",
+    "eye",
+    "star"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    true,
+    false,
+    false,
+    false,
+    false
+  ],
+  "gate": "sofe:aureum/market",
+  "boss": "sofe:nixara",
+  "anchor": "sofe:aureum/market"
+}

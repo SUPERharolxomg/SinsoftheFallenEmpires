@@ -1,0 +1,44 @@
+{
+  "type": "dungeon",
+  "act": 4,
+  "starts_near": {
+    "x": -2600,
+    "z": -1500,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -2600,
+        "z": -1500,
+        "radius": 14
+      },
+      "target": {
+        "x": -2600,
+        "z": -1500
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gilded_legionnaire",
+        "count": 6
+      },
+      "target": {
+        "x": -2600,
+        "z": -1500
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2400
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  }
+}

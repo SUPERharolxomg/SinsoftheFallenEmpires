@@ -14,10 +14,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-/** Loads data/&lt;ns&gt;/quests/*.json and data/&lt;ns&gt;/dialogue/*.json on start and on /reload. */
+/** Loads data/&lt;ns&gt;/quests/*.json, data/&lt;ns&gt;/dialogue/*.json and data/&lt;ns&gt;/puzzles/*.json on start and on /reload. */
 public final class StoryDataManager {
     private static volatile Map<String, QuestDefinition> quests = Map.of();
     private static volatile Map<String, DialogueDefinition> dialogues = Map.of();
+    private static volatile Map<String, com.sofe.puzzle.PuzzleDefinition> puzzles = Map.of();
 
     private StoryDataManager() {
     }
@@ -25,6 +26,12 @@ public final class StoryDataManager {
     public static void onAddReloadListeners(AddReloadListenerEvent event) {
         event.addListener(new Loader<>("quests", StoryParser::quest, loaded -> quests = loaded));
         event.addListener(new Loader<>("dialogue", StoryParser::dialogue, loaded -> dialogues = loaded));
+        event.addListener(new Loader<>("puzzles", com.sofe.puzzle.PuzzleParser::parse, loaded -> puzzles = loaded));
+    }
+
+    /** The rune puzzles (data/sofe/puzzles). */
+    public static Map<String, com.sofe.puzzle.PuzzleDefinition> puzzles() {
+        return puzzles;
     }
 
     public static Optional<QuestDefinition> quest(String id) {
@@ -41,6 +48,13 @@ public final class StoryDataManager {
 
     public static Map<String, DialogueDefinition> dialogues() {
         return dialogues;
+    }
+
+    /** For GameTests: a puzzle of their own, next to the real ones. */
+    public static void putPuzzleForTest(com.sofe.puzzle.PuzzleDefinition puzzle) {
+        Map<String, com.sofe.puzzle.PuzzleDefinition> copy = new HashMap<>(puzzles);
+        copy.put(puzzle.id(), puzzle);
+        puzzles = Map.copyOf(copy);
     }
 
     /** For GameTests, which run without the reload listeners of a real server start. */

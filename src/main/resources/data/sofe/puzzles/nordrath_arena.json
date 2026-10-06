@@ -1,0 +1,19 @@
+{
+  "kind": "lights",
+  "runes": [
+    "eye",
+    "flame",
+    "eye",
+    "flame"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    true,
+    false,
+    false
+  ],
+  "gate": "sofe:nordrath/arena",
+  "boss": "sofe:serath",
+  "anchor": "sofe:nordrath/arena"
+}

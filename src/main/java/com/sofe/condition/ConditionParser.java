@@ -30,6 +30,7 @@ public final class ConditionParser {
                 yield new Condition.ActReached(act);
             }
             case "boss_defeated" -> new Condition.BossDefeated(id(obj, "boss", path));
+            case "puzzle_solved" -> new Condition.PuzzleSolved(id(obj, "puzzle", path));
             case "quest_step" -> new Condition.QuestStep(id(obj, "quest", path), positive(obj, "step", path));
             case "item_owned" -> new Condition.ItemOwned(id(obj, "item", path),
                     obj.has("count") ? positive(obj, "count", path) : 1);

@@ -183,9 +183,10 @@ public class SultharisLifeGameTests {
         ServerPlayer hero = player(helper, "sofe_test_hero");
         PlayerClassCapability.get(hero).orElseThrow().set(PlayerClass.KNIGHT);
         QuestEngine.startQuest(hero, QuestEngine.FIRST_QUEST);
-        for (int i = 0; i < 3; i++) QuestEngine.advance(hero, QuestEngine.FIRST_QUEST);
+        int steps = com.sofe.quest.StoryDataManager.quest(QuestEngine.FIRST_QUEST).orElseThrow().steps().size(); // the Sentinel is the last
+        for (int i = 0; i < steps - 1; i++) QuestEngine.advance(hero, QuestEngine.FIRST_QUEST);
         DialogueService.close(hero);
-        helper.assertTrue(StoryCapability.get(hero).orElseThrow().questStep(QuestEngine.FIRST_QUEST) == 4, "the hero should face the Sentinel");
+        helper.assertTrue(StoryCapability.get(hero).orElseThrow().questStep(QuestEngine.FIRST_QUEST) == steps, "the hero should face the Sentinel");
 
         BrassSentinelEntity sentinel = helper.spawn(EntityRegistry.BRASS_SENTINEL.get(), new Vec3(2.5, 1, 2.5));
         sentinel.setNoAi(true);

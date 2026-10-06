@@ -31,6 +31,14 @@ public sealed interface Condition {
         }
     }
 
+    /** A rune puzzle solved by the player: the seals before the bosses open this way. */
+    record PuzzleSolved(String puzzle) implements Condition {
+        @Override
+        public boolean test(ProgressView progress) {
+            return progress.hasSolved(puzzle);
+        }
+    }
+
     record ItemOwned(String item, int count) implements Condition {
         @Override
         public boolean test(ProgressView progress) {

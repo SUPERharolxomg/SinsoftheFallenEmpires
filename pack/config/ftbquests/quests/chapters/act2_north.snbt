@@ -10,7 +10,7 @@
 	quests: [
 		{
 			dependencies: [
-				"47019F1A5E0B1922"
+				"7920D605D1E9F751"
 			]
 			description: [
 				"{ftbquests.sofe.step_hint}"

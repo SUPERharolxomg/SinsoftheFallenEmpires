@@ -117,6 +117,7 @@ FIRST_STEPS = [  # name, icon, how many lines of description
     ("death", "minecraft:skeleton_skull", 2),
     ("travel", "minecraft:lodestone", 2),
     ("stuck", "minecraft:ender_pearl", 2),
+    ("runes", "sofe:rune_stone", 3),
 ]
 
 ACTS = [("act1_eclipse", "minecraft:clock"), ("act2_north", "minecraft:snowball"), ("act3_east", "minecraft:amethyst_shard"),
@@ -153,6 +154,16 @@ LANG_EN = {
     "ftbquests.sofe.first.stuck": "Stuck?",
     "ftbquests.sofe.first.stuck.1": "In a hole or on a roof with no way down? Type /sofe unstuck in the chat.",
     "ftbquests.sofe.first.stuck.2": "It takes you back to the plaza of Sulthari, once every five minutes.",
+    "ftbquests.sofe.first.runes": "Rune puzzles",
+    "ftbquests.sofe.first.runes.1": "Every boss's dungeon is sealed by runes. Beside its Waystone stand Rune Stones and a Riddle Tablet.",
+    "ftbquests.sofe.first.runes.2": "Right-click the tablet to read the riddle; right-click the stones to press them, in its order, or until all burn.",
+    "ftbquests.sofe.first.runes.3": "Each Rune Stone says its rune when pressed. Solved once, the seal stays open for you; a Pact solves it together.",
+    "ftbquests.sofe.chapter.dungeons": "Dungeons",
+    "ftbquests.sofe.dungeon.crypt": "Small dungeon: one hall of the dead, a chest at the back.",
+    "ftbquests.sofe.dungeon.ruin": "Medium dungeon: wake the runes of its court to open its seal; its guardian wakes with them. Two chests behind the seal.",
+    "ftbquests.sofe.dungeon.large": "Large dungeon: a boss of the story waits inside.",
+    "ftbquests.sofe.dungeon.runes": "Wake the runes beside its Waystone to open its seal.",
+    "ftbquests.sofe.dungeon.act1": "Part of Act I: the Council sends you there.",
     "ftbquests.sofe.step_hint": "The golden compass leads you there.",
     "ftbquests.sofe.side.hint": "Opens with its act. Talk to the townsfolk to find it.",
 }
@@ -187,6 +198,16 @@ LANG_ES = {
     "ftbquests.sofe.first.stuck": "¿Atrapado?",
     "ftbquests.sofe.first.stuck.1": "¿En un hueco o en un techo sin salida? Escribe /sofe unstuck en el chat.",
     "ftbquests.sofe.first.stuck.2": "Te devuelve a la plaza de Sulthari, una vez cada cinco minutos.",
+    "ftbquests.sofe.first.runes": "Acertijos de runas",
+    "ftbquests.sofe.first.runes.1": "La mazmorra de cada jefe está sellada por runas. Junto a su Piedra de Paso hay Piedras Rúnicas y una Tablilla del Acertijo.",
+    "ftbquests.sofe.first.runes.2": "Clic derecho en la tablilla para leer el acertijo; clic derecho en las piedras para pulsarlas, en su orden o hasta que ardan todas.",
+    "ftbquests.sofe.first.runes.3": "Cada Piedra Rúnica dice su runa al pulsarla. Resuelto una vez, el sello queda abierto para ti; un Pacto lo resuelve junto.",
+    "ftbquests.sofe.chapter.dungeons": "Mazmorras",
+    "ftbquests.sofe.dungeon.crypt": "Mazmorra pequeña: una sala de muertos, con un cofre al fondo.",
+    "ftbquests.sofe.dungeon.ruin": "Mazmorra mediana: despierta las runas de su patio para abrir su sello; su guardián despierta con ellas. Dos cofres tras el sello.",
+    "ftbquests.sofe.dungeon.large": "Mazmorra grande: dentro espera un jefe de la historia.",
+    "ftbquests.sofe.dungeon.runes": "Despierta las runas junto a su Piedra de Paso para abrir su sello.",
+    "ftbquests.sofe.dungeon.act1": "Parte del Acto I: el Consejo te envía allí.",
     "ftbquests.sofe.step_hint": "La brújula dorada te lleva hasta allí.",
     "ftbquests.sofe.side.hint": "Se abre con su acto. Habla con la gente de las ciudades para encontrarla.",
 }
@@ -230,8 +251,46 @@ def book(all_quests):
         side.append(quest(name, "{%s}" % key(quest_id), col * 1.5, (q["act"] - 1) * 1.5,
                           by_advancement(name, "sofe:quest/%s/step%d" % (name, last)),
                           ["{%s.step1}" % key(quest_id), "", "{ftbquests.sofe.side.hint}"]))
-    chapters.append(chapter("side_quests", len(ACTS) + 1, "{ftbquests.sofe.chapter.side}", "minecraft:map", side))
+    chapters.append(chapter("side_quests", len(ACTS) + 2, "{ftbquests.sofe.chapter.side}", "minecraft:map", side))
+    chapters.append(dungeons(all_quests))
     return chapters
+
+
+REGIONS = [("sulthari", "act1_eclipse"), ("nordrath", None), ("parsivan", None), ("khemet", None), ("aureum", None)]
+
+
+def dungeons(all_quests):
+    """A row per region: its Crypt (small), its Ruin (medium) and its boss dungeons (large), each sealed by runes."""
+    puzzles = {}
+    for f in sorted(glob.glob(os.path.join(DATA, "puzzles", "*.json"))):
+        with open(f, encoding="utf-8") as fh:
+            puzzles[os.path.basename(f)[:-5]] = json.load(fh)
+    out = []
+    for row, (region, act1) in enumerate(REGIONS):
+        col = 0
+        for size in ("crypt", "ruin"):
+            quest_id = "sofe:dungeon/%s_%s" % (region, size)
+            name = "dungeons/%s_%s" % (region, size)
+            if quest_id in all_quests:
+                done = "sofe:quest/dungeon/%s_%s/step%d" % (region, size, len(all_quests[quest_id]["steps"]))
+                desc = ["{ftbquests.sofe.dungeon.%s}" % size, "", "{%s.step1}" % key(quest_id)]
+            else:  # Sulthari's are steps of Act I
+                done = "sofe:quest/%s/step%d" % (act1, 4 if size == "crypt" else 6)
+                desc = ["{ftbquests.sofe.dungeon.%s}" % size, "", "{ftbquests.sofe.dungeon.act1}"]
+            out.append(quest(name, "{place.sofe.%s.%s}" % (region, size), col * 1.5, row * 1.5, by_advancement(name, done), desc,
+                             icon="minecraft:chest" if size == "crypt" else "sofe:rune_stone", size=0.8 if size == "crypt" else 1.0))
+            col += 1
+        for pname, p in sorted(puzzles.items()):
+            if not pname.startswith(region + "_") or "boss" not in p:
+                continue
+            name = "dungeons/" + pname
+            boss = p["boss"].split(":", 1)[1]
+            out.append(quest(name, "{puzzle.sofe.%s.place}" % pname, col * 1.5, row * 1.5,
+                             by_advancement(name, "sofe:story/boss_" + boss),
+                             ["{ftbquests.sofe.dungeon.large}", "", "{puzzle.sofe.%s}" % pname, "{ftbquests.sofe.dungeon.runes}"],
+                             icon="minecraft:wither_skeleton_skull", shape="gear", size=1.2))
+            col += 1
+    return chapter("dungeons", len(ACTS) + 1, "{ftbquests.sofe.chapter.dungeons}", "sofe:rune_stone", out)
 
 
 def lang():

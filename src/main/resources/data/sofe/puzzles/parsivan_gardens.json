@@ -1,0 +1,23 @@
+{
+  "kind": "lights",
+  "runes": [
+    "star",
+    "sun",
+    "star",
+    "sun",
+    "star",
+    "sun"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "gate": "sofe:parsivan/enchanted_gardens",
+  "boss": "sofe:luxara",
+  "anchor": "sofe:parsivan/enchanted_gardens"
+}

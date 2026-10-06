@@ -24,7 +24,8 @@ import java.util.Optional;
  * A Sealed Gate (docs/Mundo.md, W2): the door of a dungeon, vault or arena. It is always solid; a
  * player whose condition passes steps through it by using it, anyone else is told what is missing
  * ("Defeat Kaleth and Serath to open the Burning Citadel"). Which condition a gate uses comes from
- * the nearest gate in structure_positions.json.
+ * the nearest gate in structure_positions.json; a gate with a rune puzzle also asks for it to be solved (or for its
+ * boss to have fallen already).
  */
 public class SealedGateBlock extends Block {
     /** A gate block belongs to the listed gate within this many blocks of it. */
@@ -45,10 +46,15 @@ public class SealedGateBlock extends Block {
      * pact_escort, also a player whose Pact member beside them (within 8 blocks) meets it.
      */
     public static boolean canPass(ServerPlayer player, StructurePositions.Gate gate) {
-        if (LockAccess.bypasses(player) || meets(player, gate)) return true;
+        if (LockAccess.bypasses(player) || meets(player, gate) && solved(player, gate)) return true;
         if (!"pact_escort".equalsIgnoreCase(com.sofe.config.SoFEConfig.SERVER.gateMode.get())) return false;
         return com.sofe.pact.Pacts.together(player).stream()
-                .anyMatch(m -> m != player && m.distanceToSqr(player) <= 64 && meets(m, gate));
+                .anyMatch(m -> m != player && m.distanceToSqr(player) <= 64 && meets(m, gate) && solved(m, gate));
+    }
+
+    /** The gate's rune puzzle, if it has one (data/sofe/puzzles), solved by this Bearer or its boss already beaten. */
+    private static boolean solved(ServerPlayer player, StructurePositions.Gate gate) {
+        return com.sofe.puzzle.PuzzleService.opens(player, gate.id());
     }
 
     private static boolean meets(ServerPlayer player, StructurePositions.Gate gate) {
@@ -65,7 +71,10 @@ public class SealedGateBlock extends Block {
             return InteractionResult.CONSUME;
         }
         if (!canPass(server, gate.get())) {
-            player.displayClientMessage(Component.translatable(gate.get().hint()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            // the story allows it but the runes are still dark: say where the puzzle is
+            boolean runesOnly = meets(server, gate.get()) && !solved(server, gate.get());
+            player.displayClientMessage(Component.translatable(runesOnly ? "message.sofe.gate.runes" : gate.get().hint())
+                    .withStyle(ChatFormatting.LIGHT_PURPLE), true);
             level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1f, 0.5f);
             return InteractionResult.CONSUME;
         }

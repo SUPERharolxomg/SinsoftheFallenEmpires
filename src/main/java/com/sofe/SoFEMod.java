@@ -234,6 +234,7 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(JourneyRules::onServerTick);
         MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.puzzle.PuzzleService::onServerTick);
 
         MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.BurningDeep::onPortalSpawn);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.BurningDeep::onTravel);

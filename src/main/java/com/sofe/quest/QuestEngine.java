@@ -243,7 +243,10 @@ public final class QuestEngine {
             int z = (int) Math.floor(player.getZ() + Math.sin(angle) * distance);
             BlockPos pos = com.sofe.world.Grounding.beside(level, x, z, player);
             Entity entity = type.spawn(level, pos, MobSpawnType.EVENT);
-            if (entity instanceof Mob mob) mob.setTarget(player);
+            if (entity instanceof Mob mob) {
+                if (spawn.elite()) com.sofe.mob.EliteMobs.make(mob, StoryCapability.get(player).map(StoryProgress::act).orElse(1), level.random);
+                mob.setTarget(player);
+            }
         }
     }
 
@@ -267,8 +270,23 @@ public final class QuestEngine {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
         if (player.tickCount % POSITION_CHECK_TICKS != 0) return;
         event(player, new QuestEvent.At(player.getBlockX(), player.getBlockZ()));
+        if (com.sofe.world.SoFEWorld.isJourney(player.server)) discover(player);
         checkCarried(player);
         wakeBosses(player);
+    }
+
+    /** A dungeon quest begins by itself when a Bearer comes near its dungeon, once its act has come. */
+    public static void discover(ServerPlayer player) {
+        StoryProgress story = StoryCapability.get(player).orElse(null);
+        if (story == null) return;
+        for (QuestDefinition quest : StoryDataManager.quests().values()) {
+            QuestDefinition.Discovery near = quest.discovery();
+            if (near == null || story.quest(quest.id()).isPresent()) continue;
+            double dx = player.getX() - near.x(), dz = player.getZ() - near.z();
+            if (dx * dx + dz * dz > (double) near.radius() * near.radius()) continue;
+            if (quest.requires() != null && !quest.requires().test(PlayerProgressView.of(player))) continue;
+            startQuest(player, quest.id());
+        }
     }
 
     /** Counts what the player carries toward an "obtain_item" step, if one is active (every second, and in tests). */
