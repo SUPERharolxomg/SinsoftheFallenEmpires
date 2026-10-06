@@ -49,6 +49,7 @@ public final class PlaceShots {
         if (place >= 0) {
             String name = places.get(place).replace('/', '_').replace(':', '_');
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
+            logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
             if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")) {
                 look(mc, places.get(place), view);
@@ -65,6 +66,19 @@ public final class PlaceShots {
         build(mc, places.get(place));
         wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("at:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
+    }
+
+    /** One line of run/placeshots_perf.log per screenshot: frames per second and the memory in use (docs/Rendimiento.md). */
+    private static void logPerformance(Minecraft mc, String shot) {
+        Runtime rt = Runtime.getRuntime();
+        long usedMb = (rt.totalMemory() - rt.freeMemory()) >> 20, maxMb = rt.maxMemory() >> 20;
+        String line = String.format("%s fps=%d memory=%d/%dMB chunks=%s%n", shot, mc.getFps(), usedMb, maxMb, mc.levelRenderer.getChunkStatistics());
+        try {
+            java.nio.file.Files.writeString(mc.gameDirectory.toPath().resolve("placeshots_perf.log"), line,
+                    java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
+        } catch (java.io.IOException e) {
+            com.sofe.SoFEMod.LOGGER.warn("Could not write placeshots_perf.log", e);
+        }
     }
 
     private static void build(Minecraft mc, String piece) {

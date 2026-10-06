@@ -94,6 +94,13 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+// The pack's config overrides (pack/config, docs/Rendimiento.md) go into run/config, so development runs as the pack does
+tasks.register('syncPackConfig', Copy) {
+    from 'pack/config'
+    into 'run/config'
+}
+tasks.matching { it.name in ['runClient', 'runServer', 'runGameTestServer'] }.configureEach { dependsOn 'syncPackConfig' }
+
 repositories {
     maven {
         name = 'GeckoLib'
@@ -114,6 +121,11 @@ repositories {
         name = 'CurseMaven'
         url = 'https://cursemaven.com'
         content { includeGroup('curse.maven') }
+    }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup('maven.modrinth') }
     }
 }
 
@@ -141,6 +153,19 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}") { transitive = false } // the mod jar holds its libraries
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}") { transitive = false } // the mod jar holds its libraries
     runtimeOnly fg.deobf("curse.maven:xaeros-minimap-263420:${xaero_minimap_file}")
+
+    // In the pack, for modest PCs (docs/Rendimiento.md): Embeddium (chunk rendering), ModernFix and FerriteCore (memory
+    // and loading), Canary (server ticks), Saturn and Memory Leak Fix (memory). -PnoPerfMods leaves them out, -PnoPerfMods=canary,saturn only those.
+    // Entity Culling, ImmediatelyFast and Dynamic FPS are in the pack too, but not here: they are built against the
+    // production (SRG) names with no refmap, so they only load outside development (scripts/pack_check.py tries them).
+    def perfMods = ['embeddium', 'modernfix', 'ferrite-core', 'canary', 'saturn', 'memoryleakfix']
+    def leftOut = project.findProperty('noPerfMods')?.toString()
+    perfMods.each { m ->
+        def version = project.property(m.replace('-', '') + '_version')
+        if (leftOut == null || !(leftOut == '' || leftOut == 'true' || leftOut.split(',').contains(m))) {
+            runtimeOnly fg.deobf("maven.modrinth:${m}:${version}")
+        }
+    }
 
     // Unit tests for pure game logic (no Minecraft classes)
     testImplementation platform("org.junit:junit-bom:${junit_version}")
