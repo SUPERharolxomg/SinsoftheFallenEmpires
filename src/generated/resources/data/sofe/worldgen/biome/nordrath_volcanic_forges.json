@@ -11,6 +11,12 @@
     "fog_color": 5909022,
     "foliage_color": 4864558,
     "grass_color": 6179386,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": false,
+      "sound": "sofe:music.region.volcanic_forges"
+    },
     "particle": {
       "options": {
         "type": "minecraft:ash"

@@ -71,6 +71,7 @@ public class SoFEMod {
         WorldgenRegistry.FEATURES.register(modBus);
         com.sofe.registry.SoFEBlocks.BLOCK_ENTITIES.register(modBus);
         com.sofe.registry.SoFEEffects.EFFECTS.register(modBus);
+        com.sofe.registry.SoFESounds.SOUNDS.register(modBus);
         com.sofe.travel.Homeward.ENCHANTMENTS.register(modBus);
         com.sofe.registry.SoFERecipes.TYPES.register(modBus);
         com.sofe.registry.SoFERecipes.SERIALIZERS.register(modBus);
