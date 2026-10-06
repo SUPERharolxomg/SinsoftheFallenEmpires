@@ -36,6 +36,22 @@
     },
     {
       "objective": {
+        "type": "obtain_item",
+        "item": "sofe:sealing_quill"
+      },
+      "target": {
+        "x": -48,
+        "z": -96
+      },
+      "on_start": [
+        {
+          "type": "open_dialogue",
+          "dialogue": "sofe:act5/the_inverted_throne"
+        }
+      ]
+    },
+    {
+      "objective": {
         "type": "defeat_boss",
         "boss": "sofe:nahrazel"
       },
@@ -46,7 +62,7 @@
       "on_start": [
         {
           "type": "open_dialogue",
-          "dialogue": "sofe:act5/the_inverted_throne"
+          "dialogue": "sofe:act5/the_quill_forged"
         }
       ]
     }

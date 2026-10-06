@@ -37,6 +37,10 @@ public sealed interface Objective {
     record DefeatBoss(String boss) implements Objective {
     }
 
+    /** Carrying an item (the Sealing Quill): checked every second, so an item already carried counts at once. */
+    record Obtain(String item) implements Objective {
+    }
+
     /** Done only by an "advance_quest" effect, usually from a dialogue answer. */
     record Manual() implements Objective {
     }

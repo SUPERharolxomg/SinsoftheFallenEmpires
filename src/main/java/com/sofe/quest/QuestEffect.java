@@ -55,4 +55,15 @@ public sealed interface QuestEffect {
     /** Opens the Bearer selection for a player who has not chosen yet (end of the festival intro). */
     record OpenClassSelect() implements QuestEffect {
     }
+
+    /** Grants sofe:&lt;advancement&gt; (the hidden ones only a choice can earn). */
+    record AwardAdvancement(String advancement) implements QuestEffect {
+    }
+
+    /**
+     * Plays a scene on the player's own screen (com.sofe.quest.SceneService), then opens the dialogue {@code then}
+     * (null: none). The player cannot be hurt while it plays.
+     */
+    record PlayScene(String scene, String then) implements QuestEffect {
+    }
 }

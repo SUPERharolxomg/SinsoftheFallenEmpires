@@ -10,5 +10,11 @@
       "speaker": "narrator",
       "text": "dialogue.sofe.act5.the_inverted_throne.2"
     }
+  ],
+  "on_end": [
+    {
+      "type": "open_dialogue",
+      "dialogue": "sofe:act5/the_sealing_quill"
+    }
   ]
 }

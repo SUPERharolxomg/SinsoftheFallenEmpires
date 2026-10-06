@@ -167,6 +167,9 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(QuestEngine::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(DialogueService::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(DialogueService::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.SceneService::onAttack);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.SceneService::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.SceneService::onLogout);
 
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onTeleport);
@@ -236,6 +239,7 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onHurt);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onArrow);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.mob.MobTraits::onStartTracking);
 
         // Sprint 5.5: gear, economy, stations, potions
         MinecraftForge.EVENT_BUS.addListener(com.sofe.gear.GearDataManager::onAddReloadListeners);

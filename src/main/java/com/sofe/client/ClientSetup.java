@@ -80,6 +80,7 @@ public final class ClientSetup {
         ClientProgressData.clear();
         ClientStoryData.clear();
         ClientLockData.clear();
+        com.sofe.client.render.CorruptedEyesLayer.clear();
         ClientBearers.clear();
         ClientEconomyData.clear();
         ClientPactData.clear();

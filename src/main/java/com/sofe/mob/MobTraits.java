@@ -45,7 +45,8 @@ import java.util.UUID;
  * creepers have a shorter fuse, endermen blind whoever they hit;</li>
  * <li>Act IV: zombies come tougher, skeletons shoot fire arrows, spiders shoot webs that slow, endermen teleport
  * behind whoever hits them;</li>
- * <li>Act V: zombies are faster, skeletons loose two arrows at once, one creeper in ten is charged.</li>
+ * <li>Act V: zombies are faster and corrupted (violet eyes, CorruptedEyesLayer), skeletons loose two arrows at once, one
+ * creeper in ten is charged.</li>
  * </ul>
  * Mobs from other mods get no traits.
  */
@@ -65,6 +66,19 @@ public final class MobTraits {
 
     public static int traitAct(LivingEntity mob) {
         return mob.getPersistentData().getInt(TAG_ACT);
+    }
+
+    /** A vanilla zombie, husk or drowned of Act V: corrupted, with violet eyes (the mod's own zombies have their own looks). */
+    public static boolean corrupted(net.minecraft.world.entity.Entity entity) {
+        return entity instanceof Zombie && traitAct((LivingEntity) entity) >= 5
+                && "minecraft".equals(net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()).getNamespace());
+    }
+
+    /** A player who starts seeing a corrupted zombie is told to draw its eyes. */
+    public static void onStartTracking(net.minecraftforge.event.entity.player.PlayerEvent.StartTracking event) {
+        if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player && corrupted(event.getTarget())) {
+            com.sofe.network.SoFENetwork.sendTo(player, new com.sofe.network.CorruptedPacket(event.getTarget().getId()));
+        }
     }
 
     /** Runs after MobLevels (low priority), on the first spawn only. */

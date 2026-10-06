@@ -37,7 +37,7 @@ public final class PlaceShots {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.getSingleplayerServer() == null) return;
         mc.options.pauseOnLostFocus = false;
-        if (mc.screen != null) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
+        if (mc.screen != null && !(mc.screen instanceof com.sofe.client.screen.CrownedInAshScreen)) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
         if (places == null) {
             places = new ArrayList<>(Arrays.asList(System.getProperty("sofe.placeShots").split(",")));
             mc.options.hideGui = true;
@@ -51,7 +51,8 @@ public final class PlaceShots {
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
-            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")) {
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
+                    && !places.get(place).startsWith("scene:")) {
                 look(mc, places.get(place), view);
                 wait = places.get(place).endsWith("/city") ? SETTLE * 4 : SETTLE; // a capital's far side takes a while to load
                 return;
@@ -64,7 +65,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("at:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") ? 30 : places.get(place).startsWith("at:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -143,6 +144,16 @@ public final class PlaceShots {
             });
             return;
         }
+        if (piece.startsWith("scene:")) { // scene:<bearer>:<second>, "Crowned in Ash" for that Bearer at that second
+            String[] v = piece.split(":");
+            ClientClassData.set(com.sofe.player.PlayerClass.byId(v[1]));
+            server.execute(() -> { // a spectator is drawn as a ghostly head: the scene needs the whole Bearer
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p != null) p.setGameMode(GameType.CREATIVE);
+            });
+            mc.setScreen(new com.sofe.client.screen.CrownedInAshScreen((int) (Float.parseFloat(v[2]) * 20) - 30));
+            return;
+        }
         if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)
             String[] v = piece.split(":");
             server.execute(() -> {
@@ -180,8 +191,15 @@ public final class PlaceShots {
                 for (int dx = -8; dx <= 8; dx++) for (int dz = -8; dz <= 8; dz++) {
                     level.setBlockAndUpdate(at.offset(dx, -1, dz), net.minecraft.world.level.block.Blocks.POLISHED_DEEPSLATE.defaultBlockState());
                 }
-                var type = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getValue(net.minecraft.resources.ResourceLocation.tryParse("sofe:" + piece.substring(piece.indexOf(':') + 1)));
+                String name = piece.substring(piece.indexOf(':') + 1);
+                boolean corrupted = name.equals("corrupted_zombie"); // boss:corrupted_zombie, a vanilla zombie of Act V, by night
+                var type = corrupted ? net.minecraft.world.entity.EntityType.ZOMBIE
+                        : net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getValue(net.minecraft.resources.ResourceLocation.tryParse("sofe:" + name));
                 if (type == null || !(type.create(level) instanceof net.minecraft.world.entity.Mob mob)) return;
+                if (corrupted) {
+                    com.sofe.mob.MobTraits.apply(mob, 5);
+                    level.setDayTime(18000);
+                }
                 mob.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, 0, 0);
                 mob.setYHeadRot(0);
                 mob.setYBodyRot(0);

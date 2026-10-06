@@ -177,6 +177,16 @@ def void_ink():
     save(outline(img), ITEM, "void_ink")
 
 
+def sealing_quill():
+    """The Sealing Quill (Act V): a pale feather on a gilt shaft, its nib dark with Void Ink and glowing violet."""
+    rows = ["...........WWW..", "..........WWwWW.", ".........WWwWWW.", "........WWwWWWw.", ".......WWwWWWw..", "......WWwWWWw...",
+            ".....WWwWWWw....", "....WWwWWWw.....", "....WwWWWw......", "....GwWWw.......", "...GgGw.........", "..GgG...........",
+            ".NgG............", ".NN.............", "V...............", "................"]
+    img = from_map(rows, {"W": (236, 232, 244, 255), "w": (176, 168, 200, 255), "G": GOLD[2], "g": GOLD[1],
+                          "N": (60, 20, 90, 255), "V": (190, 100, 255, 255)})
+    save(outline(img), ITEM, "sealing_quill")
+
+
 # ------------------------------------------------------------------------------------------------ station faces
 
 def noise_tex(base, spread, seed):
@@ -290,6 +300,7 @@ if __name__ == "__main__":
     papyrus()
     void_crystal()
     void_ink()
+    sealing_quill()
     stations()
     void_crystal_ore()
     print("sprint 7 sprites written")
