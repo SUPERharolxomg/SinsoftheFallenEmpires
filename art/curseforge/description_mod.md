@@ -17,6 +17,14 @@ On the Night of the Eclipse the seal beneath Sulthari breaks, and five shards of
 - **The Codex:** the story's lore, a bestiary and a gallery that open as you play.
 - **English and Spanish.**
 
+## First steps
+
+1. Press **Begin the Journey** and choose your Bearer.
+2. Press **K** and learn your first three skills.
+3. Follow the **gold**: the compass at the top of the screen points to your next step, golden motes on the ground lead the way and a crown of light shines over the person to talk to. **U** opens the Journal.
+4. **H** drinks from the Bearer's Flask: it heals 40% of your life and resource, refills in Sulthari, and is not drunk when you are at full strength.
+5. Stuck in a hole or on a roof? Type `/sofe unstuck`.
+
 ## Requirements
 
 Minecraft **1.20.1**, Forge **47.4.23** or later, **GeckoLib** and **Curios API**. The furniture, decoration and ship mods of the cities (MrCrayfish's Furniture Mod: Refurbished, Supplementaries, Small Ships) are recommended; the modpack *Sins of the Fallen Empires* has everything, performance mods included.
@@ -48,6 +56,8 @@ En la Noche del Eclipse el sello bajo Sulthari se rompe, y cinco fragmentos del 
 - **Decisiones que importan:** el destino de cada región, el epílogo de tu Portador y un final secreto.
 - **Cooperativo** hasta cinco jugadores, y **el Códice** con lore, bestiario y galería.
 - **Inglés y español.**
+
+**Primeros pasos:** pulsa *Comenzar la Aventura* y elige tu Portador; con **K** aprende tus tres primeras habilidades; sigue el **oro** (la brújula de arriba de la pantalla, los destellos dorados del suelo y la corona de luz sobre la persona con quien hablar); **U** abre el Diario; **H** bebe del Frasco del Portador (cura el 40% de vida y recurso, se rellena en Sulthari y no se bebe si estás al máximo). ¿Atrapado? Escribe `/sofe unstuck`.
 
 Requisitos: Minecraft 1.20.1, Forge 47.4.23 o posterior, GeckoLib y Curios API. Recomendado: el modpack *Sins of the Fallen Empires*. **Beta 0.8.0.**
 

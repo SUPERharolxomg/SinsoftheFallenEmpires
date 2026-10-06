@@ -1,0 +1,93 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "act1_eclipse"
+	group: ""
+	icon: "minecraft:clock"
+	id: "6998CA31098E89AD"
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "54D4F2FCD6E5C162"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step1"
+					criterion: ""
+					id: "4AF44BF1F2996189"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step1}"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"54D4F2FCD6E5C162"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "40DB5FE504FAA838"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step2"
+					criterion: ""
+					id: "731E111A8E42A090"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step2}"
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"40DB5FE504FAA838"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "103F52134DFAAB3B"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step3"
+					criterion: ""
+					id: "654145173A259F7F"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step3}"
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"103F52134DFAAB3B"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "47019F1A5E0B1922"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step4"
+					criterion: ""
+					id: "79A190B690972224"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step4}"
+			x: 4.5d
+			y: 0.0d
+		}
+	]
+	title: "{quest.sofe.act1_eclipse}"
+}

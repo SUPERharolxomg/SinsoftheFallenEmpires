@@ -334,8 +334,22 @@ public final class QuestEngine {
         Optional<SyncStoryPacket.Target> corpse = CorpseRegistry.get(player.server).latest(player.getUUID())
                 .filter(c -> c.dimension() == net.minecraft.world.level.Level.OVERWORLD)
                 .map(c -> new SyncStoryPacket.Target(c.pos().getX(), c.pos().getZ()));
+        StoryCapability.get(player).ifPresent(story -> grantMilestones(player, story));
         StoryCapability.get(player).ifPresent(story -> SoFENetwork.sendTo(player, packet(story, QuestGuide.target(player, story), corpse,
                 SoFEConfig.SERVER.opsBypass.get() && player.hasPermissions(2))));
+    }
+
+    /**
+     * Every step done grants its hidden advancement sofe:quest/&lt;quest&gt;/step&lt;n&gt; (no toast, no chat, not on the
+     * advancement screen), so a quest book such as the modpack's FTB Quests can tick the step
+     * (scripts/make_quest_book.py). Steps done before this existed are granted on the next sync.
+     */
+    public static void grantMilestones(ServerPlayer player, StoryProgress story) {
+        story.quests().forEach((id, state) -> StoryDataManager.quest(id).ifPresent(q -> {
+            int done = state.completed() ? q.steps().size() : state.step();
+            String path = "quest/" + id.substring(id.indexOf(':') + 1) + "/step";
+            for (int n = 1; n <= done; n++) com.sofe.story.SoFEAdvancements.award(player, path + n);
+        }));
     }
 
     public static SyncStoryPacket packet(StoryProgress story, Optional<SyncStoryPacket.Target> compass, Optional<SyncStoryPacket.Target> corpse,

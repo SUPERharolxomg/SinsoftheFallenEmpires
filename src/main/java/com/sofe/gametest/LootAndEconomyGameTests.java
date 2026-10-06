@@ -158,6 +158,11 @@ public class LootAndEconomyGameTests {
     public static void theFlaskHealsAndSoulboundItemsSurviveDeath(GameTestHelper helper) {
         ServerPlayer player = bearer(helper, "sofe_test_flask", new Vec3(1.5, 1, 1.5));
         player.getInventory().add(new ItemStack(ItemRegistry.BEARERS_FLASK.get()));
+        // at full strength the Flask is not drunk, so no charge is wasted (a beta tester thought it did nothing)
+        player.setHealth(player.getMaxHealth());
+        com.sofe.combat.CombatCapability.get(player).flatMap(c -> c.resource()).ifPresent(pool -> pool.set(pool.max()));
+        helper.assertFalse(ConsumableItems.drinkFlask(player), "the Flask was drunk at full strength");
+        helper.assertTrue(EconomyCapability.get(player).orElseThrow().flaskCharges() == EconomyData.FLASK_START, "a charge was wasted at full strength");
         player.setHealth(4);
         helper.assertTrue(ConsumableItems.drinkFlask(player), "the Flask could not be used");
         helper.assertTrue(player.getHealth() > 4, "the Flask did not heal");

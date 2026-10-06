@@ -1,0 +1,164 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "first_steps"
+	group: ""
+	icon: "minecraft:book"
+	id: "5D310C4DD8F9F35F"
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [ ]
+			description: [
+				"{ftbquests.sofe.first.welcome.1}"
+				"{ftbquests.sofe.first.welcome.2}"
+				"{ftbquests.sofe.first.welcome.3}"
+			]
+			icon: "minecraft:book"
+			id: "4FC0C7BDC64FEB96"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "0CFF2CD7930890B9"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.welcome}"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4FC0C7BDC64FEB96"
+			]
+			description: [
+				"{ftbquests.sofe.first.compass.1}"
+				"{ftbquests.sofe.first.compass.2}"
+				"{ftbquests.sofe.first.compass.3}"
+			]
+			icon: "minecraft:compass"
+			id: "14BB5D537065074A"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "71AB564DAAA2B0E2"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.compass}"
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"14BB5D537065074A"
+			]
+			description: [
+				"{ftbquests.sofe.first.keys.1}"
+				"{ftbquests.sofe.first.keys.2}"
+				"{ftbquests.sofe.first.keys.3}"
+				"{ftbquests.sofe.first.keys.4}"
+				"{ftbquests.sofe.first.keys.5}"
+			]
+			icon: "minecraft:oak_sign"
+			id: "6AFF9FA94CDCA238"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "177ABB32101F4216"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.keys}"
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6AFF9FA94CDCA238"
+			]
+			description: [
+				"{ftbquests.sofe.first.flask.1}"
+				"{ftbquests.sofe.first.flask.2}"
+				"{ftbquests.sofe.first.flask.3}"
+			]
+			icon: "sofe:bearers_flask"
+			id: "3D4E6A9A28471873"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "42220E448F992FB1"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.flask}"
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"3D4E6A9A28471873"
+			]
+			description: [
+				"{ftbquests.sofe.first.death.1}"
+				"{ftbquests.sofe.first.death.2}"
+			]
+			icon: "minecraft:skeleton_skull"
+			id: "0060BBA442B864CE"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "33472272C543DDB7"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.death}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"0060BBA442B864CE"
+			]
+			description: [
+				"{ftbquests.sofe.first.travel.1}"
+				"{ftbquests.sofe.first.travel.2}"
+			]
+			icon: "minecraft:lodestone"
+			id: "3EF9A93DE5E418F3"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "1C35C494F5F9C380"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.travel}"
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"3EF9A93DE5E418F3"
+			]
+			description: [
+				"{ftbquests.sofe.first.stuck.1}"
+				"{ftbquests.sofe.first.stuck.2}"
+			]
+			icon: "minecraft:ender_pearl"
+			id: "77DC43A4276F590A"
+			shape: "rsquare"
+			tasks: [
+				{
+					id: "473CC6DA2B2BAA60"
+					type: "checkmark"
+				}
+			]
+			title: "{ftbquests.sofe.first.stuck}"
+			x: 9.0d
+			y: 0.0d
+		}
+	]
+	title: "{ftbquests.sofe.chapter.first_steps}"
+}

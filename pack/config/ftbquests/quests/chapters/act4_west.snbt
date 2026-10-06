@@ -1,0 +1,175 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "act4_west"
+	group: ""
+	icon: "minecraft:gold_ingot"
+	id: "31A4BBAD97C62B59"
+	order_index: 4
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [
+				"4F1872CFBAEAF04C"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "71C544B3B5B3935B"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step1"
+					criterion: ""
+					id: "074B45A546830F76"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step1}"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"71C544B3B5B3935B"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "08FC1F067B7620EF"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step2"
+					criterion: ""
+					id: "10ECF4BE7C92C2B9"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step2}"
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"08FC1F067B7620EF"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "6F10A4B64257D16A"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step3"
+					criterion: ""
+					id: "58C77F15EE22E4B1"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step3}"
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6F10A4B64257D16A"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "2F332171346B9F12"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step4"
+					criterion: ""
+					id: "5763EB7A90AA2DE1"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step4}"
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2F332171346B9F12"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "6E1D23D875F84B92"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step5"
+					criterion: ""
+					id: "67BF506705FAD0F8"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step5}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6E1D23D875F84B92"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "09D28B2522A8E218"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step6"
+					criterion: ""
+					id: "6E715C36C116F4EF"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step6}"
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"09D28B2522A8E218"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "44F546166AED67C1"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step7"
+					criterion: ""
+					id: "727586253876D6AE"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step7}"
+			x: 9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"44F546166AED67C1"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "588D7904B6673463"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step8"
+					criterion: ""
+					id: "42F24D19F9367B6F"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step8}"
+			x: 10.5d
+			y: 0.0d
+		}
+	]
+	title: "{quest.sofe.act4_west}"
+}
