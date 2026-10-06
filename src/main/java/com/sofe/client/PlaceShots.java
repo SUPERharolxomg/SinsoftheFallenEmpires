@@ -205,7 +205,9 @@ public final class PlaceShots {
                 ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
                 if (p != null) p.setGameMode(GameType.CREATIVE);
             });
-            mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2])));
+            java.util.Map<String, String> fates = new java.util.HashMap<>();
+            for (int i = 3; i < v.length; i++) fates.put(v[i].split("=")[0], v[i].split("=")[1]); // ending:<bearer>:<card>:khemet=rest
+            mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2]), v.length > 3 ? fates : null));
             return;
         }
         if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)

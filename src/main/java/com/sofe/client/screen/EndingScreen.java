@@ -60,9 +60,14 @@ public class EndingScreen extends Screen {
 
     /** Opening at card {@code start} (PlaceShots' ending:&lt;bearer&gt;:&lt;card&gt;). */
     public EndingScreen(int start) {
+        this(start, null);
+    }
+
+    /** With these fates instead of the story's (PlaceShots' ending:&lt;bearer&gt;:&lt;card&gt;:&lt;region&gt;=&lt;fate&gt;). */
+    public EndingScreen(int start, Map<String, String> fatesShown) {
         super(Component.translatable("ending.sofe.credits.title"));
         bearer = ClientClassData.get().orElse(PlayerClass.KING);
-        Map<String, String> fates = ClientStoryData.get().map(SyncStoryPacket::fates).orElse(Map.of());
+        Map<String, String> fates = fatesShown != null ? fatesShown : ClientStoryData.get().map(SyncStoryPacket::fates).orElse(Map.of());
         List<SyncStoryPacket.Quest> quests = ClientStoryData.get().map(SyncStoryPacket::quests).orElse(List.of());
         boolean full = Epilogue.full(bearer, id -> quests.stream().anyMatch(q -> q.id().equals(id) && q.completed()));
         String b = bearer.name().toLowerCase(Locale.ROOT);
