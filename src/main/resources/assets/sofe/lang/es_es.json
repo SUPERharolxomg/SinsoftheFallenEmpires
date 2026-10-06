@@ -3394,5 +3394,6 @@
   "tip.sofe.12": "Las decisiones de las misiones secundarias deciden qué será de cada imperio.",
   "tip.sofe.13": "¿Perdiste un objeto de la historia? El Consejo de Sulthari puede devolvértelo.",
   "tip.sofe.14": "El Códice recuerda.",
-  "gui.sofe.journal": "Diario"
+  "gui.sofe.journal": "Diario",
+  "block.sofe.void_crystal_ore": "Mena de Cristal del Vacío"
 }

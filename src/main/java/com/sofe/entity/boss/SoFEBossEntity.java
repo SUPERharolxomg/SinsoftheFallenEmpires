@@ -221,6 +221,11 @@ public abstract class SoFEBossEntity extends Monster {
         return (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * times);
     }
 
+    /** The id of this boss's signature attack (its name is signature.sofe.&lt;id&gt;), if it has one. */
+    public java.util.Optional<String> signatureId() {
+        return java.util.Optional.ofNullable(signature()).map(Signature::id);
+    }
+
     /** Starts the signature attack at once (tests). */
     public void startSignature(net.minecraft.world.entity.LivingEntity target) {
         Signature sig = signature();

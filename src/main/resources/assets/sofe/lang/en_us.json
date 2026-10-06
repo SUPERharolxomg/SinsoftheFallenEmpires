@@ -3394,5 +3394,6 @@
   "tip.sofe.12": "The choices of the side quests decide what becomes of each empire.",
   "tip.sofe.13": "Lost a story item? The Council of Sulthari can give it back.",
   "tip.sofe.14": "The Codex remembers.",
-  "gui.sofe.journal": "Journal"
+  "gui.sofe.journal": "Journal",
+  "block.sofe.void_crystal_ore": "Void Crystal Ore"
 }
