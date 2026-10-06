@@ -332,7 +332,8 @@ public final class QuestEngine {
         Map<String, String> fates = new java.util.TreeMap<>();
         story.fates().forEach((r, f) -> fates.put(r.id(), f));
         List<String> open = RegionFates.open(story).stream().map(Region::id).toList();
-        return new SyncStoryPacket(story.act(), quests, story.trackedQuest(), fates, open, compassTarget(story), corpse, bypassLocks);
+        return new SyncStoryPacket(story.act(), quests, story.trackedQuest(), fates, open, compassTarget(story), corpse, bypassLocks,
+                story.bosses().stream().sorted().toList());
     }
 
     /** Where the Quest Compass points: the tracked quest's current step, if it has a place. */

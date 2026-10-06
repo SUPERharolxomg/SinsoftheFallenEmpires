@@ -57,6 +57,16 @@ public final class TitleShot {
             } catch (java.io.IOException ignored) {
             }
         }
+        if ("codex".equals(System.getProperty("sofe.titleShot"))) { // -Dsofe.titleShot=codex: the Codex's pages
+            if (ticks == 110) mc.setScreen(new com.sofe.client.screen.CodexScreen(mc.screen));
+            if (ticks == 140) Screenshot.grab(mc.gameDirectory, "codex_cover.png", mc.getMainRenderTarget(), m -> { });
+            if (ticks == 150 && mc.screen instanceof com.sofe.client.screen.CodexScreen c) c.pick(0, 0);
+            if (ticks == 170) Screenshot.grab(mc.gameDirectory, "codex_story.png", mc.getMainRenderTarget(), m -> { });
+            if (ticks == 180 && mc.screen instanceof com.sofe.client.screen.CodexScreen c) c.pick(1, 5);
+            if (ticks == 200) Screenshot.grab(mc.gameDirectory, "codex_bestiary.png", mc.getMainRenderTarget(), m -> { });
+            if (ticks == 210) mc.stop();
+            return;
+        }
         boolean more = !TitleScreenHandler.titleMods().isEmpty();
         if (more && ticks == 110) TitleScreenHandler.openVanillaTitle(mc); // the button for Essential's menu
         if (more && ticks == 210) Screenshot.grab(mc.gameDirectory, "titleshot_classic.png", mc.getMainRenderTarget(), m -> { });
