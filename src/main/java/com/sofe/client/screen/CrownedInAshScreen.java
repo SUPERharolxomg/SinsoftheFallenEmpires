@@ -101,17 +101,22 @@ public class CrownedInAshScreen extends Screen {
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         float t = (ticks + partialTick) / 20f;
         int w = width, h = height;
-        sky(g, w, h, t);
-        falseSun(g, w / 2, (int) (h * 0.26f), Math.max(14, h / 9), t);
-        skyline(g, City.of(bearer), w, h, t, 0.62f, 0.35f, 0xFF2A0C08, 7); // far
-        flamesOnSkyline(g, w, h, t);
-        if (bearer == PlayerClass.SORCERESS) fallingStars(g, w, h, t);
-        skyline(g, City.of(bearer), w, h, t, 0.74f, 0.9f, 0xFF140504, 13); // near
-        int floor = (int) (h * 0.78f);
-        g.fill(0, floor, w, h, 0xFF0C0302);
-        int cx = w / 2;
-        throne(g, cx, floor, h);
-        crowd(g, cx, floor, w, h, t);
+        int floor = (int) (h * 0.78f), cx = w / 2;
+        // the final illustration (splash/crowned/<class>.png, docs/ArteFinal.md) when the game has it; drawn by code otherwise
+        var art = Splash.find("crowned/" + bearer.name().toLowerCase(Locale.ROOT));
+        if (art.isPresent()) {
+            Splash.cover(g, art.get(), 0, 0, w, h);
+        } else {
+            sky(g, w, h, t);
+            falseSun(g, w / 2, (int) (h * 0.26f), Math.max(14, h / 9), t);
+            skyline(g, City.of(bearer), w, h, t, 0.62f, 0.35f, 0xFF2A0C08, 7); // far
+            flamesOnSkyline(g, w, h, t);
+            if (bearer == PlayerClass.SORCERESS) fallingStars(g, w, h, t);
+            skyline(g, City.of(bearer), w, h, t, 0.74f, 0.9f, 0xFF140504, 13); // near
+            g.fill(0, floor, w, h, 0xFF0C0302);
+            throne(g, cx, floor, h);
+            crowd(g, cx, floor, w, h, t);
+        }
         bearer(g, cx, floor, h, t);
         // what follows lies in front of the Bearer's model, which the GUI draws some depth forward
         g.pose().pushPose();

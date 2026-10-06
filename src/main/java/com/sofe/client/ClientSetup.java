@@ -55,6 +55,8 @@ public final class ClientSetup {
         if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
         if (SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(SkillShots::onClientTick);
         modBus.addListener(SoFEKeys::register);
+        modBus.addListener((net.minecraftforge.client.event.RegisterClientReloadListenersEvent e) ->
+                e.registerReloadListener((net.minecraft.server.packs.resources.ResourceManagerReloadListener) rm -> com.sofe.client.screen.Splash.clear()));
         modBus.addListener(ClientSetup::registerItemProperties);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(SoFEKeys::onClientTick);
