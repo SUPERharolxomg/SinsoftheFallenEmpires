@@ -70,6 +70,34 @@ public class SultharisLifeGameTests {
         helper.succeed();
     }
 
+    /** A beta tester killed the hens of Sulthari: the town's animals cannot be hurt by a player there, but at the homestead they can. */
+    @GameTest(template = "empty")
+    public static void theTownsAnimalsAreSafeButTheHomesteadsAreNot(GameTestHelper helper) {
+        BlockPos city = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos plot = helper.absolutePos(new BlockPos(5, 2, 1));
+        ProtectedZoneData zones = ProtectedZoneData.get(helper.getLevel().getServer());
+        String cityId = "sofe:test_town_" + city.asLong(), plotId = "sofe:test_farm_" + plot.asLong();
+        zones.add(new ProtectedZone(cityId, ProtectedZone.Kind.CITY, city.getX() - 1, city.getY() - 2, city.getZ() - 1, plot.getX() + 1, city.getY() + 3, city.getZ() + 1));
+        zones.add(new ProtectedZone(plotId, ProtectedZone.Kind.HOMESTEAD, plot.getX() - 1, plot.getY() - 2, plot.getZ() - 1, plot.getX() + 1, plot.getY() + 3, plot.getZ() + 1));
+        ServerPlayer hunter = player(helper, "sofe_test_hunter");
+        try {
+            var hen = helper.spawn(EntityType.CHICKEN, new BlockPos(1, 2, 1));
+            var farmHen = helper.spawn(EntityType.CHICKEN, new BlockPos(5, 2, 1));
+            hen.setNoAi(true);
+            farmHen.setNoAi(true);
+            hen.hurt(hunter.damageSources().playerAttack(hunter), 2f);
+            farmHen.hurt(hunter.damageSources().playerAttack(hunter), 2f);
+            helper.assertTrue(hen.getHealth() == hen.getMaxHealth(), "a hen of the town was hurt");
+            helper.assertTrue(farmHen.getHealth() < farmHen.getMaxHealth(), "a hen of the homestead could not be hurt");
+            hen.discard();
+            farmHen.discard();
+        } finally {
+            zones.remove(cityId);
+            zones.remove(plotId);
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "empty")
     public static void theSealVeilStopsMobsAndCannotBeBroken(GameTestHelper helper) {
         helper.setBlock(new BlockPos(1, 1, 1), SoFEBlocks.SEAL_VEIL.get());

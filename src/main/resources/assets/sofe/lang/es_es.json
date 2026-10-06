@@ -3150,6 +3150,7 @@
   "command.sofe.progress.act_not_moved": "%s ya está en el acto %s o después (los actos solo avanzan).",
   "command.sofe.progress.defeat": "%s recibe el crédito de %s.",
   "command.sofe.unstuck": "%s fue enviado de vuelta a la plaza de Sulthari.",
+  "command.sofe.unstuck.wait": "Podrás pedir ayuda de nuevo en %s:%s.",
   "command.sofe.pacts.none": "No hay Pactos en este servidor.",
   "gui.sofe.pact.hud": "Pacto",
   "gui.sofe.pact.offline": "desconectado",
@@ -3402,6 +3403,8 @@
   "tip.sofe.12": "Las decisiones de las misiones secundarias deciden qué será de cada imperio.",
   "tip.sofe.13": "¿Perdiste un objeto de la historia? El Consejo de Sulthari puede devolvértelo.",
   "tip.sofe.14": "El Códice recuerda.",
+  "tip.sofe.15": "¿Atrapado en un hueco o en un techo? Escribe /sofe unstuck para volver a la plaza de Sulthari.",
+  "tip.sofe.16": "¿Perdido? Los destellos dorados del suelo llevan a tu siguiente paso.",
   "gui.sofe.journal": "Diario",
   "block.sofe.void_crystal_ore": "Mena de Cristal del Vacío"
 }

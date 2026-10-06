@@ -3150,6 +3150,7 @@
   "command.sofe.progress.act_not_moved": "%s is already at act %s or later (acts only move forward).",
   "command.sofe.progress.defeat": "%s is credited with %s.",
   "command.sofe.unstuck": "%s was sent back to the plaza of Sulthari.",
+  "command.sofe.unstuck.wait": "You can call for help again in %s:%s.",
   "command.sofe.pacts.none": "There are no Pacts on this server.",
   "gui.sofe.pact.hud": "Pact",
   "gui.sofe.pact.offline": "offline",
@@ -3402,6 +3403,8 @@
   "tip.sofe.12": "The choices of the side quests decide what becomes of each empire.",
   "tip.sofe.13": "Lost a story item? The Council of Sulthari can give it back.",
   "tip.sofe.14": "The Codex remembers.",
+  "tip.sofe.15": "Stuck in a hole or on a roof? Type /sofe unstuck to go back to the plaza of Sulthari.",
+  "tip.sofe.16": "Lost? The golden motes on the ground lead to your next step.",
   "gui.sofe.journal": "Journal",
   "block.sofe.void_crystal_ore": "Void Crystal Ore"
 }

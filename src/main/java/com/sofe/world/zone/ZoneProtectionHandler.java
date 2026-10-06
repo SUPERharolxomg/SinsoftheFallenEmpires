@@ -139,7 +139,7 @@ public final class ZoneProtectionHandler {
 
     /** No one can strike down a statue, a frame, a painting, a boat or a cart in a protected place. */
     public static void onAttackEntity(net.minecraftforge.event.entity.player.AttackEntityEvent event) {
-        if (furnishingProtected(event.getTarget(), event.getEntity())) {
+        if (furnishingProtected(event.getTarget(), event.getEntity()) || livestockProtected(event.getTarget(), event.getEntity())) {
             event.setCanceled(true);
             tell(event.getEntity());
         }
@@ -173,6 +173,13 @@ public final class ZoneProtectionHandler {
                 && furnishingProtected(event.getEntity(), event.getSource().getEntity())) {
             event.setCanceled(true);
         }
+        if (livestockProtected(event.getEntity(), event.getSource().getEntity())) event.setCanceled(true); // arrows and spells too
+    }
+
+    /** The hens, sheep and cows of a town belong to its people: a player cannot kill them there. */
+    private static boolean livestockProtected(Entity entity, Entity actor) {
+        return entity instanceof net.minecraft.world.entity.animal.Animal && actor instanceof net.minecraft.world.entity.player.Player
+                && !allowed(entity.level(), entity.blockPosition(), ZoneAction.TAKE, actor);
     }
 
     /** A piston outside a zone cannot push or pull blocks in or out of it. */

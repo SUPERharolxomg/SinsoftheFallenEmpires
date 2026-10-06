@@ -50,6 +50,10 @@ public final class StoryPlacements extends SavedData {
         if (!SoFEWorld.isJourney(server)) return;
         BlockPos spawn = server.overworld().getSharedSpawnPos();
         placeNear(server, StructurePositions.get(), (x, z) -> near(spawn.getX(), spawn.getZ(), x, z, START_DISTANCE));
+        // a journey begins in front of the fountain, not at a random spot around it: on the fountain's dome,
+        // a roof or an acacia a new Bearer was stuck
+        var radius = server.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_SPAWN_RADIUS);
+        if (radius.get() != 0) radius.set(0, server);
     }
 
     /** Every few seconds: build what a player is now close to (Nordrath's dungeons, the Citadel...). */
