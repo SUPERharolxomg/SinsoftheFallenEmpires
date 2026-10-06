@@ -64,6 +64,42 @@ public final class SultharisBuilder {
         BlockPos pos = new BlockPos(x, y, z);
         if (connects(state)) state = Block.updateFromNeighbourShapes(state, level, pos);
         level.setBlock(pos, state, Block.UPDATE_CLIENTS);
+        if (state.getBlock() instanceof net.minecraft.world.level.block.LanternBlock) LANTERNS.add(pos);
+    }
+
+    /** Lanterns set during the build in progress, checked when it ends ({@link #settleLanterns}). */
+    private static final java.util.List<BlockPos> LANTERNS = new java.util.ArrayList<>();
+
+    /**
+     * After a build: every lantern must hold. Blocks are set without telling their neighbours, so a lantern
+     * hung from the air looks fine until the first block update nearby, then drops. A hanging lantern gets a
+     * chain up to the ceiling; one with no ceiling over it stands on the floor; a standing one with nothing
+     * under it hangs from what is above; one that can do neither is taken away.
+     */
+    static void settleLanterns(ServerLevel level) {
+        for (BlockPos pos : LANTERNS) {
+            BlockState state = level.getBlockState(pos);
+            if (!(state.getBlock() instanceof net.minecraft.world.level.block.LanternBlock) || state.canSurvive(level, pos)) continue;
+            var hanging = net.minecraft.world.level.block.LanternBlock.HANGING;
+            if (state.getValue(hanging) && chainUp(level, pos)) continue;
+            BlockState flipped = state.setValue(hanging, !state.getValue(hanging));
+            level.setBlock(pos, flipped.canSurvive(level, pos) ? flipped : Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+        }
+        LANTERNS.clear();
+    }
+
+    /** A chain from a hanging lantern up to a ceiling at most four blocks above; false when there is none. */
+    private static boolean chainUp(ServerLevel level, BlockPos lantern) {
+        for (int up = 1; up <= 4; up++) {
+            BlockPos above = lantern.above(up);
+            if (Block.canSupportCenter(level, above, Direction.DOWN)) {
+                BlockState chain = Blocks.CHAIN.defaultBlockState();
+                for (int k = 1; k < up; k++) level.setBlock(lantern.above(k), chain, Block.UPDATE_CLIENTS);
+                return true;
+            }
+            if (!level.getBlockState(above).isAir()) return false;
+        }
+        return false;
     }
 
     private static boolean connects(BlockState state) {

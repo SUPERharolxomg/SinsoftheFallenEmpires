@@ -40,6 +40,11 @@ public class BearerNpcEntity extends StoryNpcEntity {
         setNpcId(bearer.npcId());
     }
 
+    @Override
+    protected String layoutId() {
+        return this.entityData.get(BEARER);
+    }
+
     /** Whether this NPC is the same hero as the player (then it is hidden for them). */
     public boolean isSameHeroAs(Player player) {
         Optional<PlayerClass> theirs = PlayerClassCapability.get(player).flatMap(PlayerClassData::get);

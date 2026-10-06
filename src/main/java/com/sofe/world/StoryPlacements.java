@@ -18,7 +18,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.event.server.ServerStartedEvent;
 
@@ -134,38 +133,12 @@ public final class StoryPlacements extends SavedData {
         return count;
     }
 
-    /**
-     * Where something stands in this column: the ground, or, under a roof of a building, the floor
-     * inside (so NPCs and Waystones end up in the palace hall, not on its dome). Scans down from the
-     * roof to the first room with a floor; stops at natural terrain, so caves never count.
-     */
-    private static BlockPos surface(ServerLevel level, int x, int z) {
-        level.getChunk(x >> 4, z >> 4);
-        int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, top - 1, z);
-        for (int y = top - 1; y > top - 40 && y > level.getMinBuildHeight() + 1; y--) {
-            pos.setY(y);
-            var state = level.getBlockState(pos);
-            if (natural(state)) break;
-            if (state.isAir() && level.getBlockState(pos.above()).isAir() && level.getBlockState(pos.below()).isSolid()) {
-                return new BlockPos(x, y, z);
-            }
-        }
-        return new BlockPos(x, top, z);
-    }
-
-    private static boolean natural(net.minecraft.world.level.block.state.BlockState state) {
-        return state.is(net.minecraft.tags.BlockTags.DIRT) || state.is(net.minecraft.tags.BlockTags.SAND)
-                || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD) || state.is(net.minecraft.tags.BlockTags.TERRACOTTA)
-                || state.is(net.minecraft.world.level.block.Blocks.SANDSTONE) || state.is(net.minecraft.world.level.block.Blocks.GRAVEL);
-    }
-
     private static void placeBlock(ServerLevel level, BlockPos column, net.minecraft.world.level.block.state.BlockState state) {
-        level.setBlock(surface(level, column.getX(), column.getZ()), state, 3);
+        level.setBlock(Grounding.groundFloor(level, column.getX(), column.getZ()), state, 3);
     }
 
     public static Optional<StoryNpcEntity> spawnNpc(ServerLevel level, StructurePositions.Npc npc) {
-        BlockPos pos = surface(level, npc.x(), npc.z());
+        BlockPos pos = Grounding.groundFloor(level, npc.x(), npc.z());
         StoryNpcEntity entity;
         switch (npc.type()) {
             case "bearer" -> {

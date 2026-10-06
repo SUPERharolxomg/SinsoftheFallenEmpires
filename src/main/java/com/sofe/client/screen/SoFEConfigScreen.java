@@ -33,6 +33,7 @@ public class SoFEConfigScreen extends Screen {
                 new Option(SoFEConfig.CLIENT.preselectJourneyPreset, "config.sofe.preselect_journey_preset"),
                 new Option(SoFEConfig.CLIENT.dialogueBlip, "config.sofe.dialogue_blip"),
                 new Option(SoFEConfig.CLIENT.showQuestCompass, "config.sofe.show_quest_compass"),
+                new Option(SoFEConfig.CLIENT.showQuestPath, "config.sofe.show_quest_path"),
                 new Option(SoFEConfig.CLIENT.hideBearerOutfit, "config.sofe.hide_bearer_outfit"),
                 new Option(SoFEConfig.CLIENT.replaceHealthHud, "config.sofe.replace_health_hud"));
 

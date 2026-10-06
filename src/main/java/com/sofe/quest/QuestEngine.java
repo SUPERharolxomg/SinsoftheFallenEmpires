@@ -29,7 +29,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -83,6 +82,7 @@ public final class QuestEngine {
         List<QuestEffect> effects = QuestLogic.start(story.get(), quest.get(), PlayerProgressView.of(player));
         boolean started = !wasStarted && story.get().quest(questId).isPresent();
         if (started) {
+            if (quest.get().type() == QuestDefinition.Type.MAIN) story.get().track(questId); // the story leads: its next chapter is followed at once
             player.sendSystemMessage(Component.translatable("message.sofe.quest_started",
                     Component.translatable(quest.get().translationKey())).withStyle(ChatFormatting.GOLD));
             player.level().playSound(null, player.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1f, 0.9f);
@@ -95,9 +95,11 @@ public final class QuestEngine {
     public static void event(ServerPlayer player, QuestEvent event) {
         StoryCapability.get(player).ifPresent(story -> {
             Map<String, StoryProgress.QuestState> before = story.quests();
+            Optional<String> trackedBefore = story.trackedQuest();
             List<QuestEffect> effects = QuestLogic.record(story, StoryDataManager.quests(), event);
             if (!before.equals(story.quests())) {
                 announceCompleted(player, before, story);
+                followTheStory(story, trackedBefore);
                 run(player, effects, 0);
                 sync(player);
             }
@@ -113,10 +115,25 @@ public final class QuestEngine {
         Optional<StoryProgress> story = StoryCapability.get(player);
         if (quest.isEmpty() || story.isEmpty()) return;
         Map<String, StoryProgress.QuestState> before = story.get().quests();
+        Optional<String> trackedBefore = story.get().trackedQuest();
         List<QuestEffect> effects = QuestLogic.advance(story.get(), quest.get());
         announceCompleted(player, before, story.get());
+        followTheStory(story.get(), trackedBefore);
         run(player, effects, depth + 1);
         sync(player);
+    }
+
+    /**
+     * When the quest the player followed is finished, the compass goes back to the main story (the next
+     * chapter if it has begun), not to whichever quest happens to come first.
+     */
+    static void followTheStory(StoryProgress story, Optional<String> trackedBefore) {
+        if (trackedBefore.isPresent() && !story.quest(trackedBefore.get()).map(StoryProgress.QuestState::completed).orElse(false)) return;
+        story.quests().entrySet().stream()
+                .filter(e -> !e.getValue().completed())
+                .filter(e -> StoryDataManager.quest(e.getKey()).map(q -> q.type() == QuestDefinition.Type.MAIN).orElse(false))
+                .map(Map.Entry::getKey).sorted().findFirst()
+                .ifPresent(story::track);
     }
 
     private static void announceCompleted(ServerPlayer player, Map<String, StoryProgress.QuestState> before, StoryProgress story) {
@@ -224,7 +241,7 @@ public final class QuestEngine {
             double distance = spawn.radius() * (0.5 + level.random.nextDouble() * 0.5);
             int x = (int) Math.floor(player.getX() + Math.cos(angle) * distance);
             int z = (int) Math.floor(player.getZ() + Math.sin(angle) * distance);
-            BlockPos pos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
+            BlockPos pos = com.sofe.world.Grounding.beside(level, x, z, player);
             Entity entity = type.spawn(level, pos, MobSpawnType.EVENT);
             if (entity instanceof Mob mob) mob.setTarget(player);
         }
@@ -317,11 +334,12 @@ public final class QuestEngine {
         Optional<SyncStoryPacket.Target> corpse = CorpseRegistry.get(player.server).latest(player.getUUID())
                 .filter(c -> c.dimension() == net.minecraft.world.level.Level.OVERWORLD)
                 .map(c -> new SyncStoryPacket.Target(c.pos().getX(), c.pos().getZ()));
-        StoryCapability.get(player).ifPresent(story -> SoFENetwork.sendTo(player, packet(story, corpse,
+        StoryCapability.get(player).ifPresent(story -> SoFENetwork.sendTo(player, packet(story, QuestGuide.target(player, story), corpse,
                 SoFEConfig.SERVER.opsBypass.get() && player.hasPermissions(2))));
     }
 
-    public static SyncStoryPacket packet(StoryProgress story, Optional<SyncStoryPacket.Target> corpse, boolean bypassLocks) {
+    public static SyncStoryPacket packet(StoryProgress story, Optional<SyncStoryPacket.Target> compass, Optional<SyncStoryPacket.Target> corpse,
+                                         boolean bypassLocks) {
         List<SyncStoryPacket.Quest> quests = new ArrayList<>();
         story.quests().forEach((id, state) -> StoryDataManager.quest(id).ifPresent(q -> {
             int step = Math.min(state.step(), q.steps().size() - 1);
@@ -332,16 +350,7 @@ public final class QuestEngine {
         Map<String, String> fates = new java.util.TreeMap<>();
         story.fates().forEach((r, f) -> fates.put(r.id(), f));
         List<String> open = RegionFates.open(story).stream().map(Region::id).toList();
-        return new SyncStoryPacket(story.act(), quests, story.trackedQuest(), fates, open, compassTarget(story), corpse, bypassLocks,
+        return new SyncStoryPacket(story.act(), quests, story.trackedQuest(), fates, open, compass, corpse, bypassLocks,
                 story.bosses().stream().sorted().toList());
-    }
-
-    /** Where the Quest Compass points: the tracked quest's current step, if it has a place. */
-    static Optional<SyncStoryPacket.Target> compassTarget(StoryProgress story) {
-        return story.trackedQuest().flatMap(id -> StoryDataManager.quest(id).flatMap(q -> story.quest(id)
-                .filter(s -> !s.completed())
-                .flatMap(s -> q.step(s.step()))
-                .flatMap(QuestDefinition.Step::compassTarget)
-                .map(t -> new SyncStoryPacket.Target(t.x(), t.z()))));
     }
 }

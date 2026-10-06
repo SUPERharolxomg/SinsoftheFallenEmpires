@@ -12,7 +12,8 @@ import java.util.function.Supplier;
 
 /**
  * Server → client: what the Journal and the Quest Compass show: the act, every quest the player
- * has started, the fates chosen so far, the regions still to choose, the compass target and the
+ * has started, the fates chosen so far, the regions still to choose, the compass target (with the NPC
+ * to talk to there, if any) and the
  * player's latest body in the overworld (the compass points there first);
  * and whether this player bypasses the locks (an operator with opsBypass), for the Seal Veil.
  */
@@ -28,7 +29,21 @@ public record SyncStoryPacket(int act, List<Quest> quests, Optional<String> trac
     public record Quest(String id, String type, int step, int steps, int count, int required, boolean completed) {
     }
 
-    public record Target(int x, int z) {
+    /** @param npc the person to talk to there, marked in the world (empty: a place) */
+    public record Target(int x, int z, String npc) {
+        public Target(int x, int z) {
+            this(x, z, "");
+        }
+    }
+
+    private static void writeTarget(FriendlyByteBuf b, Target t) {
+        b.writeInt(t.x());
+        b.writeInt(t.z());
+        b.writeUtf(t.npc());
+    }
+
+    private static Target readTarget(FriendlyByteBuf b) {
+        return new Target(b.readInt(), b.readInt(), b.readUtf());
     }
 
     public void encode(FriendlyByteBuf buf) {
@@ -45,14 +60,8 @@ public record SyncStoryPacket(int act, List<Quest> quests, Optional<String> trac
         buf.writeOptional(tracked, FriendlyByteBuf::writeUtf);
         buf.writeMap(fates, FriendlyByteBuf::writeUtf, FriendlyByteBuf::writeUtf);
         buf.writeCollection(openFates, FriendlyByteBuf::writeUtf);
-        buf.writeOptional(compass, (b, t) -> {
-            b.writeInt(t.x());
-            b.writeInt(t.z());
-        });
-        buf.writeOptional(corpse, (b, t) -> {
-            b.writeInt(t.x());
-            b.writeInt(t.z());
-        });
+        buf.writeOptional(compass, SyncStoryPacket::writeTarget);
+        buf.writeOptional(corpse, SyncStoryPacket::writeTarget);
         buf.writeBoolean(bypassLocks);
         buf.writeCollection(bosses, FriendlyByteBuf::writeUtf); // the bosses beaten, for the Codex's bestiary
     }
@@ -64,8 +73,8 @@ public record SyncStoryPacket(int act, List<Quest> quests, Optional<String> trac
         Optional<String> tracked = buf.readOptional(FriendlyByteBuf::readUtf);
         Map<String, String> fates = buf.readMap(FriendlyByteBuf::readUtf, FriendlyByteBuf::readUtf);
         List<String> openFates = buf.readList(FriendlyByteBuf::readUtf);
-        Optional<Target> compass = buf.readOptional(b -> new Target(b.readInt(), b.readInt()));
-        Optional<Target> corpse = buf.readOptional(b -> new Target(b.readInt(), b.readInt()));
+        Optional<Target> compass = buf.readOptional(SyncStoryPacket::readTarget);
+        Optional<Target> corpse = buf.readOptional(SyncStoryPacket::readTarget);
         boolean bypass = buf.readBoolean();
         return new SyncStoryPacket(act, quests, tracked, fates, openFates, compass, corpse, bypass, buf.readList(FriendlyByteBuf::readUtf));
     }

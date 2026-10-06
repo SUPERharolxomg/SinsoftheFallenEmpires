@@ -36,7 +36,7 @@ public final class SoFEConfig {
         public final ForgeConfigSpec.BooleanValue replaceTitleScreen;
         public final ForgeConfigSpec.BooleanValue preselectJourneyPreset;
         public final ForgeConfigSpec.BooleanValue dialogueBlip;
-        public final ForgeConfigSpec.BooleanValue showQuestCompass;
+        public final ForgeConfigSpec.BooleanValue showQuestCompass, showQuestPath;
         public final ForgeConfigSpec.BooleanValue hideBearerOutfit;
         public final ForgeConfigSpec.BooleanValue replaceHealthHud;
         public final ForgeConfigSpec.BooleanValue rarityLabels, reduceMotion;
@@ -62,6 +62,11 @@ public final class SoFEConfig {
                     .comment("Show the Quest Compass at the top of the screen, pointing to the tracked quest.")
                     .translation("config.sofe.show_quest_compass")
                     .define("showQuestCompass", true);
+            showQuestPath = builder
+                    .comment("Show the way to the tracked quest in the world: golden motes on the ground, a column of light",
+                            "over the place and a crown of light over the person to talk to.")
+                    .translation("config.sofe.show_quest_path")
+                    .define("showQuestPath", true);
             hideBearerOutfit = builder
                     .comment("Hide the Bearer outfit layer and show only your own skin and armor.")
                     .translation("config.sofe.hide_bearer_outfit")

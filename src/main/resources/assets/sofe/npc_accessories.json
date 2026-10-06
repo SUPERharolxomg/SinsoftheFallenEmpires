@@ -20,8 +20,14 @@
  "bazaar_weaver": [
   "skirt"
  ],
+ "citizen_astronomer": [
+  "skirt"
+ ],
  "citizen_baker": [
   "skirt"
+ ],
+ "citizen_fisherman": [
+  "turban"
  ],
  "citizen_pilgrim": [
   "turban",
@@ -33,6 +39,15 @@
  ],
  "citizen_storyteller": [
   "fez",
+  "skirt"
+ ],
+ "citizen_tea_seller": [
+  "skirt"
+ ],
+ "citizen_tram_keeper": [
+  "fez"
+ ],
+ "citizen_veteran": [
   "skirt"
  ],
  "citizen_water_carrier": [

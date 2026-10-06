@@ -16,7 +16,9 @@ import java.util.Optional;
 
 /**
  * The Quest Compass (docs/Mundo.md, W3): a strip at the top of the screen with the cardinal points,
- * a gold marker toward the tracked quest's objective and the distance to it.
+ * a gold marker toward the tracked quest's objective, the distance to it (and who to talk to there) and
+ * the step to do; a step with no place shows its text alone. {@link com.sofe.client.QuestPath} draws the
+ * way in the world.
  */
 public final class QuestCompassOverlay {
     private static final int HALF_WIDTH = 70, TOP = 3;
@@ -34,11 +36,20 @@ public final class QuestCompassOverlay {
         if (story.isEmpty()) return;
         boolean toCorpse = story.get().corpse().isPresent();
         Optional<SyncStoryPacket.Target> maybeTarget = toCorpse ? story.get().corpse() : story.get().compass();
-        if (maybeTarget.isEmpty()) return;
-        SyncStoryPacket.Target target = maybeTarget.get();
-
         Font font = gui.getFont();
         int cx = width / 2;
+        if (maybeTarget.isEmpty()) {
+            // a step with no place (learn your first skills...): what to do is still written at the top
+            trackedStep(story.get()).ifPresent(text -> {
+                String line = font.plainSubstrByWidth(text, 260);
+                int w = font.width(line) / 2 + 4;
+                g.fill(cx - w, TOP, cx + w, TOP + 11, 0x88000000);
+                g.drawCenteredString(font, line, cx, TOP + 2, PARCHMENT);
+            });
+            return;
+        }
+        SyncStoryPacket.Target target = maybeTarget.get();
+
         float yaw = Mth.wrapDegrees(mc.player.getViewYRot(partialTick));
         g.fill(cx - HALF_WIDTH - 2, TOP, cx + HALF_WIDTH + 2, TOP + 11, 0x88000000);
         g.fill(cx - HALF_WIDTH - 2, TOP + 11, cx + HALF_WIDTH + 2, TOP + 12, 0xAA000000 | GOLD);
@@ -71,17 +82,22 @@ public final class QuestCompassOverlay {
         }
         g.drawCenteredString(font, marker, mx, TOP + 2, GOLD);
         Component label = Component.translatable("gui.sofe.compass.distance", distance);
+        if (!toCorpse && !target.npc().isEmpty()) {
+            label = Component.translatable("gui.sofe.compass.talk_to", Component.translatable("npc.sofe." + target.npc()))
+                    .append(" · ").append(label);
+        }
         g.drawCenteredString(font, label, cx, TOP + 14, GOLD);
 
         if (toCorpse) {
             g.drawCenteredString(font, Component.translatable("gui.sofe.compass.corpse"), cx, TOP + 24, PARCHMENT);
             return;
         }
-        story.get().tracked().flatMap(id -> story.get().quests().stream().filter(q -> q.id().equals(id)).findFirst())
-                .ifPresent(q -> {
-                    Component step = Component.translatable(QuestDefinition.stepKey(q.id(), q.step()));
-                    String text = font.plainSubstrByWidth(step.getString(), 220);
-                    g.drawCenteredString(font, text, cx, TOP + 24, PARCHMENT);
-                });
+        trackedStep(story.get()).ifPresent(text -> g.drawCenteredString(font, font.plainSubstrByWidth(text, 220), cx, TOP + 24, PARCHMENT));
+    }
+
+    /** The current step of the tracked quest, as written in the Journal. */
+    private static Optional<String> trackedStep(SyncStoryPacket story) {
+        return story.tracked().flatMap(id -> story.quests().stream().filter(q -> q.id().equals(id) && !q.completed()).findFirst())
+                .map(q -> Component.translatable(QuestDefinition.stepKey(q.id(), q.step())).getString());
     }
 }

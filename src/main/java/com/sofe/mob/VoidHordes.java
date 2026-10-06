@@ -18,7 +18,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.TickEvent;
 
 import java.util.ArrayList;
@@ -119,11 +118,11 @@ public final class VoidHordes {
         for (int i = 0; i < count; i++) {
             double angle = random.nextDouble() * Math.PI * 2, distance = 18 + random.nextDouble() * 12;
             int x = (int) Math.floor(player.getX() + Math.cos(angle) * distance), z = (int) Math.floor(player.getZ() + Math.sin(angle) * distance);
-            int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+            BlockPos at = com.sofe.world.Grounding.beside(level, x, z, player); // on the ground, or the floor of the hall the Bearer is in
             int roll = random.nextInt(10); // the horde: zombies and skeletons of the Void, Wretches and Stalkers
             EntityType<? extends Mob> type = roll < 4 ? EntityRegistry.VOID_ZOMBIE.get() : roll < 6 ? EntityRegistry.VOID_SKELETON.get()
                     : roll < 8 ? EntityRegistry.VOID_WRETCH.get() : EntityRegistry.VOID_STALKER.get();
-            Mob mob = type.spawn(level, new BlockPos(x, y, z), MobSpawnType.EVENT);
+            Mob mob = type.spawn(level, at, MobSpawnType.EVENT);
             if (mob == null) continue;
             mob.getPersistentData().putBoolean(TAG, true);
             mob.setPersistenceRequired();
