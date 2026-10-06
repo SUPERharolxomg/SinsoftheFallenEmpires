@@ -1,0 +1,116 @@
+{
+  "_comment": "The CurseForge modpack (scripts/make_modpack.py): every mod by its CurseForge project and file id, the versions checked with the mod (docs/Rendimiento.md). Memory Leak Fix has no 1.20.1 build on CurseForge, so it is only in the Modrinth/development pack.",
+  "name": "Sins of the Fallen Empires",
+  "minecraft": "1.20.1",
+  "forge": "47.4.23",
+  "mods": [
+    {
+      "name": "Sins of the Fallen Empires",
+      "projectID": null,
+      "fileID": null,
+      "note": "the mod itself: fill in its project and file ids once it is published on CurseForge"
+    },
+    {
+      "name": "GeckoLib",
+      "projectID": 388172,
+      "fileID": 8285794,
+      "note": "geckolib-forge-1.20.1-4.8.4"
+    },
+    {
+      "name": "Curios API",
+      "projectID": 309927,
+      "fileID": 6418456,
+      "note": "curios-forge-5.14.1+1.20.1"
+    },
+    {
+      "name": "Just Enough Items (JEI)",
+      "projectID": 238222,
+      "fileID": 9058038,
+      "note": "jei-1.20.1-forge-15.62.0.219"
+    },
+    {
+      "name": "MrCrayfish's Furniture Mod: Refurbished",
+      "projectID": 897116,
+      "fileID": 7110922,
+      "note": "1.0.20"
+    },
+    {
+      "name": "Framework",
+      "projectID": 549225,
+      "fileID": 6531428,
+      "note": "0.7.15"
+    },
+    {
+      "name": "Supplementaries",
+      "projectID": 412082,
+      "fileID": 7884611,
+      "note": "1.20-3.1.43"
+    },
+    {
+      "name": "Moonlight Lib",
+      "projectID": 499980,
+      "fileID": 8820589,
+      "note": "1.20-2.16.35"
+    },
+    {
+      "name": "Small Ships",
+      "projectID": 450659,
+      "fileID": 5566900,
+      "note": "2.0.0-b1.4"
+    },
+    {
+      "name": "Xaero's Minimap",
+      "projectID": 263420,
+      "fileID": 8849836,
+      "note": "26.5.0"
+    },
+    {
+      "name": "Embeddium",
+      "projectID": 908741,
+      "fileID": 5681725,
+      "note": "0.3.31+mc1.20.1"
+    },
+    {
+      "name": "ImmediatelyFast",
+      "projectID": 686911,
+      "fileID": 8348481,
+      "note": "1.5.5+1.20.4"
+    },
+    {
+      "name": "Entity Culling",
+      "projectID": 448233,
+      "fileID": 8942290,
+      "note": "1.11.2"
+    },
+    {
+      "name": "ModernFix",
+      "projectID": 790626,
+      "fileID": 9032601,
+      "note": "5.27.85+mc1.20.1"
+    },
+    {
+      "name": "FerriteCore",
+      "projectID": 429235,
+      "fileID": 4810975,
+      "note": "6.0.1"
+    },
+    {
+      "name": "Canary",
+      "projectID": 665658,
+      "fileID": 5089991,
+      "note": "mc1.20.1-0.3.3"
+    },
+    {
+      "name": "Saturn",
+      "projectID": 670986,
+      "fileID": 5093785,
+      "note": "mc1.20.1-0.1.3"
+    },
+    {
+      "name": "Dynamic FPS",
+      "projectID": 335493,
+      "fileID": 7546908,
+      "note": "3.11.4"
+    }
+  ]
+}
