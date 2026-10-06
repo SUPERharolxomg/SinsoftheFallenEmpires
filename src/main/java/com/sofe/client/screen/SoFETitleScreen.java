@@ -93,6 +93,15 @@ public class SoFETitleScreen extends Screen {
         y += 24;
         addRenderableWidget(Button.builder(Component.translatable("menu.quit"),
                 b -> this.minecraft.stop()).bounds(x, y, w, 20).build());
+        // Essential and the like put their menus on the vanilla title screen: a way to it (docs/Rendimiento.md, compatibility)
+        var titleMods = com.sofe.client.TitleScreenHandler.titleMods();
+        if (!titleMods.isEmpty()) {
+            Component label = Component.translatable("menu.sofe.classic_menu", net.minecraftforge.fml.ModList.get().getModContainerById(titleMods.get(0))
+                    .map(m -> m.getModInfo().getDisplayName()).orElse(titleMods.get(0)));
+            int bw = this.font.width(label) + 16;
+            addRenderableWidget(Button.builder(label, b -> com.sofe.client.TitleScreenHandler.openVanillaTitle(this.minecraft))
+                    .bounds(this.width - bw - 6, this.height - 26, bw, 20).build());
+        }
 
         findLatestWorld();
     }

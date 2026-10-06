@@ -31,7 +31,7 @@ public final class ShotsWorld {
             idle = 0;
             return;
         }
-        boolean aetheris = PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled();
+        boolean aetheris = PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled() || CompatCheck.enabled();
         String name = aetheris ? AETHERIS : NAME;
         if (++idle < 60 || mc.getLevelSource().levelExists(name)) return;
         created = true;
