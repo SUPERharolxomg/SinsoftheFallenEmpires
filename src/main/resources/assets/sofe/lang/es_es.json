@@ -3297,5 +3297,18 @@
   "message.sofe.echo_kneel": "Sigue arrodillado para llamar al Eco de %s",
   "message.sofe.echo_rises": "El Eco de %s se alza",
   "advancement.sofe.the_seal_rewritten": "El Sello Reescrito",
-  "advancement.sofe.the_seal_rewritten.desc": "Cierra el Códice sobre el Primer Caído y mira lo que fue de Aetheris"
+  "advancement.sofe.the_seal_rewritten.desc": "Cierra el Códice sobre el Primer Caído y mira lo que fue de Aetheris",
+  "config.sofe.rarity_labels": "Etiquetas de rareza",
+  "config.sofe.rarity_labels.tooltip": "Escribe el nombre de la rareza sobre el equipo tirado en el suelo, no solo el color de su haz.",
+  "config.sofe.reduce_motion": "Reducir movimiento",
+  "config.sofe.reduce_motion.tooltip": "Escenas de la historia más tranquilas: sin fuego parpadeante, sin horizontes que se desplazan, menos ascuas. También se activa con 'Ocultar destellos de relámpagos' de Minecraft.",
+  "message.sofe.free_mode": "Este mundo está en el modo libre de SoFE: %s. Los objetos funcionan; la historia, los sellos y los jefes esperan.",
+  "message.sofe.free_mode.incompatible": "%s está instalado, y rompe la historia",
+  "message.sofe.free_mode.no_layout": "falta el mapa de Aetheris en este mundo",
+  "message.sofe.free_mode.no_story": "faltan los datos de la historia",
+  "message.sofe.free_mode.missing_boss": "falta el jefe de la historia %s",
+  "message.sofe.free_mode.not_journey": "este mundo no se creó con Comenzar la Aventura",
+  "menu.sofe.incompatible": "%s rompe la historia: una aventura nueva se jugará en modo libre.",
+  "config.sofe.allow_incompatible_mods": "Permitir mods incompatibles",
+  "config.sofe.allow_incompatible_mods.tooltip": "Juega la historia aunque haya instalado un mod de data/sofe/compat/incompatible_mods.json (bajo tu responsabilidad)."
 }

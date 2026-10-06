@@ -39,6 +39,7 @@ public final class SoFEConfig {
         public final ForgeConfigSpec.BooleanValue showQuestCompass;
         public final ForgeConfigSpec.BooleanValue hideBearerOutfit;
         public final ForgeConfigSpec.BooleanValue replaceHealthHud;
+        public final ForgeConfigSpec.BooleanValue rarityLabels, reduceMotion;
 
         private Client(ForgeConfigSpec.Builder builder) {
             builder.push("menu");
@@ -69,6 +70,15 @@ public final class SoFEConfig {
                     .comment("Show health as a bar in the SoFE HUD instead of the vanilla hearts.")
                     .translation("config.sofe.replace_health_hud")
                     .define("replaceHealthHud", true);
+            // accessibility (docs/Jugabilidad.md, G13)
+            rarityLabels = builder
+                    .comment("Write the rarity's name over gear lying on the ground, not only the colour of its beam.")
+                    .translation("config.sofe.rarity_labels")
+                    .define("rarityLabels", true);
+            reduceMotion = builder
+                    .comment("Calmer story scenes: no flickering fire, no scrolling skylines, fewer embers. Also on with Minecraft's 'Hide Lightning Flashes'.")
+                    .translation("config.sofe.reduce_motion")
+                    .define("reduceMotion", false);
             builder.pop();
         }
     }
@@ -77,7 +87,7 @@ public final class SoFEConfig {
         public final ForgeConfigSpec.BooleanValue openClassSelectOnJoin;
         public final ForgeConfigSpec.BooleanValue opsBypass;
         public final ForgeConfigSpec.BooleanValue protectZones;
-        public final ForgeConfigSpec.BooleanValue corpseSystem;
+        public final ForgeConfigSpec.BooleanValue corpseSystem, allowIncompatibleMods;
         public final ForgeConfigSpec.ConfigValue<String> relicBinding;
         public final ForgeConfigSpec.IntValue pactMaxMembers;
         public final ForgeConfigSpec.DoubleValue pactRange, pactXpBonus, pactFindBonus, pactFindBonusCap, bossHealthPerPlayer;
@@ -137,6 +147,10 @@ public final class SoFEConfig {
                             "Turn off when the server uses another grave or corpse mod.")
                     .translation("config.sofe.corpse_system")
                     .define("corpseSystem", true);
+            allowIncompatibleMods = builder
+                    .comment("Play the story even with a mod listed in data/sofe/compat/incompatible_mods.json installed (at your own risk).")
+                    .translation("config.sofe.allow_incompatible_mods")
+                    .define("allowIncompatibleMods", false);
             builder.pop();
             builder.push("items");
             relicBinding = builder

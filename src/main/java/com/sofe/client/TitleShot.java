@@ -16,6 +16,31 @@ public final class TitleShot {
     private TitleShot() {
     }
 
+    /** -Dsofe.joinShot: ten seconds after joining a server, a screenshot and what the client sees (joinshot.log). */
+    public static boolean joinEnabled() {
+        return System.getProperty("sofe.joinShot") != null;
+    }
+
+    private static int joined;
+
+    public static void onJoinTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.level == null) return;
+        joined++;
+        if (joined == 200) {
+            Screenshot.grab(mc.gameDirectory, "joinshot.png", mc.getMainRenderTarget(), m -> { });
+            String line = "joined " + (mc.getCurrentServer() == null ? "?" : mc.getCurrentServer().ip) + " | at " + mc.player.blockPosition().toShortString()
+                    + " | screen " + (mc.screen == null ? "none" : mc.screen.getClass().getSimpleName())
+                    + " | story synced " + com.sofe.client.ClientStoryData.get().isPresent() + "\n";
+            try {
+                java.nio.file.Files.writeString(mc.gameDirectory.toPath().resolve("joinshot.log"), line);
+            } catch (java.io.IOException ignored) {
+            }
+        }
+        if (joined == 220) mc.stop();
+    }
+
     public static boolean enabled() {
         return System.getProperty("sofe.titleShot") != null;
     }

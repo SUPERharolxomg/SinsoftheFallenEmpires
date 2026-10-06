@@ -39,6 +39,12 @@ final class SceneArt {
     private SceneArt() {
     }
 
+    /** Reduce motion (accessibility): the SoFE option, or Minecraft's "Hide Lightning Flashes". */
+    static boolean calm() {
+        var mc = net.minecraft.client.Minecraft.getInstance();
+        return com.sofe.config.SoFEConfig.CLIENT.reduceMotion.get() || mc.options.hideLightningFlash().get();
+    }
+
     static int argb(float alpha, int rgb) {
         return (Mth.clamp((int) (alpha * 255), 0, 255) << 24) | (rgb & 0xFFFFFF);
     }
@@ -90,7 +96,7 @@ final class SceneArt {
     static void skyline(GuiGraphics g, City city, int w, int h, float t, float baseY, float speed, int color, int salt) {
         int base = (int) (h * baseY);
         int unit = Math.max(4, h / 60);
-        int offset = (int) (t * speed * unit) % (unit * 40);
+        int offset = calm() ? 0 : (int) (t * speed * unit) % (unit * 40);
         g.fill(0, base, w, h, color);
         for (int x = -unit * 40 - offset, i = 0; x < w + unit * 20; i++) {
             int width = unit * (3 + (int) (rand(i, salt) * 5));
@@ -133,6 +139,10 @@ final class SceneArt {
 
     /** Motes rising (embers) or drifting up slowly (motes of light), in the two colours given. */
     static void motes(GuiGraphics g, int w, int h, float t, int count, float speed, int colorA, int colorB) {
+        if (calm()) {
+            count /= 4;
+            speed /= 3;
+        }
         for (int i = 0; i < count; i++) {
             float s = speed * (0.45f + rand(i, 11));
             float y = h - ((t * s + rand(i, 12) * h) % (h * 1.1f));

@@ -198,11 +198,11 @@ public class Sprint8GameTests {
     public static void kneelingInALairCallsItsEchoAfterTheCampaign(GameTestHelper helper) {
         com.sofe.world.lair.BossLairs.forget();
         Vec3 middle = helper.absoluteVec(new Vec3(4.5, 2, 4.5));
-        var lair = new com.sofe.world.lair.BossLairs.Lair("sofe:kaleth", (int) Math.floor(middle.x), (int) Math.floor(middle.z), 12);
+        var lair = new com.sofe.world.lair.BossLairs.Lair("sofe:prython", (int) Math.floor(middle.x), (int) Math.floor(middle.z), 12);
         ServerPlayer player = bearer(helper, "sofe_test_kneel");
         player.moveTo(middle.x, middle.y, middle.z, 0, 0);
         player.setPose(net.minecraft.world.entity.Pose.CROUCHING);
-        story(player).defeat("sofe:kaleth");
+        story(player).defeat("sofe:prython"); // a boss no other test raises, so none stands nearby
         var players = List.of(player);
         for (int i = 0; i < com.sofe.world.lair.BossLairs.ECHO_KNEEL_CHECKS; i++) {
             helper.assertTrue(com.sofe.world.lair.BossLairs.kneel(helper.getLevel(), lair, players).isEmpty(), "an Echo rose before the campaign was over");
@@ -212,10 +212,20 @@ public class Sprint8GameTests {
         for (int i = 0; i < com.sofe.world.lair.BossLairs.ECHO_KNEEL_CHECKS && echo.isEmpty(); i++) {
             echo = com.sofe.world.lair.BossLairs.kneel(helper.getLevel(), lair, players);
         }
-        helper.assertTrue(echo.isPresent() && echo.get() instanceof KalethEntity, "kneeling should call Kaleth's Echo");
-        helper.assertFalse(((KalethEntity) echo.get()).isEcho(), "a called Echo is a whole fight, with its rewards");
+        helper.assertTrue(echo.isPresent() && echo.get() instanceof com.sofe.entity.boss.PrythonEntity, "kneeling should call Prython's Echo");
+        helper.assertFalse(((com.sofe.entity.boss.SoFEBossEntity) echo.get()).isEcho(), "a called Echo is a whole fight, with its rewards");
         echo.get().discard();
         com.sofe.world.lair.BossLairs.forget();
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void theIntegrityCheckPassesAWholeJourneyAndCatchesAMissingMap(GameTestHelper helper) {
+        var whole = com.sofe.world.FreeMode.check(com.sofe.world.region.RegionMap.defaultLayout());
+        helper.assertTrue(whole.isEmpty(), "a whole journey should pass the integrity check: " + whole.map(c -> c.getString()).orElse(""));
+        var empty = com.sofe.world.FreeMode.check(new com.sofe.world.region.RegionMap(List.of()));
+        helper.assertTrue(empty.isPresent(), "a journey with no map of Aetheris should go to free mode");
+        helper.assertTrue(com.sofe.world.FreeMode.incompatibleInstalled().isEmpty(), "no mod of the pack should be on the incompatible list");
         helper.succeed();
     }
 }

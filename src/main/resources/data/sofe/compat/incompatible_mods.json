@@ -1,0 +1,4 @@
+{
+  "_comment": "Mod ids known to break the story (docs/Jugabilidad.md, 'Free mode'): with one installed the title screen warns, and a journey plays in free mode. None is known yet; add an id here when one is found.",
+  "mods": []
+}

@@ -156,7 +156,7 @@ public class CrownedInAshScreen extends Screen {
         g.fill(0, base - unit * 2, w, base, 0x30FF5010); // the glow over the burning roofs
         for (int i = 0; i < w / unit; i++) {
             if (rand(i, 2) < 0.62f) continue; // fires here and there, not everywhere
-            float flick = 0.5f + 0.5f * Mth.sin(t * (5 + rand(i, 3) * 5) + i * 1.7f);
+            float flick = calm() ? 0.6f : 0.5f + 0.5f * Mth.sin(t * (5 + rand(i, 3) * 5) + i * 1.7f);
             int tall = (int) (unit * (2 + rand(i, 5) * 7) * (0.6f + 0.5f * flick));
             int wide = unit * (2 + (int) (rand(i, 6) * 3));
             int x = i * unit + (int) (Mth.sin(t * 2 + i) * unit * 0.3f);
@@ -270,14 +270,7 @@ public class CrownedInAshScreen extends Screen {
 
     /** Embers rising from the burning city. */
     private void embers(GuiGraphics g, int w, int h, float t) {
-        for (int i = 0; i < 90; i++) {
-            float speed = 18 + rand(i, 11) * 40;
-            float y = h - ((t * speed + rand(i, 12) * h) % (h * 1.1f));
-            float x = rand(i, 13) * w + 10 * Mth.sin(t * 1.7f + i);
-            float life = 1 - y / h;
-            int size = rand(i, 14) < 0.2f ? 2 : 1;
-            g.fill((int) x, (int) y, (int) x + size, (int) y + size, argb(0.9f - life * 0.6f, rand(i, 15) < 0.5f ? 0xFFB030 : 0xFF5010));
-        }
+        motes(g, w, h, t, 90, 40, 0xFFB030, 0xFF5010);
     }
 
     /** Ash falling on the throne. */

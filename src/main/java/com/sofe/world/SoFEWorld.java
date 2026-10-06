@@ -20,9 +20,17 @@ public final class SoFEWorld {
         return regionMap(server).isPresent();
     }
 
-    /** The region layout saved in this world, if it is a journey. */
+    /**
+     * The region layout saved in this world, if it is a journey whose story can run: a journey in free mode (FreeMode)
+     * answers as a world that is no journey, so the story, the locks and the lairs stop.
+     */
     public static Optional<RegionMap> regionMap(MinecraftServer server) {
-        if (server.overworld().getChunkSource().getGenerator().getBiomeSource() instanceof AetherisBiomeSource source) {
+        return rawRegionMap(server).filter(map -> FreeMode.reason(server, map).isEmpty());
+    }
+
+    /** The region layout saved in this world, free mode or not. */
+    public static Optional<RegionMap> rawRegionMap(MinecraftServer server) {
+        if (server.overworld() != null && server.overworld().getChunkSource().getGenerator().getBiomeSource() instanceof AetherisBiomeSource source) {
             return Optional.of(source.regionMap());
         }
         return Optional.empty();
