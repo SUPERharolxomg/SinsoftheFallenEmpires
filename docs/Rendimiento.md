@@ -85,7 +85,18 @@ Measured on 2026-10-05 on the development PC (not the target PC: an RTX 4060, re
 | The bosses in a row | 768 fps, 2.6 GB | 899 fps, 1.1 GB |
 
 - Chunk rendering roughly doubles: the capitals benefit most.
-- The bosses gain least: their GeckoLib models are drawn every frame and Embeddium does not touch entity rendering. They are where the mod's own optimization should start (Sprint 8, "Performance optimization").
+- The bosses gain least: their GeckoLib models are drawn every frame and Embeddium does not touch entity rendering.
+
+**The bosses, measured** (2026-10-06, same PC and settings, frame time = 1000 / fps):
+
+| Scene | fps | Frame time |
+|-------|-----|------------|
+| An almost empty scene (a Waystone in the sky) | 2,960 | 0.34 ms |
+| Prython filling the screen (the most complex model, 277 cubes) | 1,536 | 0.65 ms |
+| Nahrazel filling the screen (238 cubes, the tallest texture) | 1,598 | 0.63 ms |
+| All 19 bosses in a row | 1,016 | 0.98 ms |
+
+A boss costs about 0.3 ms a frame when it fills the screen. On a GTX 1650, roughly three times slower, that is about 1 ms of the 16.7 ms a 60 fps frame allows: the models do not need simplifying, and making them simpler would cost the bestiary its look for nothing measurable.
 - The 19 mods load together with no errors; the 102 GameTests pass with the pack's config.
 
 **Still to do:** play an hour on a PC like the target (a capital, a boss fight, a long ride across a region) and write its frame rate and memory here.
