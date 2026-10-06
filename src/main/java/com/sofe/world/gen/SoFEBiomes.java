@@ -1,5 +1,7 @@
 package com.sofe.world.gen;
 
+import com.sofe.registry.SoFESounds;
+
 import com.sofe.SoFEMod;
 import com.sofe.world.region.Region;
 import net.minecraft.core.HolderGetter;
@@ -54,15 +56,41 @@ public final class SoFEBiomes {
         HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(Registries.CONFIGURED_CARVER);
 
-        context.register(SULTHARI_DESERT, OverworldBiomes.desert(features, carvers));
-        context.register(NORDRATH_TUNDRA, OverworldBiomes.plains(features, carvers, false, true, false));
-        context.register(PARSIVAN_GARDENS, OverworldBiomes.forest(features, carvers, false, false, true));
-        context.register(KHEMET_VALLEY, OverworldBiomes.savanna(features, carvers, false, false));
-        context.register(AUREUM_HILLS, OverworldBiomes.plains(features, carvers, false, false, false));
+        context.register(SULTHARI_DESERT, withMusic(OverworldBiomes.desert(features, carvers), SoFESounds.MUSIC_SULTHARI));
+        context.register(NORDRATH_TUNDRA, withMusic(OverworldBiomes.plains(features, carvers, false, true, false), SoFESounds.MUSIC_NORDRATH));
+        context.register(PARSIVAN_GARDENS, withMusic(OverworldBiomes.forest(features, carvers, false, false, true), SoFESounds.MUSIC_PARSIVAN));
+        context.register(KHEMET_VALLEY, withMusic(OverworldBiomes.savanna(features, carvers, false, false), SoFESounds.MUSIC_KHEMET));
+        context.register(AUREUM_HILLS, withMusic(OverworldBiomes.plains(features, carvers, false, false, false), SoFESounds.MUSIC_AUREUM));
         context.register(AETHERIS_OCEAN, OverworldBiomes.ocean(features, carvers, false));
-        context.register(ASHEN_WASTES, ashenWastes(OverworldBiomes.desert(features, carvers)));
-        context.register(NORDRATH_ICE_FIELDS, OverworldBiomes.plains(features, carvers, false, true, true));
-        context.register(NORDRATH_VOLCANIC_FORGES, volcanicForges(OverworldBiomes.plains(features, carvers, false, false, false)));
+        context.register(ASHEN_WASTES, withMusic(ashenWastes(OverworldBiomes.desert(features, carvers)), SoFESounds.MUSIC_ASHEN_WASTES));
+        context.register(NORDRATH_ICE_FIELDS, withMusic(OverworldBiomes.plains(features, carvers, false, true, true), SoFESounds.MUSIC_NORDRATH));
+        context.register(NORDRATH_VOLCANIC_FORGES, withMusic(volcanicForges(OverworldBiomes.plains(features, carvers, false, false, false)),
+                SoFESounds.MUSIC_VOLCANIC_FORGES));
+    }
+
+    /** The same biome, with the music of its region (SoFESounds, assets/sofe/sounds.json). */
+    private static Biome withMusic(Biome biome, net.minecraftforge.registries.RegistryObject<net.minecraft.sounds.SoundEvent> music) {
+        BiomeSpecialEffects e = biome.getSpecialEffects();
+        BiomeSpecialEffects.Builder effects = new BiomeSpecialEffects.Builder()
+                .fogColor(e.getFogColor()).skyColor(e.getSkyColor()).waterColor(e.getWaterColor()).waterFogColor(e.getWaterFogColor())
+                .grassColorModifier(e.getGrassColorModifier())
+                .backgroundMusic(SoFESounds.regionMusic(music.getHolder().orElseThrow()));
+        e.getFoliageColorOverride().ifPresent(effects::foliageColorOverride);
+        e.getGrassColorOverride().ifPresent(effects::grassColorOverride);
+        e.getAmbientParticleSettings().ifPresent(effects::ambientParticle);
+        e.getAmbientLoopSoundEvent().ifPresent(effects::ambientLoopSound);
+        e.getAmbientMoodSettings().ifPresent(effects::ambientMoodSound);
+        e.getAmbientAdditionsSettings().ifPresent(effects::ambientAdditionsSound);
+        var climate = biome.getModifiedClimateSettings();
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(climate.hasPrecipitation())
+                .temperature(climate.temperature())
+                .temperatureAdjustment(climate.temperatureModifier())
+                .downfall(climate.downfall())
+                .specialEffects(effects.build())
+                .mobSpawnSettings(biome.getMobSettings())
+                .generationSettings(biome.getGenerationSettings())
+                .build();
     }
 
     /** Black rock and embers under a red sky, where Vorath's fire comes up from below. */

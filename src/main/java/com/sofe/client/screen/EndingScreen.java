@@ -60,9 +60,14 @@ public class EndingScreen extends Screen {
 
     /** Opening at card {@code start} (PlaceShots' ending:&lt;bearer&gt;:&lt;card&gt;). */
     public EndingScreen(int start) {
+        this(start, null);
+    }
+
+    /** With these fates instead of the story's (PlaceShots' ending:&lt;bearer&gt;:&lt;card&gt;:&lt;region&gt;=&lt;fate&gt;). */
+    public EndingScreen(int start, Map<String, String> fatesShown) {
         super(Component.translatable("ending.sofe.credits.title"));
         bearer = ClientClassData.get().orElse(PlayerClass.KING);
-        Map<String, String> fates = ClientStoryData.get().map(SyncStoryPacket::fates).orElse(Map.of());
+        Map<String, String> fates = fatesShown != null ? fatesShown : ClientStoryData.get().map(SyncStoryPacket::fates).orElse(Map.of());
         List<SyncStoryPacket.Quest> quests = ClientStoryData.get().map(SyncStoryPacket::quests).orElse(List.of());
         boolean full = Epilogue.full(bearer, id -> quests.stream().anyMatch(q -> q.id().equals(id) && q.completed()));
         String b = bearer.name().toLowerCase(Locale.ROOT);
@@ -266,6 +271,12 @@ public class EndingScreen extends Screen {
 
     /** A region at dawn, its skyline whole, in its own colours; greyer when nothing was settled there. */
     private void slide(GuiGraphics g, int w, int h, float t, Card c) {
+        // the final illustration (splash/fate/<region>_<fate>.png, docs/ArteFinal.md) when the game has it
+        var art = Splash.find("fate/" + c.text().substring("ending.sofe.".length()).replace('.', '_'));
+        if (art.isPresent()) {
+            Splash.cover(g, art.get(), 0, 0, w, h);
+            return;
+        }
         int[] sky = switch (c.region()) {
             case NORDRATH -> new int[]{0xFF2A4058, 0xFFD8E8F0, 0xFF3A4A60, 0xFF1C2838};
             case PARSIVAN -> new int[]{0xFF2A1A48, 0xFFE8A0C8, 0xFF4A2A60, 0xFF24143A};
@@ -285,16 +296,23 @@ public class EndingScreen extends Screen {
 
     /** The Bearer's epilogue: their own figure on a hill of their land, at dawn. */
     private void bearer(GuiGraphics g, int w, int h, float t, float p) {
-        sky(g, w, h, 0xFF1A2440, lerpColor(0xFFE09060, 0xFFF0D8A0, p));
-        stars(g, w, h, t, 40, 0.3f);
-        City city = City.of(bearer);
-        skyline(g, city, w, h, t, 0.6f, 0.15f, 0xFF4A3A40, 7);
-        int hill = (int) (h * 0.72f), rise = h / 9, halfW = (int) (w * 0.42f);
-        for (int i = 0; i < rise; i++) { // a low hill, the Bearer on its top
-            int half = (int) (halfW * Math.sqrt(1 - (i / (float) rise) * (i / (float) rise)));
-            g.fill(w / 2 - half, hill + rise - i - 1, w / 2 + half, hill + rise - i, 0xFF1A1418);
+        int hill = (int) (h * 0.72f);
+        // the final illustration (splash/epilogue/<hero>_<full|unfinished>.png) when the game has it, the player drawn on it
+        var art = Splash.find("epilogue/" + cards.get(card).text().substring("ending.sofe.bearer.".length()).replace('.', '_'));
+        if (art.isPresent()) {
+            Splash.cover(g, art.get(), 0, 0, w, h);
+        } else {
+            sky(g, w, h, 0xFF1A2440, lerpColor(0xFFE09060, 0xFFF0D8A0, p));
+            stars(g, w, h, t, 40, 0.3f);
+            City city = City.of(bearer);
+            skyline(g, city, w, h, t, 0.6f, 0.15f, 0xFF4A3A40, 7);
+            int rise = h / 9, halfW = (int) (w * 0.42f);
+            for (int i = 0; i < rise; i++) { // a low hill, the Bearer on its top
+                int half = (int) (halfW * Math.sqrt(1 - (i / (float) rise) * (i / (float) rise)));
+                g.fill(w / 2 - half, hill + rise - i - 1, w / 2 + half, hill + rise - i, 0xFF1A1418);
+            }
+            g.fill(0, hill + rise, w, h, 0xFF1A1418);
         }
-        g.fill(0, hill + rise, w, h, 0xFF1A1418);
         var player = Minecraft.getInstance().player;
         int scale = (int) (h / 6.5f);
         if (player != null) InventoryScreen.renderEntityInInventoryFollowsMouse(g, w / 2, hill, scale, -30f, -8f, player);

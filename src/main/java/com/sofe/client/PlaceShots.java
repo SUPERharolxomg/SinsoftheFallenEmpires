@@ -37,8 +37,10 @@ public final class PlaceShots {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.getSingleplayerServer() == null) return;
         mc.options.pauseOnLostFocus = false;
+        boolean talking = place >= 0 && place < (places == null ? 0 : places.size()) && places.get(place).startsWith("dialogue:");
         if (mc.screen != null && !(mc.screen instanceof com.sofe.client.screen.CrownedInAshScreen)
-                && !(mc.screen instanceof com.sofe.client.screen.EndingScreen)) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
+                && !(mc.screen instanceof com.sofe.client.screen.EndingScreen)
+                && !(talking && mc.screen instanceof com.sofe.client.screen.DialogueScreen)) mc.setScreen(null); // the pause menu, the class choice and the prologue's dialogues of a journey
         if (places == null) {
             places = new ArrayList<>(Arrays.asList(System.getProperty("sofe.placeShots").split(",")));
             mc.options.hideGui = true;
@@ -53,7 +55,8 @@ public final class PlaceShots {
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
             if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
-                    && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")) {
+                    && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")
+                    && !places.get(place).startsWith("dialogue:")) {
                 look(mc, places.get(place), view);
                 wait = places.get(place).endsWith("/city") ? SETTLE * 4 : SETTLE; // a capital's far side takes a while to load
                 return;
@@ -66,7 +69,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") ? 30 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -155,6 +158,14 @@ public final class PlaceShots {
             mc.setScreen(new com.sofe.client.screen.CrownedInAshScreen((int) (Float.parseFloat(v[2]) * 20) - 30));
             return;
         }
+        if (piece.startsWith("dialogue:")) { // dialogue:act1/shard, a scene of the story on screen (with its illustration, if any)
+            String id = "sofe:" + piece.substring("dialogue:".length());
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p != null) com.sofe.quest.DialogueService.open(p, id, null);
+            });
+            return;
+        }
         if (piece.equals("loot")) { // loot: gear of each rarity on the ground, its beam and its rarity label (accessibility)
             server.execute(() -> {
                 ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
@@ -194,7 +205,9 @@ public final class PlaceShots {
                 ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
                 if (p != null) p.setGameMode(GameType.CREATIVE);
             });
-            mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2])));
+            java.util.Map<String, String> fates = new java.util.HashMap<>();
+            for (int i = 3; i < v.length; i++) fates.put(v[i].split("=")[0], v[i].split("=")[1]); // ending:<bearer>:<card>:khemet=rest
+            mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2]), v.length > 3 ? fates : null));
             return;
         }
         if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)

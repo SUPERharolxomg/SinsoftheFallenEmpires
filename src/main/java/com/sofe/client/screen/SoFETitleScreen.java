@@ -84,6 +84,9 @@ public class SoFETitleScreen extends Screen {
 
         addRenderableWidget(Button.builder(Component.translatable("menu.sofe.join_expedition"),
                 b -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))).bounds(x, y, w, 20).build());
+        y += 24;
+        addRenderableWidget(Button.builder(Component.translatable("menu.sofe.codex"),
+                b -> this.minecraft.setScreen(new CodexScreen(this))).bounds(x, y, w, 20).build());
         y += 36;
 
         addRenderableWidget(Button.builder(Component.translatable("menu.options"),

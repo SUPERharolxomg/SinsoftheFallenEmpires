@@ -45,6 +45,8 @@ public class JournalScreen extends Screen {
         trackButton = addRenderableWidget(Button.builder(Component.translatable("gui.sofe.journal.track"), b -> {
             if (selected != null) SoFENetwork.sendToServer(new TrackQuestPacket(selected));
         }).bounds(left() + PANEL_W - 78, top() + PANEL_H - 24, 70, 18).build());
+        addRenderableWidget(Button.builder(Component.translatable("menu.sofe.codex"),
+                b -> this.minecraft.setScreen(new CodexScreen(this))).bounds(left() + PANEL_W - 156, top() + PANEL_H - 24, 74, 18).build());
         if (selected == null) {
             selected = ClientStoryData.get().flatMap(SyncStoryPacket::tracked).orElse(null);
         }

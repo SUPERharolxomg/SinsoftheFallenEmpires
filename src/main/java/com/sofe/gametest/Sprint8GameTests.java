@@ -228,4 +228,36 @@ public class Sprint8GameTests {
         helper.assertTrue(com.sofe.world.FreeMode.incompatibleInstalled().isEmpty(), "no mod of the pack should be on the incompatible list");
         helper.succeed();
     }
+
+    private static com.google.gson.JsonObject lang(String code) {
+        try (var in = SoFEMod.class.getResourceAsStream("/assets/sofe/lang/" + code + ".json")) {
+            return com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @GameTest(template = "empty")
+    public static void everythingTheModRegistersHasANameInBothLanguages(GameTestHelper helper) {
+        List<String> missing = new java.util.ArrayList<>();
+        for (String code : List.of("en_us", "es_es")) {
+            var lang = lang(code);
+            java.util.function.Consumer<String> need = key -> { if (!lang.has(key)) missing.add(code + ": " + key); };
+            net.minecraftforge.registries.ForgeRegistries.ITEMS.getEntries().stream().filter(e -> e.getKey().location().getNamespace().equals(SoFEMod.MOD_ID))
+                    .forEach(e -> need.accept(e.getValue().getDescriptionId()));
+            net.minecraftforge.registries.ForgeRegistries.BLOCKS.getEntries().stream().filter(e -> e.getKey().location().getNamespace().equals(SoFEMod.MOD_ID))
+                    .filter(e -> e.getValue().asItem() != net.minecraft.world.item.Items.AIR)
+                    .forEach(e -> need.accept(e.getValue().getDescriptionId()));
+            net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getEntries().stream().filter(e -> e.getKey().location().getNamespace().equals(SoFEMod.MOD_ID))
+                    .forEach(e -> {
+                        need.accept(e.getValue().getDescriptionId());
+                        if (e.getValue().create(helper.getLevel()) instanceof com.sofe.entity.boss.SoFEBossEntity boss) {
+                            boss.signatureId().ifPresent(id -> need.accept("signature.sofe." + id));
+                            boss.discard();
+                        }
+                    });
+        }
+        helper.assertTrue(missing.isEmpty(), missing.size() + " names missing: " + String.join(", ", missing.subList(0, Math.min(12, missing.size()))));
+        helper.succeed();
+    }
 }

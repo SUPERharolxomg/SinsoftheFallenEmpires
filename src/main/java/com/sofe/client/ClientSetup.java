@@ -42,6 +42,10 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onInit);
+        MinecraftForge.EVENT_BUS.addListener(SoFEMusic::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onBackground);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onRender);
         if (ArmorShots.enabled() || SkillShots.enabled() || PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled()
                 || CompatCheck.enabled()) {
             MinecraftForge.EVENT_BUS.addListener(ShotsWorld::onClientTick);
@@ -55,6 +59,8 @@ public final class ClientSetup {
         if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
         if (SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(SkillShots::onClientTick);
         modBus.addListener(SoFEKeys::register);
+        modBus.addListener((net.minecraftforge.client.event.RegisterClientReloadListenersEvent e) ->
+                e.registerReloadListener((net.minecraft.server.packs.resources.ResourceManagerReloadListener) rm -> com.sofe.client.screen.Splash.clear()));
         modBus.addListener(ClientSetup::registerItemProperties);
         MinecraftForge.EVENT_BUS.addListener(TitleScreenHandler::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(SoFEKeys::onClientTick);

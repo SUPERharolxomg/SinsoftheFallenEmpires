@@ -272,11 +272,18 @@ public class DialogueScreen extends Screen {
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         layout();
         if (line.cinematic()) {
-            // letterbox: the lower band is tall enough to hold the whole box, portrait and name included
+            // a scene of the story with its own illustration (splash/dialogues.json) shows it instead of the world
+            var art = Splash.forDialogue(line.dialogue());
+            art.ifPresent(a -> Splash.cover(g, a, 0, 0, this.width, this.height));
+            // letterbox: the lower band is tall enough to hold the whole box, portrait and name included (veiled over an illustration)
             int[] frame = portraitCard();
             int lower = Math.min(frame[1] - frame[2] / 8, boxTop() - 14) - 8;
-            g.fill(0, 0, this.width, this.height / 8, 0xFF000000);
-            g.fill(0, lower, this.width, this.height, 0xFF000000);
+            int bars = art.isPresent() ? 0x70000000 : 0xFF000000;
+            g.fill(0, 0, this.width, this.height / 8, bars);
+            if (art.isPresent()) {
+                g.fillGradient(0, lower - 40, this.width, lower, 0x00000000, bars); // the picture fades into the band
+            }
+            g.fill(0, lower, this.width, this.height, bars);
         }
         int l = boxLeft(), t = boxTop(), w = boxWidth(), h = boxHeight();
         int[] card = portraitCard();

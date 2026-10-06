@@ -11,7 +11,8 @@ import net.minecraftforge.event.TickEvent;
  * opens too (titleshot_classic.png); then the game quits.
  */
 public final class TitleShot {
-    private static int ticks;
+    private static int ticks, inWorld, menuTicks, loadingTicks;
+    private static boolean loadingShot;
 
     private TitleShot() {
     }
@@ -48,6 +49,17 @@ public final class TitleShot {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
+        if ("menus".equals(System.getProperty("sofe.titleShot"))) { // -Dsofe.titleShot=menus: a loading screen, then the pause menu
+            if (++menuTicks == 160 && mc.level == null) mc.createWorldOpenFlows().loadLevel(mc.screen, ShotsWorld.AETHERIS);
+            if (mc.screen != null && com.sofe.client.screen.ThemedMenus.isLoading(mc.screen) && !loadingShot && ++loadingTicks == 8) {
+                loadingShot = true;
+                Screenshot.grab(mc.gameDirectory, "loading.png", mc.getMainRenderTarget(), m -> { });
+            }
+            if (mc.level != null && ++inWorld == 200) mc.setScreen(new net.minecraft.client.gui.screens.PauseScreen(true));
+            if (inWorld == 230) Screenshot.grab(mc.gameDirectory, "pause.png", mc.getMainRenderTarget(), m -> { });
+            if (inWorld == 240) mc.stop();
+            return;
+        }
         if (mc.screen == null || mc.getOverlay() != null) return;
         ticks++;
         if (ticks == 100) {
@@ -56,6 +68,16 @@ public final class TitleShot {
                 java.nio.file.Files.writeString(mc.gameDirectory.toPath().resolve("titleshot.log"), mc.screen.getClass().getName() + "\n");
             } catch (java.io.IOException ignored) {
             }
+        }
+        if ("codex".equals(System.getProperty("sofe.titleShot"))) { // -Dsofe.titleShot=codex: the Codex's pages
+            if (ticks == 110) mc.setScreen(new com.sofe.client.screen.CodexScreen(mc.screen));
+            if (ticks == 140) Screenshot.grab(mc.gameDirectory, "codex_cover.png", mc.getMainRenderTarget(), m -> { });
+            if (ticks == 150 && mc.screen instanceof com.sofe.client.screen.CodexScreen c) c.pick(0, 0);
+            if (ticks == 170) Screenshot.grab(mc.gameDirectory, "codex_story.png", mc.getMainRenderTarget(), m -> { });
+            if (ticks == 180 && mc.screen instanceof com.sofe.client.screen.CodexScreen c) c.pick(1, 5);
+            if (ticks == 200) Screenshot.grab(mc.gameDirectory, "codex_bestiary.png", mc.getMainRenderTarget(), m -> { });
+            if (ticks == 210) mc.stop();
+            return;
         }
         boolean more = !TitleScreenHandler.titleMods().isEmpty();
         if (more && ticks == 110) TitleScreenHandler.openVanillaTitle(mc); // the button for Essential's menu
