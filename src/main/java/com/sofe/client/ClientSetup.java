@@ -50,6 +50,7 @@ public final class ClientSetup {
         if (ProtectCheck.enabled()) MinecraftForge.EVENT_BUS.addListener(ProtectCheck::onClientTick);
         if (CompatCheck.enabled()) MinecraftForge.EVENT_BUS.addListener(CompatCheck::onClientTick);
         if (TitleShot.enabled()) MinecraftForge.EVENT_BUS.addListener(TitleShot::onClientTick);
+        if (TitleShot.joinEnabled()) MinecraftForge.EVENT_BUS.addListener(TitleShot::onJoinTick);
         if (PlaceShots.enabled()) MinecraftForge.EVENT_BUS.addListener(PlaceShots::onClientTick);
         if (ArmorShots.enabled()) MinecraftForge.EVENT_BUS.addListener(ArmorShots::onClientTick);
         if (SkillShots.enabled()) MinecraftForge.EVENT_BUS.addListener(SkillShots::onClientTick);

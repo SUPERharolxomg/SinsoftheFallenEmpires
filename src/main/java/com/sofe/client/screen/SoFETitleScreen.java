@@ -147,6 +147,11 @@ public class SoFETitleScreen extends Screen {
         int subtitleY = buttonsTop - 16;
         int[] logo = renderLogo(graphics, 6, subtitleY - 4);
         graphics.drawCenteredString(this.font, Component.translatable("menu.sofe.subtitle"), this.width / 2, subtitleY, PARCHMENT);
+        var breaking = com.sofe.world.FreeMode.incompatibleInstalled();
+        if (!breaking.isEmpty()) { // a mod that breaks the story: say so before a journey begins
+            graphics.drawCenteredString(this.font, Component.translatable("menu.sofe.incompatible", String.join(", ", breaking)),
+                    this.width / 2, this.height - 36, 0xFF6060);
+        }
 
         if (splash != null) {
             // The vanilla splash draws at (width / 2 + 123, 69); move it onto the logo's lower right corner

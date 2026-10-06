@@ -3297,5 +3297,18 @@
   "message.sofe.echo_kneel": "Keep kneeling to call the Echo of %s",
   "message.sofe.echo_rises": "The Echo of %s rises",
   "advancement.sofe.the_seal_rewritten": "The Seal Rewritten",
-  "advancement.sofe.the_seal_rewritten.desc": "Close the Codex on the First Fallen and see what became of Aetheris"
+  "advancement.sofe.the_seal_rewritten.desc": "Close the Codex on the First Fallen and see what became of Aetheris",
+  "config.sofe.rarity_labels": "Rarity labels",
+  "config.sofe.rarity_labels.tooltip": "Write the rarity's name over gear lying on the ground, not only the colour of its beam.",
+  "config.sofe.reduce_motion": "Reduce motion",
+  "config.sofe.reduce_motion.tooltip": "Calmer story scenes: no flickering fire, no scrolling skylines, fewer embers. Also on with Minecraft's 'Hide Lightning Flashes'.",
+  "message.sofe.free_mode": "This world is in SoFE free mode: %s. The items work; the story, the seals and the bosses wait.",
+  "message.sofe.free_mode.incompatible": "%s is installed, and it breaks the story",
+  "message.sofe.free_mode.no_layout": "the map of Aetheris is missing from this world",
+  "message.sofe.free_mode.no_story": "the story's data is missing",
+  "message.sofe.free_mode.missing_boss": "the story boss %s is missing",
+  "message.sofe.free_mode.not_journey": "this world was not made with Begin the Journey",
+  "menu.sofe.incompatible": "%s breaks the story: a new journey will play in free mode.",
+  "config.sofe.allow_incompatible_mods": "Allow incompatible mods",
+  "config.sofe.allow_incompatible_mods.tooltip": "Play the story even with a mod listed in data/sofe/compat/incompatible_mods.json installed (at your own risk)."
 }

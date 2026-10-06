@@ -171,6 +171,9 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.SceneService::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.SceneService::onLogout);
 
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.FreeMode::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.FreeMode::onServerStopped);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.FreeMode::onLogin);
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onTeleport);
         MinecraftForge.EVENT_BUS.addListener(RegionEnforcer::onLogout);

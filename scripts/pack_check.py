@@ -89,6 +89,7 @@ def prepare(instance, jars):
 # mods that players often add, to check the pack with them (--extra): where their jars come from
 EXTRA = {
     "essential": ["https://cdn.modrinth.com/data/k2ZPuTBm/versions/soTLEi9f/Essential_1-5-0-1_forge_1-20-1.jar"],
+    "chunky": ["https://cdn.modrinth.com/data/fALzjamp/versions/4FTDk9wv/Chunky-1.3.146.jar"],
     "ftb": ["https://maven.ftb.dev/releases/dev/ftb/mods/ftb-essentials-forge/2001.2.4/ftb-essentials-forge-2001.2.4.jar",
             "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-forge/2001.2.13/ftb-library-forge-2001.2.13.jar",
             "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1MKTLiiG/architectury-9.2.14-forge.jar"],
@@ -114,7 +115,8 @@ def main():
     ap.add_argument("--memory", default="4G", help="what the game gets (-Xmx); 4G on a PC with 8 GB")
     ap.add_argument("--shots", default="aureum/city,parsivan/city,bosses")
     ap.add_argument("--no-perf-mods", action="store_true")
-    ap.add_argument("--check", default="places", choices=["places", "compat", "title"])
+    ap.add_argument("--check", default="places", choices=["places", "compat", "title", "join"])
+    ap.add_argument("--server", default="localhost", help="for --check join: the server to join")
     ap.add_argument("--extra", default="", help="other mods to add: " + ", ".join(EXTRA))
     args = ap.parse_args()
     from portablemc.forge import ForgeVersion
@@ -128,16 +130,19 @@ def main():
 
     version = ForgeVersion("%s-%s" % (p["minecraft_version"], p["forge_version"]), context=Context(PACK / "mc", instance))
     version.set_auth_offline("SoFEPackCheck", None)
-    if args.check != "title":
+    if args.check == "join":
+        version.set_quick_play_multiplayer(args.server)
+    elif args.check != "title":
         version.set_quick_play_singleplayer("shots_aetheris")
     version.resolution = (1280, 720)
     env = version.install()
     # the JVM path comes first; the pack's memory and garbage collector right after it (docs/Rendimiento.md)
     env.jvm_args[1:1] = ["-Xms%s" % args.memory, "-Xmx%s" % args.memory, "-XX:+UseG1GC", "-XX:+ParallelRefProcEnabled",
                          "-XX:MaxGCPauseMillis=200",
-                         {"places": "-Dsofe.placeShots=" + args.shots, "compat": "-Dsofe.compatCheck=true", "title": "-Dsofe.titleShot=true"}[args.check]]
+                         {"places": "-Dsofe.placeShots=" + args.shots, "compat": "-Dsofe.compatCheck=true", "title": "-Dsofe.titleShot=true",
+                          "join": "-Dsofe.joinShot=true"}[args.check]]
     env.run()
-    log = instance / {"places": "placeshots_perf.log", "compat": "compatcheck.log", "title": "titleshot.log"}[args.check]
+    log = instance / {"places": "placeshots_perf.log", "compat": "compatcheck.log", "title": "titleshot.log", "join": "joinshot.log"}[args.check]
     print(log.read_text(encoding="utf-8") if log.exists() else "no placeshots_perf.log: see %s" % (instance / "logs" / "latest.log"))
 
 

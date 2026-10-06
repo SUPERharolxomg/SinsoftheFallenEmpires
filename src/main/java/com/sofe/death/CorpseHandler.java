@@ -16,10 +16,16 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 /**
  * Death in a journey (docs/Jugabilidad.md, G1): the gear stays on a {@link BearerCorpseEntity} where
- * the player fell. Off with keepInventory, in hardcore, outside journeys, or with
- * corpseSystem = false (for servers that use a grave mod).
+ * the player fell. Off with keepInventory, in hardcore, outside journeys, with corpseSystem = false, or when a grave
+ * mod is installed ({@link #GRAVE_MODS}: theirs takes care of the items).
  */
 public final class CorpseHandler {
+    /** Grave and corpse mods that keep a dead player's items their own way (docs/Jugabilidad.md, "Other mods"). */
+    public static final java.util.List<String> GRAVE_MODS = java.util.List.of("corpse", "gravestone", "tombstone", "yigd");
+
+    public static boolean graveModInstalled() {
+        return GRAVE_MODS.stream().anyMatch(net.minecraftforge.fml.ModList.get()::isLoaded);
+    }
 
     private CorpseHandler() {
     }
@@ -27,6 +33,7 @@ public final class CorpseHandler {
     public static boolean appliesTo(ServerPlayer player) {
         return SoFEWorld.isJourney(player.server)
                 && SoFEConfig.SERVER.corpseSystem.get()
+                && !graveModInstalled()
                 && !player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
                 && !player.level().getLevelData().isHardcore()
                 && !player.isSpectator();

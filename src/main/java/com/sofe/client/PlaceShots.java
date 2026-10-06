@@ -53,7 +53,7 @@ public final class PlaceShots {
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
             if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
-                    && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:")) {
+                    && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")) {
                 look(mc, places.get(place), view);
                 wait = places.get(place).endsWith("/city") ? SETTLE * 4 : SETTLE; // a capital's far side takes a while to load
                 return;
@@ -66,7 +66,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") ? 30 : places.get(place).startsWith("at:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") ? 30 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -153,6 +153,38 @@ public final class PlaceShots {
                 if (p != null) p.setGameMode(GameType.CREATIVE);
             });
             mc.setScreen(new com.sofe.client.screen.CrownedInAshScreen((int) (Float.parseFloat(v[2]) * 20) - 30));
+            return;
+        }
+        if (piece.equals("loot")) { // loot: gear of each rarity on the ground, its beam and its rarity label (accessibility)
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                var level = p.serverLevel();
+                level.setDayTime(18000);
+                net.minecraft.core.BlockPos at = new net.minecraft.core.BlockPos(0, 220, 0);
+                for (int dx = -6; dx <= 6; dx++) for (int dz = -4; dz <= 4; dz++) {
+                    level.setBlockAndUpdate(at.offset(dx, -1, dz), net.minecraft.world.level.block.Blocks.POLISHED_DEEPSLATE.defaultBlockState());
+                }
+                var rarities = new com.sofe.gear.Rarity[]{com.sofe.gear.Rarity.TEMPERED, com.sofe.gear.Rarity.IMPERIAL};
+                for (int i = 0; i < rarities.length; i++) {
+                    var stack = com.sofe.gear.GearMaker.rollItem("sofe:glacial_iron_sword", 30, rarities[i], p, level.random);
+                    var relic = com.sofe.gear.GearMaker.relic("vorath_wrath", p);
+                    var item = (i == 0 ? stack : stack).orElse(null);
+                    if (item == null) continue;
+                    var e = new net.minecraft.world.entity.item.ItemEntity(level, at.getX() - 2.5 + i * 2.5, at.getY(), at.getZ() + 0.5, item, 0, 0, 0);
+                    e.setNeverPickUp();
+                    e.setUnlimitedLifetime();
+                    level.addFreshEntity(e);
+                    if (i == rarities.length - 1 && relic.isPresent()) {
+                        var r = new net.minecraft.world.entity.item.ItemEntity(level, at.getX() + 2.5, at.getY(), at.getZ() + 0.5, relic.get(), 0, 0, 0);
+                        r.setNeverPickUp();
+                        r.setUnlimitedLifetime();
+                        level.addFreshEntity(r);
+                    }
+                }
+                p.teleportTo(level, at.getX() + 0.5, at.getY() + 0.6, at.getZ() + 4.5, 180, 8);
+            });
             return;
         }
         if (piece.startsWith("ending:")) { // ending:<bearer>:<card>, the ending's card for that Bearer, a second and a half in
