@@ -64,6 +64,10 @@ minecraft {
                 property 'sofe.deathCheck', 'true'
                 args '--quickPlaySingleplayer', 'shots_aetheris'
             }
+            // ./gradlew runClient -PtitleShot=codex: screenshots of the title screen (and the Codex's pages), then quits (TitleShot)
+            if (project.hasProperty('titleShot')) {
+                property 'sofe.titleShot', project.property('titleShot')
+            }
             if (project.hasProperty('placeShots')) {
                 property 'sofe.placeShots', project.property('placeShots')
                 args '--quickPlaySingleplayer', 'shots_aetheris'

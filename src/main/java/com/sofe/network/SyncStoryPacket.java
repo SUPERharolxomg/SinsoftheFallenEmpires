@@ -17,7 +17,8 @@ import java.util.function.Supplier;
  * and whether this player bypasses the locks (an operator with opsBypass), for the Seal Veil.
  */
 public record SyncStoryPacket(int act, List<Quest> quests, Optional<String> tracked, Map<String, String> fates,
-                              List<String> openFates, Optional<Target> compass, Optional<Target> corpse, boolean bypassLocks) {
+                              List<String> openFates, Optional<Target> compass, Optional<Target> corpse, boolean bypassLocks,
+                              List<String> bosses) {
 
     /**
      * @param type     "main", "bearer" or "side"
@@ -53,6 +54,7 @@ public record SyncStoryPacket(int act, List<Quest> quests, Optional<String> trac
             b.writeInt(t.z());
         });
         buf.writeBoolean(bypassLocks);
+        buf.writeCollection(bosses, FriendlyByteBuf::writeUtf); // the bosses beaten, for the Codex's bestiary
     }
 
     public static SyncStoryPacket decode(FriendlyByteBuf buf) {
@@ -64,7 +66,8 @@ public record SyncStoryPacket(int act, List<Quest> quests, Optional<String> trac
         List<String> openFates = buf.readList(FriendlyByteBuf::readUtf);
         Optional<Target> compass = buf.readOptional(b -> new Target(b.readInt(), b.readInt()));
         Optional<Target> corpse = buf.readOptional(b -> new Target(b.readInt(), b.readInt()));
-        return new SyncStoryPacket(act, quests, tracked, fates, openFates, compass, corpse, buf.readBoolean());
+        boolean bypass = buf.readBoolean();
+        return new SyncStoryPacket(act, quests, tracked, fates, openFates, compass, corpse, bypass, buf.readList(FriendlyByteBuf::readUtf));
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {
