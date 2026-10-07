@@ -4,6 +4,69 @@
   "steps": [
     {
       "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 3,
+        "z": 85
+      },
+      "_chapter": "act5_ascension/hollow_choir"
+    },
+    {
+      "objective": {
+        "type": "reach",
+        "x": -1100,
+        "z": -900,
+        "radius": 14
+      },
+      "target": {
+        "x": -1100,
+        "z": -900
+      },
+      "_chapter": "act5_ascension/hollow_choir"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:void_*",
+        "count": 10
+      },
+      "target": {
+        "x": -1100,
+        "z": -900
+      },
+      "_chapter": "act5_ascension/hollow_choir"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:void_stalker",
+        "count": 1
+      },
+      "target": {
+        "x": -1082,
+        "z": -900
+      },
+      "lair": {
+        "x": -1082,
+        "z": -900,
+        "depth": 18,
+        "name": "lord.sofe.tomb_hollow_choir"
+      },
+      "_chapter": "act5_ascension/hollow_choir"
+    },
+    {
+      "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 3,
+        "z": 85
+      },
+      "_chapter": "act5_ascension/hollow_choir"
+    },
+    {
+      "objective": {
         "type": "solve_puzzle",
         "puzzle": "sofe:void_ruin"
       },

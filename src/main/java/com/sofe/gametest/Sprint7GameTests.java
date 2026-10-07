@@ -259,7 +259,8 @@ public class Sprint7GameTests {
         com.sofe.quest.QuestEngine.run(player, java.util.List.of(new com.sofe.quest.QuestEffect.StartQuest(quest)));
         helper.assertTrue(story.questStep(quest) == 1, "Act III did not start");
         com.sofe.quest.QuestEngine.event(player, new com.sofe.quest.QuestEvent.EnteredRegion("parsivan"));
-        // the Abandoned Pavilion first: its runes, then its guardian
+        for (int i = 0; i < 5; i++) com.sofe.quest.QuestEngine.advance(player, quest); // the poet's chapter: her word, the Veiled Queen's tomb, back to her
+        // the Abandoned Pavilion next: its runes, then its guardian
         com.sofe.quest.QuestEngine.event(player, new com.sofe.quest.QuestEvent.PuzzleSolved("sofe:parsivan_ruin"));
         com.sofe.quest.QuestEngine.event(player, new com.sofe.quest.QuestEvent.Killed("minecraft:evoker"));
         for (String boss : java.util.List.of("mirael", "thessyn", "luxara")) com.sofe.quest.QuestEngine.bossDefeated(player, "sofe:" + boss);
@@ -268,6 +269,7 @@ public class Sprint7GameTests {
         while (!(steps.get(khemet).objective() instanceof com.sofe.quest.Objective.ReachRegion r && r.region().equals("khemet"))) khemet++;
         helper.assertTrue(story.questStep(quest) == khemet + 1, "after Luxara the quest should send the Bearer to Khemet, is at " + story.questStep(quest));
         com.sofe.quest.QuestEngine.event(player, new com.sofe.quest.QuestEvent.EnteredRegion("khemet"));
+        for (int i = 0; i < 5; i++) com.sofe.quest.QuestEngine.advance(player, quest); // the scribe's chapter
         com.sofe.quest.QuestEngine.event(player, new com.sofe.quest.QuestEvent.PuzzleSolved("sofe:khemet_ruin"));
         com.sofe.quest.QuestEngine.event(player, new com.sofe.quest.QuestEvent.Killed("minecraft:wither_skeleton"));
         com.sofe.quest.QuestEngine.bossDefeated(player, "sofe:dormiel");

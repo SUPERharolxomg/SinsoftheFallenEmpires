@@ -21,7 +21,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/act1_eclipse/step5"
+					advancement: "sofe:quest/act1_eclipse/step10"
 					criterion: ""
 					id: "6B56F1C0159F0EFA"
 					type: "advancement"
@@ -44,7 +44,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act1_eclipse/step7"
+					advancement: "sofe:quest/act1_eclipse/step12"
 					criterion: ""
 					id: "063FF7ED953E1428"
 					type: "advancement"
@@ -161,7 +161,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act2_north/step3"
+					advancement: "sofe:quest/act2_north/step8"
 					criterion: ""
 					id: "40BF16B706B49026"
 					type: "advancement"
@@ -302,7 +302,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act3_east/step3"
+					advancement: "sofe:quest/act3_east/step8"
 					criterion: ""
 					id: "35562E4EE63FC8A6"
 					type: "advancement"
@@ -419,7 +419,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act3_east/step9"
+					advancement: "sofe:quest/act3_east/step19"
 					criterion: ""
 					id: "7A7D4DEFA422D2CE"
 					type: "advancement"
@@ -512,7 +512,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act4_west/step3"
+					advancement: "sofe:quest/act4_west/step8"
 					criterion: ""
 					id: "7AE559D45553BA2B"
 					type: "advancement"
@@ -677,7 +677,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act5_ascension/step2"
+					advancement: "sofe:quest/act5_ascension/step7"
 					criterion: ""
 					id: "74A2CAD1DD3F6CEB"
 					type: "advancement"

@@ -1,0 +1,61 @@
+{
+  "type": "dungeon",
+  "act": 1,
+  "starts_near": {
+    "x": -1100,
+    "z": 200,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -1100,
+        "z": 200,
+        "radius": 14
+      },
+      "target": {
+        "x": -1100,
+        "z": 200
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:sand_ghoul",
+        "count": 10
+      },
+      "target": {
+        "x": -1100,
+        "z": 200
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:sand_ghoul",
+        "count": 1
+      },
+      "target": {
+        "x": -1082,
+        "z": 200
+      },
+      "lair": {
+        "x": -1082,
+        "z": 200,
+        "depth": 18,
+        "name": "lord.sofe.tomb_lost_caravan"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 450
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 1
+  }
+}

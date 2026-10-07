@@ -1,0 +1,45 @@
+{
+  "style": "khemet",
+  "npc": "khemet_scribe",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act3_east",
+        "step": 13
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act3_east",
+          "step": 14
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.chapter.act3_east_scarab_priest_ask.1"
+    },
+    {
+      "speaker": "khemet_scribe",
+      "text": "dialogue.sofe.chapter.act3_east_scarab_priest_ask.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act3_east_scarab_priest_ask.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act3_east"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

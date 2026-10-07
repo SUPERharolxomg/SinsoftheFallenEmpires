@@ -10,7 +10,7 @@
 	quests: [
 		{
 			dependencies: [
-				"683B89972D548075"
+				"5C7D3D1C7253F6D6"
 			]
 			description: [
 				"{ftbquests.sofe.step_hint}"
@@ -196,8 +196,6 @@
 				"{ftbquests.sofe.step_hint}"
 			]
 			id: "195AF112C572A68F"
-			shape: "gear"
-			size: 1.5d
 			tasks: [
 				{
 					advancement: "sofe:quest/act4_west/step10"
@@ -208,6 +206,108 @@
 			]
 			title: "{quest.sofe.act4_west.step10}"
 			x: 13.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"195AF112C572A68F"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "7E481AA4907B7EB2"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step11"
+					criterion: ""
+					id: "358F409E5A032DB1"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step11}"
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7E481AA4907B7EB2"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "6F48D13B088D82B6"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step12"
+					criterion: ""
+					id: "00010993B25271CA"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step12}"
+			x: 16.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6F48D13B088D82B6"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "264150FF190B207F"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step13"
+					criterion: ""
+					id: "7F3EB847A92BAF29"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step13}"
+			x: 18.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"264150FF190B207F"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "2D5E7A780D65C279"
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step14"
+					criterion: ""
+					id: "6995D61DA8A031AA"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step14}"
+			x: 19.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2D5E7A780D65C279"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "6DC6BD672956CB28"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act4_west/step15"
+					criterion: ""
+					id: "51704600859EE303"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act4_west.step15}"
+			x: 21.0d
 			y: 0.0d
 		}
 	]

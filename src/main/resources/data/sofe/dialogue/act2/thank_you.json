@@ -25,6 +25,36 @@
     {
       "speaker": "narrator",
       "text": "dialogue.sofe.act2.thank_you.4"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.road.act3_east",
+      "answers": [
+        {
+          "text": "dialogue.sofe.road.act3_east.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:act3_east"
+            },
+            {
+              "type": "travel",
+              "waystone": "sofe:parsivan/city"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.road.act3_east.stay",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:act3_east"
+            }
+          ]
+        }
+      ]
     }
   ],
   "on_end": [

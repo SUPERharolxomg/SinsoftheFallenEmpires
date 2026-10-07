@@ -20,6 +20,69 @@
     },
     {
       "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": -5400,
+        "z": 2800
+      },
+      "_chapter": "act4_west/first_consul"
+    },
+    {
+      "objective": {
+        "type": "reach",
+        "x": -2600,
+        "z": 1800,
+        "radius": 14
+      },
+      "target": {
+        "x": -2600,
+        "z": 1800
+      },
+      "_chapter": "act4_west/first_consul"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gilded_legionnaire",
+        "count": 10
+      },
+      "target": {
+        "x": -2600,
+        "z": 1800
+      },
+      "_chapter": "act4_west/first_consul"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:gilded_legionnaire",
+        "count": 1
+      },
+      "target": {
+        "x": -2582,
+        "z": 1800
+      },
+      "lair": {
+        "x": -2582,
+        "z": 1800,
+        "depth": 18,
+        "name": "lord.sofe.tomb_first_consul"
+      },
+      "_chapter": "act4_west/first_consul"
+    },
+    {
+      "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": -5400,
+        "z": 2800
+      },
+      "_chapter": "act4_west/first_consul"
+    },
+    {
+      "objective": {
         "type": "solve_puzzle",
         "puzzle": "sofe:aureum_ruin"
       },
@@ -145,6 +208,10 @@
     {
       "type": "advance_act",
       "act": 5
+    },
+    {
+      "type": "start_quest",
+      "quest": "sofe:act5_ascension"
     }
   ]
 }

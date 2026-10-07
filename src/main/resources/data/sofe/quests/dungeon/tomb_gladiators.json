@@ -1,0 +1,61 @@
+{
+  "type": "dungeon",
+  "act": 4,
+  "starts_near": {
+    "x": -4200,
+    "z": -900,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": -4200,
+        "z": -900,
+        "radius": 14
+      },
+      "target": {
+        "x": -4200,
+        "z": -900
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:gilded_legionnaire",
+        "count": 10
+      },
+      "target": {
+        "x": -4200,
+        "z": -900
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:gilded_legionnaire",
+        "count": 1
+      },
+      "target": {
+        "x": -4182,
+        "z": -900
+      },
+      "lair": {
+        "x": -4182,
+        "z": -900,
+        "depth": 18,
+        "name": "lord.sofe.tomb_gladiators"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 2400
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 4
+  }
+}

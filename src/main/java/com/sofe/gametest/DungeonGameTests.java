@@ -146,15 +146,17 @@ public class DungeonGameTests {
         String act2 = "sofe:act2_north";
         QuestEngine.startQuest(hero, act2);
         QuestEngine.event(hero, new com.sofe.quest.QuestEvent.EnteredRegion("nordrath"));
-        helper.assertTrue(story.questStep(act2) == 2, "the Burnt Longhall's runes should come right after Nordrath");
+        helper.assertTrue(story.questStep(act2) == 2, "Gunnhild's chapter should come right after Nordrath");
+        for (int i = 0; i < 5; i++) QuestEngine.advance(hero, act2); // her word, the Frost King's barrow, back to her
+        helper.assertTrue(story.questStep(act2) == 7, "the Burnt Longhall's runes should come after Gunnhild's chapter, is at " + story.questStep(act2));
         story.solvePuzzle("sofe:nordrath_ruin");
         QuestEngine.skipDone(hero);
-        helper.assertTrue(story.questStep(act2) == 3, "solved runes should move on to the guardian");
+        helper.assertTrue(story.questStep(act2) == 8, "solved runes should move on to the guardian");
         QuestEngine.advance(hero, act2); // the guardian
         story.defeat("sofe:kaleth");
         story.defeat("sofe:serath");
         QuestEngine.skipDone(hero);
-        helper.assertTrue(story.questStep(act2) == 6, "Kaleth and Serath were beaten: Vorath should be next, is at " + story.questStep(act2));
+        helper.assertTrue(story.questStep(act2) == 11, "Kaleth and Serath were beaten: Vorath should be next, is at " + story.questStep(act2));
         com.sofe.quest.DialogueService.close(hero);
         helper.succeed();
     }

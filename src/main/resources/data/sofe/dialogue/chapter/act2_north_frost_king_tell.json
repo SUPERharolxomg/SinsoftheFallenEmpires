@@ -1,0 +1,45 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_elder",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act2_north",
+        "step": 6
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act2_north",
+          "step": 7
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "nordrath_elder",
+      "text": "dialogue.sofe.chapter.act2_north_frost_king_tell.1"
+    },
+    {
+      "speaker": "nordrath_elder",
+      "text": "dialogue.sofe.chapter.act2_north_frost_king_tell.2",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act2_north_frost_king_tell.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act2_north"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

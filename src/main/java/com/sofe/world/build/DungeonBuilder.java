@@ -60,7 +60,7 @@ final class DungeonBuilder {
     static boolean blockout(ServerLevel level, StructurePositions.Structure s, String piece) {
         String region = piece.substring(0, piece.indexOf('/'));
         int y = SultharisBuilder.surfaceY(level, s.x(), s.z());
-        if (piece.endsWith("/crypt")) crypt(level, s, y, palette(region));
+        if (piece.endsWith("/crypt") || piece.contains("/tomb_")) crypt(level, s, y, palette(region)); // a tomb is built as a Crypt is (make_chapters.py)
         else if (piece.endsWith("/ruin")) ruin(level, s, y, palette(region));
         else return false;
         StructureBuilder.placeGates(level, s, y);

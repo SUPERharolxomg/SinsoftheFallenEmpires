@@ -1,0 +1,49 @@
+{
+  "style": "sulthari",
+  "npc": "council_general",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act1_eclipse",
+        "step": 4
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act1_eclipse",
+          "step": 5
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "council_general",
+      "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_ask.1"
+    },
+    {
+      "speaker": "council_general",
+      "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_ask.2"
+    },
+    {
+      "speaker": "council_general",
+      "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_ask.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_ask.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act1_eclipse"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

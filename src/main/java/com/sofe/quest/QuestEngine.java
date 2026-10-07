@@ -224,6 +224,8 @@ public final class QuestEngine {
             SceneService.play(player, e.scene(), e.then());
         } else if (effect instanceof QuestEffect.OpenClassSelect) {
             ClassSelectionHandler.openIfNeeded(player);
+        } else if (effect instanceof QuestEffect.Travel e) {
+            travel(player, e.waystone());
         } else if (effect instanceof QuestEffect.GiveItem e) {
             Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(e.item()));
             if (item == null) {
@@ -232,6 +234,25 @@ public final class QuestEngine {
                 player.drop(new ItemStack(item, e.count()), false);
             }
         }
+    }
+
+    /** To a Waystone of the layout: beside it on its ground, and it is woken for the player (they can travel back). */
+    private static void travel(ServerPlayer player, String waystone) {
+        BlockPos at = com.sofe.world.zone.StructurePositions.get().waystones().get(waystone);
+        if (at == null) {
+            SoFEMod.LOGGER.warn("Unknown waystone {} in a quest effect", waystone);
+            return;
+        }
+        ServerLevel level = player.server.overworld();
+        BlockPos stone = com.sofe.world.Grounding.groundFloor(level, at.getX(), at.getZ());
+        for (int dy = -3; dy <= 3; dy++) { // the Waystone block itself, to wake it
+            BlockPos p = stone.offset(0, dy, 0);
+            if (level.getBlockState(p).is(com.sofe.registry.SoFEBlocks.WAYSTONE.get())) {
+                com.sofe.travel.WaystoneService.activate(player, p);
+                break;
+            }
+        }
+        com.sofe.travel.WaystoneService.teleport(player, com.sofe.world.Grounding.groundFloor(level, at.getX() + 2, at.getZ() + 2));
     }
 
     private static void spawn(ServerPlayer player, QuestEffect.Spawn spawn) {

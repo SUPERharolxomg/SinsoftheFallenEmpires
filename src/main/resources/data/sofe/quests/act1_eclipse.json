@@ -107,6 +107,69 @@
     },
     {
       "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": -6,
+        "z": 87
+      },
+      "_chapter": "act1_eclipse/first_vizier"
+    },
+    {
+      "objective": {
+        "type": "reach",
+        "x": 300,
+        "z": 620,
+        "radius": 14
+      },
+      "target": {
+        "x": 300,
+        "z": 620
+      },
+      "_chapter": "act1_eclipse/first_vizier"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:sand_ghoul",
+        "count": 10
+      },
+      "target": {
+        "x": 300,
+        "z": 620
+      },
+      "_chapter": "act1_eclipse/first_vizier"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:sand_ghoul",
+        "count": 1
+      },
+      "target": {
+        "x": 318,
+        "z": 620
+      },
+      "lair": {
+        "x": 318,
+        "z": 620,
+        "depth": 18,
+        "name": "lord.sofe.tomb_first_vizier"
+      },
+      "_chapter": "act1_eclipse/first_vizier"
+    },
+    {
+      "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 0,
+        "z": 88
+      },
+      "_chapter": "act1_eclipse/first_vizier"
+    },
+    {
+      "objective": {
         "type": "kill",
         "entity": "sofe:sand_ghoul",
         "count": 10
@@ -196,6 +259,10 @@
     {
       "type": "advance_act",
       "act": 2
+    },
+    {
+      "type": "start_quest",
+      "quest": "sofe:act2_north"
     }
   ]
 }

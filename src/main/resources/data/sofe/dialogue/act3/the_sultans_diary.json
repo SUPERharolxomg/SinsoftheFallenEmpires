@@ -17,6 +17,36 @@
     {
       "speaker": "ozhan",
       "text": "dialogue.sofe.act3.the_sultans_diary.4"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.road.act4_west",
+      "answers": [
+        {
+          "text": "dialogue.sofe.road.act4_west.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:act4_west"
+            },
+            {
+              "type": "travel",
+              "waystone": "sofe:aureum/city"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.road.act4_west.stay",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:act4_west"
+            }
+          ]
+        }
+      ]
     }
   ],
   "on_end": [

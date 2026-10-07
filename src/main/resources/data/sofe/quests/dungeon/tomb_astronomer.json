@@ -1,0 +1,61 @@
+{
+  "type": "dungeon",
+  "act": 3,
+  "starts_near": {
+    "x": 4200,
+    "z": -1100,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 4200,
+        "z": -1100,
+        "radius": 14
+      },
+      "target": {
+        "x": 4200,
+        "z": -1100
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:mirage_dancer",
+        "count": 10
+      },
+      "target": {
+        "x": 4200,
+        "z": -1100
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:mirage_dancer",
+        "count": 1
+      },
+      "target": {
+        "x": 4218,
+        "z": -1100
+      },
+      "lair": {
+        "x": 4218,
+        "z": -1100,
+        "depth": 18,
+        "name": "lord.sofe.tomb_astronomer"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 1600
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}
