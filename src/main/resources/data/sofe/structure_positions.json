@@ -396,8 +396,8 @@
   "sofe:sulthari/crypt": {
    "x": 480,
    "z": -420,
-   "size_x": 17,
-   "size_z": 17,
+   "size_x": 49,
+   "size_z": 49,
    "zone": "dungeon"
   },
   "sofe:sulthari/ruin": {
@@ -410,8 +410,8 @@
   "sofe:nordrath/crypt": {
    "x": 760,
    "z": -2050,
-   "size_x": 17,
-   "size_z": 17,
+   "size_x": 49,
+   "size_z": 49,
    "zone": "dungeon"
   },
   "sofe:nordrath/ruin": {
@@ -424,8 +424,8 @@
   "sofe:parsivan/crypt": {
    "x": 2600,
    "z": -1300,
-   "size_x": 17,
-   "size_z": 17,
+   "size_x": 49,
+   "size_z": 49,
    "zone": "dungeon"
   },
   "sofe:parsivan/ruin": {
@@ -438,8 +438,8 @@
   "sofe:khemet/crypt": {
    "x": 3000,
    "z": 2500,
-   "size_x": 17,
-   "size_z": 17,
+   "size_x": 49,
+   "size_z": 49,
    "zone": "dungeon"
   },
   "sofe:khemet/ruin": {
@@ -452,8 +452,8 @@
   "sofe:aureum/crypt": {
    "x": -2600,
    "z": -1500,
-   "size_x": 17,
-   "size_z": 17,
+   "size_x": 49,
+   "size_z": 49,
    "zone": "dungeon"
   },
   "sofe:aureum/ruin": {
@@ -466,8 +466,8 @@
   "sofe:void/crypt": {
    "x": 1050,
    "z": 250,
-   "size_x": 17,
-   "size_z": 17,
+   "size_x": 49,
+   "size_z": 49,
    "zone": "dungeon"
   },
   "sofe:void/ruin": {

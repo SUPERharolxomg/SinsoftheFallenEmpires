@@ -54,7 +54,7 @@ public final class PlaceShots {
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
-            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("crypt:") && !places.get(place).equals("rift") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
                     && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")
                     && !places.get(place).startsWith("dialogue:")) {
                 look(mc, places.get(place), view);
@@ -69,7 +69,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") || places.get(place).startsWith("eclipse:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") || places.get(place).startsWith("crypt:") || places.get(place).equals("rift") || places.get(place).startsWith("eclipse:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -227,6 +227,38 @@ public final class PlaceShots {
                 com.sofe.quest.QuestEngine.sync(p);
                 p.teleportTo(p.serverLevel(), Double.parseDouble(v[1]) + 0.5, Double.parseDouble(v[2]), Double.parseDouble(v[3]) + 0.5,
                         Float.parseFloat(v[4]), Float.parseFloat(v[5]));
+            });
+            return;
+        }
+        if (piece.equals("rift")) { // rift: a rift of the Void's invasion on a floor in the sky at dusk, two creatures out of it
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                var level = p.serverLevel();
+                level.setDayTime(13000);
+                net.minecraft.core.BlockPos at = new net.minecraft.core.BlockPos(40, 220, 0);
+                for (int dx = -8; dx <= 8; dx++) for (int dz = -8; dz <= 8; dz++) {
+                    level.setBlockAndUpdate(at.offset(dx, -1, dz), net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState());
+                }
+                com.sofe.quest.VoidInvasion.showcase(level, at);
+                p.teleportTo(level, at.getX() + 4.5, at.getY() + 2.5, at.getZ() + 9.5, 155, 5);
+            });
+            return;
+        }
+        if (piece.startsWith("crypt:")) { // crypt:<region>:dx:dy:dz:yaw:pitch, a look inside a Crypt built earlier in the run, from its center and its ground
+            String[] v = piece.split(":");
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                StructurePositions.get().structure("sofe:" + v[1] + "/crypt").ifPresent(s -> {
+                    p.setGameMode(GameType.SPECTATOR);
+                    var level = p.serverLevel();
+                    level.getChunk(s.x() >> 4, (s.z() + 8) >> 4);
+                    int ground = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, s.x(), s.z() + 8);
+                    p.teleportTo(level, s.x() + Double.parseDouble(v[2]) + 0.5, ground + Double.parseDouble(v[3]), s.z() + Double.parseDouble(v[4]) + 0.5,
+                            Float.parseFloat(v[5]), Float.parseFloat(v[6]));
+                });
             });
             return;
         }

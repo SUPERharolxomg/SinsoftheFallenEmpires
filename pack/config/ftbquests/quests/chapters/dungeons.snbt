@@ -21,7 +21,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/act1_eclipse/step4"
+					advancement: "sofe:quest/act1_eclipse/step5"
 					criterion: ""
 					id: "6B56F1C0159F0EFA"
 					type: "advancement"
@@ -44,7 +44,7 @@
 			size: 1.0d
 			tasks: [
 				{
-					advancement: "sofe:quest/act1_eclipse/step6"
+					advancement: "sofe:quest/act1_eclipse/step7"
 					criterion: ""
 					id: "063FF7ED953E1428"
 					type: "advancement"
@@ -138,7 +138,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/nordrath_crypt/step2"
+					advancement: "sofe:quest/dungeon/nordrath_crypt/step3"
 					criterion: ""
 					id: "59ADAE3D8528E90E"
 					type: "advancement"
@@ -279,7 +279,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/parsivan_crypt/step2"
+					advancement: "sofe:quest/dungeon/parsivan_crypt/step3"
 					criterion: ""
 					id: "6E5B79B9E86BD189"
 					type: "advancement"
@@ -396,7 +396,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/khemet_crypt/step2"
+					advancement: "sofe:quest/dungeon/khemet_crypt/step3"
 					criterion: ""
 					id: "61ABDAD97C22322E"
 					type: "advancement"
@@ -489,7 +489,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/aureum_crypt/step2"
+					advancement: "sofe:quest/dungeon/aureum_crypt/step3"
 					criterion: ""
 					id: "74B861627B061C88"
 					type: "advancement"
@@ -654,7 +654,7 @@
 			size: 0.8d
 			tasks: [
 				{
-					advancement: "sofe:quest/dungeon/void_crypt/step2"
+					advancement: "sofe:quest/dungeon/void_crypt/step3"
 					criterion: ""
 					id: "2385221E6693244C"
 					type: "advancement"

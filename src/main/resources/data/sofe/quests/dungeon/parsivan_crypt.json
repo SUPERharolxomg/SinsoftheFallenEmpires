@@ -23,11 +23,28 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:mirage_dancer",
-        "count": 6
+        "count": 10
       },
       "target": {
         "x": 2600,
         "z": -1300
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:mirage_dancer",
+        "count": 1
+      },
+      "target": {
+        "x": 2618,
+        "z": -1300
+      },
+      "lair": {
+        "x": 2618,
+        "z": -1300,
+        "depth": 18,
+        "name": "lord.sofe.parsivan_crypt"
       }
     }
   ],

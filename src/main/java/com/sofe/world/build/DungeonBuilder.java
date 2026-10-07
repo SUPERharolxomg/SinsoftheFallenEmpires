@@ -32,7 +32,8 @@ final class DungeonBuilder {
      * so the guardian is the one a dungeon quest asks for: scripts/make_dungeons.py).
      */
     private record Palette(BlockState wall, BlockState trim, BlockState floor, BlockState light,
-                           Supplier<? extends EntityType<?>> first, Supplier<? extends EntityType<?>> second) {
+                           Supplier<? extends EntityType<?>> first, Supplier<? extends EntityType<?>> second, BlockState stairs,
+                           BlockState rock, BlockState band, BlockState top, BlockState statue) {
     }
 
     private DungeonBuilder() {
@@ -41,17 +42,17 @@ final class DungeonBuilder {
     private static Palette palette(String region) {
         return switch (region) {
             case "nordrath" -> new Palette(b(SoFEBlocks.NORDRATH_RUNESTONE_BRICKS), b(SoFEBlocks.NORDRATH_DARK_PLANKS), Blocks.COBBLED_DEEPSLATE.defaultBlockState(),
-                    Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.DRAUGR, () -> EntityType.STRAY);
+                    Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.DRAUGR, () -> EntityType.STRAY, Blocks.COBBLED_DEEPSLATE_STAIRS.defaultBlockState(), Blocks.STONE.defaultBlockState(), Blocks.ANDESITE.defaultBlockState(), Blocks.SNOW_BLOCK.defaultBlockState(), Blocks.CHISELED_STONE_BRICKS.defaultBlockState());
             case "parsivan" -> new Palette(b(SoFEBlocks.PARSIVAN_WHITE_PLASTER), b(SoFEBlocks.PARSIVAN_TURQUOISE_TILES), b(SoFEBlocks.PARSIVAN_LAPIS_MOSAIC),
-                    Blocks.LANTERN.defaultBlockState(), EntityRegistry.MIRAGE_DANCER, () -> EntityType.CAVE_SPIDER);
+                    Blocks.LANTERN.defaultBlockState(), EntityRegistry.MIRAGE_DANCER, () -> EntityType.CAVE_SPIDER, Blocks.QUARTZ_STAIRS.defaultBlockState(), Blocks.STONE.defaultBlockState(), Blocks.CALCITE.defaultBlockState(), Blocks.MOSS_BLOCK.defaultBlockState(), Blocks.CHISELED_QUARTZ_BLOCK.defaultBlockState());
             case "khemet" -> new Palette(b(SoFEBlocks.KHEMET_CARVED_SANDSTONE), b(SoFEBlocks.KHEMET_GOLD_HIEROGLYPHS), b(SoFEBlocks.KHEMET_PAINTED_LIMESTONE),
-                    Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.BOG_MUMMY, () -> EntityType.HUSK);
+                    Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.BOG_MUMMY, () -> EntityType.HUSK, Blocks.SMOOTH_SANDSTONE_STAIRS.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState(), Blocks.ORANGE_TERRACOTTA.defaultBlockState(), Blocks.SMOOTH_SANDSTONE.defaultBlockState(), Blocks.CHISELED_SANDSTONE.defaultBlockState());
             case "aureum" -> new Palette(b(SoFEBlocks.AUREUM_MARBLE_BRICKS), b(SoFEBlocks.AUREUM_GOLD_MOSAIC), b(SoFEBlocks.AUREUM_POLISHED_MARBLE),
-                    Blocks.LANTERN.defaultBlockState(), EntityRegistry.GILDED_LEGIONNAIRE, () -> EntityType.SKELETON);
+                    Blocks.LANTERN.defaultBlockState(), EntityRegistry.GILDED_LEGIONNAIRE, () -> EntityType.SKELETON, Blocks.QUARTZ_STAIRS.defaultBlockState(), Blocks.STONE.defaultBlockState(), Blocks.TUFF.defaultBlockState(), Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.CHISELED_QUARTZ_BLOCK.defaultBlockState());
             case "void" -> new Palette(Blocks.POLISHED_BLACKSTONE_BRICKS.defaultBlockState(), Blocks.CRYING_OBSIDIAN.defaultBlockState(),
-                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.VOID_ZOMBIE, EntityRegistry.VOID_SKELETON);
+                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.SOUL_LANTERN.defaultBlockState(), EntityRegistry.VOID_ZOMBIE, EntityRegistry.VOID_SKELETON, Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS.defaultBlockState(), Blocks.BLACKSTONE.defaultBlockState(), Blocks.BASALT.defaultBlockState(), Blocks.POLISHED_BLACKSTONE.defaultBlockState(), Blocks.CHISELED_POLISHED_BLACKSTONE.defaultBlockState());
             default -> new Palette(b(SoFEBlocks.SULTHARI_SANDSTONE_BRICKS), b(SoFEBlocks.SULTHARI_BRASS_PLATING), b(SoFEBlocks.SULTHARI_GLAZED_TILES),
-                    b(SoFEBlocks.SULTHARI_AETHERIUM_LAMP), EntityRegistry.SAND_GHOUL, EntityRegistry.SAND_GHOUL);
+                    b(SoFEBlocks.SULTHARI_AETHERIUM_LAMP), EntityRegistry.SAND_GHOUL, EntityRegistry.SAND_GHOUL, Blocks.SANDSTONE_STAIRS.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState(), Blocks.RED_SANDSTONE.defaultBlockState(), Blocks.SMOOTH_SANDSTONE.defaultBlockState(), Blocks.CHISELED_SANDSTONE.defaultBlockState());
         };
     }
 
@@ -68,29 +69,272 @@ final class DungeonBuilder {
 
     // ------------------------------------------------------------------------------------------------ the crypt
 
-    /** A squat hall of the dead, its roof fallen in places: sarcophagi along the walls, two spawners, a chest at the back. */
+    /** How far the Crypt reaches round its center (its place is 49 across), and how deep its three levels lie. */
+    static final int CRYPT_REACH = 24, FIRST_DEPTH = 10, SECOND_DEPTH = 18, DEEPEST = 26;
+    /** The deepest chamber's center, from the Crypt's center (its lord's lair: scripts/make_dungeons.py). */
+    static final int CHAMBER_DX = 18, CHAMBER_DZ = 0;
+
+    /**
+     * A tomb cut into a hill, gone down through: a terraced hill of the region's rock rises over the dungeon, and the tomb's
+     * carved front stands in its southern side, a double door between two pillars with their statues; before it a court of
+     * tiles with two pools and a causeway between them, and a small stepped altar with a chest and the bones of those who
+     * came before. Behind the door a stair goes down at once, into the hill: the Hall of the Dead ten blocks under
+     * (sarcophagi, two spawners, a chest); a passage west and a stair down to the Ossuary (bones, two spawners, a chest);
+     * a passage east and a last stair down to the burial chamber, 26 blocks under the ground, where the lord of the crypt
+     * sleeps before its altar and the treasure. Every room and passage is lined with the region's stone, so a cave or water
+     * that crosses it is shut out; where the Crypt stands in water, the water round it is filled with rock first.
+     */
     private static void crypt(ServerLevel level, StructurePositions.Structure s, int y, Palette p) {
-        int x0 = s.x() - 8, x1 = s.x() + 8, z0 = s.z() - 8, z1 = s.z() + 8, height = 6;
-        Random random = new Random(s.x() * 31L + s.z());
-        SultharisBuilder.pad(level, x0, z0, x1, z1, y, p.floor(), height + 4);
-        walls(level, x0, z0, x1, z1, y, height, p, random, true);
-        roof(level, x0, z0, x1, z1, y + height, p, random, 0.25);
-        door(level, s.x(), z1, y);
-        for (int x = x0 + 2; x <= x1 - 2; x += 3) { // sarcophagi along both long walls
-            for (int z : new int[]{z0 + 2, z1 - 3}) {
-                if (Math.abs(x - s.x()) <= 1 && z == z1 - 3) continue; // the way in
-                set(level, x, y, z, Blocks.SMOOTH_STONE_SLAB.defaultBlockState());
+        int cx = s.x(), cz = s.z();
+        Random random = new Random(cx * 31L + cz);
+        int ground = SultharisBuilder.surfaceY(level, cx, cz + 5); // the court's level
+        islet(level, cx, cz, ground, p);
+        hill(level, cx, cz, ground, p, random);
+        court(level, cx, cz, ground, p, random);
+        front(level, cx, cz, ground, p);
+
+        int l1 = ground - FIRST_DEPTH, l2 = ground - SECOND_DEPTH, l3 = ground - DEEPEST;
+        Dig dig = new Dig(ground);
+        dig.stair(cx, cz - 3, 0, -1, ground, FIRST_DEPTH, p);                  // behind the door, down into the hill, northwards
+        dig.room(cx - 1, l1, cz - 15, cx + 1, cz - 13, 4);                    // the landing
+        dig.room(cx - 8, l1, cz - 24, cx + 8, cz - 16, 6);                    // the Hall of the Dead
+        dig.room(cx - 20, l1, cz - 22, cx - 9, cz - 20, 4);                   // the passage west
+        dig.stair(cx - 19, cz - 19, 0, 1, l1, SECOND_DEPTH - FIRST_DEPTH, p); // down, southwards
+        dig.room(cx - 24, l2, cz - 11, cx - 14, cz + 2, 5);                   // the Ossuary
+        dig.room(cx - 13, l2, cz - 1, cx + 3, cz + 1, 4);                     // the passage east
+        dig.stair(cx + 4, cz, 1, 0, l2, DEEPEST - SECOND_DEPTH, p);           // the last stair down, eastwards
+        dig.room(cx + 12, l3, cz - 6, cx + 24, cz + 6, 8);                    // the burial chamber
+        dig.apply(level, p, random);
+        hang(level, cx, ground - 4, cz - 8, p); // a light over the stair
+
+        // the Hall of the Dead: sarcophagi along its long walls, four pillars, bones
+        for (int x = cx - 6; x <= cx + 6; x += 3) {
+            if (x != cx) sarcophagus(level, x, l1, cz - 23, p);
+            if (Math.abs(x - cx) > 1) sarcophagus(level, x, l1, cz - 17, p);
+        }
+        for (int dx : new int[]{-4, 4}) for (int z : new int[]{cz - 22, cz - 18}) pillar(level, cx + dx, z, l1, 6, p);
+        spawner(level, cx - 6, l1, cz - 20, p.first().get());
+        spawner(level, cx + 6, l1, cz - 20, p.second().get());
+        chest(level, cx, l1, cz - 24, "sofe:chests/dungeon_small", random);
+        hang(level, cx, l1 + 5, cz - 20, p);
+        bones(level, cx - 7, cz - 23, cx + 7, cz - 17, l1, random, 10);
+        cobwebs(level, cx - 7, cz - 23, cx + 7, cz - 17, l1, 6, random);
+
+        // the Ossuary: walls of bone and skulls, its two spawners and a chest in a corner
+        for (int z = cz - 10; z <= cz + 1; z += 2) {
+            set(level, cx - 24, l2, z, Blocks.BONE_BLOCK.defaultBlockState());
+            set(level, cx - 24, l2 + 1, z, Blocks.SKELETON_SKULL.defaultBlockState());
+        }
+        spawner(level, cx - 21, l2, cz - 7, p.first().get());
+        spawner(level, cx - 17, l2, cz - 3, p.second().get());
+        chest(level, cx - 23, l2, cz + 2, "sofe:chests/dungeon_small", random);
+        hang(level, cx - 19, l2 + 4, cz - 4, p);
+        bones(level, cx - 23, cz - 10, cx - 15, cz + 1, l2, random, 14);
+        cobwebs(level, cx - 23, cz - 10, cx - 15, cz + 1, l2, 5, random);
+
+        // the burial chamber: pillars with lights, the lord's tomb in the middle, the altar and the treasure at its east end
+        for (int x : new int[]{cx + 14, cx + 22}) {
+            for (int z : new int[]{cz - 4, cz + 4}) {
+                pillar(level, x, z, l3, 8, p);
+                set(level, x, l3 + 3, z + (z < cz + CHAMBER_DZ ? 1 : -1), Blocks.SOUL_LANTERN.defaultBlockState());
             }
         }
-        pillar(level, x0 + 4, z0 + 4, y, height, p);
-        pillar(level, x1 - 4, z0 + 4, y, height, p);
-        pillar(level, x0 + 4, z1 - 5, y, height, p);
-        pillar(level, x1 - 4, z1 - 5, y, height, p);
-        spawner(level, x0 + 3, y, s.z(), p.first().get());
-        spawner(level, x1 - 3, y, s.z(), p.second().get());
-        chest(level, s.x(), y, z0 + 1, "sofe:chests/dungeon_small", random);
-        hang(level, s.x(), y + height - 1, s.z(), p);
-        cobwebs(level, x0 + 1, z0 + 1, x1 - 1, z1 - 1, y, height, random);
+        for (int dx = -1; dx <= 1; dx++) sarcophagus(level, cx + CHAMBER_DX + dx, l3, cz + CHAMBER_DZ, p);
+        for (int dz = -1; dz <= 1; dz++) set(level, cx + 23, l3, cz + CHAMBER_DZ + dz, p.trim());
+        set(level, cx + 23, l3 + 1, cz + CHAMBER_DZ - 1, Blocks.SOUL_LANTERN.defaultBlockState());
+        set(level, cx + 23, l3 + 1, cz + CHAMBER_DZ + 1, Blocks.SOUL_LANTERN.defaultBlockState());
+        chest(level, cx + 24, l3, cz + CHAMBER_DZ, "sofe:chests/dungeon_medium", random);
+        hang(level, cx + CHAMBER_DX, l3 + 7, cz + CHAMBER_DZ, p);
+        bones(level, cx + 13, cz - 5, cx + 21, cz + 5, l3, random, 8);
+        cobwebs(level, cx + 13, cz - 5, cx + 23, cz + 5, l3, 8, random);
+    }
+
+    /**
+     * Where the Crypt stands in water: the water round it filled with the region's rock up to the court, an islet with a
+     * ragged shore. Dry land is left as it is.
+     */
+    private static void islet(ServerLevel level, int cx, int cz, int ground, Palette p) {
+        for (int x = cx - CRYPT_REACH; x <= cx + CRYPT_REACH; x++) {
+            for (int z = cz - CRYPT_REACH; z <= cz + CRYPT_REACH; z++) {
+                double r = Math.sqrt((double) (x - cx) * (x - cx) + (double) (z - cz) * (z - cz));
+                if (r > 20 + 3 * Math.sin(x * 0.4) * Math.cos(z * 0.33)) continue;
+                boolean wet = false;
+                for (int y = ground - 1; y >= ground - 4 && !wet; y--) wet = !level.getFluidState(new BlockPos(x, y, z)).isEmpty();
+                if (!wet) continue;
+                for (int y = ground - 1; y > level.getMinBuildHeight() + 1; y--) {
+                    BlockPos pos = new BlockPos(x, y, z);
+                    if (level.getFluidState(pos).isEmpty() && !level.getBlockState(pos).isAir()) break;
+                    set(level, x, y, z, y == ground - 1 ? p.top() : p.rock());
+                }
+            }
+        }
+    }
+
+    /**
+     * The hill the tomb is cut into: terraced, two blocks a step, highest behind the tomb, of the region's rock with bands
+     * of a second one (sandstone and red sandstone in the desert) and its own top; its southern side is cut straight where
+     * the court begins.
+     */
+    private static void hill(ServerLevel level, int cx, int cz, int ground, Palette p, Random random) {
+        for (int x = cx - CRYPT_REACH; x <= cx + CRYPT_REACH; x++) {
+            for (int z = cz - CRYPT_REACH; z <= cz - 2; z++) {
+                double dx = (x - cx) / 21.0, dz = (z - (cz - 10)) / 13.0;
+                double r = Math.sqrt(dx * dx + dz * dz) + 0.07 * Math.sin(x * 0.45) * Math.cos(z * 0.38);
+                int height = (int) ((1 - r) * 24) / 2 * 2;
+                int top = ground + height;
+                if (height <= 0 || top <= SultharisBuilder.surfaceY(level, x, z)) continue;
+                for (int yy = ground - 3; yy < top; yy++) {
+                    BlockPos pos = new BlockPos(x, yy, z);
+                    if (yy < ground && !level.getBlockState(pos).isAir() && level.getFluidState(pos).isEmpty()) continue;
+                    BlockState rock = yy == top - 1 ? p.top() : Math.floorMod(yy - ground, 6) == 4 ? p.band() : p.rock();
+                    set(level, x, yy, z, rock);
+                }
+                for (int yy = top; yy < top + 6; yy++) { // nothing stands on it (a tree, a cactus)
+                    if (!level.getBlockState(new BlockPos(x, yy, z)).isAir()) set(level, x, yy, z, AIR);
+                }
+            }
+        }
+    }
+
+    /**
+     * The court before the tomb: tiles, two pools with a causeway of the region's top between them to the door, bones,
+     * pots and candles, and a small stepped altar to the west with a chest on it.
+     */
+    private static void court(ServerLevel level, int cx, int cz, int ground, Palette p, Random random) {
+        SultharisBuilder.pad(level, cx - 17, cz - 1, cx + 11, cz + 11, ground, p.floor(), 8);
+        BlockState water = Blocks.WATER.defaultBlockState();
+        for (int side : new int[]{-1, 1}) { // the pools, two deep, their bottoms strewn with what fell in
+            int x0 = side < 0 ? cx - 9 : cx + 3, x1 = side < 0 ? cx - 3 : cx + 9;
+            for (int x = x0; x <= x1; x++) {
+                for (int z = cz + 2; z <= cz + 9; z++) {
+                    set(level, x, ground - 3, z, p.rock());
+                    set(level, x, ground - 2, z, water);
+                    set(level, x, ground - 1, z, water);
+                }
+            }
+            for (int i = 0; i < 4; i++) {
+                int x = x0 + random.nextInt(x1 - x0 + 1), z = cz + 2 + random.nextInt(8);
+                set(level, x, ground - 2, z, random.nextBoolean() ? Blocks.SKELETON_SKULL.defaultBlockState()
+                        .setValue(net.minecraft.world.level.block.SkullBlock.ROTATION, random.nextInt(16)) : Blocks.DECORATED_POT.defaultBlockState());
+            }
+        }
+        for (int z = cz - 1; z <= cz + 11; z++) { // the causeway
+            for (int x = cx - 2; x <= cx + 2; x++) set(level, x, ground - 1, z, p.top());
+        }
+        // the stepped altar: three tiers, a chest on the second
+        for (int tier = 0; tier < 3; tier++) {
+            int r = 3 - tier;
+            for (int x = cx - 14 - r; x <= cx - 14 + r; x++) for (int z = cz + 5 - r; z <= cz + 5 + r; z++) set(level, x, ground + tier, z, p.top());
+        }
+        chest(level, cx - 14, ground + 2, cz + 7, "sofe:chests/dungeon_small", random);
+        set(level, cx - 14, ground + 3, cz + 5, p.statue());
+        bones(level, cx - 16, cz, cx + 10, cz + 11, ground, random, 12);
+        for (int[] at : new int[][]{{cx - 11, cz + 1}, {cx + 11, cz + 1}, {cx - 11, cz + 10}, {cx + 11, cz + 10}}) { // the court's lamps
+            set(level, at[0], ground, at[1], p.trim());
+            set(level, at[0], ground + 1, at[1], p.light());
+        }
+    }
+
+    /** The tomb's front, cut into the hill: dressed stone, a lintel and a cornice, a double door, two pillars with their statues. */
+    private static void front(ServerLevel level, int cx, int cz, int ground, Palette p) {
+        int z = cz - 2, height = 9;
+        for (int x = cx - 5; x <= cx + 5; x++) {
+            for (int dy = 0; dy < height; dy++) {
+                boolean edge = x == cx - 5 || x == cx + 5 || dy == height - 1 || dy == 5;
+                set(level, x, ground + dy, z, edge ? p.trim() : p.wall());
+            }
+            set(level, x, ground + height, z + 1, p.top()); // the cornice
+        }
+        for (int x = cx - 2; x <= cx + 1; x++) set(level, x, ground + 3, z, p.trim()); // the lintel over the door
+        for (int dy = 0; dy < 3; dy++) {                                            // its posts
+            set(level, cx - 2, ground + dy, z, p.trim());
+            set(level, cx + 1, ground + dy, z, p.trim());
+        }
+        for (int x = cx - 1; x <= cx; x++) { // the double door, opening to the south
+            var door = Blocks.SPRUCE_DOOR.defaultBlockState().setValue(net.minecraft.world.level.block.DoorBlock.FACING, net.minecraft.core.Direction.SOUTH)
+                    .setValue(net.minecraft.world.level.block.DoorBlock.HINGE, x == cx - 1 ? net.minecraft.world.level.block.state.properties.DoorHingeSide.RIGHT
+                            : net.minecraft.world.level.block.state.properties.DoorHingeSide.LEFT);
+            set(level, x, ground, z, door.setValue(net.minecraft.world.level.block.DoorBlock.HALF, net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER));
+            set(level, x, ground + 1, z, door.setValue(net.minecraft.world.level.block.DoorBlock.HALF, net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER));
+            set(level, x, ground + 2, z, AIR);
+        }
+        for (int x : new int[]{cx - 4, cx + 3}) { // the pillars and their statues
+            for (int dy = 0; dy < 5; dy++) set(level, x, ground + dy, z + 1, dy == 0 || dy == 4 ? p.trim() : p.top());
+            set(level, x, ground + 5, z + 1, p.statue());
+            set(level, x, ground + 6, z + 1, p.statue());
+        }
+    }
+
+    /** A sarcophagus: a lid of slab on a block of the region's trim. */
+    private static void sarcophagus(ServerLevel level, int x, int y, int z, Palette p) {
+        set(level, x, y, z, p.trim());
+        set(level, x, y + 1, z, Blocks.SMOOTH_STONE_SLAB.defaultBlockState());
+    }
+
+    /** Bones, skulls and a few lit candles on a floor, where there is room. */
+    private static void bones(ServerLevel level, int x0, int z0, int x1, int z1, int y, Random random, int count) {
+        for (int i = 0; i < count; i++) {
+            int x = x0 + random.nextInt(x1 - x0 + 1), z = z0 + random.nextInt(z1 - z0 + 1);
+            BlockPos pos = new BlockPos(x, y, z);
+            if (!level.getBlockState(pos).isAir() || level.getBlockState(pos.below()).isAir() || !level.getFluidState(pos.below()).isEmpty()) continue;
+            BlockState bone = switch (random.nextInt(5)) {
+                case 0 -> Blocks.SKELETON_SKULL.defaultBlockState().setValue(net.minecraft.world.level.block.SkullBlock.ROTATION, random.nextInt(16));
+                case 1 -> Blocks.CANDLE.defaultBlockState().setValue(net.minecraft.world.level.block.CandleBlock.LIT, true)
+                        .setValue(net.minecraft.world.level.block.CandleBlock.CANDLES, 1 + random.nextInt(3));
+                case 2 -> Blocks.DECORATED_POT.defaultBlockState();
+                default -> Blocks.BONE_BLOCK.defaultBlockState();
+            };
+            set(level, x, y, z, bone);
+        }
+    }
+
+    /**
+     * The rooms, passages and stairs dug under the ground: first every open place is noted, then the region's stone is
+     * laid round all of them at once (walls, floors, ceilings), so a passage opens into the room it reaches.
+     */
+    private static final class Dig {
+        private final java.util.Set<BlockPos> open = new java.util.HashSet<>();
+        private final java.util.Map<BlockPos, BlockState> steps = new java.util.HashMap<>();
+        /** The ground's level: from it up the hill stands round the stair, so nothing is lined there. */
+        private final int ground;
+
+        Dig(int ground) {
+            this.ground = ground;
+        }
+
+        /** A room from (x0, z0) to (x1, z1) with its floor at y, this high inside. */
+        void room(int x0, int y, int z0, int x1, int z1, int height) {
+            for (int x = x0; x <= x1; x++) for (int z = z0; z <= z1; z++) for (int dy = 0; dy < height; dy++) open.add(new BlockPos(x, y + dy, z));
+        }
+
+        /** A stair three wide going down one block a step from (x, z) towards (dx, dz), from a floor at y, this many steps. */
+        void stair(int x, int z, int dx, int dz, int y, int count, Palette p) {
+            net.minecraft.core.Direction up = net.minecraft.core.Direction.fromDelta(-dx, 0, -dz);
+            for (int i = 0; i < count; i++) {
+                int sx = x + dx * i, sz = z + dz * i, floor = y - i;
+                for (int w = -1; w <= 1; w++) {
+                    int px = sx + (dx == 0 ? w : 0), pz = sz + (dz == 0 ? w : 0);
+                    steps.put(new BlockPos(px, floor - 1, pz), p.stairs().setValue(net.minecraft.world.level.block.StairBlock.FACING, up));
+                    for (int dy = 0; dy < 5; dy++) open.add(new BlockPos(px, floor + dy, pz));
+                }
+            }
+        }
+
+        void apply(ServerLevel level, Palette p, Random random) {
+            java.util.Set<BlockPos> lining = new java.util.HashSet<>();
+            for (BlockPos pos : open) {
+                for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) for (int dz = -1; dz <= 1; dz++) {
+                    BlockPos n = pos.offset(dx, dy, dz);
+                    if (!open.contains(n) && !steps.containsKey(n) && n.getY() < ground) lining.add(n);
+                }
+            }
+            for (BlockPos pos : lining) {
+                BlockState stone = open.contains(pos.above()) ? p.floor() : random.nextInt(9) == 0 ? p.trim() : p.wall();
+                set(level, pos.getX(), pos.getY(), pos.getZ(), stone);
+            }
+            for (BlockPos pos : open) set(level, pos.getX(), pos.getY(), pos.getZ(), AIR);
+            steps.forEach((pos, state) -> set(level, pos.getX(), pos.getY(), pos.getZ(), state));
+        }
     }
 
     // ------------------------------------------------------------------------------------------------ the ruin
@@ -183,10 +427,31 @@ final class DungeonBuilder {
         }
     }
 
+    /**
+     * A spawner of this creature that works in any light: a dungeon keeps its lanterns, and its dead still come (a spawner's
+     * own rules, not the darkness the wild asks of a monster).
+     */
     private static void spawner(ServerLevel level, int x, int y, int z, EntityType<?> type) {
         BlockPos pos = new BlockPos(x, y, z);
         level.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
-        if (level.getBlockEntity(pos) instanceof SpawnerBlockEntity spawner) spawner.setEntityId(type, level.getRandom());
+        if (!(level.getBlockEntity(pos) instanceof SpawnerBlockEntity spawner)) return;
+        spawner.setEntityId(type, level.getRandom());
+        net.minecraft.nbt.CompoundTag tag = spawner.saveWithoutMetadata();
+        net.minecraft.nbt.CompoundTag data = new net.minecraft.nbt.CompoundTag();
+        net.minecraft.nbt.CompoundTag entity = new net.minecraft.nbt.CompoundTag();
+        entity.putString("id", String.valueOf(net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(type)));
+        data.put("entity", entity);
+        net.minecraft.nbt.CompoundTag rules = new net.minecraft.nbt.CompoundTag();
+        for (String limit : new String[]{"block_light_limit", "sky_light_limit"}) {
+            net.minecraft.nbt.CompoundTag range = new net.minecraft.nbt.CompoundTag();
+            range.putInt("min_inclusive", 0);
+            range.putInt("max_inclusive", 15);
+            rules.put(limit, range);
+        }
+        data.put("custom_spawn_rules", rules);
+        tag.put("SpawnData", data);
+        tag.remove("SpawnPotentials");
+        spawner.load(tag);
     }
 
     /** A chest that fills from its loot table the first time it is opened (gear rolled for the Bearer who opens it). */

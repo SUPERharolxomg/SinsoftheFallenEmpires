@@ -81,7 +81,7 @@ public class DungeonGameTests {
         helper.succeed();
     }
 
-    /** The Ruin: walls, its Sealed Gate, spawners and chests; the Crypt: spawners and a chest. */
+    /** The Ruin: walls, its Sealed Gate, spawners and chests; the Crypt: a dungeon dug three levels down, its treasure in the deepest. */
     @GameTest(template = "empty", timeoutTicks = 400)
     public static void aRuinAndACryptAreBuilt(GameTestHelper helper) {
         var level = helper.getLevel();
@@ -89,20 +89,35 @@ public class DungeonGameTests {
         BlockPos base = helper.absolutePos(new BlockPos(8, 1, 8)).offset(-600, 0, 0);
         var here = new StructurePositions.Structure("sofe:nordrath/ruin", base.getX(), base.getZ(), ruin.sizeX(), ruin.sizeZ(), -64, 319, ruin.zone());
         helper.assertTrue(StructureBuilder.build(level, here), "the Ruin has no blockout");
-        var crypt = new StructurePositions.Structure("sofe:khemet/crypt", base.getX(), base.getZ() + 60, 17, 17, -64, 319, null);
+        int cryptZ = base.getZ() + 80;
+        level.getChunk(base.getX() >> 4, cryptZ >> 4);
+        int ground = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, base.getX(), cryptZ);
+        var crypt = new StructurePositions.Structure("sofe:khemet/crypt", base.getX(), cryptZ, 49, 49, -64, 319, null);
         helper.assertTrue(StructureBuilder.build(level, crypt), "the Crypt has no blockout");
-        int spawners = 0, chests = 0;
-        for (int x = base.getX() - 20; x <= base.getX() + 20; x++) {
-            for (int z = base.getZ() - 16; z <= base.getZ() + 70; z++) {
+        int ruinSpawners = 0, ruinChests = 0, cryptSpawners = 0, cryptChests = 0, deepest = Integer.MAX_VALUE;
+        for (int x = base.getX() - 25; x <= base.getX() + 25; x++) {
+            for (int z = base.getZ() - 16; z <= cryptZ + 25; z++) {
                 for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); y++) { // the whole column: the ground there is not always flat
                     var state = level.getBlockState(new BlockPos(x, y, z));
-                    if (state.is(Blocks.SPAWNER)) spawners++;
-                    if (state.is(Blocks.CHEST)) chests++;
+                    boolean inCrypt = z > base.getZ() + 40;
+                    if (state.is(Blocks.SPAWNER)) {
+                        if (inCrypt) cryptSpawners++;
+                        else ruinSpawners++;
+                    }
+                    if (state.is(Blocks.CHEST)) {
+                        if (inCrypt) {
+                            cryptChests++;
+                            deepest = Math.min(deepest, y);
+                        } else ruinChests++;
+                    }
                 }
             }
         }
-        helper.assertTrue(spawners >= 5, "the Ruin and the Crypt should hold at least five spawners, found " + spawners);
-        helper.assertTrue(chests >= 3, "the Ruin's two chests and the Crypt's one, found " + chests);
+        helper.assertTrue(ruinSpawners >= 3 && ruinChests >= 2, "the Ruin should hold three spawners and two chests, found " + ruinSpawners + " and " + ruinChests);
+        // (at least: the test world keeps what earlier runs built there)
+        helper.assertTrue(cryptSpawners >= 4, "the Crypt's two levels should hold four spawners, found " + cryptSpawners);
+        helper.assertTrue(cryptChests >= 3, "the Crypt should hold three chests, found " + cryptChests);
+        helper.assertTrue(deepest <= ground - 20, "the Crypt's treasure should lie deep under the ground (" + ground + "), found at " + deepest);
         helper.succeed();
     }
 

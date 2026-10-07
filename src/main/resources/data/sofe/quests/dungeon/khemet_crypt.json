@@ -23,11 +23,28 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:bog_mummy",
-        "count": 6
+        "count": 10
       },
       "target": {
         "x": 3000,
         "z": 2500
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:bog_mummy",
+        "count": 1
+      },
+      "target": {
+        "x": 3018,
+        "z": 2500
+      },
+      "lair": {
+        "x": 3018,
+        "z": 2500,
+        "depth": 18,
+        "name": "lord.sofe.khemet_crypt"
       }
     }
   ],

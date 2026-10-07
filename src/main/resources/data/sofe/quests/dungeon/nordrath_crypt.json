@@ -23,11 +23,28 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:draugr",
-        "count": 6
+        "count": 10
       },
       "target": {
         "x": 760,
         "z": -2050
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:draugr",
+        "count": 1
+      },
+      "target": {
+        "x": 778,
+        "z": -2050
+      },
+      "lair": {
+        "x": 778,
+        "z": -2050,
+        "depth": 18,
+        "name": "lord.sofe.nordrath_crypt"
       }
     }
   ],

@@ -134,8 +134,6 @@
 				"{ftbquests.sofe.step_hint}"
 			]
 			id: "7920D605D1E9F751"
-			shape: "gear"
-			size: 1.5d
 			tasks: [
 				{
 					advancement: "sofe:quest/act1_eclipse/step7"
@@ -146,6 +144,28 @@
 			]
 			title: "{quest.sofe.act1_eclipse.step7}"
 			x: 9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7920D605D1E9F751"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "6FD4C734E8B793D5"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step8"
+					criterion: ""
+					id: "2D857EAA463793FE"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step8}"
+			x: 10.5d
 			y: 0.0d
 		}
 	]
