@@ -184,29 +184,36 @@ def clay_golem():
     stripes(0, 8, 8, 10, vertical=False)                  # right side
     stripes(16, 8, 8, 10, vertical=False)                 # left side
     stripes(24, 8, 8, 10, vertical=False, start=1)        # back
-    for x in range(8, 16):                                 # the face: gold mask
-        for y in range(8, 18):
-            c = gold[2] if x < 12 else gold[1]
-            if y == 8:
-                c = lapis[1]
-            elif y == 9:
-                c = gold[3] if x % 2 else gold[2]
-            out[x, y] = c + (255,)
-    for x in range(9, 15):                                 # kohl brows and lines
-        out[x, 11] = (24, 18, 30, 255)
-    for (x, y) in ((9, 12), (10, 12), (13, 12), (14, 12), (15, 12), (8, 12)):
-        out[x, y] = (24, 18, 30, 255)
-    for (x, y) in ((10, 12), (13, 12)):
-        out[x, y] = (130, 255, 236, 255)                   # the soul in the eyes
-    for (x, y) in ((11, 15), (12, 15)):
-        out[x, y] = gold[0] + (255,)                       # the mouth
-    for y in range(16, 18):                                # the false beard's start, lapis and gold
-        for x in range(11, 13):
-            out[x, y] = (lapis[1] if y % 2 else gold[1]) + (255,)
-    for x in range(24, 32):                                # the nose box: gold
+    # the face: a gold funerary mask, drawn whole (8 wide, rows 8..17), shaded the same on both sides
+    kohl, glow, white = (28, 20, 34), (90, 240, 222), (200, 255, 246)
+    mask = ["llllllll",   # 8  the nemes' lapis band
+            "GgGgGgGg",   # 9  its gold edge
+            "sggggggs",   # 10 the brow
+            "skk..kks",   # 11 two kohl brows, apart
+            "sWE..EWs",   # 12 the eyes, lit by the bound soul
+            "kkkbbkkk",   # 13 kohl lines drawn out to the temples; the bridge of the nose
+            "sgHbbHgs",   # 14 the cheekbones
+            "ssgmmgss",   # 15 the mouth
+            ".sgllgs.",   # 16 the chin and the false beard
+            "..slls.."]   # 17
+    colors = {"l": lapis[1], "G": gold[3], "g": gold[2], "s": gold[1], "k": kohl, "W": white, "E": glow, "b": gold[1],
+              "H": gold[3], "m": gold[0], ".": gold[2]}
+    for dy, row in enumerate(mask):
+        for dx, ch in enumerate(row):
+            out[8 + dx, 8 + dy] = colors[ch] + (255,)
+    out[8, 16] = out[15, 16] = out[8, 17] = out[9, 17] = out[14, 17] = out[15, 17] = gold[1] + (255,)  # the jaw in shadow
+    # the nose box (24,0: 2x4x2) stands out over the lower face, so the mouth and the false beard are painted on it
+    for x in range(24, 32):
         for y in range(0, 6):
             if out[x, y][3]:
                 out[x, y] = (gold[2] if x < 28 else gold[1]) + (255,)
+    nose = ["gg",   # its front (26,2): the bridge
+            "kk",   # the nostrils' shadow
+            "mm",   # the mouth
+            "lG"]   # the false beard, lapis and gold
+    for dy, row in enumerate(nose):
+        for dx, ch in enumerate(row):
+            out[26 + dx, 2 + dy] = colors[ch] + (255,)
     # the usekh collar on the chest (body front: x 11..29, y 51..63) and the top of the shoulders
     for x in range(11, 29):
         for y in range(51, 55):
