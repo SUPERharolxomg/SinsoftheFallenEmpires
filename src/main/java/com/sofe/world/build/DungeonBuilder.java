@@ -90,6 +90,7 @@ final class DungeonBuilder {
         int ground = SultharisBuilder.surfaceY(level, cx, cz + 5); // the court's level
         islet(level, cx, cz, ground, p);
         hill(level, cx, cz, ground, p, random);
+        crags(level, cx, cz, ground, p, random);
         court(level, cx, cz, ground, p, random);
         front(level, cx, cz, ground, p);
 
@@ -180,7 +181,7 @@ final class DungeonBuilder {
             for (int z = cz - CRYPT_REACH; z <= cz - 2; z++) {
                 double dx = (x - cx) / 21.0, dz = (z - (cz - 10)) / 13.0;
                 double r = Math.sqrt(dx * dx + dz * dz) + 0.07 * Math.sin(x * 0.45) * Math.cos(z * 0.38);
-                int height = (int) ((1 - r) * 24) / 2 * 2;
+                int height = (int) ((1 - r) * 24 + 2 * Precinct.patches(x * 3, z * 3)) / 2 * 2 + (Precinct.patches(x * 7, z * 7) > 0.5 ? 1 : 0);
                 int top = ground + height;
                 if (height <= 0 || top <= SultharisBuilder.surfaceY(level, x, z)) continue;
                 for (int yy = ground - 3; yy < top; yy++) {
@@ -191,6 +192,24 @@ final class DungeonBuilder {
                 }
                 for (int yy = top; yy < top + 6; yy++) { // nothing stands on it (a tree, a cactus)
                     if (!level.getBlockState(new BlockPos(x, yy, z)).isAir()) set(level, x, yy, z, AIR);
+                }
+            }
+        }
+    }
+
+    /** Spires and fallen boulders on a tomb's hill, so its slopes are not smooth steps. */
+    private static void crags(ServerLevel level, int cx, int cz, int ground, Palette p, Random random) {
+        for (int i = 0; i < 26; i++) {
+            int x = cx + random.nextInt(41) - 20, z = cz - 2 - random.nextInt(22);
+            int top = SultharisBuilder.surfaceY(level, x, z);
+            if (top <= ground + 2 || Math.abs(x - cx) <= 6 && z > cz - 8) continue; // only on the hill, never over the tomb's front
+            boolean spire = random.nextInt(3) == 0;
+            int h = spire ? 3 + random.nextInt(5) : 1 + random.nextInt(2);
+            for (int dy = 0; dy < h; dy++) {
+                int w = spire ? (dy < h / 2 ? 1 : 0) : 1;
+                for (int dx = 0; dx <= w; dx++) for (int dz = 0; dz <= w; dz++) {
+                    if (random.nextInt(4) == 0 && dy > 0) continue;
+                    set(level, x + dx, top + dy, z + dz, Math.floorMod(top + dy - ground, 6) == 4 ? p.band() : p.rock());
                 }
             }
         }
@@ -431,7 +450,7 @@ final class DungeonBuilder {
      * A spawner of this creature that works in any light: a dungeon keeps its lanterns, and its dead still come (a spawner's
      * own rules, not the darkness the wild asks of a monster).
      */
-    private static void spawner(ServerLevel level, int x, int y, int z, EntityType<?> type) {
+    static void spawner(ServerLevel level, int x, int y, int z, EntityType<?> type) {
         BlockPos pos = new BlockPos(x, y, z);
         level.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
         if (!(level.getBlockEntity(pos) instanceof SpawnerBlockEntity spawner)) return;
@@ -455,7 +474,7 @@ final class DungeonBuilder {
     }
 
     /** A chest that fills from its loot table the first time it is opened (gear rolled for the Bearer who opens it). */
-    private static void chest(ServerLevel level, int x, int y, int z, String table, Random random) {
+    static void chest(ServerLevel level, int x, int y, int z, String table, Random random) {
         BlockPos pos = new BlockPos(x, y, z);
         level.setBlock(pos, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, net.minecraft.core.Direction.SOUTH), 2);
         if (level.getBlockEntity(pos) instanceof RandomizableContainerBlockEntity chest) {

@@ -111,6 +111,8 @@ final class Precinct {
         int hx = s.sizeX() / 2, hz = s.sizeZ() / 2;
         Direction door = door(s);
         BlockPos waystone = StructurePositions.get().waystones().get(s.id());
+        boolean mountain = MountainHalls.has(piece); // a hall in a mountain has its own terrace and stair: the grounds keep to the land below
+        int land = SultharisBuilder.surfaceY(level, s.x(), s.z() + s.sizeZ() / 2 + REACH) + 3;
         // 1. the ground: turned to the place's, its plants and trees cleared
         for (int x = s.x() - hx - REACH; x <= s.x() + hx + REACH; x++) {
             for (int z = s.z() - hz - REACH; z <= s.z() + hz + REACH; z++) {
@@ -118,7 +120,7 @@ final class Precinct {
                 if (out <= 1 || out > edge) continue;
                 if (out > edge - 4 && random.nextInt(edge - out + 2) == 0) continue; // the grounds fray into the land round them
                 BlockPos top = ground(level, x, z);
-                if (top == null) continue;
+                if (top == null || mountain && top.getY() > land) continue;
                 // the place's main ground, with patches of the others; the paving of its court near its walls
                 int n = theme.ground().size();
                 double p = (patches(x, z) + 1) / 2;
@@ -131,7 +133,7 @@ final class Precinct {
         // 2. the way in: paved, from the door out past the grounds, between columns with lights
         int doorX = s.x() + door.getStepX() * (hx + 1), doorZ = s.z() + door.getStepZ() * (hz + 1);
         Direction across = door.getClockWise();
-        int length = REACH + 6;
+        int length = mountain ? 0 : REACH + 6;
         for (int i = 0; i < length; i++) {
             int px = doorX + door.getStepX() * i, pz = doorZ + door.getStepZ() * i;
             for (int w = -2; w <= 2; w++) {
@@ -161,7 +163,7 @@ final class Precinct {
             if (out < 5 || out > ring - 3 || onWay(s, door, x, z, 7)) continue;
             if (waystone != null && Math.abs(waystone.getX() - x) < 12 && Math.abs(waystone.getZ() - z) < 12) continue;
             BlockPos top = ground(level, x, z);
-            if (top == null) continue;
+            if (top == null || mountain && top.getY() > land) continue;
             feature(level, top, theme.features().get(random.nextInt(theme.features().size())), theme, random, s);
             count--;
         }
