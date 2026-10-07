@@ -12,6 +12,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: production # CURSEFORGE_TOKEN lives in this environment
     steps:
       - uses: actions/checkout@v4
         with:
