@@ -82,6 +82,13 @@ public final class GearMaker {
         return roll(generator, random);
     }
 
+    /** A plain item of this base: common (no affixes), at this item level, as a Bearer's first weapon. */
+    public static Optional<ItemStack> commonItem(String itemId, int itemLevel, RandomSource random) {
+        List<GearBase> base = GearDataManager.bases().stream().filter(b -> b.item().equals(itemId)).toList();
+        if (base.isEmpty()) return Optional.empty();
+        return roll(LootGenerator.builder(base, GearDataManager.affixes()).itemLevel(itemLevel).rarity(Rarity.COMMON).build(), random);
+    }
+
     /** The random skill bonus of a class unique weapon: +1 or +2 ranks to one of its class's skills (not an upgrade). */
     public static Optional<GearData.Roll> randomSkillRanks(GearDataManager.Relic relic, RandomSource random) {
         if (relic.slot() != GearSlot.WEAPON || relic.playerClass() == null) return Optional.empty();

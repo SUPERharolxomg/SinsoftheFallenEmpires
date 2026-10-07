@@ -274,6 +274,7 @@ public final class QuestEngine {
         skipDone(player);
         checkCarried(player);
         wakeBosses(player);
+        VoidInvasion.tick(player);
     }
 
     /**

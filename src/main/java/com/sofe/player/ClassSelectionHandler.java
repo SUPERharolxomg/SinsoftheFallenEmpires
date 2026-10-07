@@ -83,7 +83,7 @@ public final class ClassSelectionHandler {
             ProgressionHandler.onBearerChosen(player);
             com.sofe.story.SoFEAdvancements.award(player, "story/root");
             giveFlask(player);
-            giveStartingKit(player);
+            data.get().ifPresent(cls -> giveStartingKit(player, cls));
             QuestEngine.onBearerChosen(player);
         });
     }
@@ -105,15 +105,29 @@ public final class ClassSelectionHandler {
     /** Dinars given with the starting kit: about two of Ferid's potions. */
     public static final int STARTING_DINARS = 50;
 
+    /** The plain brass weapon each Bearer sets out with, the first of their class's (data/sofe/gear_bases). */
+    static String firstWeapon(PlayerClass playerClass) {
+        return switch (playerClass) {
+            case KNIGHT -> "sofe:brass_longsword";
+            case NECROMANCER -> "sofe:brass_ankh_rod";
+            case SORCERESS -> "sofe:brass_staff";
+            case THIEF -> "sofe:brass_dagger";
+            case KING -> "sofe:brass_scimitar";
+        };
+    }
+
     /**
-     * Once per Bearer, so nobody sets out empty-handed: dinars in the Wallet, a Minor Pomegranate Elixir (health),
-     * a Bearer's Tonic (the class resource) and a Return Scroll (back to Sulthari).
+     * Once per Bearer, so nobody sets out empty-handed: a plain brass weapon of their class, dinars in the Wallet,
+     * a Minor Pomegranate Elixir (health), a Bearer's Tonic (the class resource) and a Return Scroll (back to Sulthari).
      */
-    private static void giveStartingKit(ServerPlayer player) {
+    private static void giveStartingKit(ServerPlayer player, PlayerClass playerClass) {
         var kept = player.getPersistentData().getCompound(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG);
         if (kept.getBoolean("sofe_starting_kit")) return;
         kept.putBoolean("sofe_starting_kit", true);
         player.getPersistentData().put(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG, kept);
+        com.sofe.gear.GearMaker.commonItem(firstWeapon(playerClass), 1, player.getRandom()).ifPresent(weapon -> {
+            if (!player.getInventory().add(weapon)) player.drop(weapon, false);
+        });
         com.sofe.economy.EconomyHandler.addDinars(player, STARTING_DINARS);
         for (var item : java.util.List.of(com.sofe.registry.ItemRegistry.MINOR_POMEGRANATE_ELIXIR, com.sofe.registry.ItemRegistry.BEARERS_TONIC,
                 com.sofe.registry.ItemRegistry.RETURN_SCROLL)) {
