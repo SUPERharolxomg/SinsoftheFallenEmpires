@@ -51,6 +51,8 @@ public final class VoidInvasion {
     static final int BREATH = 20 * 8, FIRST_BREATH = 20 * 3;
     /** How many of a rift's creatures are out at once, and how many more in each later wave. */
     static final int AT_ONCE = 3, MORE_EACH_WAVE = 1;
+    /** How far from its side's point a rift may open, to stand on the open ground (a street, not a roof). */
+    static final int RIFT_RANGE = 6;
 
     /** One Bearer's invasion in progress. */
     static final class Run {
@@ -178,7 +180,7 @@ public final class VoidInvasion {
     private static void open(ServerLevel level, Run run, QuestDefinition.Invasion invasion, QuestDefinition.Target center, int wave, ServerPlayer player) {
         for (String side : invasion.waves().get(wave).from()) {
             QuestDefinition.Target at = invasion.point(center, side);
-            BlockPos pos = com.sofe.entity.army.Army.outdoors(level, at.x(), at.z());
+            BlockPos pos = com.sofe.entity.army.Army.outdoors(level, at.x(), at.z(), RIFT_RANGE);
             if (pos == null) pos = com.sofe.world.Grounding.groundFloor(level, at.x(), at.z());
             boolean alongX = side.equals("north") || side.equals("south"); // the portal's face turns to the place
             run.rifts.add(new Rift(side, pos, alongX));

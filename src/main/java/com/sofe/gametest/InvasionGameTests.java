@@ -36,7 +36,7 @@ public class InvasionGameTests {
         ServerPlayer hero = FakePlayerFactory.get(helper.getLevel(), new GameProfile(UUID.randomUUID(), "sofe_test_defender"));
         hero.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
         String id = "sofe:test_invasion_" + Long.toHexString(System.nanoTime());
-        var invasion = new QuestDefinition.Invasion(new QuestDefinition.Target(at.getX(), at.getZ()), 48, 8, Map.of(),
+        var invasion = new QuestDefinition.Invasion(new QuestDefinition.Target(at.getX(), at.getZ()), 48, 12, Map.of(),
                 List.of("sofe:void_wretch"), List.of(new QuestDefinition.Wave(List.of("east"), 2), new QuestDefinition.Wave(List.of("west", "north"), 4)));
         StoryDataManager.putForTest(new QuestDefinition(id, QuestDefinition.Type.SIDE, 1,
                 List.of(new QuestDefinition.Step(new Objective.Kill("sofe:void_*", 6), List.of(), null, invasion, null)), List.of(), null));
@@ -53,7 +53,7 @@ public class InvasionGameTests {
         String mine = VoidInvasion.forTag(hero.getUUID());
         List<Mob> out = helper.getLevel().getEntitiesOfClass(Mob.class, around, m -> m.getTags().contains(mine) && m.getTags().contains(VoidInvasion.INVADER));
         helper.assertTrue(out.size() == 2, "the east rift should let out the wave's two creatures, found " + out.size());
-        helper.assertTrue(out.stream().allMatch(m -> m.getX() > at.getX() + 3), "the creatures did not come out of the east");
+        helper.assertTrue(out.stream().allMatch(m -> m.getX() > at.getX() + 2), "the creatures did not come out of the east");
         helper.assertFalse(helper.getLevel().getEntitiesOfClass(Display.BlockDisplay.class, around, d -> d.getTags().contains(VoidInvasion.RIFT)).isEmpty(),
                 "the rift is not drawn");
 

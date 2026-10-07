@@ -114,9 +114,14 @@ public final class Army {
      * point; a roof or a fountain's dome is open to the sky too, but higher than the street. Null when there is none.
      */
     public static BlockPos outdoors(ServerLevel level, int x, int z) {
+        return outdoors(level, x, z, 16);
+    }
+
+    /** The same, looked for no farther than this from the point (a rift keeps to its side of the place). */
+    public static BlockPos outdoors(ServerLevel level, int x, int z, int range) {
         BlockPos best = null;
         double bestDistance = 0;
-        for (int r = 0; r <= 16; r += 2) {
+        for (int r = 0; r <= range; r += 2) {
             for (int a = 0; a < (r == 0 ? 1 : 8); a++) {
                 int px = x + (int) Math.round(Math.cos(a * Math.PI / 4) * r), pz = z + (int) Math.round(Math.sin(a * Math.PI / 4) * r);
                 BlockPos floor = com.sofe.world.Grounding.groundFloor(level, px, pz);
