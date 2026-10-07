@@ -34,7 +34,7 @@ A modest PC is enough: Ryzen 3 3200G, GTX 1650, 8 GB of RAM (give the game 4 GB)
 
 ## Status
 
-**Beta (0.8.0).** The whole story can be played from the first act to the ending. Some of the story's illustrations are still drawn stand-ins, and the music uses Minecraft's tracks for now.
+**Beta (0.8.1).** The whole story can be played from the first act to the ending. Some of the story's illustrations are still drawn stand-ins, and the music uses Minecraft's tracks for now.
 
 ## Support the project
 
@@ -61,6 +61,6 @@ En la Noche del Eclipse el sello bajo Sulthari se rompe, y cinco fragmentos del 
 
 **Primeros pasos:** pulsa *Comenzar la Aventura* y elige tu Portador; con **K** aprende tus tres primeras habilidades; sigue el **oro** (la brújula de arriba de la pantalla, los destellos dorados del suelo y la corona de luz sobre la persona con quien hablar); **U** abre el Diario; **H** bebe del Frasco del Portador (cura el 40% de vida y recurso, se rellena en Sulthari y no se bebe si estás al máximo). ¿Atrapado? Escribe `/sofe unstuck`.
 
-Requisitos: Minecraft 1.20.1, Forge 47.4.23 o posterior, GeckoLib y Curios API. Recomendado: el modpack *Sins of the Fallen Empires*. **Beta 0.8.0.**
+Requisitos: Minecraft 1.20.1, Forge 47.4.23 o posterior, GeckoLib y Curios API. Recomendado: el modpack *Sins of the Fallen Empires*. **Beta 0.8.1.**
 
 **Apoya el proyecto:** el mod es y será siempre gratis y completo. Si te gusta y quieres ayudar a que crezca (más ilustraciones, música propia), puedes hacer una donación voluntaria: [donar con PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).
