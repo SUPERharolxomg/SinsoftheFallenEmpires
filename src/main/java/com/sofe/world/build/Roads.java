@@ -67,7 +67,13 @@ final class Roads {
             int cx = x0 + out.getStepX() * t, cz = z0 + out.getStepZ() * t;
             int ground = naturalTop(level, cx, cz);
             boolean water = ground < sea - 1 || !level.getFluidState(new BlockPos(cx, ground + 1, cz)).isEmpty();
-            int walk = Math.max(Math.max(ground, water ? sea : ground), top - 1 - t / 3); // the surface block's height
+            int ideal = t % 3 == 0 ? previous - 1 : previous; // down one block every 3
+            if (ground > ideal + 1 && !water) { // a hill or a mountain in the way: the road goes through it
+                tunnel(level, cx, cz, out, t, ideal, half, style.fill(), PATH, EDGE);
+                previous = ideal;
+                continue;
+            }
+            int walk = Math.max(Math.max(ground, water ? sea : ground), ideal); // the surface block's height
             boolean raised = water || walk > ground + 1;
             for (int b = -half - 1; b <= half + 1; b++) {
                 int x = cx + (out.getAxis() == Direction.Axis.X ? 0 : b), z = cz + (out.getAxis() == Direction.Axis.Z ? 0 : b);
@@ -93,9 +99,52 @@ final class Roads {
         }
     }
 
-    /** The height of the highest natural solid block in a column (ignoring plants and water). */
-    private static int naturalTop(ServerLevel level, int x, int z) {
-        return level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z) - 1;
+    /**
+     * One slice of the way through a hill, step t of a road going out, its floor at height walk. Where the hill rises
+     * over the headroom it is a tunnel: four blocks high, with walls and a ceiling of wall wherever the hill leaves a
+     * gap, water or lava, or sand and gravel that would fall in, and a lantern hung every 6 blocks. Where the hill is
+     * lower it is an open cut, the earth above the road taken away.
+     */
+    static void tunnel(ServerLevel level, int cx, int cz, Direction out, int t, int walk, int half, BlockState wall, BlockState floor, BlockState edge) {
+        boolean alongX = out.getAxis() == Direction.Axis.X;
+        boolean covered = naturalTop(level, cx, cz) >= walk + 5;
+        for (int b = -half - 1; b <= half + 1; b++) {
+            int x = cx + (alongX ? 0 : b), z = cz + (alongX ? b : 0);
+            int hill = naturalTop(level, x, z);
+            if (Math.abs(b) == half + 1) { // the sides: the hill's own rock, made sound
+                for (int y = walk; y <= Math.min(walk + 4, hill); y++) shore(level, x, y, z, wall);
+                if (covered) shore(level, x, walk + 5, z, wall);
+                continue;
+            }
+            shore(level, x, walk - 1, z, wall);
+            set(level, x, walk, z, Math.abs(b) == half ? edge : floor);
+            int clear = covered ? walk + 4 : Math.max(walk + 4, hill); // a cut takes the earth off right to the top
+            for (int y = walk + 1; y <= clear; y++) set(level, x, y, z, AIR);
+            if (covered) shore(level, x, walk + 5, z, wall);
+        }
+        if (covered && Math.floorMod(t, 6) == 0) set(level, cx, walk + 4, cz, Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true));
+    }
+
+    /** A block of a tunnel's shell: kept if it is solid rock or earth, made wall if it is open, wet or would fall. */
+    private static void shore(ServerLevel level, int x, int y, int z, BlockState wall) {
+        BlockPos pos = new BlockPos(x, y, z);
+        BlockState state = level.getBlockState(pos);
+        if (state.isAir() || !level.getFluidState(pos).isEmpty() || state.getBlock() instanceof net.minecraft.world.level.block.FallingBlock
+                || !state.isCollisionShapeFullBlock(level, pos)) {
+            set(level, x, y, z, wall);
+        }
+    }
+
+    /** The height of the highest natural solid block in a column (ignoring plants, trees and water). */
+    static int naturalTop(ServerLevel level, int x, int z) {
+        int y = level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z) - 1;
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
+        while (y > level.getMinBuildHeight()) { // a tree is not the ground
+            BlockState state = level.getBlockState(pos.setY(y));
+            if (!state.is(net.minecraft.tags.BlockTags.LOGS) && !state.is(net.minecraft.tags.BlockTags.LEAVES)) break;
+            y--;
+        }
+        return y;
     }
 
     private static void lanternPost(ServerLevel level, int x, int y, int z, Style style) {

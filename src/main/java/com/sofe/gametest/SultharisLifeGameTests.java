@@ -97,6 +97,37 @@ public class SultharisLifeGameTests {
         helper.succeed();
     }
 
+    /** A town's trees can be cut down, the whole tree at once; a post of a house and a garden's hedge cannot. */
+    @GameTest(template = "empty")
+    public static void aTownsTreesCanBeCutButNotItsPosts(GameTestHelper helper) {
+        var leaves = Blocks.ACACIA_LEAVES.defaultBlockState().setValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT, true);
+        for (int y = 1; y <= 3; y++) helper.setBlock(new BlockPos(1, y, 1), Blocks.ACACIA_LOG);
+        for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) helper.setBlock(new BlockPos(1 + dx, 4, 1 + dz), leaves);
+        helper.setBlock(new BlockPos(4, 1, 1), Blocks.SPRUCE_LOG); // a post holding up a roof
+        helper.setBlock(new BlockPos(4, 2, 1), Blocks.SPRUCE_LOG);
+        helper.setBlock(new BlockPos(4, 3, 1), Blocks.STONE_BRICKS);
+        helper.setBlock(new BlockPos(6, 1, 1), leaves); // a hedge, out of the tree's reach
+        BlockPos city = helper.absolutePos(new BlockPos(1, 1, 1));
+        ProtectedZoneData zones = ProtectedZoneData.get(helper.getLevel().getServer());
+        String cityId = "sofe:test_grove_" + city.asLong();
+        zones.add(new ProtectedZone(cityId, ProtectedZone.Kind.CITY, city.getX() - 2, city.getY() - 1, city.getZ() - 2, city.getX() + 6, city.getY() + 6, city.getZ() + 2));
+        ServerPlayer woodcutter = player(helper, "sofe_test_woodcutter");
+        try {
+            woodcutter.gameMode.destroyBlock(helper.absolutePos(new BlockPos(1, 1, 1)));
+            for (int y = 1; y <= 3; y++) helper.assertBlockNotPresent(Blocks.ACACIA_LOG, new BlockPos(1, y, 1));
+            helper.assertBlockNotPresent(Blocks.ACACIA_LEAVES, new BlockPos(0, 4, 2)); // the crown fell with it
+            woodcutter.gameMode.destroyBlock(helper.absolutePos(new BlockPos(4, 1, 1)));
+            helper.assertBlockPresent(Blocks.SPRUCE_LOG, new BlockPos(4, 1, 1));
+            woodcutter.gameMode.destroyBlock(helper.absolutePos(new BlockPos(6, 1, 1)));
+            helper.assertBlockPresent(Blocks.ACACIA_LEAVES, new BlockPos(6, 1, 1));
+        } finally {
+            zones.remove(cityId);
+            for (BlockPos p : BlockPos.betweenClosed(new BlockPos(0, 1, 0), new BlockPos(6, 4, 2))) helper.setBlock(p, Blocks.AIR); // beyond the plot: leave nothing
+            helper.killAllEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class);
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "empty")
     public static void theSealVeilStopsMobsAndCannotBeBroken(GameTestHelper helper) {
         helper.setBlock(new BlockPos(1, 1, 1), SoFEBlocks.SEAL_VEIL.get());

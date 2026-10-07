@@ -67,6 +67,43 @@ public final class StoryPlacements extends SavedData {
                 .anyMatch(p -> near(p.getBlockX(), p.getBlockZ(), x, z, BUILD_DISTANCE)));
     }
 
+    /** How far round a place its build can leave things lying, and how long it goes on settling after. */
+    private static final int SETTLE_MARGIN = 24, SETTLE_TICKS = 20 * 60;
+    /** No one is near a place while it is built; a drop this close to a player is theirs (a tree they cut). */
+    private static final double PLAYER_REACH = 8;
+
+    private record Settling(net.minecraft.world.phys.AABB area, long until) {
+    }
+
+    private static final java.util.List<Settling> SETTLING = new java.util.ArrayList<>();
+
+    /**
+     * A new world was found strewn with things: what a build cuts through (tall grass, flowers, a lantern left with
+     * nothing to hold it, sand that falls) drops on the ground. Right after a place is built what lies there is taken
+     * away, and for a minute nothing more is dropped there unless a player is beside it.
+     */
+    private static void settle(ServerLevel level, StructurePositions.Structure structure) {
+        int rx = structure.sizeX() / 2 + SETTLE_MARGIN, rz = structure.sizeZ() / 2 + SETTLE_MARGIN;
+        var area = new net.minecraft.world.phys.AABB(structure.x() - rx, level.getMinBuildHeight(), structure.z() - rz,
+                structure.x() + rx + 1, level.getMaxBuildHeight(), structure.z() + rz + 1);
+        level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, area).forEach(net.minecraft.world.entity.Entity::discard);
+        SETTLING.add(new Settling(area, level.getGameTime() + SETTLE_TICKS));
+    }
+
+    /** A drop while a place settles: kept only beside a player. */
+    public static void onEntityJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent event) {
+        if (SETTLING.isEmpty() || event.loadedFromDisk() || !(event.getEntity() instanceof net.minecraft.world.entity.item.ItemEntity item)
+                || !(event.getLevel() instanceof ServerLevel level) || level.dimension() != net.minecraft.world.level.Level.OVERWORLD) return;
+        long now = level.getGameTime();
+        SETTLING.removeIf(s -> s.until() < now);
+        for (Settling s : SETTLING) {
+            if (s.area().contains(item.position()) && level.getNearestPlayer(item, PLAYER_REACH) == null) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+    }
+
     private static boolean near(int ax, int az, int bx, int bz, int distance) {
         long dx = ax - bx, dz = az - bz;
         return dx * dx + dz * dz <= (long) distance * distance;
@@ -94,6 +131,7 @@ public final class StoryPlacements extends SavedData {
             String key = "build:" + structure.id();
             if (data.placed.contains(key) || !near.test(structure.x(), structure.z())) continue;
             if (StructureBuilder.build(level, structure)) count++;
+            settle(level, structure);
             data.placed.add(key);
             com.sofe.world.build.RegionHealing.afterBuilt(server, structure.id()); // built after its region was liberated: heal it too
         }

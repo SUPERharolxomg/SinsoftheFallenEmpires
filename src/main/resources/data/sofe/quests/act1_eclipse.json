@@ -5,7 +5,7 @@
     {
       "objective": {
         "type": "learn_skills",
-        "count": 3
+        "count": 1
       },
       "on_start": [
         {
