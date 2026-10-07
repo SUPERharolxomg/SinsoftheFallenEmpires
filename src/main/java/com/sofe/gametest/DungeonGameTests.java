@@ -18,7 +18,6 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
@@ -95,8 +94,7 @@ public class DungeonGameTests {
         int spawners = 0, chests = 0;
         for (int x = base.getX() - 20; x <= base.getX() + 20; x++) {
             for (int z = base.getZ() - 16; z <= base.getZ() + 70; z++) {
-                int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
-                for (int y = top - 12; y <= top; y++) {
+                for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); y++) { // the whole column: the ground there is not always flat
                     var state = level.getBlockState(new BlockPos(x, y, z));
                     if (state.is(Blocks.SPAWNER)) spawners++;
                     if (state.is(Blocks.CHEST)) chests++;
