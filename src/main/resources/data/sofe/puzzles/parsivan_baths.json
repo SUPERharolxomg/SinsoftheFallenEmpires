@@ -1,0 +1,19 @@
+{
+  "kind": "order",
+  "runes": [
+    "wave",
+    "moon",
+    "star",
+    "sun"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "moon",
+    "wave",
+    "sun",
+    "star"
+  ],
+  "gate": "sofe:parsivan/baths",
+  "boss": "sofe:mirael",
+  "anchor": "sofe:parsivan/baths"
+}

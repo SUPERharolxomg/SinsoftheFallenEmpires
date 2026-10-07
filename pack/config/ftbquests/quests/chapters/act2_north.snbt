@@ -1,0 +1,135 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "act2_north"
+	group: ""
+	icon: "minecraft:snowball"
+	id: "18C1DFAC547DD1AE"
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [
+				"7920D605D1E9F751"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "45702D284F531A57"
+			tasks: [
+				{
+					advancement: "sofe:quest/act2_north/step1"
+					criterion: ""
+					id: "4F1E242AA2F5D1D0"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act2_north.step1}"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"45702D284F531A57"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "35B1C9B918E776BB"
+			tasks: [
+				{
+					advancement: "sofe:quest/act2_north/step2"
+					criterion: ""
+					id: "41552014002B3019"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act2_north.step2}"
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"35B1C9B918E776BB"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "14A2DEB6C9067604"
+			tasks: [
+				{
+					advancement: "sofe:quest/act2_north/step3"
+					criterion: ""
+					id: "0EA173FBAEB424A6"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act2_north.step3}"
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"14A2DEB6C9067604"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "3517F79FAFB284FC"
+			tasks: [
+				{
+					advancement: "sofe:quest/act2_north/step4"
+					criterion: ""
+					id: "7B898BB6B9D4324C"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act2_north.step4}"
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"3517F79FAFB284FC"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "045E9BFCE1961D74"
+			tasks: [
+				{
+					advancement: "sofe:quest/act2_north/step5"
+					criterion: ""
+					id: "7709B336C6E2764A"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act2_north.step5}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"045E9BFCE1961D74"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "1B8F382DC91069D5"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act2_north/step6"
+					criterion: ""
+					id: "3240BD0F45D20E23"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act2_north.step6}"
+			x: 7.5d
+			y: 0.0d
+		}
+	]
+	title: "{quest.sofe.act2_north}"
+}

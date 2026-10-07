@@ -93,6 +93,11 @@ EXTRA = {
     "ftb": ["https://maven.ftb.dev/releases/dev/ftb/mods/ftb-essentials-forge/2001.2.4/ftb-essentials-forge-2001.2.4.jar",
             "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-forge/2001.2.13/ftb-library-forge-2001.2.13.jar",
             "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1MKTLiiG/architectury-9.2.14-forge.jar"],
+    # the pack's quest book (pack/config/ftbquests): the files pack/curseforge.json names
+    "ftbquests": ["https://cursemaven.com/curse/maven/ftb-quests-forge-289412/8078538/ftb-quests-forge-289412-8078538.jar",
+                  "https://cursemaven.com/curse/maven/ftb-library-forge-404465/8226927/ftb-library-forge-404465-8226927.jar",
+                  "https://cursemaven.com/curse/maven/ftb-teams-forge-404468/7499810/ftb-teams-forge-404468-7499810.jar",
+                  "https://cursemaven.com/curse/maven/architectury-api-419699/5137938/architectury-api-419699-5137938.jar"],
 }
 
 

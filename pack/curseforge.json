@@ -65,6 +65,30 @@
       "note": "26.5.0"
     },
     {
+      "name": "FTB Quests",
+      "projectID": 289412,
+      "fileID": 8078538,
+      "note": "ftb-quests-forge-2001.4.22: the quest book (pack/config/ftbquests, scripts/make_quest_book.py)"
+    },
+    {
+      "name": "FTB Library",
+      "projectID": 404465,
+      "fileID": 8226927,
+      "note": "ftb-library-forge-2001.2.13"
+    },
+    {
+      "name": "FTB Teams",
+      "projectID": 404468,
+      "fileID": 7499810,
+      "note": "ftb-teams-forge-2001.3.2"
+    },
+    {
+      "name": "Architectury API",
+      "projectID": 419699,
+      "fileID": 5137938,
+      "note": "architectury-9.2.14-forge"
+    },
+    {
       "name": "Embeddium",
       "projectID": 908741,
       "fileID": 5681725,

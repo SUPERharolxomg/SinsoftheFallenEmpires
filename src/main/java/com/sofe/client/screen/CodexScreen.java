@@ -282,7 +282,7 @@ public class CodexScreen extends Screen {
                     Splash.Image art = gallery.get(i).image();
                     Splash.cover(g, art, x + 2, y + 1, 28, 16);
                     tx = x + 34;
-                    label = Component.literal(gallery.get(i).path().substring(gallery.get(i).path().indexOf('/') + 1).replace('_', ' '));
+                    label = artTitle(gallery.get(i).path());
                 }
             }
             g.drawString(this.font, this.font.substrByWidth(label, w - (tx - x) - 4).getString(), tx, y + 6, INK, false);
@@ -351,5 +351,25 @@ public class CodexScreen extends Screen {
         public void onClose() {
             Minecraft.getInstance().setScreen(parent);
         }
+    }
+
+    /** The name an illustration goes by in the gallery: "boss/kaleth" is Kaleth, "fate/khemet_rest" the fate's name. */
+    static Component artTitle(String path) {
+        String folder = path.substring(0, path.indexOf('/')), name = path.substring(path.indexOf('/') + 1);
+        return switch (folder) {
+            case "hero" -> Component.translatable("npc.sofe." + name);
+            case "boss" -> Component.translatable("entity.sofe." + name);
+            case "empire" -> Component.translatable("region.sofe." + name);
+            case "fate" -> {
+                String region = name.substring(0, name.indexOf('_')), fate = name.substring(name.indexOf('_') + 1);
+                yield Component.translatable("region.sofe." + region).append(" · ")
+                        .append(Component.translatable(fate.equals("unsettled") ? "ending.sofe.unsettled" : "fate.sofe." + region + "." + fate));
+            }
+            case "epilogue" -> {
+                String hero = name.substring(0, name.lastIndexOf('_')), kind = name.substring(name.lastIndexOf('_') + 1);
+                yield Component.translatable("npc.sofe." + hero).append(" · ").append(Component.translatable("codex.sofe.art.epilogue_" + kind));
+            }
+            default -> Component.translatable("codex.sofe.art." + name);
+        };
     }
 }

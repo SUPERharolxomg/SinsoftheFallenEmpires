@@ -1,0 +1,21 @@
+{
+  "kind": "order",
+  "runes": [
+    "wave",
+    "sun",
+    "moon",
+    "eye",
+    "star"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "star",
+    "wave",
+    "sun",
+    "eye",
+    "moon"
+  ],
+  "gate": "sofe:aureum/golden_vaults",
+  "boss": "sofe:avarok",
+  "anchor": "sofe:aureum/golden_vaults"
+}

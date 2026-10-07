@@ -4,6 +4,38 @@
   "steps": [
     {
       "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:void_ruin"
+      },
+      "target": {
+        "x": -1050,
+        "z": 302
+      },
+      "_dungeon": "void/ruin"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:void_stalker",
+        "count": 1
+      },
+      "target": {
+        "x": -1050,
+        "z": 300
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:void_stalker",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ],
+      "_dungeon": "void/ruin"
+    },
+    {
+      "objective": {
         "type": "defeat_boss",
         "boss": "sofe:solrath"
       },

@@ -171,6 +171,11 @@ public final class ConsumableItems {
     public static boolean drinkFlask(ServerPlayer player) {
         if (player.getCooldowns().isOnCooldown(ItemRegistry.BEARERS_FLASK.get())) return false;
         if (!player.getInventory().contains(new ItemStack(ItemRegistry.BEARERS_FLASK.get()))) return false;
+        if (atFullStrength(player)) { // a sip at full health only wasted a charge, and it looked as if the Flask did nothing
+            player.displayClientMessage(Component.translatable("message.sofe.flask.full").withStyle(ChatFormatting.GRAY), true);
+            return false;
+        }
+        float before = player.getHealth();
         boolean drank = EconomyCapability.get(player).map(e -> e.useFlask()).orElse(false);
         if (!drank) {
             player.displayClientMessage(Component.translatable("message.sofe.flask.empty").withStyle(ChatFormatting.GRAY), true);
@@ -181,6 +186,15 @@ public final class ConsumableItems {
         sharedCooldown(player);
         player.level().playSound(null, player.blockPosition(), SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 1f, 1.1f);
         EconomyHandler.sync(player);
+        int healed = Math.round(player.getHealth() - before);
+        EconomyCapability.get(player).ifPresent(e -> player.displayClientMessage(Component.translatable("message.sofe.flask.drank",
+                healed, e.flaskCharges(), EconomyHandler.flaskMax(player)).withStyle(ChatFormatting.AQUA), true));
         return true;
+    }
+
+    /** Full life, and the class's resource (mana, rage...) full too: nothing for the Flask to give back. */
+    private static boolean atFullStrength(ServerPlayer player) {
+        if (player.getHealth() < player.getMaxHealth()) return false;
+        return CombatCapability.get(player).flatMap(c -> c.resource()).map(pool -> pool.current() >= pool.max()).orElse(true);
     }
 }

@@ -1,0 +1,19 @@
+{
+  "kind": "order",
+  "runes": [
+    "sun",
+    "star",
+    "moon",
+    "flame"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "sun",
+    "flame",
+    "moon",
+    "star"
+  ],
+  "gate": "sofe:aureum/treasury",
+  "boss": "sofe:goldarc",
+  "anchor": "sofe:aureum/treasury"
+}

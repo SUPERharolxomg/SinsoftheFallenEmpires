@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
 
@@ -191,12 +192,15 @@ final class Architecture {
     }
 
     /**
-     * A house on the floor at height y, w by d, with a door on the given side, windows, a lantern and
-     * either a gabled roof or a flat roof with a parapet.
+     * A house on the floor at height y, w by d, with a door on the given side, windows, lanterns and
+     * either a gabled roof or a flat roof with a parapet. The front is symmetric: a wall an even number of
+     * blocks wide gets a double door in its middle, and the windows mirror each other from the corners.
      */
     static void house(ServerLevel level, int minX, int minZ, int w, int d, int y, int height, Direction doorSide, HouseStyle style) {
         int maxX = minX + w - 1, maxZ = minZ + d - 1;
-        int doorX = (minX + maxX) / 2, doorZ = (minZ + maxZ) / 2;
+        int doorX = Math.floorDiv(minX + maxX, 2), doorZ = Math.floorDiv(minZ + maxZ, 2);
+        boolean alongX = doorSide.getAxis() == Direction.Axis.Z; // the door's wall runs along x
+        int leaves = ((alongX ? w : d) % 2 == 0) ? 2 : 1;
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
                 boolean edgeX = x == minX || x == maxX, edgeZ = z == minZ || z == maxZ;
@@ -207,7 +211,8 @@ final class Architecture {
                         continue;
                     }
                     boolean corner = edgeX && edgeZ;
-                    boolean window = !corner && dy >= 1 && dy <= 2 && (edgeX ? Math.floorMod(z - minZ, 3) == 2 : Math.floorMod(x - minX, 3) == 2);
+                    int fromCorner = edgeX ? Math.min(z - minZ, maxZ - z) : Math.min(x - minX, maxX - x); // mirrored on each wall
+                    boolean window = !corner && dy >= 1 && dy <= 2 && fromCorner % 3 == 2;
                     BlockState s = corner || dy == height - 1 ? style.frame() : window ? Blocks.GLASS_PANE.defaultBlockState() : style.wall();
                     set(level, x, y + dy, z, s);
                 }
@@ -220,29 +225,30 @@ final class Architecture {
             case WEST -> new int[]{minX, doorZ, minX - 1, doorZ};
             default -> new int[]{maxX, doorZ, maxX + 1, doorZ};
         };
-        set(level, door[0], y, door[1], style.door().setValue(DoorBlock.FACING, doorSide.getOpposite()).setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER));
-        set(level, door[0], y + 1, door[1], style.door().setValue(DoorBlock.FACING, doorSide.getOpposite()).setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER));
-        set(level, door[2], y + 2, door[3], style.awning());
-        if (doorSide.getAxis() == Direction.Axis.Z) {
-            set(level, door[2] - 1, y + 2, door[3], style.awning());
-            set(level, door[2] + 1, y + 2, door[3], style.awning());
-        } else {
-            set(level, door[2], y + 2, door[3] - 1, style.awning());
-            set(level, door[2], y + 2, door[3] + 1, style.awning());
+        Direction facing = doorSide.getOpposite(), left = facing.getCounterClockWise();
+        int ax = alongX ? 1 : 0, az = alongX ? 0 : 1; // one step along the door's wall
+        for (int i = 0; i < leaves; i++) {
+            int lx = door[0] + ax * i, lz = door[1] + az * i;
+            // a double door opens from the middle: each leaf hinged on its outer side
+            boolean leftLeaf = leaves == 2 && (left.getStepX() * (ax * (i == 0 ? -1 : 1)) + left.getStepZ() * (az * (i == 0 ? -1 : 1))) > 0;
+            BlockState leaf = style.door().setValue(DoorBlock.FACING, facing)
+                    .setValue(DoorBlock.HINGE, leaves == 2 && !leftLeaf ? DoorHingeSide.RIGHT : DoorHingeSide.LEFT);
+            set(level, lx, y, lz, leaf.setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER));
+            set(level, lx, y + 1, lz, leaf.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER));
         }
+        // the awning runs one block past the door on each side; a lantern hangs under each end
         BlockState hanging = Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true);
-        set(level, (minX + maxX) / 2, y + height - 1, (minZ + maxZ) / 2, hanging);
-        set(level, minX + 1, y + height - 1, maxZ - 1, hanging);
-        set(level, maxX - 1, y + height - 1, minZ + 1, hanging);
-        if (doorSide.getAxis() == Direction.Axis.Z) {
-            set(level, door[2] - 1, y + 1, door[3], hanging);
-            set(level, door[2] + 1, y + 1, door[3], hanging);
-        } else {
-            set(level, door[2], y + 1, door[3] - 1, hanging);
-            set(level, door[2], y + 1, door[3] + 1, hanging);
-        }
+        for (int i = -1; i <= leaves; i++) set(level, door[2] + ax * i, y + 2, door[3] + az * i, style.awning());
+        set(level, door[2] - ax, y + 1, door[3] - az, hanging);
+        set(level, door[2] + ax * leaves, y + 1, door[3] + az * leaves, hanging);
         if (style.gable()) gableRoof(level, minX, minZ, maxX, maxZ, y + height, style);
         else flatRoof(level, minX, minZ, maxX, maxZ, y + height, style);
+        // lanterns inside, each hung from a beam in the ceiling (from the air they fell at the first block update)
+        int[][] inside = {{doorX, doorZ}, {minX + 1, maxZ - 1}, {maxX - 1, minZ + 1}};
+        for (int[] l : inside) {
+            set(level, l[0], y + height, l[1], style.frame());
+            set(level, l[0], y + height - 1, l[1], hanging);
+        }
     }
 
     /** A gabled roof along the longer side, overhanging by one block, with walled gable ends. */

@@ -1,0 +1,10 @@
+{
+	default_autoclaim_rewards: "disabled"
+	default_quest_shape: "circle"
+	disable_gui: false
+	drop_loot_crates: false
+	pause_game: false
+	progression_mode: "linear"
+	title: "{ftbquests.sofe.title}"
+	version: 13
+}

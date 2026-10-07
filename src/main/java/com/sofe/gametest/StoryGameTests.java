@@ -121,4 +121,24 @@ public class StoryGameTests {
         helper.assertTrue(copy.act() == 3, "the act was not saved");
         helper.succeed();
     }
+
+    /** Every step done grants its hidden advancement, which ticks the step in the modpack's FTB Quests book. */
+    @GameTest(template = "empty")
+    public static void aStepDoneGrantsTheAdvancementTheQuestBookReads(GameTestHelper helper) {
+        // a real player, never logged in: a fake player's advancements are thrown away, and a mock one logs in (and syncs)
+        ServerPlayer player = new ServerPlayer(helper.getLevel().getServer(), helper.getLevel(),
+                new GameProfile(UUID.randomUUID(), "sofe_test_book"));
+        String quest = "sofe:side/sulthari_embers";
+        // the story kept by hand: a mock player has no connection for the Journal's sync
+        StoryProgress story = StoryCapability.get(player).orElseThrow();
+        story.start(quest);
+        com.sofe.quest.QuestEngine.grantMilestones(player, story);
+        helper.assertFalse(com.sofe.story.SoFEAdvancements.has(player, "quest/side/sulthari_embers/step1"), "granted before the step was done");
+        story.update(quest, story.quest(quest).orElseThrow().advance());
+        com.sofe.quest.QuestEngine.grantMilestones(player, story);
+        helper.assertTrue(com.sofe.story.SoFEAdvancements.has(player, "quest/side/sulthari_embers/step1"), "the first step's advancement was not granted");
+        helper.assertFalse(com.sofe.story.SoFEAdvancements.has(player, "quest/side/sulthari_embers/step2"), "the second step was granted too early");
+        player.discard();
+        helper.succeed();
+    }
 }

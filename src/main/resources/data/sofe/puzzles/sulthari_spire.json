@@ -1,0 +1,21 @@
+{
+  "kind": "order",
+  "runes": [
+    "star",
+    "sun",
+    "moon",
+    "eye",
+    "flame"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "flame",
+    "moon",
+    "sun",
+    "star",
+    "eye"
+  ],
+  "gate": "sofe:sulthari/celestial_spire",
+  "boss": "sofe:prython",
+  "anchor": "sofe:ascension/celestial_spire"
+}

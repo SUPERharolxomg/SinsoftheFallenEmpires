@@ -1,0 +1,19 @@
+{
+  "kind": "order",
+  "runes": [
+    "eye",
+    "moon",
+    "sun",
+    "wave"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "eye",
+    "wave",
+    "moon",
+    "sun"
+  ],
+  "gate": "sofe:khemet/catacombs",
+  "boss": "sofe:dormiel",
+  "anchor": "sofe:khemet/catacombs"
+}

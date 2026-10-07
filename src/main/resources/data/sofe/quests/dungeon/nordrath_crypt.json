@@ -1,0 +1,44 @@
+{
+  "type": "dungeon",
+  "act": 2,
+  "starts_near": {
+    "x": 760,
+    "z": -2050,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 760,
+        "z": -2050,
+        "radius": 14
+      },
+      "target": {
+        "x": 760,
+        "z": -2050
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:draugr",
+        "count": 6
+      },
+      "target": {
+        "x": 760,
+        "z": -2050
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 900
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  }
+}

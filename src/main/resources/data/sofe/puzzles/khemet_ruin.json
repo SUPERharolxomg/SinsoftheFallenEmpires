@@ -1,0 +1,23 @@
+{
+  "kind": "lights",
+  "runes": [
+    "eye",
+    "sun",
+    "eye",
+    "sun",
+    "eye",
+    "sun"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    false,
+    true,
+    true,
+    false,
+    false
+  ],
+  "x": 5600,
+  "z": 7202,
+  "facing": "south"
+}

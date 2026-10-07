@@ -85,4 +85,62 @@ public class JourneyWorldGameTests {
         npcs.forEach(n -> n.discard());
         helper.succeed();
     }
+
+    /** The King once stood on the palace dome: people go to the ground floor, on its carpet, never on a gallery or a roof. */
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void peopleStandOnTheGroundFloorNotOnTheRoof(GameTestHelper helper) {
+        var level = helper.getLevel();
+        // built on the open surface of the test's column, as the palace stands on the land
+        BlockPos column = helper.absolutePos(new BlockPos(4, 2, 4));
+        level.getChunk(column.getX() >> 4, column.getZ() >> 4);
+        int surface = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column.getX(), column.getZ());
+        BlockPos hall = new BlockPos(column.getX(), surface + 1, column.getZ());
+        var bricks = net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState();
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                level.setBlock(hall.offset(dx, -1, dz), bricks, 3);
+                level.setBlock(hall.offset(dx, 0, dz), net.minecraft.world.level.block.Blocks.RED_CARPET.defaultBlockState(), 3);
+                level.setBlock(hall.offset(dx, 5, dz), bricks, 3); // a gallery no stairs reach
+                level.setBlock(hall.offset(dx, 10, dz), bricks, 3); // the roof
+            }
+        }
+        BlockPos ground = com.sofe.world.Grounding.groundFloor(level, hall.getX(), hall.getZ());
+        helper.assertTrue(ground.getY() == hall.getY(), "the ground floor is at " + hall.getY() + ", found " + ground.getY());
+        String tag = "gt" + Long.toHexString(System.nanoTime());
+        var npc = StoryPlacements.spawnNpc(level, new StructurePositions.Npc("test_" + tag, "story", hall.getX(), hall.getZ(), 180, null));
+        helper.assertTrue(npc.isPresent(), "the NPC was not placed");
+        helper.assertTrue(npc.get().getBlockY() == hall.getY(), "the NPC stands at y " + npc.get().getBlockY() + ", not in the hall");
+        npc.get().discard();
+        for (int dx = -2; dx <= 2; dx++) { // the land as it was
+            for (int dz = -2; dz <= 2; dz++) {
+                for (int dy = -1; dy <= 10; dy++) level.setBlock(hall.offset(dx, dy, dz), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+            }
+        }
+        helper.succeed();
+    }
+
+    /** A beta tester saw every lantern of the first town fall: each lantern a build sets must hold on its own. */
+    @GameTest(template = "empty", timeoutTicks = 400)
+    public static void everyLanternOfTheHousesHolds(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos base = helper.absolutePos(new BlockPos(8, 1, 8)).offset(400, 0, 0);
+        var district = new StructurePositions.Structure("sofe:sulthari/lower_district", base.getX(), base.getZ(), 40, 40, -64, 319, null);
+        helper.assertTrue(StructureBuilder.build(level, district), "the district has no blockout");
+        int lanterns = 0;
+        for (int x = base.getX() - 20; x <= base.getX() + 20; x++) {
+            for (int z = base.getZ() - 20; z <= base.getZ() + 20; z++) {
+                int top = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, x, z);
+                for (int y = top - 20; y <= top; y++) {
+                    BlockPos pos = new BlockPos(x, y, z);
+                    var state = level.getBlockState(pos);
+                    if (!(state.getBlock() instanceof net.minecraft.world.level.block.LanternBlock)) continue;
+                    lanterns++;
+                    helper.assertTrue(state.canSurvive(level, pos), "a lantern hangs from nothing at " + pos.toShortString());
+                }
+            }
+        }
+        level.getEntitiesOfClass(StoryNpcEntity.class, new AABB(base).inflate(48, 200, 48)).forEach(n -> n.discard()); // its townsfolk
+        helper.assertTrue(lanterns > 0, "no lanterns were built to check");
+        helper.succeed();
+    }
 }

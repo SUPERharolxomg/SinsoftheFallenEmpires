@@ -120,6 +120,26 @@ public final class StoryProgress {
         return Set.copyOf(relics);
     }
 
+    /** The rune puzzles this Bearer has solved (a dungeon's seal opens for them): sofe:nordrath_forge... */
+    private final Set<String> puzzles = new HashSet<>();
+
+    public boolean solvePuzzle(String puzzle) {
+        return puzzles.add(puzzle);
+    }
+
+    public boolean hasSolved(String puzzle) {
+        return puzzles.contains(puzzle);
+    }
+
+    public Set<String> puzzles() {
+        return Set.copyOf(puzzles);
+    }
+
+    public void loadPuzzles(Set<String> solved) {
+        puzzles.clear();
+        puzzles.addAll(solved);
+    }
+
     public void loadRelics(Set<String> received) {
         relics.clear();
         relics.addAll(received);

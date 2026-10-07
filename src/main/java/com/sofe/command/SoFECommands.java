@@ -31,7 +31,8 @@ import java.util.Optional;
 /**
  * The /sofe commands. Every player has {@code /sofe pact} (invite, accept, decline, leave, kick, list; UC-18) and
  * {@code /sofe council restore} (the Council gives back lost story items, in Sulthari; UC-21). Operators (permission
- * level 2) also have, UC-36: {@code /sofe progress <player> act|defeat|show}, {@code /sofe unstuck <player>},
+ * level 2) also have, UC-36: {@code /sofe progress <player> act|defeat|show}, {@code /sofe unstuck <player>} (every player
+ * has {@code /sofe unstuck} for themselves, every five minutes),
  * {@code /sofe item restore <player>}, {@code /sofe pacts} and {@code /sofe export}.
  *
  *
@@ -73,8 +74,9 @@ public final class SoFECommands {
                                         .suggests((c, b) -> SharedSuggestionProvider.suggest(com.sofe.world.lair.BossLairs.lairs().stream()
                                                 .map(com.sofe.world.lair.BossLairs.Lair::boss), b))
                                         .executes(SoFECommands::progressDefeat)))))
-                .then(Commands.literal("unstuck").requires(src -> src.hasPermission(2))
-                        .then(Commands.argument("player", EntityArgument.player()).executes(SoFECommands::unstuck)))
+                .then(Commands.literal("unstuck").executes(SoFECommands::unstuckSelf)
+                        .then(Commands.argument("player", EntityArgument.player()).requires(src -> src.hasPermission(2))
+                                .executes(c -> unstuck(c.getSource(), EntityArgument.getPlayer(c, "player")))))
                 .then(Commands.literal("item").requires(src -> src.hasPermission(2))
                         .then(Commands.literal("restore").then(Commands.argument("player", EntityArgument.player())
                                 .executes(c -> restore(c.getSource(), EntityArgument.getPlayer(c, "player"))))))
@@ -148,16 +150,32 @@ public final class SoFECommands {
         return 1;
     }
 
-    /** Sends a stuck player back to the plaza of Sulthari, on the ground. */
-    private static int unstuck(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
-        ServerPlayer player = EntityArgument.getPlayer(c, "player");
+    /** How often a player may send themselves back: often enough to get out of a hole, not a free journey home. */
+    private static final long UNSTUCK_COOLDOWN_TICKS = 20 * 60 * 5;
+    private static final java.util.Map<java.util.UUID, Long> LAST_UNSTUCK = new java.util.HashMap<>();
+
+    /** {@code /sofe unstuck}: any player stuck somewhere (in a hole, on a roof) goes back to the plaza, every five minutes. */
+    private static int unstuckSelf(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer player = c.getSource().getPlayerOrException();
+        long now = player.server.overworld().getGameTime();
+        Long last = LAST_UNSTUCK.get(player.getUUID());
+        if (last != null && now - last < UNSTUCK_COOLDOWN_TICKS && !c.getSource().hasPermission(2)) {
+            long seconds = (UNSTUCK_COOLDOWN_TICKS - (now - last)) / 20;
+            c.getSource().sendFailure(Component.translatable("command.sofe.unstuck.wait", seconds / 60, String.format("%02d", seconds % 60)));
+            return 0;
+        }
+        LAST_UNSTUCK.put(player.getUUID(), now);
+        return unstuck(c.getSource(), player);
+    }
+
+    /** Sends a stuck player back to the plaza of Sulthari, on the ground in front of the fountain. */
+    private static int unstuck(CommandSourceStack source, ServerPlayer player) {
         ServerLevel level = player.server.overworld();
-        int x = StructurePositions.get().spawnX(), z = StructurePositions.get().spawnZ();
-        level.getChunk(x >> 4, z >> 4);
-        int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-        player.teleportTo(level, x + 0.5, y, z + 0.5, player.getYRot(), 0);
-        c.getSource().sendSuccess(() -> Component.translatable("command.sofe.unstuck", player.getDisplayName()), true);
-        SoFEMod.LOGGER.info("{} sent {} back to Sulthari", c.getSource().getTextName(), player.getGameProfile().getName());
+        BlockPos spawn = level.getSharedSpawnPos();
+        BlockPos at = com.sofe.world.Grounding.groundFloor(level, spawn.getX(), spawn.getZ());
+        player.teleportTo(level, at.getX() + 0.5, at.getY(), at.getZ() + 0.5, player.getYRot(), 0);
+        source.sendSuccess(() -> Component.translatable("command.sofe.unstuck", player.getDisplayName()), true);
+        SoFEMod.LOGGER.info("{} sent {} back to Sulthari", source.getTextName(), player.getGameProfile().getName());
         return 1;
     }
 

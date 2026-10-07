@@ -1,0 +1,193 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "side_quests"
+	group: ""
+	icon: "minecraft:map"
+	id: "4C71902A950D3F77"
+	order_index: 7
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.aureum_bread_and_circuses.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "6860B10B603EB981"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/aureum_bread_and_circuses/step3"
+					criterion: ""
+					id: "3C61552D223EC581"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.aureum_bread_and_circuses}"
+			x: 0.0d
+			y: 4.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.aureum_gold_of_the_courts.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "5EB3F2721F36B5C2"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/aureum_gold_of_the_courts/step3"
+					criterion: ""
+					id: "00EF25A8C515C294"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.aureum_gold_of_the_courts}"
+			x: 1.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.khemet_souls_below.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "70A1F09B8A0215A2"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/khemet_souls_below/step3"
+					criterion: ""
+					id: "1C5809AA34CB8221"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.khemet_souls_below}"
+			x: 0.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.khemet_sunken_archive.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "2AFB947DA1958B24"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/khemet_sunken_archive/step3"
+					criterion: ""
+					id: "0D4EF8AB20F802C9"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.khemet_sunken_archive}"
+			x: 1.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.nordrath_cold_forge.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "7416385523FC6FD1"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/nordrath_cold_forge/step3"
+					criterion: ""
+					id: "2A5C68B061263FC7"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.nordrath_cold_forge}"
+			x: 0.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.nordrath_endless_war.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "6EB922DAEC87D462"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/nordrath_endless_war/step3"
+					criterion: ""
+					id: "092D73047774EBFF"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.nordrath_endless_war}"
+			x: 1.5d
+			y: 1.5d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.parsivan_dreaming_court.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "40E83A023579729B"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/parsivan_dreaming_court/step3"
+					criterion: ""
+					id: "3E7641918773575E"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.parsivan_dreaming_court}"
+			x: 3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.parsivan_silk_caravan.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "445F0525ECD90D0D"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/parsivan_silk_caravan/step3"
+					criterion: ""
+					id: "0ADB93B21AC6DD4E"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.parsivan_silk_caravan}"
+			x: 4.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [ ]
+			description: [
+				"{quest.sofe.side.sulthari_embers.step1}"
+				""
+				"{ftbquests.sofe.side.hint}"
+			]
+			id: "122ECB6B938587D5"
+			tasks: [
+				{
+					advancement: "sofe:quest/side/sulthari_embers/step3"
+					criterion: ""
+					id: "192E7F1D775A285C"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.side.sulthari_embers}"
+			x: 0.0d
+			y: 0.0d
+		}
+	]
+	title: "{ftbquests.sofe.chapter.side}"
+}

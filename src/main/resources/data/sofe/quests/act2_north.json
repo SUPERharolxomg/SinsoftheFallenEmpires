@@ -20,6 +20,38 @@
     },
     {
       "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:nordrath_ruin"
+      },
+      "target": {
+        "x": -1000,
+        "z": -3698
+      },
+      "_dungeon": "nordrath/ruin"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:rime_wolf",
+        "count": 1
+      },
+      "target": {
+        "x": -1000,
+        "z": -3700
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:rime_wolf",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ],
+      "_dungeon": "nordrath/ruin"
+    },
+    {
+      "objective": {
         "type": "defeat_boss",
         "boss": "sofe:kaleth"
       },

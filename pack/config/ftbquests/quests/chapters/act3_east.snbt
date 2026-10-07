@@ -1,0 +1,235 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "act3_east"
+	group: ""
+	icon: "minecraft:amethyst_shard"
+	id: "102672CF4090D968"
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [
+				"1B8F382DC91069D5"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "2B2AFDCAA0EFFAB8"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step1"
+					criterion: ""
+					id: "465B95CD1C438B44"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step1}"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2B2AFDCAA0EFFAB8"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "57FDB5E801AF17FC"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step2"
+					criterion: ""
+					id: "21861CCB825894B4"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step2}"
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"57FDB5E801AF17FC"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "232FFFA4B85987BE"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step3"
+					criterion: ""
+					id: "4FDC259595408ECC"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step3}"
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"232FFFA4B85987BE"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "5FE79CFEC32A07D3"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step4"
+					criterion: ""
+					id: "22DF47831A9A333E"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step4}"
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"5FE79CFEC32A07D3"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "5CDAB6B05E769238"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step5"
+					criterion: ""
+					id: "4E07C9BFA6EF2C49"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step5}"
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"5CDAB6B05E769238"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "677E640BC0C3D67F"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step6"
+					criterion: ""
+					id: "429E50C0582C6188"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step6}"
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"677E640BC0C3D67F"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "4F1872CFBAEAF04C"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step7"
+					criterion: ""
+					id: "3353C4CEFC945B4C"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step7}"
+			x: 9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4F1872CFBAEAF04C"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "249BCC2AC0314C74"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step8"
+					criterion: ""
+					id: "7B1A371931A3B283"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step8}"
+			x: 10.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"249BCC2AC0314C74"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "26DCEA3B70622F95"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step9"
+					criterion: ""
+					id: "24D1B9734DB868AA"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step9}"
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"26DCEA3B70622F95"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "5C744895E4A81C1F"
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step10"
+					criterion: ""
+					id: "7024529742655B8A"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step10}"
+			x: 13.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"5C744895E4A81C1F"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "683B89972D548075"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act3_east/step11"
+					criterion: ""
+					id: "0C6A5ACBECD7AC69"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act3_east.step11}"
+			x: 15.0d
+			y: 0.0d
+		}
+	]
+	title: "{quest.sofe.act3_east}"
+}

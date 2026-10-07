@@ -21,11 +21,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 /**
- * A person of the story (Grand Vizier Ozhan, the Council elder...). Stands at their place, turns to
- * the player and talks through {@link DialogueService}. Cannot be hurt or pushed; never despawns.
+ * A person of the story (Grand Vizier Ozhan, the Council elder...). Stands at their place, on a floor the
+ * player can walk to, turns to the player and talks through {@link DialogueService}. Cannot be hurt or
+ * pushed; never despawns.
  */
 public class StoryNpcEntity extends PathfinderMob {
     private static final EntityDataAccessor<String> NPC = SynchedEntityData.defineId(StoryNpcEntity.class, EntityDataSerializers.STRING);
+    /** Raised when where NPCs stand changes; an NPC placed by an older version is moved once to its floor. */
+    private static final int GROUNDING_VERSION = 1;
+    private int grounded = GROUNDING_VERSION;
 
     public StoryNpcEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -73,6 +77,62 @@ public class StoryNpcEntity extends PathfinderMob {
         return InteractionResult.sidedSuccess(level().isClientSide());
     }
 
+    /** Its id in structure_positions.json (a Bearer is listed by its class: "king"). */
+    protected String layoutId() {
+        return npcId();
+    }
+
+    /** Each time it is placed or loaded it tells the {@link com.sofe.world.NpcDirectory} where it stands. */
+    @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        recordPlace();
+    }
+
+    private void recordPlace() {
+        if (level() instanceof net.minecraft.server.level.ServerLevel server && server.dimension() == Level.OVERWORLD && !npcId().isEmpty()) {
+            com.sofe.world.NpcDirectory.get(server.getServer()).record(npcId(), blockPosition());
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (grounded < GROUNDING_VERSION && tickCount > 20 && level() instanceof net.minecraft.server.level.ServerLevel server) {
+            grounded = GROUNDING_VERSION;
+            reground(server);
+        }
+    }
+
+    /**
+     * An NPC placed before {@link com.sofe.world.Grounding} could stand on a roof or a gallery no stairs
+     * reach (the King on the palace dome): it goes down to the ground floor, at its place in the layout
+     * if it has one (the King now waits beside the throne).
+     */
+    protected void reground(net.minecraft.server.level.ServerLevel server) {
+        var spot = com.sofe.world.zone.StructurePositions.get().npcs().stream()
+                .filter(n -> n.npc().equals(layoutId())).findFirst();
+        int x = spot.map(com.sofe.world.zone.StructurePositions.Npc::x).orElse(homeColumn().getX());
+        int z = spot.map(com.sofe.world.zone.StructurePositions.Npc::z).orElse(homeColumn().getZ());
+        net.minecraft.core.BlockPos floor = com.sofe.world.Grounding.groundFloor(server, x, z);
+        if (floor.distToCenterSqr(getX(), getY(), getZ()) < 4) return;
+        float yaw = spot.map(com.sofe.world.zone.StructurePositions.Npc::yaw).orElse(getYRot());
+        moveTo(floor.getX() + 0.5, floor.getY(), floor.getZ() + 0.5, yaw, 0);
+        setYHeadRot(yaw);
+        setYBodyRot(yaw);
+        onRegrounded(floor);
+        recordPlace();
+    }
+
+    /** Where an NPC that is not in the layout belongs: where it stands (a citizen: its home). */
+    protected net.minecraft.core.BlockPos homeColumn() {
+        return blockPosition();
+    }
+
+    /** A citizen moves its home with it. */
+    protected void onRegrounded(net.minecraft.core.BlockPos floor) {
+    }
+
     /** Subclasses can refuse a player (a Bearer NPC does not talk to the player who is that Bearer). */
     protected boolean canTalkTo(Player player) {
         return true;
@@ -107,11 +167,13 @@ public class StoryNpcEntity extends PathfinderMob {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("npc", npcId());
+        tag.putInt("grounded", grounded);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("npc")) this.entityData.set(NPC, tag.getString("npc"));
+        grounded = tag.getInt("grounded"); // 0 in a world saved before NPCs were grounded
     }
 }

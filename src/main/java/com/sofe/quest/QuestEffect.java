@@ -23,7 +23,11 @@ public sealed interface QuestEffect {
     }
 
     /** Spawns enemies around the player (the Void invasion, a boss). */
-    record Spawn(String entity, int count, double radius) implements QuestEffect {
+    /** @param elite each one an elite of the player's act (a ruin's guardian) */
+    record Spawn(String entity, int count, double radius, boolean elite) implements QuestEffect {
+        public Spawn(String entity, int count, double radius) {
+            this(entity, count, radius, false);
+        }
     }
 
     record OpenDialogue(String dialogue) implements QuestEffect {

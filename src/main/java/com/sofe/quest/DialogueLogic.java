@@ -43,4 +43,23 @@ public final class DialogueLogic {
                 .filter(d -> d.requires() == null || d.requires().test(view))
                 .max(Comparator.comparingInt(DialogueDefinition::priority).thenComparing(DialogueDefinition::id, Comparator.reverseOrder()));
     }
+
+    /**
+     * Who the player must talk to now to move a quest on: an NPC whose dialogue, as it stands for this
+     * player, advances the quest (the Quest Compass leads there). Several: the highest priority one.
+     */
+    public static Optional<String> npcAdvancing(Collection<DialogueDefinition> dialogues, String quest, ProgressView view) {
+        return dialogues.stream()
+                .filter(d -> d.npc() != null && advances(d, quest))
+                .filter(d -> d.requires() == null || d.requires().test(view))
+                .max(Comparator.comparingInt(DialogueDefinition::priority).thenComparing(DialogueDefinition::id, Comparator.reverseOrder()))
+                .map(DialogueDefinition::npc);
+    }
+
+    private static boolean advances(DialogueDefinition dialogue, String quest) {
+        java.util.function.Predicate<List<QuestEffect>> any = effects -> effects.stream()
+                .anyMatch(e -> e instanceof QuestEffect.AdvanceQuest a && a.quest().equals(quest));
+        if (any.test(dialogue.onEnd())) return true;
+        return dialogue.lines().stream().anyMatch(l -> any.test(l.effects()) || l.answers().stream().anyMatch(a -> any.test(a.effects())));
+    }
 }

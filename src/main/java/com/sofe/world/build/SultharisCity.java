@@ -400,7 +400,7 @@ final class SultharisCity {
         set(level, minX + 1, y, minZ + 2, bed.setValue(net.minecraft.world.level.block.BedBlock.PART, net.minecraft.world.level.block.state.properties.BedPart.HEAD));
         set(level, minX + 1, y, minZ + 1, bed.setValue(net.minecraft.world.level.block.BedBlock.PART, net.minecraft.world.level.block.state.properties.BedPart.FOOT));
         set(level, minX + 2, y, minZ + 1, Blocks.RED_CARPET.defaultBlockState());
-        set(level, minX + 1, y, minZ + 3, Blocks.POTTED_CACTUS.defaultBlockState());
+        set(level, minX + 1, y, minZ + d - 2, Blocks.POTTED_CACTUS.defaultBlockState()); // in the corner, not before a west door
     }
 
     private static Architecture.HouseStyle houseStyle(Random random) {

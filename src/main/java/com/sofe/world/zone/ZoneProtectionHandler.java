@@ -60,6 +60,7 @@ public final class ZoneProtectionHandler {
     }
 
     public static void onBreak(BlockEvent.BreakEvent event) {
+        if (isFarmCrop(event.getState())) return; // the town's fields are there to be harvested
         if (!allowed(event.getLevel(), event.getPos(), ZoneAction.BREAK, event.getPlayer())) {
             event.setCanceled(true);
             tell(event.getPlayer());
@@ -67,6 +68,7 @@ public final class ZoneProtectionHandler {
     }
 
     public static void onPlace(BlockEvent.EntityPlaceEvent event) {
+        if (event.getEntity() instanceof Player && isFarmCrop(event.getPlacedBlock())) return; // and sown again
         ZoneAction action = event.getEntity() instanceof Player ? ZoneAction.PLACE : ZoneAction.MOB_GRIEFING;
         if (!allowed(event.getLevel(), event.getPos(), action, event.getEntity())) {
             event.setCanceled(true);
@@ -80,6 +82,7 @@ public final class ZoneProtectionHandler {
      */
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         BlockPos target = event.getHitVec().getBlockPos();
+        if (farming(event.getLevel(), target, event.getItemStack())) return; // sowing, bone meal, picking berries
         if (holdsSomething(event.getLevel(), target) && !allowed(event.getLevel(), target, ZoneAction.TAKE, event.getEntity())) {
             event.setCanceled(true);
             event.setCancellationResult(net.minecraft.world.InteractionResult.FAIL);
@@ -95,6 +98,25 @@ public final class ZoneProtectionHandler {
                 ZoneAction.USE_ITEM_ON_BLOCK, event.getEntity())) {
             event.setUseItem(Event.Result.DENY);
         }
+    }
+
+    /**
+     * What grows in a field: wheat, carrots, potatoes, beetroots, melons, pumpkins, sugar cane, cocoa, berries.
+     * In a town a Bearer may harvest the fields and sow them again (the rest of the town stays as it is).
+     */
+    static boolean isFarmCrop(net.minecraft.world.level.block.state.BlockState state) {
+        return state.is(net.minecraft.tags.BlockTags.CROPS) || state.is(net.minecraft.world.level.block.Blocks.MELON)
+                || state.is(net.minecraft.world.level.block.Blocks.PUMPKIN) || state.is(net.minecraft.world.level.block.Blocks.SUGAR_CANE)
+                || state.is(net.minecraft.world.level.block.Blocks.COCOA) || state.is(net.minecraft.world.level.block.Blocks.SWEET_BERRY_BUSH)
+                || state.is(net.minecraft.world.level.block.Blocks.NETHER_WART);
+    }
+
+    /** Right-clicking a field: seeds on farmland, bone meal or a bare hand on a crop. */
+    private static boolean farming(Level level, BlockPos target, net.minecraft.world.item.ItemStack stack) {
+        var state = level.getBlockState(target);
+        if (isFarmCrop(state)) return stack.isEmpty() || stack.is(net.minecraft.world.item.Items.BONE_MEAL);
+        return state.is(net.minecraft.world.level.block.Blocks.FARMLAND) && stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && isFarmCrop(item.getBlock().defaultBlockState());
     }
 
     /** Explosions still happen, but the protected blocks, armor stands, frames and paintings are taken out of them. */

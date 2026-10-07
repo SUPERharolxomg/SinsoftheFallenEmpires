@@ -39,6 +39,16 @@ public class CitizenEntity extends StoryNpcEntity {
     }
 
     @Override
+    protected BlockPos homeColumn() {
+        return hasRestriction() ? getRestrictCenter() : blockPosition();
+    }
+
+    @Override
+    protected void onRegrounded(BlockPos floor) {
+        setHome(floor);
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (hasRestriction()) tag.put("home", NbtUtils.writeBlockPos(getRestrictCenter()));

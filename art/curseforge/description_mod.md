@@ -12,10 +12,19 @@ On the Night of the Eclipse the seal beneath Sulthari breaks, and five shards of
 - **Five Bearers**, each a hero with their own class, skill tree, story and temptation: the Knight, the Necromancer, the Sorceress, the Thief and the King.
 - **Nineteen great foes**, every one with its own 3D model, phases and signature attack: the Brass Sentinel, the Ten Broken Oaths, the Seven Archsins and Nahrazel, the First Fallen.
 - **Diablo-style gear:** rarities, affixes, sockets and sin gems, set bonuses, Relics, fifty-five 3D armor sets.
+- **Dungeons of three sizes** in every region, crypts, ruins and the bosses' lairs, each boss sealed behind a rune puzzle with its own riddle.
 - **Choices that matter:** the fate of every region, the epilogue of your Bearer, and a secret ending for those who say yes.
 - **Co-op:** the Pact of the Empires for up to five players, with bosses that grow for every Bearer.
 - **The Codex:** the story's lore, a bestiary and a gallery that open as you play.
 - **English and Spanish.**
+
+## First steps
+
+1. Press **Begin the Journey** and choose your Bearer.
+2. Press **K** and learn your first three skills.
+3. Follow the **gold**: the compass at the top of the screen points to your next step, golden motes on the ground lead the way and a crown of light shines over the person to talk to. **U** opens the Journal.
+4. **H** drinks from the Bearer's Flask: it heals 40% of your life and resource, refills in Sulthari, and is not drunk when you are at full strength.
+5. Stuck in a hole or on a roof? Type `/sofe unstuck`.
 
 ## Requirements
 
@@ -25,7 +34,11 @@ A modest PC is enough: Ryzen 3 3200G, GTX 1650, 8 GB of RAM (give the game 4 GB)
 
 ## Status
 
-**Beta (0.8.0).** The whole story can be played from the first act to the ending. Some of the story's illustrations are still drawn stand-ins, and the music uses Minecraft's tracks for now.
+**Beta (0.8.1).** The whole story can be played from the first act to the ending. Some of the story's illustrations are still drawn stand-ins, and the music uses Minecraft's tracks for now.
+
+## Support the project
+
+The mod is and will always be free and whole. If you enjoy it and want to help it grow (more illustrations, its own music), you can make a voluntary donation: [donate with PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).
 
 ---
 
@@ -41,8 +54,13 @@ En la Noche del Eclipse el sello bajo Sulthari se rompe, y cinco fragmentos del 
 - **Cinco Portadores**, cada uno con su clase, árbol de habilidades, historia y tentación.
 - **Diecinueve grandes enemigos** con modelo 3D, fases y ataque propio.
 - **Equipo al estilo Diablo:** rarezas, afijos, gemas, conjuntos, Reliquias y 55 armaduras 3D.
+- **Mazmorras de tres tamaños** en cada región, criptas, ruinas y las guaridas de los jefes, cada jefe sellado tras un acertijo de runas con su propio verso.
 - **Decisiones que importan:** el destino de cada región, el epílogo de tu Portador y un final secreto.
 - **Cooperativo** hasta cinco jugadores, y **el Códice** con lore, bestiario y galería.
 - **Inglés y español.**
 
-Requisitos: Minecraft 1.20.1, Forge 47.4.23 o posterior, GeckoLib y Curios API. Recomendado: el modpack *Sins of the Fallen Empires*. **Beta 0.8.0.**
+**Primeros pasos:** pulsa *Comenzar la Aventura* y elige tu Portador; con **K** aprende tus tres primeras habilidades; sigue el **oro** (la brújula de arriba de la pantalla, los destellos dorados del suelo y la corona de luz sobre la persona con quien hablar); **U** abre el Diario; **H** bebe del Frasco del Portador (cura el 40% de vida y recurso, se rellena en Sulthari y no se bebe si estás al máximo). ¿Atrapado? Escribe `/sofe unstuck`.
+
+Requisitos: Minecraft 1.20.1, Forge 47.4.23 o posterior, GeckoLib y Curios API. Recomendado: el modpack *Sins of the Fallen Empires*. **Beta 0.8.1.**
+
+**Apoya el proyecto:** el mod es y será siempre gratis y completo. Si te gusta y quieres ayudar a que crezca (más ilustraciones, música propia), puedes hacer una donación voluntaria: [donar con PayPal](https://www.paypal.com/donate/?hosted_button_id=M298QQM56Q83Y).

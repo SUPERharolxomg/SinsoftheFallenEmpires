@@ -24,16 +24,26 @@ public final class StoryItems {
     public static final Map<String, Sin> SHARDS = Map.of("sofe:vorath", Sin.WRATH, "sofe:luxara", Sin.LUST, "sofe:morthis", Sin.SLOTH,
             "sofe:gularth", Sin.GLUTTONY, "sofe:avarok", Sin.GREED, "sofe:envyris", Sin.ENVY, "sofe:prython", Sin.PRIDE);
 
-    /** The Act V quest, and its step (from 0) that asks for the Sealing Quill. */
+    /** The Act V quest. */
     public static final String ASCENSION = "sofe:act5_ascension";
-    public static final int QUILL_STEP = 2;
+
+    /** The step of the Act V quest (from 0) that asks for the Sealing Quill: found in the quest, as steps come before it. */
+    public static int quillStep() {
+        return com.sofe.quest.StoryDataManager.quest(ASCENSION).map(q -> {
+            for (int i = 0; i < q.steps().size(); i++) {
+                if (q.steps().get(i).objective() instanceof com.sofe.quest.Objective.Obtain) return i;
+            }
+            return -1;
+        }).orElse(-1);
+    }
 
     private StoryItems() {
     }
 
     /** Whether the Bearer forged the Sealing Quill: the quest has gone past the step that asked for it. */
     public static boolean owedQuill(com.sofe.story.StoryProgress story) {
-        return story.quest(ASCENSION).map(s -> s.completed() || s.step() > QUILL_STEP).orElse(false);
+        int quill = quillStep();
+        return story.quest(ASCENSION).map(s -> s.completed() || quill >= 0 && s.step() > quill).orElse(false);
     }
 
     /** The Shards a Bearer is owed by their victories. */

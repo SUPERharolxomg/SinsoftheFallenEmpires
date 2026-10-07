@@ -98,9 +98,10 @@ public class NorthernCampaignGameTests {
         var story = StoryCapability.get(hero).orElseThrow();
         story.advanceTo(2);
         QuestEngine.startQuest(hero, ACT2);
-        for (int i = 0; i < 3; i++) QuestEngine.advance(hero, ACT2);
+        int steps = com.sofe.quest.StoryDataManager.quest(ACT2).orElseThrow().steps().size(); // Vorath is the last
+        for (int i = 0; i < steps - 1; i++) QuestEngine.advance(hero, ACT2);
         DialogueService.close(hero);
-        helper.assertTrue(story.questStep(ACT2) == 4, "the hero should be facing Vorath");
+        helper.assertTrue(story.questStep(ACT2) == steps, "the hero should be facing Vorath");
 
         VorathEntity vorath = helper.spawn(EntityRegistry.VORATH.get(), new Vec3(2.5, 1, 2.5));
         vorath.setNoAi(true);

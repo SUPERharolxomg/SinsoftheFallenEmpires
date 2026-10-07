@@ -58,7 +58,7 @@ public class JournalScreen extends Screen {
 
     private List<Row> rows(SyncStoryPacket story) {
         List<Row> rows = new ArrayList<>();
-        for (String type : List.of("main", "bearer", "side")) {
+        for (String type : List.of("main", "dungeon", "bearer", "side")) {
             List<SyncStoryPacket.Quest> active = story.quests().stream().filter(q -> q.type().equals(type) && !q.completed()).toList();
             if (active.isEmpty()) continue;
             rows.add(new Row(Component.translatable("quest.sofe.type." + type).withStyle(ChatFormatting.GOLD), null));

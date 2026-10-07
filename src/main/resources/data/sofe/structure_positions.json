@@ -392,6 +392,90 @@
    "size_x": 320,
    "size_z": 320,
    "zone": "city"
+  },
+  "sofe:sulthari/crypt": {
+   "x": 480,
+   "z": -420,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:sulthari/ruin": {
+   "x": -560,
+   "z": -520,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/crypt": {
+   "x": 760,
+   "z": -2050,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/ruin": {
+   "x": -1000,
+   "z": -3700,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/crypt": {
+   "x": 2600,
+   "z": -1300,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/ruin": {
+   "x": 6200,
+   "z": -2600,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
+  },
+  "sofe:khemet/crypt": {
+   "x": 3000,
+   "z": 2500,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:khemet/ruin": {
+   "x": 5600,
+   "z": 7200,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/crypt": {
+   "x": -2600,
+   "z": -1500,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/ruin": {
+   "x": -6600,
+   "z": -3000,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
+  },
+  "sofe:void/crypt": {
+   "x": 1050,
+   "z": 250,
+   "size_x": 17,
+   "size_z": 17,
+   "zone": "dungeon"
+  },
+  "sofe:void/ruin": {
+   "x": -1050,
+   "z": 300,
+   "size_x": 37,
+   "size_z": 29,
+   "zone": "dungeon"
   }
  },
  "waystones": {
@@ -554,8 +638,8 @@
   {
    "npc": "king",
    "type": "bearer",
-   "x": 0,
-   "z": 94,
+   "x": -3,
+   "z": 119,
    "yaw": 180
   },
   {
@@ -796,6 +880,42 @@
    "z": -92,
    "condition": "sofe:void_gate",
    "hint": "message.sofe.gate.void_gate"
+  },
+  "sofe:sulthari/ruin": {
+   "x": -560,
+   "z": -523,
+   "condition": "sofe:ruin_sulthari",
+   "hint": "message.sofe.gate.ruin"
+  },
+  "sofe:nordrath/ruin": {
+   "x": -1000,
+   "z": -3703,
+   "condition": "sofe:ruin_nordrath",
+   "hint": "message.sofe.gate.ruin"
+  },
+  "sofe:parsivan/ruin": {
+   "x": 6200,
+   "z": -2603,
+   "condition": "sofe:ruin_parsivan",
+   "hint": "message.sofe.gate.ruin"
+  },
+  "sofe:khemet/ruin": {
+   "x": 5600,
+   "z": 7197,
+   "condition": "sofe:ruin_khemet",
+   "hint": "message.sofe.gate.ruin"
+  },
+  "sofe:aureum/ruin": {
+   "x": -6600,
+   "z": -3003,
+   "condition": "sofe:ruin_aureum",
+   "hint": "message.sofe.gate.ruin"
+  },
+  "sofe:void/ruin": {
+   "x": -1050,
+   "z": 297,
+   "condition": "sofe:ruin_void",
+   "hint": "message.sofe.gate.ruin"
   }
  }
 }

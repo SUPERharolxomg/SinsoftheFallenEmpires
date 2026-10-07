@@ -66,4 +66,19 @@ class DialogueLogicTest {
         assertEquals("sofe:ozhan/act2", DialogueLogic.forNpc(all, "ozhan", player("thief", 2)).orElseThrow().id());
         assertTrue(DialogueLogic.forNpc(all, "selim", player("thief", 2)).isEmpty());
     }
+
+    @Test
+    void theCompassLeadsToTheNpcWhoMovesTheQuestOnNow() {
+        DialogueDefinition early = parse("sofe:ferid/q_early", """
+                {"npc": "ferid", "requires": {"type": "act_reached", "act": 2},
+                 "lines": [{"speaker": "ferid", "text": "x", "effects": [{"type": "advance_quest", "quest": "sofe:q"}]}]}""");
+        DialogueDefinition scene = parse("sofe:scene", """
+                {"lines": [{"speaker": "narrator", "text": "y"}], "on_end": [{"type": "advance_quest", "quest": "sofe:q"}]}""");
+        List<DialogueDefinition> all = List.of(COUNCIL, early, scene);
+        assertEquals("ozhan", DialogueLogic.npcAdvancing(all, "sofe:q", player("thief", 1)).orElseThrow(), "an answer that advances it counts");
+        assertTrue(DialogueLogic.npcAdvancing(List.of(early, scene), "sofe:q", player("thief", 1)).isEmpty(),
+                "a dialogue the player cannot have yet, or a scene with no NPC, leads nowhere");
+        assertEquals("ferid", DialogueLogic.npcAdvancing(List.of(early), "sofe:q", player("thief", 2)).orElseThrow());
+        assertTrue(DialogueLogic.npcAdvancing(all, "sofe:other", player("thief", 2)).isEmpty());
+    }
 }

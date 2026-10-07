@@ -54,6 +54,50 @@
     },
     {
       "objective": {
+        "type": "kill",
+        "entity": "sofe:sand_ghoul",
+        "count": 6
+      },
+      "target": {
+        "x": 480,
+        "z": -420
+      },
+      "_dungeon": "sulthari/crypt"
+    },
+    {
+      "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:sulthari_ruin"
+      },
+      "target": {
+        "x": -560,
+        "z": -518
+      },
+      "_dungeon": "sulthari/ruin"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:clockwork_scarab",
+        "count": 1
+      },
+      "target": {
+        "x": -560,
+        "z": -520
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "sofe:clockwork_scarab",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ],
+      "_dungeon": "sulthari/ruin"
+    },
+    {
+      "objective": {
         "type": "defeat_boss",
         "boss": "sofe:brass_sentinel"
       },

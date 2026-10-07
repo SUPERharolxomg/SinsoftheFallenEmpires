@@ -1,0 +1,23 @@
+{
+  "kind": "lights",
+  "runes": [
+    "sun",
+    "moon",
+    "star",
+    "flame",
+    "wave",
+    "eye"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    true,
+    false,
+    true,
+    false,
+    false
+  ],
+  "gate": "sofe:sulthari/inverted_throne",
+  "boss": "sofe:nahrazel",
+  "anchor": "sofe:ascension/inverted_throne"
+}

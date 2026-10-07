@@ -23,7 +23,7 @@ import java.util.WeakHashMap;
  * ({@code tip.sofe.<n>}, a new one each time a loading screen opens).
  */
 public final class ThemedMenus {
-    public static final int TIPS = 14;
+    public static final int TIPS = 16;
     /** The illustrations a loading screen may show, the first that exist (docs/ArteFinal.md). */
     private static final List<String> LOADING_ART = List.of("intro/night_of_the_eclipse", "empire/sulthari", "empire/nordrath",
             "empire/parsivan", "empire/khemet", "empire/aureum", "codex/cover");

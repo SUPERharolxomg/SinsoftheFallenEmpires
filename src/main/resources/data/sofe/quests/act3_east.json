@@ -20,6 +20,38 @@
     },
     {
       "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:parsivan_ruin"
+      },
+      "target": {
+        "x": 6200,
+        "z": -2598
+      },
+      "_dungeon": "parsivan/ruin"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "minecraft:evoker",
+        "count": 1
+      },
+      "target": {
+        "x": 6200,
+        "z": -2600
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "minecraft:evoker",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ],
+      "_dungeon": "parsivan/ruin"
+    },
+    {
+      "objective": {
         "type": "defeat_boss",
         "boss": "sofe:mirael"
       },
@@ -69,6 +101,38 @@
           "dialogue": "sofe:act3/laleh_at_rest"
         }
       ]
+    },
+    {
+      "objective": {
+        "type": "solve_puzzle",
+        "puzzle": "sofe:khemet_ruin"
+      },
+      "target": {
+        "x": 5600,
+        "z": 7202
+      },
+      "_dungeon": "khemet/ruin"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "minecraft:wither_skeleton",
+        "count": 1
+      },
+      "target": {
+        "x": 5600,
+        "z": 7200
+      },
+      "on_start": [
+        {
+          "type": "spawn",
+          "entity": "minecraft:wither_skeleton",
+          "count": 1,
+          "radius": 6,
+          "elite": true
+        }
+      ],
+      "_dungeon": "khemet/ruin"
     },
     {
       "objective": {

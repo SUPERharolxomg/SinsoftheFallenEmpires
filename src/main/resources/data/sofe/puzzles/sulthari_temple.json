@@ -1,0 +1,23 @@
+{
+  "kind": "lights",
+  "runes": [
+    "sun",
+    "eye",
+    "sun",
+    "eye",
+    "sun",
+    "eye"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    false,
+    true,
+    true,
+    true,
+    false
+  ],
+  "gate": "sofe:sulthari/temple",
+  "boss": "sofe:solrath",
+  "anchor": "sofe:ascension/temple"
+}

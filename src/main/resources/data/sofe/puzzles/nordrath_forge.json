@@ -1,0 +1,19 @@
+{
+  "kind": "order",
+  "runes": [
+    "wave",
+    "sun",
+    "flame",
+    "moon"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "flame",
+    "wave",
+    "moon",
+    "sun"
+  ],
+  "gate": "sofe:nordrath/forge",
+  "boss": "sofe:kaleth",
+  "anchor": "sofe:nordrath/forge"
+}

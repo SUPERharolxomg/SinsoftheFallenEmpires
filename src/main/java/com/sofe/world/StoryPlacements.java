@@ -18,7 +18,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.event.server.ServerStartedEvent;
 
@@ -51,6 +50,10 @@ public final class StoryPlacements extends SavedData {
         if (!SoFEWorld.isJourney(server)) return;
         BlockPos spawn = server.overworld().getSharedSpawnPos();
         placeNear(server, StructurePositions.get(), (x, z) -> near(spawn.getX(), spawn.getZ(), x, z, START_DISTANCE));
+        // a journey begins in front of the fountain, not at a random spot around it: on the fountain's dome,
+        // a roof or an acacia a new Bearer was stuck
+        var radius = server.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_SPAWN_RADIUS);
+        if (radius.get() != 0) radius.set(0, server);
     }
 
     /** Every few seconds: build what a player is now close to (Nordrath's dungeons, the Citadel...). */
@@ -122,6 +125,15 @@ public final class StoryPlacements extends SavedData {
             if (station == null || !near.test(npc.x(), npc.z()) || !data.placed.add("station:" + npc.npc())) continue;
             placeBlock(level, new BlockPos(npc.x() + 2, 0, npc.z()), station.defaultBlockState());
         }
+        // the rune puzzles before the seals and in the ruins (data/sofe/puzzles), in old worlds too
+        for (com.sofe.puzzle.PuzzleDefinition puzzle : com.sofe.quest.StoryDataManager.puzzles().values()) {
+            var at = com.sofe.puzzle.PuzzleService.origin(puzzle, layout);
+            if (at.isEmpty() || !near.test(at.get()[0], at.get()[1]) || data.placed.contains("puzzle:" + puzzle.id())) continue;
+            if (com.sofe.puzzle.PuzzleService.place(level, puzzle, layout)) {
+                data.placed.add("puzzle:" + puzzle.id());
+                count++;
+            }
+        }
         layout.structure("sofe:sulthari/bank").ifPresent(bank -> {
             if (near.test(bank.x(), bank.z()) && data.placed.add("vault:sofe:sulthari/bank")) {
                 placeBlock(level, new BlockPos(bank.x(), 0, bank.z()), SoFEBlocks.PERSONAL_VAULT.get().defaultBlockState());
@@ -134,38 +146,12 @@ public final class StoryPlacements extends SavedData {
         return count;
     }
 
-    /**
-     * Where something stands in this column: the ground, or, under a roof of a building, the floor
-     * inside (so NPCs and Waystones end up in the palace hall, not on its dome). Scans down from the
-     * roof to the first room with a floor; stops at natural terrain, so caves never count.
-     */
-    private static BlockPos surface(ServerLevel level, int x, int z) {
-        level.getChunk(x >> 4, z >> 4);
-        int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, top - 1, z);
-        for (int y = top - 1; y > top - 40 && y > level.getMinBuildHeight() + 1; y--) {
-            pos.setY(y);
-            var state = level.getBlockState(pos);
-            if (natural(state)) break;
-            if (state.isAir() && level.getBlockState(pos.above()).isAir() && level.getBlockState(pos.below()).isSolid()) {
-                return new BlockPos(x, y, z);
-            }
-        }
-        return new BlockPos(x, top, z);
-    }
-
-    private static boolean natural(net.minecraft.world.level.block.state.BlockState state) {
-        return state.is(net.minecraft.tags.BlockTags.DIRT) || state.is(net.minecraft.tags.BlockTags.SAND)
-                || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD) || state.is(net.minecraft.tags.BlockTags.TERRACOTTA)
-                || state.is(net.minecraft.world.level.block.Blocks.SANDSTONE) || state.is(net.minecraft.world.level.block.Blocks.GRAVEL);
-    }
-
     private static void placeBlock(ServerLevel level, BlockPos column, net.minecraft.world.level.block.state.BlockState state) {
-        level.setBlock(surface(level, column.getX(), column.getZ()), state, 3);
+        level.setBlock(Grounding.groundFloor(level, column.getX(), column.getZ()), state, 3);
     }
 
     public static Optional<StoryNpcEntity> spawnNpc(ServerLevel level, StructurePositions.Npc npc) {
-        BlockPos pos = surface(level, npc.x(), npc.z());
+        BlockPos pos = Grounding.groundFloor(level, npc.x(), npc.z());
         StoryNpcEntity entity;
         switch (npc.type()) {
             case "bearer" -> {

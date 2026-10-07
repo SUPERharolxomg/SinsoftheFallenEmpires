@@ -1,0 +1,19 @@
+{
+  "kind": "lights",
+  "runes": [
+    "flame",
+    "sun",
+    "flame",
+    "sun"
+  ],
+  "riddle_lines": 2,
+  "start": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "gate": "sofe:aureum/colosseum",
+  "boss": "sofe:shadeyn",
+  "anchor": "sofe:aureum/colosseum"
+}

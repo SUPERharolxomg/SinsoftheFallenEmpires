@@ -56,6 +56,7 @@ public final class StoryCapability {
         get(event.getOriginal()).ifPresent(old -> get(event.getEntity()).ifPresent(copy -> copy.load(old.act(),
                 old.quests(), old.bosses(), old.fates(), old.trackedQuest().orElse(null))));
         get(event.getOriginal()).ifPresent(old -> get(event.getEntity()).ifPresent(copy -> copy.loadRelics(old.relics())));
+        get(event.getOriginal()).ifPresent(old -> get(event.getEntity()).ifPresent(copy -> copy.loadPuzzles(old.puzzles())));
         event.getOriginal().invalidateCaps();
     }
 
@@ -77,6 +78,9 @@ public final class StoryCapability {
         ListTag relics = new ListTag();
         data.relics().forEach(r -> relics.add(StringTag.valueOf(r)));
         tag.put("relics", relics);
+        ListTag puzzles = new ListTag();
+        data.puzzles().forEach(z -> puzzles.add(StringTag.valueOf(z)));
+        tag.put("puzzles", puzzles);
         CompoundTag fates = new CompoundTag();
         data.fates().forEach((r, f) -> fates.putString(r.id(), f));
         tag.put("fates", fates);
@@ -102,6 +106,10 @@ public final class StoryCapability {
         ListTag r = tag.getList("relics", Tag.TAG_STRING);
         for (int i = 0; i < r.size(); i++) relics.add(r.getString(i));
         data.loadRelics(relics);
+        Set<String> puzzles = new HashSet<>();
+        ListTag z = tag.getList("puzzles", Tag.TAG_STRING);
+        for (int i = 0; i < z.size(); i++) puzzles.add(z.getString(i));
+        data.loadPuzzles(puzzles);
     }
 
     public static final class Provider implements ICapabilitySerializable<CompoundTag> {

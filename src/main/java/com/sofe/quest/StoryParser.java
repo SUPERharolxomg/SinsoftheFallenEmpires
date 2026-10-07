@@ -30,7 +30,13 @@ public final class StoryParser {
             steps.add(new QuestDefinition.Step(objective(step.getAsJsonObject("objective")), effects(step, "on_start"), target));
         }
         Condition requires = json.has("requires") ? ConditionParser.parse(json.get("requires")) : null;
-        return new QuestDefinition(id, type, act, steps, effects(json, "rewards"), requires);
+        QuestDefinition.Discovery discovery = null;
+        if (json.has("starts_near")) {
+            JsonObject near = json.getAsJsonObject("starts_near");
+            discovery = new QuestDefinition.Discovery(near.get("x").getAsInt(), near.get("z").getAsInt(),
+                    near.has("radius") ? near.get("radius").getAsInt() : 48);
+        }
+        return new QuestDefinition(id, type, act, steps, effects(json, "rewards"), requires, discovery);
     }
 
     public static DialogueDefinition dialogue(String id, JsonObject json) {
@@ -67,6 +73,7 @@ public final class StoryParser {
             case "defeat_boss" -> new Objective.DefeatBoss(str(json, "boss", null));
             case "manual" -> new Objective.Manual();
             case "obtain_item" -> new Objective.Obtain(str(json, "item", null));
+            case "solve_puzzle" -> new Objective.SolvePuzzle(str(json, "puzzle", null));
             default -> throw new IllegalArgumentException("unknown objective type \"" + type + "\"");
         };
     }
@@ -84,7 +91,8 @@ public final class StoryParser {
                 case "advance_act" -> new QuestEffect.AdvanceAct(effect.get("act").getAsInt());
                 case "give_xp" -> new QuestEffect.GiveXp(effect.get("amount").getAsLong());
                 case "spawn" -> new QuestEffect.Spawn(str(effect, "entity", null),
-                        effect.has("count") ? effect.get("count").getAsInt() : 1, effect.has("radius") ? effect.get("radius").getAsDouble() : 8);
+                        effect.has("count") ? effect.get("count").getAsInt() : 1, effect.has("radius") ? effect.get("radius").getAsDouble() : 8,
+                        effect.has("elite") && effect.get("elite").getAsBoolean());
                 case "open_dialogue" -> new QuestEffect.OpenDialogue(str(effect, "dialogue", null));
                 case "give_item" -> new QuestEffect.GiveItem(str(effect, "item", null), effect.has("count") ? effect.get("count").getAsInt() : 1);
                 case "open_class_select" -> new QuestEffect.OpenClassSelect();

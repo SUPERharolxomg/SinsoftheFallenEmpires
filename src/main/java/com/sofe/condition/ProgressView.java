@@ -26,4 +26,9 @@ public interface ProgressView {
     default String playerClass() {
         return null;
     }
+
+    /** Whether the player has solved a rune puzzle (e.g. "sofe:nordrath_forge"). */
+    default boolean hasSolved(String puzzleId) {
+        return false;
+    }
 }

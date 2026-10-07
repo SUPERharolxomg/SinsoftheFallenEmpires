@@ -1,0 +1,23 @@
+{
+  "kind": "order",
+  "runes": [
+    "sun",
+    "moon",
+    "eye",
+    "wave",
+    "flame",
+    "star"
+  ],
+  "riddle_lines": 2,
+  "solution": [
+    "eye",
+    "flame",
+    "star",
+    "wave",
+    "sun",
+    "moon"
+  ],
+  "gate": "sofe:aureum/shadow_throne",
+  "boss": "sofe:envyris",
+  "anchor": "sofe:aureum/shadow_throne"
+}
