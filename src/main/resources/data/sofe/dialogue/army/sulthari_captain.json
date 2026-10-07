@@ -1,0 +1,51 @@
+{
+  "style": "sulthari",
+  "npc": "sulthari_captain",
+  "lines": [
+    {
+      "speaker": "sulthari_captain",
+      "text": "dialogue.sofe.army.sulthari.greet"
+    },
+    {
+      "speaker": "sulthari_captain",
+      "text": "dialogue.sofe.army.offer",
+      "answers": [
+        {
+          "text": "dialogue.sofe.army.hire_soldier",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "sulthari",
+              "rank": "soldier"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.hire_archer",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "sulthari",
+              "rank": "archer"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.revive",
+          "next": -1,
+          "effects": [
+            {
+              "type": "revive_soldiers"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.leave",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

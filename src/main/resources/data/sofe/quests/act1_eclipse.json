@@ -18,7 +18,7 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:void_*",
-        "count": 8
+        "count": 20
       },
       "target": {
         "x": -96,
@@ -28,20 +28,9 @@
         {
           "type": "open_dialogue",
           "dialogue": "sofe:act1/invasion"
-        },
-        {
-          "type": "spawn",
-          "entity": "sofe:void_wretch",
-          "count": 4,
-          "radius": 12
-        },
-        {
-          "type": "spawn",
-          "entity": "sofe:void_stalker",
-          "count": 2,
-          "radius": 14
         }
-      ]
+      ],
+      "_invasion": "the creatures come out in the lower district when the Bearer gets there (VoidInvasion)"
     },
     {
       "objective": {

@@ -98,6 +98,8 @@ public final class StoryParser {
                 case "open_class_select" -> new QuestEffect.OpenClassSelect();
                 case "give_relic" -> new QuestEffect.GiveRelic(str(effect, "relic", null));
                 case "hire_companion" -> new QuestEffect.HireCompanion(str(effect, "bearer", null));
+                case "hire_soldier" -> new QuestEffect.HireSoldier(str(effect, "empire", null), str(effect, "rank", "soldier"));
+                case "revive_soldiers" -> new QuestEffect.ReviveSoldiers();
                 case "companion_order" -> new QuestEffect.CompanionOrder(str(effect, "order", null));
                 case "play_sound" -> new QuestEffect.PlaySound(str(effect, "sound", null),
                         effect.has("volume") ? effect.get("volume").getAsFloat() : 1f, effect.has("pitch") ? effect.get("pitch").getAsFloat() : 1f);

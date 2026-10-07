@@ -49,6 +49,14 @@ public sealed interface QuestEffect {
     }
 
     /** Hires a Bearer as the player's companion (UC-22). */
+    /** Hires a soldier or an archer of an empire's army into the player's company (a captain's dialogue). */
+    record HireSoldier(String empire, String rank) implements QuestEffect {
+    }
+
+    /** Brings back the fallen of the player's company (a captain's dialogue). */
+    record ReviveSoldiers() implements QuestEffect {
+    }
+
     record HireCompanion(String bearer) implements QuestEffect {
     }
 

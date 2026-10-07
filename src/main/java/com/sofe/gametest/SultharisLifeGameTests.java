@@ -97,6 +97,40 @@ public class SultharisLifeGameTests {
         helper.succeed();
     }
 
+    /**
+     * A beta tester set a crafting table in a house and it vanished: a Bearer may set blocks in a town and take them
+     * away again, while the town's own stone stays, and its flowers are not covered over.
+     */
+    @GameTest(template = "empty")
+    public static void aBearerMaySetBlocksInATownAndTakeThemBack(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.STONE_BRICKS);
+        helper.setBlock(new BlockPos(2, 1, 1), Blocks.GRASS_BLOCK);
+        helper.setBlock(new BlockPos(2, 2, 1), Blocks.GRASS); // short grass: a block set on it would take its place
+        BlockPos city = helper.absolutePos(new BlockPos(1, 1, 1));
+        ProtectedZoneData zones = ProtectedZoneData.get(helper.getLevel().getServer());
+        String cityId = "sofe:test_house_" + city.asLong();
+        zones.add(new ProtectedZone(cityId, ProtectedZone.Kind.CITY, city.getX() - 1, city.getY() - 1, city.getZ() - 1, city.getX() + 2, city.getY() + 3, city.getZ() + 1));
+        ServerPlayer builder = player(helper, "sofe_test_builder");
+        try {
+            builder.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.CRAFTING_TABLE, 2));
+            var onStone = new net.minecraft.world.phys.BlockHitResult(Vec3.atCenterOf(city).add(0, 0.5, 0), net.minecraft.core.Direction.UP, city, false);
+            builder.gameMode.useItemOn(builder, helper.getLevel(), builder.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, onStone);
+            helper.assertBlockPresent(Blocks.CRAFTING_TABLE, new BlockPos(1, 2, 1));
+            BlockPos grass = helper.absolutePos(new BlockPos(2, 2, 1));
+            var onGrass = new net.minecraft.world.phys.BlockHitResult(Vec3.atCenterOf(grass), net.minecraft.core.Direction.UP, grass, false);
+            builder.gameMode.useItemOn(builder, helper.getLevel(), builder.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, onGrass);
+            helper.assertBlockPresent(Blocks.GRASS, new BlockPos(2, 2, 1));
+            builder.gameMode.destroyBlock(helper.absolutePos(new BlockPos(1, 2, 1)));
+            helper.assertBlockNotPresent(Blocks.CRAFTING_TABLE, new BlockPos(1, 2, 1));
+            builder.gameMode.destroyBlock(city);
+            helper.assertBlockPresent(Blocks.STONE_BRICKS, new BlockPos(1, 1, 1));
+        } finally {
+            zones.remove(cityId);
+            helper.killAllEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class);
+        }
+        helper.succeed();
+    }
+
     /** A town's trees can be cut down, the whole tree at once; a post of a house and a garden's hedge cannot. */
     @GameTest(template = "empty")
     public static void aTownsTreesCanBeCutButNotItsPosts(GameTestHelper helper) {

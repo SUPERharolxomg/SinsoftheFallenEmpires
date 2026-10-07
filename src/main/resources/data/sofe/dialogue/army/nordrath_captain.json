@@ -1,0 +1,51 @@
+{
+  "style": "nordrath",
+  "npc": "nordrath_captain",
+  "lines": [
+    {
+      "speaker": "nordrath_captain",
+      "text": "dialogue.sofe.army.nordrath.greet"
+    },
+    {
+      "speaker": "nordrath_captain",
+      "text": "dialogue.sofe.army.offer",
+      "answers": [
+        {
+          "text": "dialogue.sofe.army.hire_soldier",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "nordrath",
+              "rank": "soldier"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.hire_archer",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "nordrath",
+              "rank": "archer"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.revive",
+          "next": -1,
+          "effects": [
+            {
+              "type": "revive_soldiers"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.leave",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

@@ -41,6 +41,8 @@ public final class EntityRegistry {
             () -> EntityType.Builder.of(BearerNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("bearer_npc"));
     public static final RegistryObject<EntityType<com.sofe.entity.npc.CitizenEntity>> CITIZEN = ENTITIES.register("citizen",
             () -> EntityType.Builder.of(com.sofe.entity.npc.CitizenEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("citizen"));
+    public static final RegistryObject<EntityType<com.sofe.entity.army.SoldierEntity>> SOLDIER = ENTITIES.register("soldier",
+            () -> EntityType.Builder.of(com.sofe.entity.army.SoldierEntity::new, MobCategory.CREATURE).sized(0.6f, 1.95f).clientTrackingRange(10).build("soldier"));
     public static final RegistryObject<EntityType<MerchantNpcEntity>> MERCHANT = ENTITIES.register("merchant",
             () -> EntityType.Builder.of(MerchantNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("merchant"));
 
@@ -161,6 +163,7 @@ public final class EntityRegistry {
         event.put(BEARER_NPC.get(), StoryNpcEntity.attributes().build());
         event.put(MERCHANT.get(), StoryNpcEntity.attributes().build());
         event.put(CITIZEN.get(), com.sofe.entity.npc.CitizenEntity.attributes().build());
+        event.put(SOLDIER.get(), com.sofe.entity.army.SoldierEntity.attributes().build());
         event.put(BRASS_SENTINEL.get(), BrassSentinelEntity.attributes().build());
         event.put(KALETH.get(), KalethEntity.attributes().build());
         event.put(SERATH.get(), SerathEntity.attributes().build());

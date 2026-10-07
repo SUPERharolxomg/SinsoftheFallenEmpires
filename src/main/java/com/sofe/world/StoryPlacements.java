@@ -163,6 +163,7 @@ public final class StoryPlacements extends SavedData {
             if (station == null || !near.test(npc.x(), npc.z()) || !data.placed.add("station:" + npc.npc())) continue;
             placeBlock(level, new BlockPos(npc.x() + 2, 0, npc.z()), station.defaultBlockState());
         }
+        count += com.sofe.entity.army.Army.placeGarrisons(server, layout, near); // each district's garrison
         // the rune puzzles before the seals and in the ruins (data/sofe/puzzles), in old worlds too
         for (com.sofe.puzzle.PuzzleDefinition puzzle : com.sofe.quest.StoryDataManager.puzzles().values()) {
             var at = com.sofe.puzzle.PuzzleService.origin(puzzle, layout);

@@ -26,7 +26,8 @@ public record ProtectedZone(String id, Kind kind, int minX, int minY, int minZ, 
         public boolean allows(ZoneAction action) {
             return switch (action) {
                 case BREAK -> canBreak;
-                case PLACE, USE_ITEM_ON_BLOCK -> canPlace;
+                case PLACE -> true; // a player may set blocks anywhere (and take them away again); only the place's own are kept
+                case USE_ITEM_ON_BLOCK -> canPlace;
                 case EXPLOSION, MOB_GRIEFING, FLUID, PISTON, FIRE, TAKE -> this == HOMESTEAD;
             };
         }

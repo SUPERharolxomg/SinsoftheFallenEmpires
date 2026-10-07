@@ -45,6 +45,9 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onInit);
         MinecraftForge.EVENT_BUS.addListener(SoFEMusic::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(QuestPath::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(EclipseSky::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(EclipseSky::onFogColor);
+        MinecraftForge.EVENT_BUS.addListener(EclipseSky::onFog);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onBackground);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onRender);
         if (ArmorShots.enabled() || SkillShots.enabled() || PlaceShots.enabled() || DeathKeysCheck.enabled() || ProtectCheck.enabled()

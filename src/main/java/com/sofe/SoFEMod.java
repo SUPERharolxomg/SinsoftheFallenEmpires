@@ -235,6 +235,11 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onServerTick);
         MinecraftForge.EVENT_BUS.addListener(StoryPlacements::onEntityJoin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.army.Army::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.army.Army::onLogin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.army.Army::onLogout);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.army.Army::onRespawn);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.entity.army.Army::onChangedDimension);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.puzzle.PuzzleService::onServerTick);
 
         MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.BurningDeep::onPortalSpawn);

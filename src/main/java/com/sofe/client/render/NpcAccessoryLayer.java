@@ -39,13 +39,21 @@ import java.util.Set;
  * </ul>
  * The parts follow the head and the body of the model as it moves.
  */
-public class NpcAccessoryLayer extends RenderLayer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
+public class NpcAccessoryLayer<T extends net.minecraft.world.entity.LivingEntity> extends RenderLayer<T, PlayerModel<T>> {
     private static final ResourceLocation LIST = SoFEMod.id("npc_accessories.json");
     private static Map<String, Set<String>> worn;
     private final ModelPart head, turban, turbanTop, beard, fez, body, cape, skirt;
+    /** The skin id of the one who wears the parts (an NPC's id, a soldier's empire and rank). */
+    private final java.util.function.Function<T, String> skinOf;
 
-    public NpcAccessoryLayer(RenderLayerParent<StoryNpcEntity, PlayerModel<StoryNpcEntity>> parent) {
+    /** For the story's people. */
+    public static NpcAccessoryLayer<StoryNpcEntity> forNpcs(RenderLayerParent<StoryNpcEntity, PlayerModel<StoryNpcEntity>> parent) {
+        return new NpcAccessoryLayer<>(parent, npc -> SoFEEntityRenderers.skinId(npc.npcId()));
+    }
+
+    public NpcAccessoryLayer(RenderLayerParent<T, PlayerModel<T>> parent, java.util.function.Function<T, String> skinOf) {
         super(parent);
+        this.skinOf = skinOf;
         ModelPart root = definition().bakeRoot();
         head = root.getChild("head");
         turban = head.getChild("turban");
@@ -93,13 +101,13 @@ public class NpcAccessoryLayer extends RenderLayer<StoryNpcEntity, PlayerModel<S
     }
 
     @Override
-    public void render(PoseStack pose, MultiBufferSource buffers, int light, StoryNpcEntity entity, float limbSwing, float limbSwingAmount,
+    public void render(PoseStack pose, MultiBufferSource buffers, int light, T entity, float limbSwing, float limbSwingAmount,
                        float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity.isInvisible()) return;
-        String id = SoFEEntityRenderers.skinId(entity.npcId());
+        String id = skinOf.apply(entity);
         Set<String> parts = worn(id);
         if (parts.isEmpty()) return;
-        PlayerModel<StoryNpcEntity> model = getParentModel();
+        PlayerModel<T> model = getParentModel();
         head.copyFrom(model.head);
         body.copyFrom(model.body);
         turban.visible = parts.contains("turban");

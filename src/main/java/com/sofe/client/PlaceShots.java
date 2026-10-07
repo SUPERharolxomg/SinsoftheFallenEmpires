@@ -54,7 +54,7 @@ public final class PlaceShots {
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
-            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
                     && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")
                     && !places.get(place).startsWith("dialogue:")) {
                 look(mc, places.get(place), view);
@@ -69,7 +69,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") || places.get(place).startsWith("eclipse:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -210,6 +210,26 @@ public final class PlaceShots {
             mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2]), v.length > 3 ? fates : null));
             return;
         }
+        if (piece.equals("army")) { // the garrisons disbanded and mustered again (no screenshot of its own worth keeping)
+            server.execute(() -> com.sofe.entity.army.Army.remuster(server));
+            return;
+        }
+        if (piece.startsWith("eclipse:")) { // eclipse:x:y:z:yaw:pitch, one look from there under the Night of the Eclipse (Act I begun)
+            String[] v = piece.split(":");
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                if (p == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                com.sofe.story.StoryCapability.get(p).ifPresent(st -> { // on the step "drive the Void out of the lower district"
+                    st.update(com.sofe.quest.QuestEngine.FIRST_QUEST, new com.sofe.story.StoryProgress.QuestState(1, 0, false));
+                    st.track(com.sofe.quest.QuestEngine.FIRST_QUEST);
+                });
+                com.sofe.quest.QuestEngine.sync(p);
+                p.teleportTo(p.serverLevel(), Double.parseDouble(v[1]) + 0.5, Double.parseDouble(v[2]), Double.parseDouble(v[3]) + 0.5,
+                        Float.parseFloat(v[4]), Float.parseFloat(v[5]));
+            });
+            return;
+        }
         if (piece.startsWith("at:")) { // at:x:y:z:yaw:pitch, one look from there (inside a place built earlier in the same run)
             String[] v = piece.split(":");
             server.execute(() -> {
@@ -217,6 +237,10 @@ public final class PlaceShots {
                 if (p == null) return;
                 p.setGameMode(GameType.SPECTATOR);
                 p.serverLevel().setDayTime(6000);
+                com.sofe.story.StoryCapability.get(p).ifPresent(st -> st.quest(com.sofe.quest.QuestEngine.FIRST_QUEST) // in daylight, past the eclipse
+                        .filter(q -> !q.completed() && q.step() <= 1)
+                        .ifPresent(q -> st.update(com.sofe.quest.QuestEngine.FIRST_QUEST, new com.sofe.story.StoryProgress.QuestState(2, 0, false))));
+                com.sofe.quest.QuestEngine.sync(p);
                 p.teleportTo(p.serverLevel(), Double.parseDouble(v[1]) + 0.5, Double.parseDouble(v[2]), Double.parseDouble(v[3]) + 0.5,
                         Float.parseFloat(v[4]), Float.parseFloat(v[5]));
             });

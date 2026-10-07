@@ -68,6 +68,7 @@ public final class SoFEEntityRenderers {
         event.registerEntityRenderer(EntityRegistry.BEARER_NPC.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.MERCHANT.get(), NpcRenderer::new);
         event.registerEntityRenderer(EntityRegistry.CITIZEN.get(), NpcRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SOLDIER.get(), SoldierRenderer::new);
         event.registerBlockEntityRenderer(com.sofe.registry.SoFEBlocks.CLAN_BANNER_ENTITY.get(), ClanBannerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BEARER_CORPSE.get(), CorpseRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BRASS_SENTINEL.get(), ctx -> new GeoMobRenderer<BrassSentinelEntity>(ctx,
@@ -329,6 +330,33 @@ public final class SoFEEntityRenderers {
         }
     }
 
+    /** A soldier of an empire's army in their empire's colors and rank, the bow drawn when an archer aims. */
+    static class SoldierRenderer extends net.minecraft.client.renderer.entity.HumanoidMobRenderer<com.sofe.entity.army.SoldierEntity,
+            PlayerModel<com.sofe.entity.army.SoldierEntity>> {
+        SoldierRenderer(EntityRendererProvider.Context ctx) {
+            super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
+            addLayer(new NpcAccessoryLayer<>(this, com.sofe.entity.army.SoldierEntity::skinId)); // the captains' capes, the archers' turbans
+        }
+
+        @Override
+        public ResourceLocation getTextureLocation(com.sofe.entity.army.SoldierEntity soldier) {
+            return skinFor(soldier.skinId());
+        }
+
+        @Override
+        public void render(com.sofe.entity.army.SoldierEntity soldier, float yaw, float partialTick, PoseStack pose, MultiBufferSource buffers, int light) {
+            boolean aiming = soldier.isAggressive() && soldier.getMainHandItem().is(net.minecraft.world.item.Items.BOW);
+            getModel().rightArmPose = aiming ? net.minecraft.client.model.HumanoidModel.ArmPose.BOW_AND_ARROW : net.minecraft.client.model.HumanoidModel.ArmPose.ITEM;
+            getModel().leftArmPose = aiming ? net.minecraft.client.model.HumanoidModel.ArmPose.BOW_AND_ARROW : net.minecraft.client.model.HumanoidModel.ArmPose.EMPTY;
+            super.render(soldier, yaw, partialTick, pose, buffers, light);
+        }
+
+        @Override
+        protected void scale(com.sofe.entity.army.SoldierEntity soldier, PoseStack pose, float partialTicks) {
+            if (soldier.rank() == com.sofe.entity.army.SoldierEntity.Rank.CAPTAIN) pose.scale(1.05f, 1.05f, 1.05f);
+        }
+    }
+
     /** A companion looks like its hero as an NPC in Sulthari, with what it carries in hand. */
     static class CompanionRenderer extends net.minecraft.client.renderer.entity.HumanoidMobRenderer<com.sofe.companion.CompanionEntity,
             PlayerModel<com.sofe.companion.CompanionEntity>> {
@@ -348,7 +376,7 @@ public final class SoFEEntityRenderers {
     static class NpcRenderer extends HumanoidMobRenderer<StoryNpcEntity, PlayerModel<StoryNpcEntity>> {
         NpcRenderer(EntityRendererProvider.Context ctx) {
             super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
-            addLayer(new NpcAccessoryLayer(this));
+            addLayer(NpcAccessoryLayer.forNpcs(this));
             addLayer(new NpcOutfitLayer(this));
         }
 
