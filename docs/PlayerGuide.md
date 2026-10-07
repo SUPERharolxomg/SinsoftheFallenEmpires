@@ -10,13 +10,18 @@ book (FTB Quests).
 2. **Choose your Bearer** (Knight, Necromancer, Sorceress, Thief or King). The Night of the Eclipse begins in
    Sulthari, in front of the plaza fountain, and you receive the **Bearer's Flask**.
 3. Press **K** and learn your **first three skills**.
-4. Drive the Void creatures out of the **Lower District** (south-west of the plaza).
+4. **Hold Sulthari against the Void:** five waves, 80 creatures. Each wave tears rifts open on a side of the city
+   (the east, then the west, the north, the south, and at last every side at once); the bar at the top counts the
+   fallen and the Quest Compass points at the nearest rift. The garrisons fight beside you, and every creature they
+   strike down counts for you.
 5. Present yourself to **Grand Vizier Ozhan** at the entrance of the **palace** (south of the plaza, the great
    golden dome).
-6. Descend into **the Wardens' Crypt** (north-east of the city) and drive out its sand ghouls.
-7. In **the Wardens' Ruin** (north-west of the city), read the riddle and wake the runes: the ruin's guardian wakes
+6. Find **the Wardens' Crypt** (north-east of the city), a tomb cut into a hill: go in by its door, down through its
+   halls and its ossuary, and drive out its sand ghouls.
+7. In its deepest chamber, defeat **the First Warden**, the lord of the crypt.
+8. In **the Wardens' Ruin** (north-west of the city), read the riddle and wake the runes: the ruin's guardian wakes
    with them. Defeat it.
-8. Stop the **Brass Sentinel** in the **Great Observatory** (north of the plaza).
+9. Stop the **Brass Sentinel** in the **Great Observatory** (north of the plaza).
 
 Then every act goes the same way: you reach a land, wake the runes of its **Ruin** and defeat its guardian, then
 break into the bosses' dungeons. Act II: the Burnt Longhall in Nordrath. Act III: the Abandoned Pavilion in Parsivan
@@ -38,7 +43,9 @@ broke through near Sulthari.
 
 Every region has dungeons of three sizes:
 
-- **Small, a Crypt:** one hall of the dead and a chest at the back.
+- **Small, a Crypt:** a tomb cut into a hill, its door between two statues over a court of pools; behind it a stair
+  goes down to the Hall of the Dead, the Ossuary and, 26 blocks under the ground, the burial chamber where the lord of
+  the crypt rises when you get there. A chest on each level and one on the court's altar.
 - **Medium, a Ruin:** a court with a rune puzzle that opens its Sealed Gate; solving it wakes the ruin's guardian
   (an elite). Behind the gate, a hall with two chests.
 - **Large, a boss's dungeon:** the bosses of the story, from Act II on. Most are sealed by a rune puzzle beside their Waystone.

@@ -23,11 +23,28 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:void_*",
-        "count": 6
+        "count": 10
       },
       "target": {
         "x": 1050,
         "z": 250
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:void_stalker",
+        "count": 1
+      },
+      "target": {
+        "x": 1068,
+        "z": 250
+      },
+      "lair": {
+        "x": 1068,
+        "z": 250,
+        "depth": 18,
+        "name": "lord.sofe.void_crypt"
       }
     }
   ],

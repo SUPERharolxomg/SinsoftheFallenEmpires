@@ -35,6 +35,10 @@ public final class QuestGuide {
             Optional<SyncStoryPacket.Target> at = locate(player, npc.get());
             if (at.isPresent()) return at;
         }
+        if (step.get().invasion() != null) { // during an invasion, the nearest rift
+            Optional<QuestDefinition.Target> rift = VoidInvasion.compass(player);
+            if (rift.isPresent()) return rift.map(t -> new SyncStoryPacket.Target(t.x(), t.z()));
+        }
         return step.get().compassTarget().map(t -> new SyncStoryPacket.Target(t.x(), t.z()));
     }
 

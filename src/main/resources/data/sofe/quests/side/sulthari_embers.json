@@ -21,16 +21,36 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:void_*",
-        "count": 6
+        "count": 22
       },
-      "on_start": [
-        {
-          "type": "spawn",
-          "entity": "sofe:void_wretch",
-          "count": 6,
-          "radius": 10
-        }
-      ]
+      "invasion": {
+        "reach": 48,
+        "distance": 18,
+        "waves": [
+          {
+            "from": [
+              "east"
+            ],
+            "count": 4
+          },
+          {
+            "from": [
+              "west"
+            ],
+            "count": 6
+          },
+          {
+            "from": [
+              "north",
+              "south"
+            ],
+            "count": 12
+          }
+        ],
+        "mobs": [
+          "sofe:void_wretch"
+        ]
+      }
     }
   ],
   "rewards": [

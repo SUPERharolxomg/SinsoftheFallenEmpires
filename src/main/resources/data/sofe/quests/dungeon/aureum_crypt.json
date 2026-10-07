@@ -23,11 +23,28 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:gilded_legionnaire",
-        "count": 6
+        "count": 10
       },
       "target": {
         "x": -2600,
         "z": -1500
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:gilded_legionnaire",
+        "count": 1
+      },
+      "target": {
+        "x": -2582,
+        "z": -1500
+      },
+      "lair": {
+        "x": -2582,
+        "z": -1500,
+        "depth": 18,
+        "name": "lord.sofe.aureum_crypt"
       }
     }
   ],

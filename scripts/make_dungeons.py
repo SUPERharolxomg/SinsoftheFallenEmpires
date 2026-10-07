@@ -1,6 +1,6 @@
 """The dungeons of every size and the rune puzzles before the bosses (docs/Mundo.md, W6), as data:
 
-- small: a Crypt in every region; medium: a Ruin with a rune puzzle before a Sealed Gate and a guardian behind it;
+- small: a Crypt in every region (a tomb cut into a hill, three levels down, its lord in the deepest); medium: a Ruin with a rune puzzle before a Sealed Gate and a guardian behind it;
   large: the boss dungeons of the story, each sealed by a rune puzzle (but the Feast Halls, deep in the Caverns).
 - Sulthari's Crypt and Ruin are part of Act I (sofe:act1_eclipse); every other Ruin is part of its act (Nordrath in
   Act II, Parsivan and Khemet in Act III, Aureum in Act IV, the Void's Breach in Act V), right after the Bearer reaches
@@ -136,6 +136,7 @@ LARGE = [
 
 # ------------------------------------------------------------------------------------------------ the crypts and ruins
 # region, act, crypt (x, z), ruin (x, z), the crypt's dead (kill), the ruin's guardian, names (en, es)
+# (each Crypt's lord, who sleeps in its deepest chamber, is in LORDS)
 REGIONS = [
     ("sulthari", 1, (480, -420), (-560, -520), "sofe:sand_ghoul", "sofe:clockwork_scarab",
      ("The Wardens' Crypt", "La Cripta de los Guardianes"), ("The Wardens' Ruin", "La Ruina de los Guardianes"),
@@ -156,6 +157,17 @@ REGIONS = [
      ("The Hollow Tomb", "La Tumba Hueca"), ("The Breach of the Seal", "La Brecha del Sello"),
      ("creatures of the Void", "criaturas del Vacío"), ("Void Stalker", "el Acechador del Vacío")),
 ]
+
+# the lord of each Crypt's depths: its kind (an elite of it, twice as strong) and its name (en, es)
+LORDS = {"sulthari": ("sofe:sand_ghoul", ("The First Warden", "El Primer Guardián")),
+         "nordrath": ("sofe:draugr", ("The Drowned Jarl", "El Jarl Ahogado")),
+         "parsivan": ("sofe:mirage_dancer", ("The Silent Poet", "El Poeta Silencioso")),
+         "khemet": ("sofe:bog_mummy", ("The Master Embalmer", "El Maestro Embalsamador")),
+         "aureum": ("sofe:gilded_legionnaire", ("The Last Legate", "El Último Legado")),
+         "void": ("sofe:void_stalker", ("The Hollow One", "El Hueco"))}
+# the Crypt (DungeonBuilder.crypt): 49 across; its burial chamber lies 26 blocks under, this far from its center
+CRYPT_SIZE, CHAMBER = 49, (18, 0)
+CRYPT_DEAD = 10
 
 # where each Ruin goes in the story: the act, and the step it follows (None: the act begins with it)
 IN_ACT = {"nordrath": ("act2_north", ("reach_region", "nordrath")), "parsivan": ("act3_east", ("reach_region", "parsivan")),
@@ -234,7 +246,7 @@ def main():
 
     for region, act, crypt, ruin, dead, guardian, crypt_name, ruin_name, dead_name, guardian_name in REGIONS:
         crypt_id, ruin_id = "sofe:%s/crypt" % region, "sofe:%s/ruin" % region
-        positions["structures"][crypt_id] = {"x": crypt[0], "z": crypt[1], "size_x": 17, "size_z": 17, "zone": "dungeon"}
+        positions["structures"][crypt_id] = {"x": crypt[0], "z": crypt[1], "size_x": CRYPT_SIZE, "size_z": CRYPT_SIZE, "zone": "dungeon"}
         positions["structures"][ruin_id] = {"x": ruin[0], "z": ruin[1], "size_x": 37, "size_z": 29, "zone": "dungeon"}
         positions["gates"][ruin_id] = {"x": ruin[0], "z": ruin[1] - 3, "condition": "sofe:ruin_%s" % region, "hint": "message.sofe.gate.ruin"}
         dump(os.path.join(DATA, "conditions", "ruin_%s.json" % region), {"type": "act_reached", "act": act})
@@ -245,14 +257,19 @@ def main():
                ruin_name, xz=(ruin[0], ruin[1] + 2))
         guardian_step = {"objective": {"type": "kill", "entity": guardian, "count": 1}, "target": {"x": ruin[0], "z": ruin[1]},
                          "on_start": [{"type": "spawn", "entity": guardian, "count": 1, "radius": 6, "elite": True}]}
+        lord, lord_name = LORDS[region]
+        lair = (crypt[0] + CHAMBER[0], crypt[1] + CHAMBER[1])
+        text("lord.sofe.%s_crypt" % region, lord_name[0], lord_name[1])
         crypt_steps = [dict(reach(*crypt), target={"x": crypt[0], "z": crypt[1]}),
-                       {"objective": {"type": "kill", "entity": dead, "count": 6}, "target": {"x": crypt[0], "z": crypt[1]}}]
+                       {"objective": {"type": "kill", "entity": dead, "count": CRYPT_DEAD}, "target": {"x": crypt[0], "z": crypt[1]}},
+                       {"objective": {"type": "kill", "entity": "lord:" + lord, "count": 1}, "target": {"x": lair[0], "z": lair[1]},
+                        "lair": {"x": lair[0], "z": lair[1], "depth": 18, "name": "lord.sofe.%s_crypt" % region}}]
         ruin_steps = [dict(reach(*ruin, r=20), target={"x": ruin[0], "z": ruin[1]}),
                       {"objective": {"type": "solve_puzzle", "puzzle": "sofe:%s_ruin" % region}, "target": {"x": ruin[0], "z": ruin[1] + 2}},
                       guardian_step]
         if region == "sulthari":
-            act1(mark(crypt_steps[1], "sulthari/crypt"), mark(ruin_steps[1], "sulthari/ruin"), mark(guardian_step, "sulthari/ruin"),
-                 crypt_name, ruin_name, dead_name, guardian_name)
+            act1(mark(crypt_steps[1], "sulthari/crypt"), mark(crypt_steps[2], "sulthari/crypt"), mark(ruin_steps[1], "sulthari/ruin"),
+                 mark(guardian_step, "sulthari/ruin"), crypt_name, ruin_name, dead_name, guardian_name, lord_name)
             continue
         quest_name, after = IN_ACT[region]
         into_act(quest_name, after, region, [mark(ruin_steps[1], region + "/ruin"), mark(guardian_step, region + "/ruin")], [
@@ -272,7 +289,9 @@ def main():
         key = "quest.sofe.dungeon.%s_crypt" % region
         text(key, crypt_name[0], crypt_name[1])
         text(key + ".step1", "Find %s." % crypt_name[0], "Encuentra %s." % lower(crypt_name[1]))
-        text(key + ".step2", "Drive out the %s inside it." % dead_name[0], "Expulsa a los %s de su interior." % dead_name[1])
+        text(key + ".step2", "Go down through its halls and drive out the %s." % dead_name[0],
+             "Baja por sus salas y acaba con sus muertos: %s." % dead_name[1])
+        text(key + ".step3", "In its deepest chamber, defeat %s." % lower(lord_name[0]), de("En su cámara más honda, derrota a %s." % lower(lord_name[1])))
 
     dump(positions_path, positions, indent=1)  # the file's own layout
     loot()
@@ -348,23 +367,25 @@ def de(s):
     return s.replace(" de el ", " del ").replace(" a el ", " al ")
 
 
-def act1(crypt_kill, ruin_puzzle, guardian, crypt_name, ruin_name, dead_name, guardian_name):
+def act1(crypt_kill, crypt_lord, ruin_puzzle, guardian, crypt_name, ruin_name, dead_name, guardian_name, lord_name):
     """Act I goes on after the Council: the Wardens' Crypt and their Ruin hold the way into the Observatory."""
     path = os.path.join(DATA, "quests", "act1_eclipse.json")
     with open(path, encoding="utf-8") as f:
         q = json.load(f)
     sentinel = next(s for s in q["steps"] if s["objective"].get("boss") == "sofe:brass_sentinel")
     council = q["steps"][:3]
-    q["steps"] = council + [crypt_kill, ruin_puzzle, guardian, sentinel]
+    q["steps"] = council + [crypt_kill, crypt_lord, ruin_puzzle, guardian, sentinel]
     dump(path, q)
     k = "quest.sofe.act1_eclipse"
-    text(k + ".step4", "Descend into %s and drive out the %s." % (crypt_name[0], dead_name[0]),
-         de("Baja a %s y expulsa a los %s." % (lower(crypt_name[1]), dead_name[1])))
-    text(k + ".step5", "In %s, read the riddle and wake the Wardens' runes." % ruin_name[0],
+    text(k + ".step4", "Go down into %s and drive out the %s of its halls." % (crypt_name[0], dead_name[0]),
+         de("Baja a %s y acaba con los %s de sus salas." % (lower(crypt_name[1]), dead_name[1])))
+    text(k + ".step5", "In the deepest chamber of the Crypt, defeat %s." % lower(lord_name[0]),
+         de("En la cámara más honda de la Cripta, derrota a %s." % lower(lord_name[1])))
+    text(k + ".step6", "In %s, read the riddle and wake the Wardens' runes." % ruin_name[0],
          "En %s, lee el acertijo y despierta las runas de los Guardianes." % lower(ruin_name[1]))
-    text(k + ".step6", "The runes woke the ruin's guardian: defeat the %s." % guardian_name[0],
+    text(k + ".step7", "The runes woke the ruin's guardian: defeat the %s." % guardian_name[0],
          de("Las runas despertaron al guardián de la ruina: derrota a %s." % guardian_name[1]))
-    text(k + ".step7", "Stop the Brass Sentinel in the Great Observatory.", "Detén al Centinela de Latón en el Gran Observatorio.")
+    text(k + ".step8", "Stop the Brass Sentinel in the Great Observatory.", "Detén al Centinela de Latón en el Gran Observatorio.")
     text("dialogue.sofe.act1.council.3",
          "The Brass Sentinel of the Great Observatory has woken. It kept the seal for three hundred years; now it obeys no one, and the Observatory has closed with it. "
          "The Wardens who built it left the way in with their dead: in their Crypt, north-east of the city, and in their Ruin, to the north-west.",

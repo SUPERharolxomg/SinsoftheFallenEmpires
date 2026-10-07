@@ -257,10 +257,27 @@ public final class QuestEngine {
 
     // --- game events ---
 
+    /**
+     * A kill counts for the Bearer who struck it, and also for the Bearer a creature came for (an invasion's, a lair's
+     * lord), whoever struck it: the garrison fights beside them. A lord counts as "lord:&lt;entity&gt;".
+     */
     public static void onKill(LivingDeathEvent event) {
-        if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
-        ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
-        if (id != null) event(player, new QuestEvent.Killed(id.toString()));
+        var dead = event.getEntity();
+        if (dead.level().isClientSide) return;
+        ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(dead.getType());
+        if (id == null) return;
+        String killed = (dead.getTags().contains(CryptLord.TAG) ? Objective.LORD : "") + id;
+        ServerPlayer striker = event.getSource().getEntity() instanceof ServerPlayer p ? p : null;
+        if (striker != null) event(striker, new QuestEvent.Killed(killed));
+        for (String tag : dead.getTags()) {
+            if (!tag.startsWith(VoidInvasion.FOR)) continue;
+            try {
+                ServerPlayer owner = dead.getServer().getPlayerList().getPlayer(java.util.UUID.fromString(tag.substring(VoidInvasion.FOR.length())));
+                if (owner != null && owner != striker) event(owner, new QuestEvent.Killed(killed));
+            } catch (IllegalArgumentException ignored) {
+                // not a player's id
+            }
+        }
     }
 
     /** Called by boss entities on every participant when they fall. */
@@ -280,6 +297,7 @@ public final class QuestEngine {
         checkCarried(player);
         wakeBosses(player);
         VoidInvasion.tick(player);
+        CryptLord.wake(player);
     }
 
     /**

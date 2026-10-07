@@ -36,6 +36,12 @@ public final class Army {
     /** How often the garrisons are made whole, and how far away a player must be not to see it. */
     private static final int MUSTER_TICKS = 20 * 120, UNSEEN = 32;
     private static final String COMPANY = "sofe_company", GARRISON_TAG = "sofe_garrison_";
+    /** A district's garrison: a captain, three soldiers and three archers (seven; some 35 to 42 a city). */
+    public static final List<SoldierEntity.Rank> GARRISON = List.of(SoldierEntity.Rank.CAPTAIN, SoldierEntity.Rank.SOLDIER,
+            SoldierEntity.Rank.SOLDIER, SoldierEntity.Rank.SOLDIER, SoldierEntity.Rank.ARCHER, SoldierEntity.Rank.ARCHER, SoldierEntity.Rank.ARCHER);
+    /** Sulthari's northern post, on the avenue up to the Observatory (where the Void's northern rift opens in Act I). */
+    static final String SULTHARI_NORTH = "sofe:sulthari/observatory_avenue";
+    static final int SULTHARI_NORTH_X = 0, SULTHARI_NORTH_Z = -58;
 
     private Army() {
     }
@@ -46,7 +52,7 @@ public final class Army {
     record Post(String key, Region empire, int x, int z) {
     }
 
-    /** Sulthari's districts (its other places are halls and workshops); each other city has a center and four quarters. */
+    /** Sulthari's districts (its other places are halls and workshops) and the Observatory's avenue; each other city has a center and four quarters. */
     private static final List<String> SULTHARI_DISTRICTS = List.of("sofe:sulthari/plaza", "sofe:sulthari/lower_district",
             "sofe:sulthari/low_bazaar", "sofe:sulthari/training_grounds", "sofe:sulthari/forge");
 
@@ -60,6 +66,7 @@ public final class Army {
             if (empire == null) continue;
             if (empire == Region.SULTHARI) {
                 for (String id : SULTHARI_DISTRICTS) layout.structure(id).ifPresent(s -> posts.add(new Post(id, empire, s.x(), s.z())));
+                posts.add(new Post(SULTHARI_NORTH, empire, city.x() + SULTHARI_NORTH_X, city.z() + SULTHARI_NORTH_Z));
                 continue;
             }
             int qx = city.sizeX() / 4, qz = city.sizeZ() / 4;
@@ -75,7 +82,7 @@ public final class Army {
         int placed = 0;
         for (Post post : posts(layout)) {
             if (data.placed.contains(post.key()) || !near.test(post.x(), post.z())) continue;
-            muster(server.overworld(), post, List.of(SoldierEntity.Rank.values()));
+            muster(server.overworld(), post, GARRISON);
             data.placed.add(post.key());
             data.setDirty();
             placed++;
@@ -83,11 +90,13 @@ public final class Army {
         return placed;
     }
 
-    /** Puts these ranks of a post's garrison on an open spot of the street near it. */
+    /** Puts these ranks of a post's garrison on the open street round it, spread in a ring (the captain in the middle). */
     private static void muster(ServerLevel level, Post post, List<SoldierEntity.Rank> ranks) {
         int i = 0;
         for (SoldierEntity.Rank rank : ranks) {
-            BlockPos at = outdoors(level, post.x() + (i % 2 == 0 ? 2 : -2) * (i + 1) / 2, post.z() + i);
+            double angle = i * Math.PI * 2 / Math.max(1, ranks.size() - 1);
+            int r = rank == SoldierEntity.Rank.CAPTAIN ? 0 : 4;
+            BlockPos at = outdoors(level, post.x() + (int) Math.round(Math.cos(angle) * r), post.z() + (int) Math.round(Math.sin(angle) * r));
             i++;
             if (at == null) continue;
             SoldierEntity soldier = EntityRegistry.SOLDIER.get().create(level);
@@ -104,10 +113,15 @@ public final class Army {
      * Open ground of the street round a point (under the sky, not in water): of the open spots, the lowest, nearest the
      * point; a roof or a fountain's dome is open to the sky too, but higher than the street. Null when there is none.
      */
-    static BlockPos outdoors(ServerLevel level, int x, int z) {
+    public static BlockPos outdoors(ServerLevel level, int x, int z) {
+        return outdoors(level, x, z, 16);
+    }
+
+    /** The same, looked for no farther than this from the point (a rift keeps to its side of the place). */
+    public static BlockPos outdoors(ServerLevel level, int x, int z, int range) {
         BlockPos best = null;
         double bestDistance = 0;
-        for (int r = 0; r <= 16; r += 2) {
+        for (int r = 0; r <= range; r += 2) {
             for (int a = 0; a < (r == 0 ? 1 : 8); a++) {
                 int px = x + (int) Math.round(Math.cos(a * Math.PI / 4) * r), pz = z + (int) Math.round(Math.sin(a * Math.PI / 4) * r);
                 BlockPos floor = com.sofe.world.Grounding.groundFloor(level, px, pz);
@@ -149,7 +163,7 @@ public final class Army {
             if (level.getNearestPlayer(post.x(), level.getSeaLevel(), post.z(), UNSEEN, false) != null) continue;
             var box = new net.minecraft.world.phys.AABB(post.x() - 48, level.getMinBuildHeight(), post.z() - 48, post.x() + 48, level.getMaxBuildHeight(), post.z() + 48);
             List<SoldierEntity> standing = level.getEntitiesOfClass(SoldierEntity.class, box, s -> s.isAlive() && s.getTags().contains(GARRISON_TAG + post.key()));
-            List<SoldierEntity.Rank> missing = new ArrayList<>(List.of(SoldierEntity.Rank.values()));
+            List<SoldierEntity.Rank> missing = new ArrayList<>(GARRISON);
             for (SoldierEntity s : standing) missing.remove(s.rank());
             if (!missing.isEmpty()) muster(level, post, missing);
         }

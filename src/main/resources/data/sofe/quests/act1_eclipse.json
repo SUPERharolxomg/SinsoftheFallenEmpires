@@ -18,11 +18,11 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:void_*",
-        "count": 20
+        "count": 80
       },
       "target": {
-        "x": -96,
-        "z": 100
+        "x": 0,
+        "z": 12
       },
       "on_start": [
         {
@@ -30,7 +30,71 @@
           "dialogue": "sofe:act1/invasion"
         }
       ],
-      "_invasion": "the creatures come out in the lower district when the Bearer gets there (VoidInvasion)"
+      "invasion": {
+        "center": {
+          "x": 0,
+          "z": 12
+        },
+        "reach": 170,
+        "points": {
+          "east": {
+            "x": 96,
+            "z": 40
+          },
+          "west": {
+            "x": -92,
+            "z": 24
+          },
+          "north": {
+            "x": 0,
+            "z": -58
+          },
+          "south": {
+            "x": -96,
+            "z": 100
+          }
+        },
+        "mobs": [
+          "sofe:void_wretch",
+          "sofe:void_zombie",
+          "sofe:void_stalker"
+        ],
+        "waves": [
+          {
+            "from": [
+              "east"
+            ],
+            "count": 8
+          },
+          {
+            "from": [
+              "west"
+            ],
+            "count": 12
+          },
+          {
+            "from": [
+              "north"
+            ],
+            "count": 16
+          },
+          {
+            "from": [
+              "south"
+            ],
+            "count": 20
+          },
+          {
+            "from": [
+              "east",
+              "west",
+              "north",
+              "south"
+            ],
+            "count": 24
+          }
+        ]
+      }
     },
     {
       "objective": {
@@ -45,11 +109,29 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:sand_ghoul",
-        "count": 6
+        "count": 10
       },
       "target": {
         "x": 480,
         "z": -420
+      },
+      "_dungeon": "sulthari/crypt"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:sand_ghoul",
+        "count": 1
+      },
+      "target": {
+        "x": 498,
+        "z": -420
+      },
+      "lair": {
+        "x": 498,
+        "z": -420,
+        "depth": 18,
+        "name": "lord.sofe.sulthari_crypt"
       },
       "_dungeon": "sulthari/crypt"
     },
