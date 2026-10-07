@@ -38,7 +38,7 @@ public final class SoFEConfig {
         public final ForgeConfigSpec.BooleanValue dialogueBlip;
         public final ForgeConfigSpec.BooleanValue showQuestCompass, showQuestPath;
         public final ForgeConfigSpec.BooleanValue hideBearerOutfit;
-        public final ForgeConfigSpec.BooleanValue replaceHealthHud;
+        public final ForgeConfigSpec.BooleanValue replaceHealthHud, enemyHealth;
         public final ForgeConfigSpec.BooleanValue rarityLabels, reduceMotion;
 
         private Client(ForgeConfigSpec.Builder builder) {
@@ -75,6 +75,10 @@ public final class SoFEConfig {
                     .comment("Show health as a bar in the SoFE HUD instead of the vanilla hearts.")
                     .translation("config.sofe.replace_health_hud")
                     .define("replaceHealthHud", true);
+            enemyHealth = builder
+                    .comment("Write over each enemy near you how much health it has left (18 / 24), not as a bar.")
+                    .translation("config.sofe.enemy_health")
+                    .define("enemyHealth", true);
             // accessibility (docs/Jugabilidad.md, G13)
             rarityLabels = builder
                     .comment("Write the rarity's name over gear lying on the ground, not only the colour of its beam.")
