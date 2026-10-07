@@ -17,6 +17,8 @@ import java.util.List;
 public class ProtectedZoneData extends SavedData {
     private static final String NAME = "sofe_protected_zones";
     private final List<ProtectedZone> zones = new ArrayList<>();
+    /** Blocks the players set in a protected place (a crafting table in a house): theirs to take away again. */
+    private final java.util.Set<Long> placedByPlayers = new java.util.HashSet<>();
     private boolean initialized;
 
     public static ProtectedZoneData get(MinecraftServer server) {
@@ -61,6 +63,21 @@ public class ProtectedZoneData extends SavedData {
         if (zones.removeIf(z -> z.id().equals(id))) setDirty();
     }
 
+    public void markPlaced(net.minecraft.core.BlockPos pos) {
+        if (placedByPlayers.add(pos.asLong())) setDirty();
+    }
+
+    /** Whether a player set this block; true once, as it is taken away. */
+    public boolean takePlaced(net.minecraft.core.BlockPos pos) {
+        boolean placed = placedByPlayers.remove(pos.asLong());
+        if (placed) setDirty();
+        return placed;
+    }
+
+    public boolean placedByPlayer(net.minecraft.core.BlockPos pos) {
+        return placedByPlayers.contains(pos.asLong());
+    }
+
     @Override
     public CompoundTag save(CompoundTag tag) {
         ListTag list = new ListTag();
@@ -72,6 +89,7 @@ public class ProtectedZoneData extends SavedData {
             list.add(t);
         }
         tag.put("zones", list);
+        tag.putLongArray("placed_by_players", placedByPlayers.stream().mapToLong(Long::longValue).toArray());
         tag.putBoolean("initialized", initialized);
         return tag;
     }
@@ -85,6 +103,7 @@ public class ProtectedZoneData extends SavedData {
             if (b.length != 6) continue;
             data.zones.add(new ProtectedZone(t.getString("id"), ProtectedZone.Kind.byId(t.getString("kind")), b[0], b[1], b[2], b[3], b[4], b[5]));
         }
+        for (long pos : tag.getLongArray("placed_by_players")) data.placedByPlayers.add(pos);
         data.initialized = tag.getBoolean("initialized");
         return data;
     }

@@ -22,6 +22,8 @@ import java.util.Optional;
  */
 public final class QuestCompassOverlay {
     private static final int HALF_WIDTH = 70, TOP = 3;
+    /** The widest a step's text runs before it goes on to the next line, and the height of each line. */
+    private static final int STEP_WIDTH = 320, LINE_HEIGHT = 10;
     private static final float VIEW_DEGREES = 90f; // the strip shows 90 degrees to each side
     private static final int GOLD = 0xE8B64A, PARCHMENT = 0xE6DCC8, MUTED = 0x8A8275;
 
@@ -40,12 +42,7 @@ public final class QuestCompassOverlay {
         int cx = width / 2;
         if (maybeTarget.isEmpty()) {
             // a step with no place (learn your first skills...): what to do is still written at the top
-            trackedStep(story.get()).ifPresent(text -> {
-                String line = font.plainSubstrByWidth(text, 260);
-                int w = font.width(line) / 2 + 4;
-                g.fill(cx - w, TOP, cx + w, TOP + 11, 0x88000000);
-                g.drawCenteredString(font, line, cx, TOP + 2, PARCHMENT);
-            });
+            trackedStep(story.get()).ifPresent(text -> drawStep(g, font, text, cx, TOP, width));
             return;
         }
         SyncStoryPacket.Target target = maybeTarget.get();
@@ -92,7 +89,24 @@ public final class QuestCompassOverlay {
             g.drawCenteredString(font, Component.translatable("gui.sofe.compass.corpse"), cx, TOP + 24, PARCHMENT);
             return;
         }
-        trackedStep(story.get()).ifPresent(text -> g.drawCenteredString(font, font.plainSubstrByWidth(text, 220), cx, TOP + 24, PARCHMENT));
+        trackedStep(story.get()).ifPresent(text -> drawStep(g, font, text, cx, TOP + 22, width));
+    }
+
+    /**
+     * The step to do, whole: broken into lines no wider than the screen allows (a long step was cut off mid-word),
+     * on a dark panel that grows with them.
+     */
+    private static void drawStep(GuiGraphics g, Font font, String text, int cx, int top, int screenWidth) {
+        int maxWidth = Mth.clamp(screenWidth - 40, 120, STEP_WIDTH);
+        var lines = font.split(Component.literal(text), maxWidth);
+        int widest = 0;
+        for (var line : lines) widest = Math.max(widest, font.width(line));
+        int half = widest / 2 + 5, height = lines.size() * LINE_HEIGHT + 3;
+        g.fill(cx - half, top, cx + half, top + height, 0x88000000);
+        for (int i = 0; i < lines.size(); i++) {
+            var line = lines.get(i);
+            g.drawString(font, line, cx - font.width(line) / 2, top + 2 + i * LINE_HEIGHT, PARCHMENT);
+        }
     }
 
     /** The current step of the tracked quest, as written in the Journal. */

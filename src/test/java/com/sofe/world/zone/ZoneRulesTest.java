@@ -18,7 +18,8 @@ class ZoneRulesTest {
     @Test
     void theCityCannotBeChangedButOutsideItCan() {
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.BREAK));
-        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.PLACE));
+        assertTrue(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.PLACE)); // a player may set blocks, the city's own stay
+        assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.USE_ITEM_ON_BLOCK));
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.EXPLOSION));
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.MOB_GRIEFING));
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.FIRE));

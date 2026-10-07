@@ -62,6 +62,7 @@ public final class ZoneProtectionHandler {
     public static void onBreak(BlockEvent.BreakEvent event) {
         if (isFarmCrop(event.getState())) return; // the town's fields are there to be harvested
         if (allowed(event.getLevel(), event.getPos(), ZoneAction.BREAK, event.getPlayer())) return;
+        if (event.getLevel() instanceof ServerLevel server && ProtectedZoneData.get(server.getServer()).takePlaced(event.getPos())) return; // a player's own
         if (event.getLevel() instanceof ServerLevel level) {
             if (isTreeLog(level, event.getPos())) { // the town's trees can be cut down, the whole tree at once
                 fellTree(level, event.getPos(), event.getPlayer());
@@ -138,13 +139,30 @@ public final class ZoneProtectionHandler {
         for (BlockPos leaf : crown) level.destroyBlock(leaf, true, player);
     }
 
+    /**
+     * A player may set blocks in a protected place (a crafting table in a house, a bed, a chest): they are noted as
+     * theirs, so they can take them away again. A block is not set over the place's own flowers, grass or water, which
+     * it would destroy. Mobs set nothing there.
+     */
     public static void onPlace(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof Player && isFarmCrop(event.getPlacedBlock())) return; // and sown again
-        ZoneAction action = event.getEntity() instanceof Player ? ZoneAction.PLACE : ZoneAction.MOB_GRIEFING;
-        if (!allowed(event.getLevel(), event.getPos(), action, event.getEntity())) {
-            event.setCanceled(true);
-            tell(event.getEntity());
+        if (!(event.getEntity() instanceof Player)) {
+            if (!allowed(event.getLevel(), event.getPos(), ZoneAction.MOB_GRIEFING, event.getEntity())) event.setCanceled(true);
+            return;
         }
+        if (!(event.getLevel() instanceof ServerLevel level) || allowed(level, event.getPos(), ZoneAction.BREAK, event.getEntity())) return;
+        List<net.minecraftforge.common.util.BlockSnapshot> set = event instanceof BlockEvent.EntityMultiPlaceEvent multi
+                ? multi.getReplacedBlockSnapshots() : List.of(event.getBlockSnapshot());
+        ProtectedZoneData data = ProtectedZoneData.get(level.getServer());
+        for (var snapshot : set) {
+            var replaced = snapshot.getReplacedBlock();
+            if (!replaced.isAir() && !data.placedByPlayer(snapshot.getPos())) {
+                event.setCanceled(true); // over the town's own flowers, grass, snow or the water of its fountains
+                tell(event.getEntity());
+                return;
+            }
+        }
+        for (var snapshot : set) data.markPlaced(snapshot.getPos());
     }
 
     /**
@@ -161,6 +179,7 @@ public final class ZoneProtectionHandler {
             return;
         }
         if (event.getItemStack().isEmpty()) return;
+        if (event.getItemStack().getItem() instanceof net.minecraft.world.item.BlockItem) return; // setting a block: onPlace decides
         // the Void Gate's frames take their Eyes of Ender even inside the city
         if (event.getItemStack().is(net.minecraft.world.item.Items.ENDER_EYE)
                 && event.getLevel().getBlockState(target).is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME)) return;
