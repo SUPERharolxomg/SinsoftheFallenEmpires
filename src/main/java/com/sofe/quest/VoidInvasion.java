@@ -1,6 +1,8 @@
 package com.sofe.quest;
 
 import com.sofe.story.StoryCapability;
+import com.sofe.network.InvasionHudPacket;
+import com.sofe.network.SoFENetwork;
 import com.sofe.story.StoryProgress;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -12,12 +14,10 @@ import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -38,7 +38,8 @@ import java.util.UUID;
  * The Void attacks a place in waves (a step's "invasion", QuestDefinition.Invasion): Sulthari in Act I, a street or a
  * camp in the smaller quests. Each wave opens a rift on one or more sides of the place (east, then west...), a portal
  * the creatures pour out of until the wave's count has fallen; then a short breath, and the next wave comes from
- * elsewhere, bigger. A bar counts the fallen, the Quest Compass points at the nearest rift, and in the last wave an
+ * elsewhere, bigger. Three soldiers of the land come to hold each rift; a counter in the top right corner of the
+ * screen counts the fallen (InvasionHudOverlay), the Quest Compass points at the nearest rift, and in the last wave an
  * elite leads out of each rift. The rifts are block displays, so they never touch the city's blocks.
  * <p>
  * Every creature that falls counts for the Bearer it came for, whoever struck it (QuestEngine.onKill): the town's
@@ -46,7 +47,10 @@ import java.util.UUID;
  */
 public final class VoidInvasion {
     /** The tag of every creature of an invasion, of every rift's display, and the tag naming the Bearer they came for. */
-    public static final String INVADER = "sofe_invader", RIFT = "sofe_rift", FOR = "sofe_for_";
+    public static final String INVADER = "sofe_invader", RIFT = "sofe_rift", FOR = "sofe_for_", GUARD = "sofe_rift_guard";
+    /** The soldiers who hold each rift: two soldiers and an archer. */
+    static final List<com.sofe.entity.army.SoldierEntity.Rank> RIFT_GUARD = List.of(com.sofe.entity.army.SoldierEntity.Rank.SOLDIER,
+            com.sofe.entity.army.SoldierEntity.Rank.SOLDIER, com.sofe.entity.army.SoldierEntity.Rank.ARCHER);
     /** The breath between two waves, and before the first. */
     static final int BREATH = 20 * 8, FIRST_BREATH = 20 * 3;
     /** How many of a rift's creatures are out at once, and how many more in each later wave. */
@@ -63,7 +67,9 @@ public final class VoidInvasion {
         long openAt;
         boolean opened, announced;
         final List<Rift> rifts = new ArrayList<>();
-        ServerBossEvent bar;
+        /** The soldiers who came to hold each side's rift, by side. */
+        final Map<String, List<Entity>> guards = new HashMap<>();
+        InvasionHudPacket shown = InvasionHudPacket.NONE;
 
         Run(String quest, int step) {
             this.quest = quest;
@@ -142,8 +148,9 @@ public final class VoidInvasion {
         }
         double dx = player.getX() - center.x(), dz = player.getZ() - center.z();
         if (dx * dx + dz * dz > (double) invasion.reach() * invasion.reach()) {
-            closeRifts(run); // away from the place: the rifts wait for the Bearer to come back
-            hideBar(run);
+            closeRifts(run); // away from the place: the rifts and their soldiers wait for the Bearer to come back
+            dismiss(run);
+            hideBar(player, run);
             run.wave = -1;
             return;
         }
@@ -184,6 +191,7 @@ public final class VoidInvasion {
             if (pos == null) pos = com.sofe.world.Grounding.groundFloor(level, at.x(), at.z());
             boolean alongX = side.equals("north") || side.equals("south"); // the portal's face turns to the place
             run.rifts.add(new Rift(side, pos, alongX));
+            if (!run.guards.containsKey(side)) run.guards.put(side, guard(level, pos, center));
             level.playSound(null, pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, 1.5f, 0.6f);
         }
     }
@@ -311,29 +319,61 @@ public final class VoidInvasion {
         run.rifts.clear();
     }
 
-    // ------------------------------------------------------------------------------------------------ the bar
+    // ------------------------------------------------------------------------------------------------ the counter and the soldiers
 
+    /** The counter in the top right corner of the Bearer's screen (InvasionHudOverlay), sent when it changes. */
     private static void showBar(ServerPlayer player, Run run, QuestDefinition.Invasion invasion, int fallen, boolean waiting) {
-        if (run.bar == null) {
-            run.bar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_10);
-            run.bar.setDarkenScreen(true);
+        InvasionHudPacket now = new InvasionHudPacket(run.wave + 1, invasion.waves().size(), Math.min(fallen, invasion.total()), invasion.total(), waiting);
+        if (now.equals(run.shown)) return;
+        run.shown = now;
+        SoFENetwork.sendTo(player, now);
+    }
+
+    private static void hideBar(ServerPlayer player, Run run) {
+        if (run.shown.equals(InvasionHudPacket.NONE)) return;
+        run.shown = InvasionHudPacket.NONE;
+        SoFENetwork.sendTo(player, InvasionHudPacket.NONE);
+    }
+
+    /**
+     * Three soldiers of the land's empire come to hold a rift: they stand between it and the place, keep near it and
+     * fight what comes out, until the invasion is over.
+     */
+    private static List<Entity> guard(ServerLevel level, BlockPos rift, QuestDefinition.Target center) {
+        List<Entity> guards = new ArrayList<>();
+        var empire = com.sofe.world.SoFEWorld.regionMap(level.getServer()).map(m -> m.regionAt(rift.getX(), rift.getZ()))
+                .filter(r -> r != com.sofe.world.region.Region.OCEAN).orElse(com.sofe.world.region.Region.SULTHARI);
+        double dx = center.x() - rift.getX(), dz = center.z() - rift.getZ(), len = Math.max(1, Math.sqrt(dx * dx + dz * dz));
+        int i = 0;
+        for (var rank : RIFT_GUARD) {
+            double side = (i++ - 1) * 2.5;
+            int x = (int) Math.round(rift.getX() + dx / len * 5 - dz / len * side), z = (int) Math.round(rift.getZ() + dz / len * 5 + dx / len * side);
+            BlockPos at = com.sofe.world.Grounding.near(level, x, rift.getY(), z, 4);
+            var soldier = com.sofe.registry.EntityRegistry.SOLDIER.get().create(level);
+            if (soldier == null) continue;
+            soldier.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, (float) Math.toDegrees(Math.atan2(-dx, dz)) + 180f, 0f);
+            soldier.enlist(empire, rank);
+            soldier.post(rift);
+            soldier.addTag(GUARD);
+            level.addFreshEntity(soldier);
+            level.sendParticles(ParticleTypes.CLOUD, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 6, 0.3, 0.3, 0.3, 0.02);
+            guards.add(soldier);
         }
-        int waves = invasion.waves().size();
-        run.bar.setName(waiting ? Component.translatable("invasion.sofe.bar_waiting", run.wave + 1, waves)
-                : Component.translatable("invasion.sofe.bar", run.wave + 1, waves, Math.min(fallen, invasion.total()), invasion.total()));
-        run.bar.setProgress(Math.min(1f, fallen / (float) invasion.total()));
-        if (!run.bar.getPlayers().contains(player)) run.bar.addPlayer(player);
+        return guards;
     }
 
-    private static void hideBar(Run run) {
-        if (run.bar != null) run.bar.removeAllPlayers();
+    /** The rifts' soldiers go back to their posts. */
+    private static void dismiss(Run run) {
+        run.guards.values().forEach(list -> list.forEach(Entity::discard));
+        run.guards.clear();
     }
 
-    /** The invasion is over (the step done) or left: the rifts close, the bar goes; a won one says so, and its stragglers fade. */
+    /** The invasion is over (the step done) or left: the rifts close, their soldiers go, the counter goes; a won one says so, and its stragglers fade. */
     private static void end(ServerPlayer player, Run run, boolean won) {
         boolean wasOn = run.opened;
         closeRifts(run);
-        hideBar(run);
+        dismiss(run);
+        hideBar(player, run);
         RUNS.remove(player.getUUID());
         if (!won || !wasOn) return;
         ServerLevel level = player.serverLevel();
@@ -370,6 +410,12 @@ public final class VoidInvasion {
         return run == null ? List.of() : run.rifts.stream().map(r -> r.side).toList();
     }
 
+    /** For GameTests: the soldiers holding this Bearer's rifts. */
+    public static int guards(ServerPlayer player) {
+        Run run = RUNS.get(player.getUUID());
+        return run == null ? 0 : run.guards.values().stream().mapToInt(List::size).sum();
+    }
+
     public static int wave(ServerPlayer player) {
         Run run = RUNS.get(player.getUUID());
         return run == null ? 0 : run.wave + 1;
@@ -386,13 +432,13 @@ public final class VoidInvasion {
             Run run = RUNS.remove(player.getUUID());
             if (run != null) {
                 closeRifts(run);
-                hideBar(run);
+                dismiss(run);
             }
         }
     }
 
-    /** A rift's display saved with its chunk never comes back: the invasion draws its rifts anew. */
+    /** A rift's display or soldier saved with its chunk never comes back: the invasion draws its rifts anew. */
     public static void onJoin(EntityJoinLevelEvent event) {
-        if (event.loadedFromDisk() && event.getEntity().getTags().contains(RIFT)) event.setCanceled(true);
+        if (event.loadedFromDisk() && (event.getEntity().getTags().contains(RIFT) || event.getEntity().getTags().contains(GUARD))) event.setCanceled(true);
     }
 }

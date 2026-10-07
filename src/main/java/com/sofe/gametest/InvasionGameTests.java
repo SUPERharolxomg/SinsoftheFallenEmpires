@@ -48,6 +48,7 @@ public class InvasionGameTests {
         VoidInvasion.hurry(hero);
         VoidInvasion.tick(hero);
         helper.assertTrue(VoidInvasion.openSides(hero).equals(List.of("east")), "the first wave should come from the east: " + VoidInvasion.openSides(hero));
+        helper.assertTrue(VoidInvasion.guards(hero) == 3, "three soldiers should hold the east rift, found " + VoidInvasion.guards(hero));
         var level = helper.getLevel(); // the rifts open on the ground of the world, wherever the test stands
         AABB around = new AABB(at.getX() - 40, level.getMinBuildHeight(), at.getZ() - 40, at.getX() + 40, level.getMaxBuildHeight(), at.getZ() + 40);
         String mine = VoidInvasion.forTag(hero.getUUID());
@@ -63,11 +64,14 @@ public class InvasionGameTests {
         VoidInvasion.tick(hero);
         helper.assertTrue(VoidInvasion.wave(hero) == 2, "the second wave did not come");
         helper.assertTrue(VoidInvasion.openSides(hero).equals(List.of("west", "north")), "the second wave should come from the west and the north: " + VoidInvasion.openSides(hero));
+        helper.assertTrue(VoidInvasion.guards(hero) == 9, "three soldiers should hold each rift, found " + VoidInvasion.guards(hero));
 
         for (int i = 0; i < 4; i++) QuestEngine.event(hero, new QuestEvent.Killed("sofe:void_wretch"));
         helper.assertTrue(StoryCapability.get(hero).orElseThrow().quest(id).map(s -> s.completed()).orElse(false), "the invasion's quest did not end");
         VoidInvasion.tick(hero);
         helper.assertTrue(VoidInvasion.openSides(hero).isEmpty(), "the rifts stayed open");
+        helper.assertTrue(level.getEntitiesOfClass(com.sofe.entity.army.SoldierEntity.class, around, m -> m.getTags().contains(VoidInvasion.GUARD)).isEmpty(),
+                "the rifts' soldiers did not go back");
         helper.assertTrue(helper.getLevel().getEntitiesOfClass(Display.BlockDisplay.class, around, d -> d.getTags().contains(VoidInvasion.RIFT)).isEmpty(),
                 "a rift is still drawn");
         helper.assertTrue(helper.getLevel().getEntitiesOfClass(Mob.class, around, m -> m.getTags().contains(mine)).isEmpty(), "the stragglers did not fade");

@@ -40,6 +40,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(CombatHudOverlay::onRenderOverlay);
         MinecraftForge.EVENT_BUS.addListener(CastPoses::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.EnemyHealthLabels::onRenderLiving);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onInit);
@@ -84,6 +85,7 @@ public final class ClientSetup {
         event.registerAbove(VanillaGuiOverlay.TITLE_TEXT.id(), "region_title", RegionTitleOverlay::render);
         event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "combat", CombatHudOverlay::render);
         event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "pact", com.sofe.client.hud.PactHudOverlay::render);
+        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "invasion", com.sofe.client.hud.InvasionHudOverlay::render);
         event.registerAbove(VanillaGuiOverlay.BOSS_EVENT_PROGRESS.id(), "quest_compass", QuestCompassOverlay::render);
     }
 

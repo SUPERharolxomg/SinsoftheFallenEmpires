@@ -7,6 +7,7 @@ on the sides of a place, rather than all at once round the Bearer.
 - Every other step that asks to drive out the Void and called its creatures round the Bearer (the side quests and the
   Bearers' own quests) becomes a small invasion round where the Bearer stands when it begins: three waves for a side
   quest, two for a Bearer's.
+- Three soldiers hold each rift; the counter stands in the top right corner (the HUD's texts are here too).
 
 Writes the quest files and the English and Spanish texts. Run after make_story.py and make_dungeons.py, from the
 repository root: python scripts/make_invasions.py   (then python scripts/make_quest_book.py)
@@ -108,8 +109,10 @@ def smaller():
 
 
 def messages():
-    text("invasion.sofe.bar", "Void Invasion · Wave %s/%s · %s/%s fallen", "Invasión del Vacío · Oleada %s/%s · %s/%s abatidos")
-    text("invasion.sofe.bar_waiting", "Void Invasion · Wave %s/%s is coming...", "Invasión del Vacío · Se acerca la oleada %s/%s...")
+    text("invasion.sofe.hud.title", "Void Invasion", "Invasión del Vacío")
+    text("invasion.sofe.hud.wave", "Wave %s/%s", "Oleada %s/%s")
+    text("invasion.sofe.hud.coming", "Wave %s/%s coming...", "Llega la oleada %s/%s...")
+    text("message.sofe.gate.opens", "The seal knows you: the gate opens.", "El sello te reconoce: la puerta se abre.")
     text("invasion.sofe.wave", "Wave %s of %s", "Oleada %s de %s")
     text("invasion.sofe.last_wave", "Last wave", "Última oleada")
     text("invasion.sofe.from", "They attack from %s!", "¡Atacan por %s!")
@@ -134,6 +137,8 @@ def main():
     for code in ("en_us", "es_es"):
         with open(os.path.join(LANG, code + ".json"), encoding="utf-8") as f:
             LANGS[code] = json.load(f)
+        for gone in ("invasion.sofe.bar", "invasion.sofe.bar_waiting"):  # the boss bar became the corner counter
+            LANGS[code].pop(gone, None)
     act1()
     changed = smaller()
     messages()
