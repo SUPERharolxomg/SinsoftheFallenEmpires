@@ -61,10 +61,81 @@ public final class ZoneProtectionHandler {
 
     public static void onBreak(BlockEvent.BreakEvent event) {
         if (isFarmCrop(event.getState())) return; // the town's fields are there to be harvested
-        if (!allowed(event.getLevel(), event.getPos(), ZoneAction.BREAK, event.getPlayer())) {
-            event.setCanceled(true);
-            tell(event.getPlayer());
+        if (allowed(event.getLevel(), event.getPos(), ZoneAction.BREAK, event.getPlayer())) return;
+        if (event.getLevel() instanceof ServerLevel level) {
+            if (isTreeLog(level, event.getPos())) { // the town's trees can be cut down, the whole tree at once
+                fellTree(level, event.getPos(), event.getPlayer());
+                return;
+            }
+            if (event.getState().is(net.minecraft.tags.BlockTags.LEAVES) && nearTreeLog(level, event.getPos())) return;
         }
+        event.setCanceled(true);
+        tell(event.getPlayer());
+    }
+
+    /** How far up a trunk and out from it a town's tree reaches (the palms spread their fronds three blocks). */
+    private static final int TREE_HEIGHT = 12, CROWN_REACH = 4;
+
+    /**
+     * A log of a tree, not of a house: going up its column of logs the next block is leaves (or leaves are beside its
+     * top), or the column stands free, nothing on its sides, as a trunk left after its crown was cut. A post, a beam or
+     * the log of a palisade meets a roof, a wall or a fence instead, and stays protected.
+     */
+    static boolean isTreeLog(Level level, BlockPos pos) {
+        if (!level.getBlockState(pos).is(net.minecraft.tags.BlockTags.LOGS)) return false;
+        BlockPos bottom = pos;
+        while (pos.getY() - bottom.getY() < TREE_HEIGHT && level.getBlockState(bottom.below()).is(net.minecraft.tags.BlockTags.LOGS)) bottom = bottom.below();
+        BlockPos top = pos;
+        while (top.getY() - bottom.getY() < TREE_HEIGHT && level.getBlockState(top.above()).is(net.minecraft.tags.BlockTags.LOGS)) top = top.above();
+        if (level.getBlockState(top.above()).is(net.minecraft.tags.BlockTags.LEAVES)) return true;
+        for (var d : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            if (level.getBlockState(top.relative(d)).is(net.minecraft.tags.BlockTags.LEAVES)) return true;
+        }
+        if (!level.getBlockState(top.above()).isAir()) return false;
+        for (BlockPos log = bottom; log.getY() <= top.getY(); log = log.above()) {
+            for (var d : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                if (!level.getBlockState(log.relative(d)).isAir()) return false;
+            }
+        }
+        return true;
+    }
+
+    /** Leaves of a tree: a tree's log is within its crown's reach (a garden's hedges are not). */
+    static boolean nearTreeLog(Level level, BlockPos leaves) {
+        for (BlockPos p : BlockPos.betweenClosed(leaves.offset(-CROWN_REACH, -CROWN_REACH, -CROWN_REACH), leaves.offset(CROWN_REACH, 1, CROWN_REACH))) {
+            if (level.getBlockState(p).is(net.minecraft.tags.BlockTags.LOGS) && isTreeLog(level, p)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Cuts down a town's tree: its trunk and the leaves of its crown fall with the log the Bearer broke (the leaves of a
+     * town do not decay, so a crown left hanging would float). Everything drops as if broken by hand.
+     */
+    static void fellTree(ServerLevel level, BlockPos broken, Player player) {
+        BlockPos bottom = broken;
+        while (broken.getY() - bottom.getY() < TREE_HEIGHT && level.getBlockState(bottom.below()).is(net.minecraft.tags.BlockTags.LOGS)) bottom = bottom.below();
+        java.util.List<BlockPos> trunk = new java.util.ArrayList<>();
+        for (BlockPos log = bottom; log.getY() - bottom.getY() <= TREE_HEIGHT && level.getBlockState(log).is(net.minecraft.tags.BlockTags.LOGS); log = log.above()) {
+            trunk.add(log.immutable());
+        }
+        // the crown: leaves joined to one another, starting from those that touch the trunk, within reach of it
+        java.util.Set<BlockPos> crown = new java.util.HashSet<>();
+        java.util.ArrayDeque<BlockPos> open = new java.util.ArrayDeque<>();
+        for (BlockPos log : trunk) {
+            for (var d : net.minecraft.core.Direction.values()) open.add(log.relative(d));
+        }
+        BlockPos top = trunk.get(trunk.size() - 1);
+        while (!open.isEmpty() && crown.size() < 256) {
+            BlockPos p = open.poll();
+            if (crown.contains(p) || !level.getBlockState(p).is(net.minecraft.tags.BlockTags.LEAVES)) continue;
+            if (Math.abs(p.getX() - top.getX()) > CROWN_REACH || Math.abs(p.getZ() - top.getZ()) > CROWN_REACH
+                    || p.getY() < bottom.getY() || p.getY() > top.getY() + CROWN_REACH) continue;
+            crown.add(p);
+            for (var d : net.minecraft.core.Direction.values()) open.add(p.relative(d));
+        }
+        for (BlockPos log : trunk) if (!log.equals(broken)) level.destroyBlock(log, true, player);
+        for (BlockPos leaf : crown) level.destroyBlock(leaf, true, player);
     }
 
     public static void onPlace(BlockEvent.EntityPlaceEvent event) {

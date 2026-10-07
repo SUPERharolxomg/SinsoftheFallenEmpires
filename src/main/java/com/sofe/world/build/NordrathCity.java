@@ -1610,7 +1610,14 @@ final class NordrathCity {
             level.getChunk(x >> 4, z >> 4);
             int ground = level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z);
             boolean water = !level.getFluidState(new BlockPos(x, ground, z)).isEmpty() || ground < sea;
-            int target = Math.max(water ? sea + 2 : ground, base - t / 3);
+            int ideal = t > 0 && t % 3 == 0 ? deck - 1 : deck; // down one block every 3
+            if (!water && Roads.naturalTop(level, x, z) + 1 > ideal + 1) { // a hill in the way: the road goes through it
+                Roads.tunnel(level, x, z, out, t, ideal - 1, 2, Blocks.STONE_BRICKS.defaultBlockState(),
+                        Blocks.GRAVEL.defaultBlockState(), Blocks.COARSE_DIRT.defaultBlockState());
+                deck = ideal;
+                continue;
+            }
+            int target = Math.max(water ? sea + 2 : ground, ideal);
             boolean bridge = water || target > ground + 1;
             int previous = deck;
             deck = target;

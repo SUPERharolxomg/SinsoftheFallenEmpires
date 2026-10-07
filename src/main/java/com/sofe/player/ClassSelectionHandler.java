@@ -83,6 +83,7 @@ public final class ClassSelectionHandler {
             ProgressionHandler.onBearerChosen(player);
             com.sofe.story.SoFEAdvancements.award(player, "story/root");
             giveFlask(player);
+            giveStartingKit(player);
             QuestEngine.onBearerChosen(player);
         });
     }
@@ -99,6 +100,26 @@ public final class ClassSelectionHandler {
         com.sofe.gear.GearNbt.bind(stack, player);
         if (!player.getInventory().add(stack)) player.drop(stack, false);
         com.sofe.economy.EconomyHandler.sync(player);
+    }
+
+    /** Dinars given with the starting kit: about two of Ferid's potions. */
+    public static final int STARTING_DINARS = 50;
+
+    /**
+     * Once per Bearer, so nobody sets out empty-handed: dinars in the Wallet, a Minor Pomegranate Elixir (health),
+     * a Bearer's Tonic (the class resource) and a Return Scroll (back to Sulthari).
+     */
+    private static void giveStartingKit(ServerPlayer player) {
+        var kept = player.getPersistentData().getCompound(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG);
+        if (kept.getBoolean("sofe_starting_kit")) return;
+        kept.putBoolean("sofe_starting_kit", true);
+        player.getPersistentData().put(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG, kept);
+        com.sofe.economy.EconomyHandler.addDinars(player, STARTING_DINARS);
+        for (var item : java.util.List.of(com.sofe.registry.ItemRegistry.MINOR_POMEGRANATE_ELIXIR, com.sofe.registry.ItemRegistry.BEARERS_TONIC,
+                com.sofe.registry.ItemRegistry.RETURN_SCROLL)) {
+            var stack = new net.minecraft.world.item.ItemStack(item.get());
+            if (!player.getInventory().add(stack)) player.drop(stack, false);
+        }
     }
 
     /** Opens the Bearer selection when the player still has none (in a journey). */
