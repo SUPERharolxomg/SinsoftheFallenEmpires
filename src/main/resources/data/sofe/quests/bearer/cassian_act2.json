@@ -18,16 +18,30 @@
       "objective": {
         "type": "kill",
         "entity": "sofe:void_*",
-        "count": 6
+        "count": 12
       },
-      "on_start": [
-        {
-          "type": "spawn",
-          "entity": "sofe:void_stalker",
-          "count": 6,
-          "radius": 10
-        }
-      ]
+      "invasion": {
+        "reach": 48,
+        "distance": 16,
+        "waves": [
+          {
+            "from": [
+              "east"
+            ],
+            "count": 4
+          },
+          {
+            "from": [
+              "west"
+            ],
+            "count": 8
+          }
+        ],
+        "mobs": [
+          "sofe:void_wretch",
+          "sofe:void_stalker"
+        ]
+      }
     },
     {
       "objective": {

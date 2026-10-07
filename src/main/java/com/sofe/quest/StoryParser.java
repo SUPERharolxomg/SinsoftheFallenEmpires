@@ -27,7 +27,21 @@ public final class StoryParser {
                 JsonObject t = step.getAsJsonObject("target");
                 target = new QuestDefinition.Target(t.get("x").getAsInt(), t.get("z").getAsInt());
             }
-            steps.add(new QuestDefinition.Step(objective(step.getAsJsonObject("objective")), effects(step, "on_start"), target));
+            Objective objective = objective(step.getAsJsonObject("objective"));
+            QuestDefinition.Invasion invasion = step.has("invasion") ? invasion(step.getAsJsonObject("invasion")) : null;
+            if (invasion != null && (!(objective instanceof Objective.Kill kill) || kill.count() != invasion.total())) {
+                throw new IllegalArgumentException("an invasion's waves must add up to its step's kill count (" + invasion.total() + ")");
+            }
+            QuestDefinition.Lair lair = null;
+            if (step.has("lair")) {
+                JsonObject l = step.getAsJsonObject("lair");
+                if (!(objective instanceof Objective.Kill kill) || !kill.entity().startsWith(Objective.LORD)) {
+                    throw new IllegalArgumentException("a lair's step must ask to kill its \"" + Objective.LORD + "\"");
+                }
+                lair = new QuestDefinition.Lair(l.get("x").getAsInt(), l.get("z").getAsInt(), l.has("depth") ? l.get("depth").getAsInt() : 12,
+                        str(l, "name", null));
+            }
+            steps.add(new QuestDefinition.Step(objective, effects(step, "on_start"), target, invasion, lair));
         }
         Condition requires = json.has("requires") ? ConditionParser.parse(json.get("requires")) : null;
         QuestDefinition.Discovery discovery = null;
@@ -37,6 +51,34 @@ public final class StoryParser {
                     near.has("radius") ? near.get("radius").getAsInt() : 48);
         }
         return new QuestDefinition(id, type, act, steps, effects(json, "rewards"), requires, discovery);
+    }
+
+    static QuestDefinition.Invasion invasion(JsonObject json) {
+        QuestDefinition.Target center = null;
+        if (json.has("center")) {
+            JsonObject c = json.getAsJsonObject("center");
+            center = new QuestDefinition.Target(c.get("x").getAsInt(), c.get("z").getAsInt());
+        }
+        java.util.Map<String, QuestDefinition.Target> points = new java.util.HashMap<>();
+        if (json.has("points")) {
+            for (var e : json.getAsJsonObject("points").entrySet()) {
+                if (!QuestDefinition.Invasion.SIDES.contains(e.getKey())) throw new IllegalArgumentException("unknown side \"" + e.getKey() + "\"");
+                JsonObject p = e.getValue().getAsJsonObject();
+                points.put(e.getKey(), new QuestDefinition.Target(p.get("x").getAsInt(), p.get("z").getAsInt()));
+            }
+        }
+        List<String> mobs = new ArrayList<>();
+        if (json.has("mobs")) json.getAsJsonArray("mobs").forEach(m -> mobs.add(m.getAsString()));
+        else mobs.addAll(List.of("sofe:void_wretch", "sofe:void_stalker"));
+        List<QuestDefinition.Wave> waves = new ArrayList<>();
+        for (JsonElement e : array(json, "waves")) {
+            JsonObject w = e.getAsJsonObject();
+            List<String> from = new ArrayList<>();
+            w.getAsJsonArray("from").forEach(s -> from.add(s.getAsString()));
+            waves.add(new QuestDefinition.Wave(from, w.get("count").getAsInt()));
+        }
+        return new QuestDefinition.Invasion(center, json.has("reach") ? json.get("reach").getAsInt() : 48,
+                json.has("distance") ? json.get("distance").getAsInt() : 22, points, mobs, waves);
     }
 
     public static DialogueDefinition dialogue(String id, JsonObject json) {

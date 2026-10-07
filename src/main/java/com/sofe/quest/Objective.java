@@ -8,6 +8,12 @@ public sealed interface Objective {
         return 1;
     }
 
+    /**
+     * A kill of "lord:&lt;entity&gt;" counts only the lord of a dungeon's depths (QuestDefinition.Lair), never one of its kind
+     * met on the way.
+     */
+    String LORD = "lord:";
+
     record Kill(String entity, int count) implements Objective {
         @Override
         public int required() {

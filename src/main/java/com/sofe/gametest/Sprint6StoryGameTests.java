@@ -62,8 +62,9 @@ public class Sprint6StoryGameTests {
         QuestEngine.run(knight, List.of(new QuestEffect.StartQuest(quest)));
         var story = StoryCapability.get(knight).orElseThrow();
         helper.assertTrue(story.questStep(quest) == 1, "the quest did not start");
-        for (int i = 0; i < 6; i++) QuestEngine.event(knight, new QuestEvent.Killed("sofe:void_wretch"));
-        helper.assertTrue(story.questStep(quest) == 2, "six Void creatures did not finish the first step");
+        int waves = com.sofe.quest.StoryDataManager.quest(quest).orElseThrow().steps().get(0).objective().required(); // the Void's waves
+        for (int i = 0; i < waves; i++) QuestEngine.event(knight, new QuestEvent.Killed("sofe:void_wretch"));
+        helper.assertTrue(story.questStep(quest) == 2, "the Void's waves did not finish the first step");
         QuestEngine.run(knight, List.of(new QuestEffect.AdvanceQuest(quest)));
         helper.assertTrue(story.questStep(quest) == Integer.MAX_VALUE, "the quest is not complete");
         boolean charm = knight.getInventory().items.stream().anyMatch(s -> s.is(com.sofe.registry.ItemRegistry.KNIGHT_SHIELD_CHARM.get()));
