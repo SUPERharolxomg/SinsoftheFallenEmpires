@@ -41,7 +41,8 @@ jobs:
           ./gradlew build --console=plain
 
       - name: GameTests
-        run: ./gradlew runGameTestServer --console=plain
+        # Canary breaks the GameTest framework clearing a test plot now and then (a crash in LevelTicks.clearArea)
+        run: ./gradlew runGameTestServer -PnoPerfMods=canary --console=plain
 
       - name: Changelog from commits since the previous tag
         run: |
