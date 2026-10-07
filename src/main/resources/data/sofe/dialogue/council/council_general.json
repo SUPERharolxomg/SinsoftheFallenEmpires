@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "council_general",
+  "lines": [
+    {
+      "speaker": "council_general",
+      "text": "dialogue.sofe.council_general.1"
+    }
+  ]
+}

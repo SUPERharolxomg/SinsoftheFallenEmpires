@@ -104,6 +104,21 @@ public final class StoryPlacements extends SavedData {
         }
     }
 
+    /** Story people whose place changed in the layout (the Council's elder, now in the palace) go there in an older world. */
+    private static final java.util.Set<String> MOVED = java.util.Set.of("council_elder");
+
+    public static void onNpcJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent event) {
+        if (!event.loadedFromDisk() || !(event.getEntity() instanceof StoryNpcEntity npc) || !MOVED.contains(npc.npcId())) return;
+        StructurePositions.get().npcs().stream().filter(n -> n.npc().equals(npc.npcId())).findFirst().ifPresent(home -> {
+            if (near(npc.getBlockX(), npc.getBlockZ(), home.x(), home.z(), 16)) return;
+            ServerLevel level = (ServerLevel) event.getLevel();
+            event.setCanceled(true); // the old one goes; the one in their new place is put down at once
+            level.getServer().execute(() -> {
+                if (level.getEntities(com.sofe.registry.EntityRegistry.STORY_NPC.get(), e -> npc.npcId().equals(e.npcId()) && e.isAlive()).isEmpty()) spawnNpc(level, home);
+            });
+        });
+    }
+
     private static boolean near(int ax, int az, int bx, int bz, int distance) {
         long dx = ax - bx, dz = az - bz;
         return dx * dx + dz * dz <= (long) distance * distance;
