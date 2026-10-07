@@ -1,0 +1,51 @@
+{
+  "style": "khemet",
+  "npc": "khemet_captain",
+  "lines": [
+    {
+      "speaker": "khemet_captain",
+      "text": "dialogue.sofe.army.khemet.greet"
+    },
+    {
+      "speaker": "khemet_captain",
+      "text": "dialogue.sofe.army.offer",
+      "answers": [
+        {
+          "text": "dialogue.sofe.army.hire_soldier",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "khemet",
+              "rank": "soldier"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.hire_archer",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "khemet",
+              "rank": "archer"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.revive",
+          "next": -1,
+          "effects": [
+            {
+              "type": "revive_soldiers"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.leave",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

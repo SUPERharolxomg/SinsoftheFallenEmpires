@@ -5,6 +5,9 @@
  "aurelion_magistrate": [
   "skirt"
  ],
+ "aureum_captain": [
+  "cape"
+ ],
  "aureum_senator": [
   "skirt"
  ],
@@ -86,6 +89,9 @@
  "kerem": [
   "fez"
  ],
+ "khemet_captain": [
+  "cape"
+ ],
  "khemet_embalmer": [
   "skirt"
  ],
@@ -100,6 +106,10 @@
  ],
  "nordrath_brewer": [
   "beard"
+ ],
+ "nordrath_captain": [
+  "beard",
+  "cape"
  ],
  "nordrath_elder": [
   "cape",
@@ -126,6 +136,9 @@
   "cape",
   "skirt"
  ],
+ "parsivan_captain": [
+  "cape"
+ ],
  "parsivan_dancer": [
   "skirt"
  ],
@@ -138,6 +151,12 @@
  ],
  "selim": [
   "fez"
+ ],
+ "sulthari_archer": [
+  "turban"
+ ],
+ "sulthari_captain": [
+  "cape"
  ],
  "zahir": [
   "cape",

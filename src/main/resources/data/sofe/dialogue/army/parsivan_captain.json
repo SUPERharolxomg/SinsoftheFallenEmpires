@@ -1,0 +1,51 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_captain",
+  "lines": [
+    {
+      "speaker": "parsivan_captain",
+      "text": "dialogue.sofe.army.parsivan.greet"
+    },
+    {
+      "speaker": "parsivan_captain",
+      "text": "dialogue.sofe.army.offer",
+      "answers": [
+        {
+          "text": "dialogue.sofe.army.hire_soldier",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "parsivan",
+              "rank": "soldier"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.hire_archer",
+          "next": -1,
+          "effects": [
+            {
+              "type": "hire_soldier",
+              "empire": "parsivan",
+              "rank": "archer"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.revive",
+          "next": -1,
+          "effects": [
+            {
+              "type": "revive_soldiers"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.army.leave",
+          "next": -1
+        }
+      ]
+    }
+  ]
+}

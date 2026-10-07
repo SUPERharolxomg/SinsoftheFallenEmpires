@@ -211,6 +211,11 @@ public final class QuestEngine {
             }, () -> SoFEMod.LOGGER.warn("Unknown relic {} in a quest effect", e.relic()));
         } else if (effect instanceof QuestEffect.HireCompanion e) {
             com.sofe.player.PlayerClass.byId(e.bearer()).ifPresent(c -> com.sofe.companion.Companions.hire(player, c));
+        } else if (effect instanceof QuestEffect.HireSoldier e) {
+            com.sofe.world.region.Region.byId(e.empire()).ifPresent(empire ->
+                    com.sofe.entity.army.Army.hire(player, empire, com.sofe.entity.army.SoldierEntity.Rank.byId(e.rank())));
+        } else if (effect instanceof QuestEffect.ReviveSoldiers) {
+            com.sofe.entity.army.Army.revive(player);
         } else if (effect instanceof QuestEffect.CompanionOrder e) {
             com.sofe.companion.Companions.order(player, e.order());
         } else if (effect instanceof QuestEffect.AwardAdvancement e) {
