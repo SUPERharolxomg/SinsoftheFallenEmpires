@@ -21,7 +21,6 @@ final class NordrathBuilder {
     }
 
     static boolean blockout(ServerLevel level, StructurePositions.Structure s, String piece) {
-        int y = SultharisBuilder.surfaceY(level, s.x(), s.z());
         switch (piece) {
             case "nordrath/city" -> {
                 NordrathCity.build(level, s);
@@ -30,7 +29,10 @@ final class NordrathBuilder {
             case "nordrath/forge", "nordrath/arena", "nordrath/burning_citadel" -> {
                 return BossKeeps.build(level, s, piece); // halls cut into mountains, their gates set at their own floor
             }
-            case "nordrath/caverns_entrance" -> cavernsEntrance(level, s, y);
+            case "nordrath/caverns_entrance" -> {
+                DeepHalls.cavernsEntrance(level, s); // a crag of ice and basalt over the way down (the user's concept)
+                return true;
+            }
             case "nordrath/forge_boss_room", "nordrath/arena_floor", "nordrath/citadel_arena" -> {
                 return true; // zones only, inside the buildings above
             }
@@ -38,25 +40,10 @@ final class NordrathBuilder {
                 return false;
             }
         }
-        StructureBuilder.placeGates(level, s, y);
-        return true;
     }
 
     private static BlockState runestone() {
         return SoFEBlocks.NORDRATH_RUNESTONE_BRICKS.get().defaultBlockState();
-    }
-
-    /** An arch of runestone over the way down; its gate stays sealed until Act IV. */
-    private static void cavernsEntrance(ServerLevel level, StructurePositions.Structure s, int y) {
-        SultharisBuilder.pad(level, s.x() - 4, s.z() - 4, s.x() + 4, s.z() + 4, y, runestone());
-        for (int dx = -3; dx <= 3; dx++) {
-            for (int dy = 0; dy < 6; dy++) {
-                boolean opening = Math.abs(dx) <= 1 && dy < 4;
-                if (!opening) SultharisBuilder.set(level, s.x() + dx, y + dy, s.z(), runestone());
-            }
-        }
-        SultharisBuilder.set(level, s.x() - 3, y + 6, s.z(), SoFEBlocks.NORDRATH_IRON_BRAZIER.get().defaultBlockState());
-        SultharisBuilder.set(level, s.x() + 3, y + 6, s.z(), SoFEBlocks.NORDRATH_IRON_BRAZIER.get().defaultBlockState());
     }
 
 }
