@@ -179,16 +179,85 @@ public final class BossLairs {
         double reach = lair.radius() + 48;
         AABB around = new AABB(lair.x() - reach, level.getMinBuildHeight(), lair.z() - reach,
                 lair.x() + reach, level.getMaxBuildHeight(), lair.z() + reach);
-        if (!level.getEntities(type, around, Entity::isAlive).isEmpty()) return Optional.empty();
+        var standing = level.getEntities(type, around, Entity::isAlive);
+        if (!standing.isEmpty()) {
+            // one that stands away from its hall (risen on the rock over it, wandered off) and is not fighting goes back
+            Entity boss = standing.get(0);
+            boolean away = sq(boss.getX() - lair.x()) + sq(boss.getZ() - lair.z()) > sq(lair.radius()) || Math.abs(boss.getY() - fromY) > 8;
+            boolean fighting = boss instanceof com.sofe.entity.boss.SoFEBossEntity b && b.isFighting();
+            if (away && !fighting) {
+                BlockPos home = spot(level, type, lair, fromY);
+                boss.teleportTo(home.getX() + 0.5, home.getY(), home.getZ() + 0.5);
+                return Optional.of(boss);
+            }
+            return Optional.empty();
+        }
         long now = level.getGameTime();
         Long last = LAST_RAISED.get(lair.boss());
         if (last != null && now >= last && now - last < RESPAWN_TICKS) return Optional.empty();
-        BlockPos at = com.sofe.world.Grounding.roomFor(level, type, floor(level, lair.x(), lair.hasHeight() ? lair.y() : fromY, lair.z()), 10);
+        BlockPos at = spot(level, type, lair, fromY);
         Entity boss = type.spawn(level, at, MobSpawnType.EVENT);
         if (boss == null) return Optional.empty();
         if (boss instanceof Mob mob) mob.setPersistenceRequired();
         LAST_RAISED.put(lair.boss(), now);
         return Optional.of(boss);
+    }
+
+    /**
+     * A survey of every lair (a development check, PlaceShots' "survey"): for each boss, where it would rise for a Bearer
+     * standing on its hall's floor (the floor of the Sealed Gate nearest it, or the lair's own height), whether its body
+     * fits there, how far that is from the floor and from the lair's middle, and whether the sky is over it.
+     */
+    public static List<String> survey(ServerLevel level) {
+        List<String> out = new java.util.ArrayList<>();
+        for (Lair lair : lairs) {
+            ResourceLocation id = ResourceLocation.tryParse(lair.boss());
+            if (id == null || !ForgeRegistries.ENTITY_TYPES.containsKey(id)) continue;
+            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(id);
+            int fromY;
+            if (lair.hasHeight()) fromY = lair.y();
+            else {
+                var gate = com.sofe.world.zone.StructurePositions.get().gates().values().stream()
+                        .min(java.util.Comparator.comparingDouble(g -> sq(g.x() - lair.x()) + sq(g.z() - lair.z()))).orElse(null);
+                fromY = Integer.MIN_VALUE;
+                if (gate != null && sq(gate.x() - lair.x()) + sq(gate.z() - lair.z()) < sq(90)) {
+                    level.getChunk(gate.x() >> 4, gate.z() >> 4);
+                    for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight() && fromY == Integer.MIN_VALUE; y++) {
+                        if (level.getBlockState(new BlockPos(gate.x(), y, gate.z())).is(com.sofe.registry.SoFEBlocks.SEALED_GATE.get())) fromY = y;
+                    }
+                }
+                if (fromY == Integer.MIN_VALUE) fromY = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, lair.x(), lair.z());
+            }
+            BlockPos at = spot(level, type, lair, fromY);
+            boolean fits = com.sofe.world.Grounding.fits(level, type, at);
+            double across = Math.sqrt(sq(at.getX() + 0.5 - lair.x()) + sq(at.getZ() + 0.5 - lair.z()));
+            boolean sky = level.canSeeSky(at);
+            boolean ok = fits && Math.abs(at.getY() - fromY) <= 4 && across <= lair.radius();
+            out.add(String.format("%s %s floor=%d at=%s fits=%s dy=%d across=%.1f/%d sky=%s", ok ? "OK " : "BAD", lair.boss(), fromY,
+                    at.toShortString(), fits, at.getY() - fromY, across, lair.radius(), sky));
+        }
+        return out;
+    }
+
+    /**
+     * Where a lair's boss rises: on the hall's floor (the Bearer's own), nearest the lair's middle where its whole body
+     * fits; a dais, an anvil, a throne or the scales in the middle are stood beside, not on. The first floor found up or
+     * down the column when the hall's floor has no room at all.
+     */
+    static BlockPos spot(ServerLevel level, EntityType<?> type, Lair lair, int fromY) {
+        int y = lair.hasHeight() ? lair.y() : fromY;
+        for (int r = 0; r <= 12; r++) {
+            for (int dx = -r; dx <= r; dx++) {
+                for (int dz = -r; dz <= r; dz++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dz)) != r) continue;
+                    for (int dy : new int[]{0, 1, -1, 2, -2}) {
+                        BlockPos p = new BlockPos(lair.x() + dx, y + dy, lair.z() + dz);
+                        if (com.sofe.world.Grounding.fits(level, type, p)) return p;
+                    }
+                }
+            }
+        }
+        return com.sofe.world.Grounding.roomFor(level, type, floor(level, lair.x(), y, lair.z()), 10);
     }
 
     /** The first floor with two blocks of air above it, looking down from a little above the Bearer, then up. */

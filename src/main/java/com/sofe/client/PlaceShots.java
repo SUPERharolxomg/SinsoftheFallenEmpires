@@ -54,7 +54,7 @@ public final class PlaceShots {
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
-            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("crypt:") && !places.get(place).startsWith("hall:") && !places.get(place).equals("rift") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("crypt:") && !places.get(place).startsWith("hall:") && !places.get(place).equals("rift") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).equals("survey") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
                     && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")
                     && !places.get(place).startsWith("dialogue:")) {
                 look(mc, places.get(place), view);
@@ -212,6 +212,13 @@ public final class PlaceShots {
             java.util.Map<String, String> fates = new java.util.HashMap<>();
             for (int i = 3; i < v.length; i++) fates.put(v[i].split("=")[0], v[i].split("=")[1]); // ending:<bearer>:<card>:khemet=rest
             mc.setScreen(new com.sofe.client.screen.EndingScreen(Integer.parseInt(v[2]), v.length > 3 ? fates : null));
+            return;
+        }
+        if (piece.equals("survey")) { // survey: where every boss would rise in its lair, written to the log (BossLairs.survey)
+            server.execute(() -> {
+                com.sofe.world.lair.BossLairs.survey(server.overworld()).forEach(line -> com.sofe.SoFEMod.LOGGER.info("SURVEY {}", line));
+                com.sofe.quest.CryptLord.survey(server.overworld()).forEach(line -> com.sofe.SoFEMod.LOGGER.info("SURVEY {}", line));
+            });
             return;
         }
         if (piece.equals("army")) { // the garrisons disbanded and mustered again (no screenshot of its own worth keeping)

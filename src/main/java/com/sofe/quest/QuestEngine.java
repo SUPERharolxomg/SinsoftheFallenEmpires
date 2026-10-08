@@ -393,6 +393,8 @@ public final class QuestEngine {
             if (state.completed()) return;
             StoryDataManager.quest(id).flatMap(q -> q.step(state.step())).ifPresent(step -> {
                 if (!(step.objective() instanceof Objective.DefeatBoss boss) || step.compassTarget().isEmpty()) return;
+                // a boss with a lair of its own (boss_lairs.json) rises there, in its hall (BossLairs), never here
+                if (com.sofe.world.lair.BossLairs.lairs().stream().anyMatch(l -> l.boss().equals(boss.boss()))) return;
                 QuestDefinition.Target at = step.compassTarget().get();
                 double dx = player.getX() - at.x(), dz = player.getZ() - at.z();
                 if (dx * dx + dz * dz > BOSS_WAKE_RADIUS * BOSS_WAKE_RADIUS) return;
@@ -403,7 +405,10 @@ public final class QuestEngine {
                     // in its own hall, the step's place: the ground floor of the building there (the Observatory's hall,
                     // not its stairs or its dome), where its whole body fits
                     ServerLevel level = player.serverLevel();
-                    BlockPos hall = com.sofe.world.Grounding.roomFor(level, type, com.sofe.world.Grounding.groundFloor(level, at.x(), at.z()), 12);
+                    // under a roof (a hall inside a building or a mountain), the Bearer's own floor; in the open, the ground floor there
+                    BlockPos floor = level.canSeeSky(player.blockPosition()) ? com.sofe.world.Grounding.groundFloor(level, at.x(), at.z())
+                            : com.sofe.world.Grounding.near(level, at.x(), player.getBlockY(), at.z(), 8);
+                    BlockPos hall = com.sofe.world.Grounding.roomFor(level, type, floor, 12);
                     if (type.spawn(level, hall, MobSpawnType.EVENT) instanceof Mob mob) {
                         mob.setPersistenceRequired();
                         mob.setTarget(player);
