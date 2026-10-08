@@ -378,7 +378,7 @@ public final class VoidInvasion {
         if (!won || !wasOn) return;
         ServerLevel level = player.serverLevel();
         String tag = forTag(player.getUUID());
-        for (Mob straggler : level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(160), m -> m.getTags().contains(tag) && m.getTags().contains(INVADER))) {
+        for (Mob straggler : level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(Mob.class), m -> m.getTags().contains(tag) && m.getTags().contains(INVADER))) {
             level.sendParticles(ParticleTypes.REVERSE_PORTAL, straggler.getX(), straggler.getY() + 1, straggler.getZ(), 30, 0.4, 0.9, 0.4, 0.05);
             straggler.discard();
         }
