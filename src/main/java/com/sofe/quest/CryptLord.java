@@ -51,8 +51,25 @@ public final class CryptLord {
     static boolean inside(ServerPlayer player, QuestDefinition.Haunt haunt) {
         double dx = player.getX() - haunt.x(), dz = player.getZ() - haunt.z();
         if (dx * dx + dz * dz > (double) haunt.reach() * haunt.reach()) return false;
-        int surface = player.serverLevel().getHeight(Heightmap.Types.WORLD_SURFACE, player.getBlockX(), player.getBlockZ());
-        return player.getY() <= surface - haunt.depth();
+        return underground(player, haunt.x(), haunt.z(), haunt.reach(), haunt.depth());
+    }
+
+    /**
+     * Whether the Bearer is this deep in a dungeon: under a roof, and this far below the highest ground round its place
+     * (its hill, its court). Measured against the ground right over a chamber, a crypt by the sea or a lake (a low shore
+     * over its deepest chamber) never counted its Bearer as deep enough, and its lord never rose.
+     */
+    static boolean underground(ServerPlayer player, int x, int z, int reach, int depth) {
+        ServerLevel level = player.serverLevel();
+        if (level.canSeeSky(player.blockPosition())) return false;
+        int highest = level.getMinBuildHeight();
+        int step = Math.max(4, reach / 2);
+        for (int dx = -reach; dx <= reach; dx += step) {
+            for (int dz = -reach; dz <= reach; dz += step) {
+                highest = Math.max(highest, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + dx, z + dz));
+            }
+        }
+        return player.getY() <= highest - depth;
     }
 
     /**
@@ -88,8 +105,7 @@ public final class CryptLord {
     static boolean inLair(ServerPlayer player, QuestDefinition.Lair lair) {
         double dx = player.getX() - lair.x(), dz = player.getZ() - lair.z();
         if (dx * dx + dz * dz > NEAR * NEAR) return false;
-        int surface = player.serverLevel().getHeight(Heightmap.Types.WORLD_SURFACE, lair.x(), lair.z());
-        return player.getY() <= surface - lair.depth();
+        return underground(player, lair.x(), lair.z(), NEAR, lair.depth());
     }
 
     private static void rise(ServerPlayer player, QuestDefinition.Lair lair, String entity) {
