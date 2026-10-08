@@ -253,6 +253,11 @@ def main():
         crypt_id, ruin_id = "sofe:%s/crypt" % region, "sofe:%s/ruin" % region
         positions["structures"][crypt_id] = {"x": crypt[0], "z": crypt[1], "size_x": CRYPT_SIZE, "size_z": CRYPT_SIZE, "zone": "dungeon"}
         positions["structures"][ruin_id] = {"x": ruin[0], "z": ruin[1], "size_x": 37, "size_z": 29, "zone": "dungeon"}
+        # a Waystone at the door of each, to travel back (the court of the Crypt opens south, the Ruin's door too)
+        positions["waystones"][crypt_id] = {"x": crypt[0] + 5, "z": crypt[1] + 13}
+        positions["waystones"][ruin_id] = {"x": ruin[0] + 5, "z": ruin[1] + 17}
+        text("waystone.sofe.%s.crypt" % region, crypt_name[0], crypt_name[1])
+        text("waystone.sofe.%s.ruin" % region, ruin_name[0], ruin_name[1])
         positions["gates"][ruin_id] = {"x": ruin[0], "z": ruin[1] - 3, "condition": "sofe:ruin_%s" % region, "hint": "message.sofe.gate.ruin"}
         dump(os.path.join(DATA, "conditions", "ruin_%s.json" % region), {"type": "act_reached", "act": act})
         text("place.sofe.%s.crypt" % region, crypt_name[0], crypt_name[1])

@@ -58,7 +58,8 @@ class ZoneRulesTest {
         layout.npcs().forEach(npc -> assertTrue(city.contains(npc.x(), 70, npc.z()) || zones.stream().anyMatch(z ->
                 z.kind() == ProtectedZone.Kind.CAMP && z.contains(npc.x(), 70, npc.z())), npc.npc() + " should stand in the city or a camp"));
         layout.waystones().forEach((id, w) -> {
-            if (id.startsWith("sofe:sulthari/")) assertTrue(city.contains(w.getX(), 70, w.getZ()), id + " should stand in the city");
+            boolean dungeon = layout.structure(id).map(st -> st.zone() == ProtectedZone.Kind.DUNGEON).orElse(false); // a crypt's, a tomb's: at its door
+            if (id.startsWith("sofe:sulthari/") && !dungeon) assertTrue(city.contains(w.getX(), 70, w.getZ()), id + " should stand in the city");
         });
         assertTrue(layout.structure("sofe:sulthari/bank").isPresent(), "the bank holds the Personal Vault");
     }

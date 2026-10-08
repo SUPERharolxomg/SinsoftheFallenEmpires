@@ -667,6 +667,98 @@
   "sofe:aureum/city": {
    "x": -5391,
    "z": 2809
+  },
+  "sofe:sulthari/crypt": {
+   "x": 485,
+   "z": -407
+  },
+  "sofe:sulthari/ruin": {
+   "x": -555,
+   "z": -503
+  },
+  "sofe:nordrath/crypt": {
+   "x": 765,
+   "z": -2037
+  },
+  "sofe:nordrath/ruin": {
+   "x": -995,
+   "z": -3683
+  },
+  "sofe:parsivan/crypt": {
+   "x": 2605,
+   "z": -1287
+  },
+  "sofe:parsivan/ruin": {
+   "x": 6205,
+   "z": -2583
+  },
+  "sofe:khemet/crypt": {
+   "x": 3005,
+   "z": 2513
+  },
+  "sofe:khemet/ruin": {
+   "x": 5605,
+   "z": 7217
+  },
+  "sofe:aureum/crypt": {
+   "x": -2595,
+   "z": -1487
+  },
+  "sofe:aureum/ruin": {
+   "x": -6595,
+   "z": -2983
+  },
+  "sofe:void/crypt": {
+   "x": 1055,
+   "z": 263
+  },
+  "sofe:void/ruin": {
+   "x": -1045,
+   "z": 317
+  },
+  "sofe:sulthari/tomb_first_vizier": {
+   "x": 305,
+   "z": 633
+  },
+  "sofe:nordrath/tomb_frost_king": {
+   "x": -2395,
+   "z": -3187
+  },
+  "sofe:parsivan/tomb_veiled_queen": {
+   "x": 2805,
+   "z": 1013
+  },
+  "sofe:khemet/tomb_scarab_priest": {
+   "x": 2205,
+   "z": 3313
+  },
+  "sofe:aureum/tomb_first_consul": {
+   "x": -2595,
+   "z": 1813
+  },
+  "sofe:void/tomb_hollow_choir": {
+   "x": -1095,
+   "z": -887
+  },
+  "sofe:sulthari/tomb_lost_caravan": {
+   "x": -1095,
+   "z": 213
+  },
+  "sofe:nordrath/tomb_skald": {
+   "x": 2605,
+   "z": -2587
+  },
+  "sofe:parsivan/tomb_astronomer": {
+   "x": 4205,
+   "z": -1087
+  },
+  "sofe:khemet/tomb_twin_kings": {
+   "x": 4405,
+   "z": 2613
+  },
+  "sofe:aureum/tomb_gladiators": {
+   "x": -4195,
+   "z": -887
   }
  },
  "npcs": [
