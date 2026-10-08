@@ -63,7 +63,8 @@ TOMBS = {
 FOUND = {"lost_caravan": 1, "skald": 2, "astronomer": 3, "twin_kings": 3, "gladiators": 4}  # tomb: its act
 
 # the chapters: quest, after (objective type and its value; None: the act begins with it), the tomb, who asks
-# (npc, where they are), who is told after (npc, where), the conversations: (speaker, en, es) lines, the last line the
+# (npc, where they are: the poet, the scribe and the senator wait in their region's refugee camp), who is told after (npc,
+# where), the conversations: (speaker, en, es) lines, the last line the
 # answer that moves on (en, es)
 CHAPTERS = [
     ("act1_eclipse", ("manual", None), "first_vizier", ("council_general", (-6, 87)), ("council_sage", (0, 88)),
@@ -90,7 +91,7 @@ CHAPTERS = [
       ("nordrath_elder", "In his barrow you saw the runes of the old jarls: the same that seal the Burnt Longhall. The way to Vorath goes through it.",
        "En su túmulo viste las runas de los viejos jarls: las mismas que sellan el Salón Quemado. El camino hasta Vorath pasa por allí.")],
      ("To the Burnt Longhall.", "Al Salón Quemado.")),
-    ("act3_east", ("reach_region", "parsivan"), "veiled_queen", ("parsivan_poet", (7200, -400)), ("parsivan_poet", (7200, -400)),
+    ("act3_east", ("reach_region", "parsivan"), "veiled_queen", ("parsivan_poet", (4400, 100)), ("parsivan_poet", (4400, 100)),
      [("parsivan_poet", "Do you hear it, Bearer? The court sings in its sleep, and the song comes from the Veiled Queen's tomb.",
        "¿Lo oyes, Portador? La corte canta en sueños, y la canción viene de la tumba de la Reina Velada."),
       ("parsivan_poet", "She was the first to dream for Luxara. As long as she sings, no one in Parsivan will wake.",
@@ -102,7 +103,7 @@ CHAPTERS = [
       ("parsivan_poet", "It is not enough to wake them, but it is a start. The Abandoned Pavilion holds the rest of her verses.",
        "No basta para despertarlos, pero es un comienzo. El Pabellón Abandonado guarda el resto de sus versos.")],
      ("To the Pavilion.", "Al Pabellón.")),
-    ("act3_east", ("reach_region", "khemet"), "scarab_priest", ("khemet_scribe", (6800, 3200)), ("khemet_scribe", (6800, 3200)),
+    ("act3_east", ("reach_region", "khemet"), "scarab_priest", ("khemet_scribe", (5200, 5600)), ("khemet_scribe", (5200, 5600)),
      [("khemet_scribe", "The dead no longer leave, Bearer, and the Scarab Priest is why: he keeps the door of the west closed from inside his house.",
        "Los muertos ya no se marchan, Portador, y el Sacerdote Escarabajo es la razón: mantiene cerrada la puerta del oeste desde dentro de su casa."),
       ("khemet_scribe", "His house is a tomb in the hills by the old river. Go down, find him, and open the door again.",
@@ -113,7 +114,7 @@ CHAPTERS = [
       ("khemet_scribe", "The rest wait in the House of the Dead. Its runes are the priest's; you know them now.",
        "Los demás esperan en la Casa de los Muertos. Sus runas son las del sacerdote; ahora las conoces.")],
      ("To the House of the Dead.", "A la Casa de los Muertos.")),
-    ("act4_west", ("reach_region", "aureum"), "first_consul", ("aureum_senator", (-5400, 2800)), ("aureum_senator", (-5400, 2800)),
+    ("act4_west", ("reach_region", "aureum"), "first_consul", ("aureum_senator", (-5600, 1000)), ("aureum_senator", (-5600, 1000)),
      [("aureum_senator", "The Senate is a ruin, but the First Consul still keeps his oath, Bearer: to guard the treasury of the republic. All of it.",
        "El Senado es una ruina, pero el Primer Cónsul aún cumple su juramento, Portador: guardar el tesoro de la república. Todo."),
       ("aureum_senator", "His tomb is east of the city. While he keeps the keys of the treasury, Goldarc keeps its doors.",
@@ -170,7 +171,8 @@ def tomb_steps(name):
     region, (x, z), place, dead, lord = TOMBS[name]
     lair = (x + make_dungeons.CHAMBER[0], z + make_dungeons.CHAMBER[1])
     return [{"objective": {"type": "reach", "x": x, "z": z, "radius": 14}, "target": {"x": x, "z": z}},
-            {"objective": {"type": "kill", "entity": dead[0], "count": make_dungeons.CRYPT_DEAD}, "target": {"x": x, "z": z}},
+            {"objective": {"type": "kill", "entity": dead[0], "count": make_dungeons.CRYPT_DEAD}, "target": {"x": x, "z": z},
+             "haunt": make_dungeons.haunt((x, z), dead[0])},
             {"objective": {"type": "kill", "entity": "lord:" + lord[0], "count": 1}, "target": {"x": lair[0], "z": lair[1]},
              "lair": {"x": lair[0], "z": lair[1], "depth": 18, "name": "lord.sofe.tomb_%s" % name}}]
 
