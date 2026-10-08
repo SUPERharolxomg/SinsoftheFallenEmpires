@@ -51,6 +51,13 @@
         "x": -2400,
         "z": -3200
       },
+      "haunt": {
+        "x": -2400,
+        "z": -3200,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:draugr"
+      },
       "_chapter": "act2_north/frost_king"
     },
     {

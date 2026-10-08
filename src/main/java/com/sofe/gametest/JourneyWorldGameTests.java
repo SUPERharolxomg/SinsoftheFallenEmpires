@@ -96,6 +96,9 @@ public class JourneyWorldGameTests {
         int surface = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column.getX(), column.getZ());
         BlockPos hall = new BlockPos(column.getX(), surface + 1, column.getZ());
         var bricks = net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState();
+        for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) for (int dy = 1; dy <= 16; dy++) { // nothing left over it by earlier runs
+            level.setBlock(hall.offset(dx, dy, dz), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+        }
         for (int dx = -2; dx <= 2; dx++) {
             for (int dz = -2; dz <= 2; dz++) {
                 for (int dy = -4; dy <= -2; dy++) level.setBlock(hall.offset(dx, dy, dz), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 3); // the land under it (the test world keeps what earlier runs dug)

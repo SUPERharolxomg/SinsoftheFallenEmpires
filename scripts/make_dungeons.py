@@ -226,6 +226,11 @@ def puzzle(name, kind, row, answer, en, es, title, place, gate=None, boss=None, 
         text("puzzle.sofe.%s.riddle.%d" % (name, i), a, b)
 
 
+def haunt(xz, dead):
+    """The dead a dungeon's halls step asks for rise near the Bearer inside it, so it never hangs on its spawners."""
+    return {"x": xz[0], "z": xz[1], "depth": 6, "reach": 30, "entity": "sofe:void_zombie" if dead.endswith("*") else dead}
+
+
 def reach(x, z, r=14):
     return {"objective": {"type": "reach", "x": x, "z": z, "radius": r}}
 
@@ -261,7 +266,8 @@ def main():
         lair = (crypt[0] + CHAMBER[0], crypt[1] + CHAMBER[1])
         text("lord.sofe.%s_crypt" % region, lord_name[0], lord_name[1])
         crypt_steps = [dict(reach(*crypt), target={"x": crypt[0], "z": crypt[1]}),
-                       {"objective": {"type": "kill", "entity": dead, "count": CRYPT_DEAD}, "target": {"x": crypt[0], "z": crypt[1]}},
+                       {"objective": {"type": "kill", "entity": dead, "count": CRYPT_DEAD}, "target": {"x": crypt[0], "z": crypt[1]},
+                        "haunt": haunt(crypt, dead)},
                        {"objective": {"type": "kill", "entity": "lord:" + lord, "count": 1}, "target": {"x": lair[0], "z": lair[1]},
                         "lair": {"x": lair[0], "z": lair[1], "depth": 18, "name": "lord.sofe.%s_crypt" % region}}]
         ruin_steps = [dict(reach(*ruin, r=20), target={"x": ruin[0], "z": ruin[1]}),

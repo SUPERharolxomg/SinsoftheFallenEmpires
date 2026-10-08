@@ -23,8 +23,8 @@
         "type": "manual"
       },
       "target": {
-        "x": 7200,
-        "z": -400
+        "x": 4400,
+        "z": 100
       },
       "_chapter": "act3_east/veiled_queen"
     },
@@ -51,6 +51,13 @@
         "x": 2800,
         "z": 1000
       },
+      "haunt": {
+        "x": 2800,
+        "z": 1000,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:mirage_dancer"
+      },
       "_chapter": "act3_east/veiled_queen"
     },
     {
@@ -76,8 +83,8 @@
         "type": "manual"
       },
       "target": {
-        "x": 7200,
-        "z": -400
+        "x": 4400,
+        "z": 100
       },
       "_chapter": "act3_east/veiled_queen"
     },
@@ -170,8 +177,8 @@
         "type": "manual"
       },
       "target": {
-        "x": 6800,
-        "z": 3200
+        "x": 5200,
+        "z": 5600
       },
       "_chapter": "act3_east/scarab_priest"
     },
@@ -198,6 +205,13 @@
         "x": 2200,
         "z": 3300
       },
+      "haunt": {
+        "x": 2200,
+        "z": 3300,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:bog_mummy"
+      },
       "_chapter": "act3_east/scarab_priest"
     },
     {
@@ -223,8 +237,8 @@
         "type": "manual"
       },
       "target": {
-        "x": 6800,
-        "z": 3200
+        "x": 5200,
+        "z": 5600
       },
       "_chapter": "act3_east/scarab_priest"
     },

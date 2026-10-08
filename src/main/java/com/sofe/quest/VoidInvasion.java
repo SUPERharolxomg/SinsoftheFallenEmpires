@@ -377,6 +377,7 @@ public final class VoidInvasion {
         RUNS.remove(player.getUUID());
         if (!won || !wasOn) return;
         ServerLevel level = player.serverLevel();
+        if (QuestEngine.FIRST_QUEST.equals(run.quest)) com.sofe.entity.army.Army.sultharisHeld(player.server); // the garrisons spread through the city
         String tag = forTag(player.getUUID());
         for (Mob straggler : level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(Mob.class), m -> m.getTags().contains(tag) && m.getTags().contains(INVADER))) {
             level.sendParticles(ParticleTypes.REVERSE_PORTAL, straggler.getX(), straggler.getY() + 1, straggler.getZ(), 30, 0.4, 0.9, 0.4, 0.05);

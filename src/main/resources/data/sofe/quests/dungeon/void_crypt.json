@@ -28,6 +28,13 @@
       "target": {
         "x": 1050,
         "z": 250
+      },
+      "haunt": {
+        "x": 1050,
+        "z": 250,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:void_zombie"
       }
     },
     {

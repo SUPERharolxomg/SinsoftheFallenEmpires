@@ -33,13 +33,17 @@ public record QuestDefinition(String id, Type type, int act, List<Step> steps, L
      * One step: its objective, what happens when the player reaches it (enemies appear, a scene plays)
      * and where the Quest Compass points (null: the objective's own place, if it has one).
      */
-    public record Step(Objective objective, List<QuestEffect> onStart, Target target, Invasion invasion, Lair lair) {
+    public record Step(Objective objective, List<QuestEffect> onStart, Target target, Invasion invasion, Lair lair, Haunt haunt) {
         public Step {
             onStart = List.copyOf(onStart);
         }
 
         public Step(Objective objective, List<QuestEffect> onStart, Target target) {
-            this(objective, onStart, target, null, null);
+            this(objective, onStart, target, null, null, null);
+        }
+
+        public Step(Objective objective, List<QuestEffect> onStart, Target target, Invasion invasion, Lair lair) {
+            this(objective, onStart, target, invasion, lair, null);
         }
 
         public Optional<Target> compassTarget() {
@@ -124,6 +128,14 @@ public record QuestDefinition(String id, Type type, int act, List<Step> steps, L
      * this deep under the ground, the lord of the step's "lord:" kill rises, an elite with its own name.
      */
     public record Lair(int x, int z, int depth, String name) {
+    }
+
+    /**
+     * A dungeon whose dead must be driven out (com.sofe.quest.CryptLord.haunt): while the Bearer is inside it, this far
+     * across from its middle and this deep under the ground, the dead the step still asks for rise near them, a few at a
+     * time, so the step never hangs on the dungeon's spawners (which a Bearer may break).
+     */
+    public record Haunt(int x, int z, int depth, int reach, String entity) {
     }
 
     public QuestDefinition {

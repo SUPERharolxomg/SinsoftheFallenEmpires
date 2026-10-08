@@ -35,6 +35,13 @@
         "x": -1100,
         "z": -900
       },
+      "haunt": {
+        "x": -1100,
+        "z": -900,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:void_zombie"
+      },
       "_chapter": "act5_ascension/hollow_choir"
     },
     {

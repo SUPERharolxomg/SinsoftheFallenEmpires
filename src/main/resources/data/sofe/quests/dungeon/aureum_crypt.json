@@ -28,6 +28,13 @@
       "target": {
         "x": -2600,
         "z": -1500
+      },
+      "haunt": {
+        "x": -2600,
+        "z": -1500,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:gilded_legionnaire"
       }
     },
     {

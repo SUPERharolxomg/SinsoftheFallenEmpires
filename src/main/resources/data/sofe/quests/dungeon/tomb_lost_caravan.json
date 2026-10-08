@@ -28,6 +28,13 @@
       "target": {
         "x": -1100,
         "z": 200
+      },
+      "haunt": {
+        "x": -1100,
+        "z": 200,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:sand_ghoul"
       }
     },
     {
