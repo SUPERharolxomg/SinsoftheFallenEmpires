@@ -267,7 +267,7 @@ public final class QuestEngine {
             double distance = spawn.radius() * (0.5 + level.random.nextDouble() * 0.5);
             int x = (int) Math.floor(player.getX() + Math.cos(angle) * distance);
             int z = (int) Math.floor(player.getZ() + Math.sin(angle) * distance);
-            BlockPos pos = com.sofe.world.Grounding.beside(level, x, z, player);
+            BlockPos pos = com.sofe.world.Grounding.roomFor(level, type, com.sofe.world.Grounding.beside(level, x, z, player), 8);
             Entity entity = type.spawn(level, pos, MobSpawnType.EVENT);
             if (entity instanceof Mob mob) {
                 if (spawn.elite()) com.sofe.mob.EliteMobs.make(mob, StoryCapability.get(player).map(StoryProgress::act).orElse(1), level.random);
@@ -394,7 +394,14 @@ public final class QuestEngine {
                 if (type == null) return;
                 var near = player.serverLevel().getEntities(type, player.getBoundingBox().inflate(64), e -> e.isAlive());
                 if (near.isEmpty()) {
-                    spawn(player, new QuestEffect.Spawn(boss.boss(), 1, 6));
+                    // in its own hall, the step's place: the ground floor of the building there (the Observatory's hall,
+                    // not its stairs or its dome), where its whole body fits
+                    ServerLevel level = player.serverLevel();
+                    BlockPos hall = com.sofe.world.Grounding.roomFor(level, type, com.sofe.world.Grounding.groundFloor(level, at.x(), at.z()), 12);
+                    if (type.spawn(level, hall, MobSpawnType.EVENT) instanceof Mob mob) {
+                        mob.setPersistenceRequired();
+                        mob.setTarget(player);
+                    }
                     player.displayClientMessage(Component.translatable("message.sofe.boss_awakens",
                             Component.translatable("npc.sofe." + boss.boss().substring(boss.boss().indexOf(':') + 1))).withStyle(ChatFormatting.RED), true);
                 }

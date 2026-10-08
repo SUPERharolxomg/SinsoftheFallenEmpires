@@ -333,10 +333,30 @@ public abstract class SoFEBossEntity extends Monster {
         return entityData.get(SHOWN_PHASE);
     }
 
+    /** How long the boss has been stuck in a wall. */
+    private int stuckTicks;
+
     @Override
     public void tick() {
         super.tick();
         if (!level().isClientSide && entityData.get(SHOWN_PHASE) != phase) entityData.set(SHOWN_PHASE, phase);
+        if (!level().isClientSide && tickCount % 10 == 0) unstick();
+    }
+
+    /**
+     * A boss caught in blocks (risen beside a stair, pushed into a wall) steps out to the nearest place its whole body
+     * fits, instead of choking there where no Bearer can reach it.
+     */
+    private void unstick() {
+        if (!isInWall()) {
+            stuckTicks = 0;
+            return;
+        }
+        stuckTicks += 10;
+        if (stuckTicks < 20) return;
+        BlockPos free = com.sofe.world.Grounding.roomFor((ServerLevel) level(), getType(), blockPosition(), 12);
+        if (com.sofe.world.Grounding.fits((ServerLevel) level(), getType(), free)) teleportTo(free.getX() + 0.5, free.getY(), free.getZ() + 0.5);
+        stuckTicks = 0;
     }
 
     public boolean isFighting() {
@@ -607,6 +627,7 @@ public abstract class SoFEBossEntity extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (source.is(net.minecraft.world.damagesource.DamageTypes.IN_WALL)) return false; // it steps out instead (unstick)
         if (transition > 0 && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) return false; // the phase change
         if (source.getEntity() instanceof ServerPlayer player && !level().isClientSide()) {
             lastSeen.put(player.getUUID(), player);

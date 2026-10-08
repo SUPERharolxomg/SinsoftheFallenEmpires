@@ -183,7 +183,7 @@ public final class BossLairs {
         long now = level.getGameTime();
         Long last = LAST_RAISED.get(lair.boss());
         if (last != null && now >= last && now - last < RESPAWN_TICKS) return Optional.empty();
-        BlockPos at = floor(level, lair.x(), lair.hasHeight() ? lair.y() : fromY, lair.z());
+        BlockPos at = com.sofe.world.Grounding.roomFor(level, type, floor(level, lair.x(), lair.hasHeight() ? lair.y() : fromY, lair.z()), 10);
         Entity boss = type.spawn(level, at, MobSpawnType.EVENT);
         if (boss == null) return Optional.empty();
         if (boss instanceof Mob mob) mob.setPersistenceRequired();
