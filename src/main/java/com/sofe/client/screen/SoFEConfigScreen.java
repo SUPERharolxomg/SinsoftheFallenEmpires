@@ -35,18 +35,21 @@ public class SoFEConfigScreen extends Screen {
                 new Option(SoFEConfig.CLIENT.showQuestCompass, "config.sofe.show_quest_compass"),
                 new Option(SoFEConfig.CLIENT.showQuestPath, "config.sofe.show_quest_path"),
                 new Option(SoFEConfig.CLIENT.hideBearerOutfit, "config.sofe.hide_bearer_outfit"),
-                new Option(SoFEConfig.CLIENT.replaceHealthHud, "config.sofe.replace_health_hud"));
+                new Option(SoFEConfig.CLIENT.replaceHealthHud, "config.sofe.replace_health_hud"),
+                new Option(SoFEConfig.CLIENT.enemyHealth, "config.sofe.enemy_health"));
 
-        int width = 260;
-        int x = (this.width - width) / 2;
-        int y = this.height / 4;
-        for (Option option : options) {
+        // two columns, so every option fits above the Done button even on a small screen
+        int column = 200, gap = 8, width = 260;
+        int left = (this.width - column * 2 - gap) / 2, top = 44;
+        for (int i = 0; i < options.size(); i++) {
+            Option option = options.get(i);
+            int bx = left + (i % 2) * (column + gap), by = top + (i / 2) * 24;
             addRenderableWidget(CycleButton.onOffBuilder(option.value().get())
                     .withTooltip(v -> Tooltip.create(Component.translatable(option.key() + ".tooltip")))
-                    .create(x, y, width, 20, Component.translatable(option.key()),
+                    .create(bx, by, column, 20, Component.translatable(option.key()),
                             (button, value) -> option.value().set(value)));
-            y += 24;
         }
+        int x = (this.width - width) / 2;
 
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose())
                 .bounds(x, this.height - 40, width, 20)

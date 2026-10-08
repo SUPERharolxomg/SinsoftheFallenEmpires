@@ -40,7 +40,7 @@
   "config.sofe.title": "Ajustes de Sins of the Fallen Empires",
   "config.sofe.replace_title_screen": "Portada de SoFE",
   "config.sofe.replace_title_screen.tooltip": "Muestra la portada y el menú de SoFE en lugar de los de Minecraft. Desactívalo si tu modpack trae su propio menú.",
-  "config.sofe.preselect_journey_preset": "Los mundos nuevos empiezan como aventura",
+  "config.sofe.preselect_journey_preset": "Mundos nuevos como aventura",
   "config.sofe.preselect_journey_preset.tooltip": "Al crear un mundo nuevo, la aventura de SoFE ya viene seleccionada como tipo de mundo.",
   "config.sofe.open_class_select_on_join": "Elegir Portador al entrar",
   "config.sofe.open_class_select_on_join.tooltip": "En una aventura de SoFE, los jugadores que no han elegido Portador ven la pantalla de selección al entrar.",
