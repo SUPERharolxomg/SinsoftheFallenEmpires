@@ -82,6 +82,8 @@ public final class Army {
         int placed = 0;
         for (Post post : posts(layout)) {
             if (data.placed.contains(post.key()) || !near.test(post.x(), post.z())) continue;
+            if (post.empire() == Region.SULTHARI && !data.defended) continue; // Sulthari's garrisons muster once the Void is driven out
+
             muster(server.overworld(), post, GARRISON);
             data.placed.add(post.key());
             data.setDirty();
@@ -143,10 +145,43 @@ public final class Army {
         for (var soldier : level.getEntities(EntityRegistry.SOLDIER.get(), s -> s.owner() == null)) soldier.discard();
         Musters data = Musters.get(server);
         data.placed.clear();
+        data.defended = true;
         data.setDirty();
         BlockPos spawn = level.getSharedSpawnPos();
         int r = com.sofe.world.StoryPlacements.START_DISTANCE;
         return placeGarrisons(server, StructurePositions.get(), (x, z) -> (long) (x - spawn.getX()) * (x - spawn.getX()) + (long) (z - spawn.getZ()) * (z - spawn.getZ()) <= (long) r * r);
+    }
+
+    /**
+     * Sulthari has been held against the Void (Act I's invasion won by a Bearer): its garrisons muster in every district
+     * near enough to the Bearers, the rest when a Bearer comes near. Until then only the soldiers who hold the rifts stand
+     * in the city, three at each (VoidInvasion), so the districts the Void attacks are not crowded with a garrison too.
+     */
+    public static void sultharisHeld(MinecraftServer server) {
+        Musters data = Musters.get(server);
+        if (data.defended) return;
+        data.defended = true;
+        data.setDirty();
+        placeGarrisons(server, StructurePositions.get(), (x, z) -> server.overworld().players().stream()
+                .anyMatch(p -> (p.getX() - x) * (p.getX() - x) + (p.getZ() - z) * (p.getZ() - z) <= 256.0 * 256.0));
+    }
+
+    /** For GameTests: whether Sulthari counts as held, and setting it back. */
+    public static boolean sultharisIsHeld(MinecraftServer server) {
+        return Musters.get(server).defended;
+    }
+
+    public static void forgetSultharisHeld(MinecraftServer server) {
+        Musters data = Musters.get(server);
+        data.defended = false;
+        data.placed.removeIf(k -> k.startsWith("sofe:sulthari/"));
+        data.setDirty();
+    }
+
+    /** Whether a Bearer has gone past Act I's invasion (in a world from before, or one who won it while offline of this rule). */
+    private static boolean pastInvasion(ServerPlayer player) {
+        return com.sofe.story.StoryCapability.get(player).map(story -> story.act() >= 2
+                || story.quest(com.sofe.quest.QuestEngine.FIRST_QUEST).map(q -> q.completed() || q.step() > 1).orElse(false)).orElse(false);
     }
 
     /** Every two minutes the garrisons whose fallen nobody is near to see are made whole again. */
@@ -156,6 +191,7 @@ public final class Army {
         if (!com.sofe.world.SoFEWorld.isJourney(server)) return;
         ServerLevel level = server.overworld();
         Musters data = Musters.get(server);
+        if (!data.defended && level.players().stream().anyMatch(Army::pastInvasion)) sultharisHeld(server);
         for (Post post : posts(StructurePositions.get())) {
             if (!data.placed.contains(post.key())) continue;
             BlockPos at = new BlockPos(post.x(), 64, post.z());
@@ -173,6 +209,8 @@ public final class Army {
     static final class Musters extends SavedData {
         private static final String NAME = "sofe_army";
         final java.util.Set<String> placed = new java.util.HashSet<>();
+        /** Whether Sulthari has been held against the Void, so its garrisons muster. */
+        boolean defended;
 
         static Musters get(MinecraftServer server) {
             return server.overworld().getDataStorage().computeIfAbsent(Musters::load, Musters::new, NAME);
@@ -183,6 +221,7 @@ public final class Army {
             ListTag list = new ListTag();
             for (String key : placed) list.add(net.minecraft.nbt.StringTag.valueOf(key));
             tag.put("placed", list);
+            tag.putBoolean("defended", defended);
             return tag;
         }
 
@@ -190,6 +229,8 @@ public final class Army {
             Musters data = new Musters();
             ListTag list = tag.getList("placed", Tag.TAG_STRING);
             for (int i = 0; i < list.size(); i++) data.placed.add(list.getString(i));
+            // a world from before this rule had its garrisons placed already: it counts as held
+            data.defended = tag.getBoolean("defended") || data.placed.stream().anyMatch(k -> k.startsWith("sofe:sulthari/"));
             return data;
         }
     }

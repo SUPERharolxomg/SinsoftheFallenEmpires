@@ -91,4 +91,16 @@ public class ArmyGameTests {
         wretch.setNoAi(true);
         helper.succeedWhen(() -> helper.assertTrue(soldier.getTarget() == wretch, "the soldier did not turn on the Void creature"));
     }
+
+    /** Sulthari's garrisons muster only once the Void's attack on the city is won: during it, only the rifts' soldiers stand. */
+    @GameTest(template = "empty")
+    public static void sultharisGarrisonsWaitForTheInvasion(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        boolean was = Army.sultharisIsHeld(server);
+        Army.forgetSultharisHeld(server);
+        int placed = Army.placeGarrisons(server, com.sofe.world.zone.StructurePositions.get(), (x, z) -> Math.abs(x) < 400 && Math.abs(z) < 400);
+        helper.assertTrue(placed == 0, "Sulthari's garrisons mustered before the Void was driven out: " + placed);
+        if (was) Army.sultharisHeld(server); // the test world as it was
+        helper.succeed();
+    }
 }
