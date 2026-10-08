@@ -154,8 +154,6 @@
 				"{ftbquests.sofe.step_hint}"
 			]
 			id: "6FD4C734E8B793D5"
-			shape: "gear"
-			size: 1.5d
 			tasks: [
 				{
 					advancement: "sofe:quest/act1_eclipse/step8"
@@ -166,6 +164,108 @@
 			]
 			title: "{quest.sofe.act1_eclipse.step8}"
 			x: 10.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6FD4C734E8B793D5"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "43D9AFBF036045C8"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step9"
+					criterion: ""
+					id: "61596BB1D266102D"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step9}"
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"43D9AFBF036045C8"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "2AAAB726AED1DA98"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step10"
+					criterion: ""
+					id: "63EC356CFAEF6170"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step10}"
+			x: 13.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2AAAB726AED1DA98"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "0D10D8809F2A5B2B"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step11"
+					criterion: ""
+					id: "66813E7A2CB720BE"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step11}"
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"0D10D8809F2A5B2B"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "77E9E24AF33DC72E"
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step12"
+					criterion: ""
+					id: "1699D2495293FAB6"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step12}"
+			x: 16.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"77E9E24AF33DC72E"
+			]
+			description: [
+				"{ftbquests.sofe.step_hint}"
+			]
+			id: "38248BD767A175B2"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "sofe:quest/act1_eclipse/step13"
+					criterion: ""
+					id: "1B72594B2CCA0B78"
+					type: "advancement"
+				}
+			]
+			title: "{quest.sofe.act1_eclipse.step13}"
+			x: 18.0d
 			y: 0.0d
 		}
 	]

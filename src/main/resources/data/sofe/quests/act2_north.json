@@ -20,6 +20,69 @@
     },
     {
       "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 0,
+        "z": -2400
+      },
+      "_chapter": "act2_north/frost_king"
+    },
+    {
+      "objective": {
+        "type": "reach",
+        "x": -2400,
+        "z": -3200,
+        "radius": 14
+      },
+      "target": {
+        "x": -2400,
+        "z": -3200
+      },
+      "_chapter": "act2_north/frost_king"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:draugr",
+        "count": 10
+      },
+      "target": {
+        "x": -2400,
+        "z": -3200
+      },
+      "_chapter": "act2_north/frost_king"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:draugr",
+        "count": 1
+      },
+      "target": {
+        "x": -2382,
+        "z": -3200
+      },
+      "lair": {
+        "x": -2382,
+        "z": -3200,
+        "depth": 18,
+        "name": "lord.sofe.tomb_frost_king"
+      },
+      "_chapter": "act2_north/frost_king"
+    },
+    {
+      "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 0,
+        "z": -2400
+      },
+      "_chapter": "act2_north/frost_king"
+    },
+    {
+      "objective": {
         "type": "solve_puzzle",
         "puzzle": "sofe:nordrath_ruin"
       },
@@ -99,6 +162,10 @@
     {
       "type": "advance_act",
       "act": 3
+    },
+    {
+      "type": "start_quest",
+      "quest": "sofe:act3_east"
     }
   ]
 }

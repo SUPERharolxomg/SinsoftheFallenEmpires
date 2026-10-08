@@ -136,6 +136,7 @@ public final class StoryParser {
                         effect.has("count") ? effect.get("count").getAsInt() : 1, effect.has("radius") ? effect.get("radius").getAsDouble() : 8,
                         effect.has("elite") && effect.get("elite").getAsBoolean());
                 case "open_dialogue" -> new QuestEffect.OpenDialogue(str(effect, "dialogue", null));
+                case "travel" -> new QuestEffect.Travel(str(effect, "waystone", null));
                 case "give_item" -> new QuestEffect.GiveItem(str(effect, "item", null), effect.has("count") ? effect.get("count").getAsInt() : 1);
                 case "open_class_select" -> new QuestEffect.OpenClassSelect();
                 case "give_relic" -> new QuestEffect.GiveRelic(str(effect, "relic", null));

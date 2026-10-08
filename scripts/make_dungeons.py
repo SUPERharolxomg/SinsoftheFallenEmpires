@@ -374,18 +374,21 @@ def act1(crypt_kill, crypt_lord, ruin_puzzle, guardian, crypt_name, ruin_name, d
         q = json.load(f)
     sentinel = next(s for s in q["steps"] if s["objective"].get("boss") == "sofe:brass_sentinel")
     council = q["steps"][:3]
-    q["steps"] = council + [crypt_kill, crypt_lord, ruin_puzzle, guardian, sentinel]
+    chapter = [s for s in q["steps"] if s.get("_chapter")]  # the chapter make_chapters.py put after the Council stays
+    q["steps"] = council + chapter + [crypt_kill, crypt_lord, ruin_puzzle, guardian, sentinel]
     dump(path, q)
     k = "quest.sofe.act1_eclipse"
-    text(k + ".step4", "Go down into %s and drive out the %s of its halls." % (crypt_name[0], dead_name[0]),
+    n = len(chapter)  # the steps after it are numbered past it
+    step = lambda i: "%s.step%d" % (k, i + n)  # noqa: E731
+    text(step(4), "Go down into %s and drive out the %s of its halls." % (crypt_name[0], dead_name[0]),
          de("Baja a %s y acaba con los %s de sus salas." % (lower(crypt_name[1]), dead_name[1])))
-    text(k + ".step5", "In the deepest chamber of the Crypt, defeat %s." % lower(lord_name[0]),
+    text(step(5), "In the deepest chamber of the Crypt, defeat %s." % lower(lord_name[0]),
          de("En la cámara más honda de la Cripta, derrota a %s." % lower(lord_name[1])))
-    text(k + ".step6", "In %s, read the riddle and wake the Wardens' runes." % ruin_name[0],
+    text(step(6), "In %s, read the riddle and wake the Wardens' runes." % ruin_name[0],
          "En %s, lee el acertijo y despierta las runas de los Guardianes." % lower(ruin_name[1]))
-    text(k + ".step7", "The runes woke the ruin's guardian: defeat the %s." % guardian_name[0],
+    text(step(7), "The runes woke the ruin's guardian: defeat the %s." % guardian_name[0],
          de("Las runas despertaron al guardián de la ruina: derrota a %s." % guardian_name[1]))
-    text(k + ".step8", "Stop the Brass Sentinel in the Great Observatory.", "Detén al Centinela de Latón en el Gran Observatorio.")
+    text(step(8), "Stop the Brass Sentinel in the Great Observatory.", "Detén al Centinela de Latón en el Gran Observatorio.")
     text("dialogue.sofe.act1.council.3",
          "The Brass Sentinel of the Great Observatory has woken. It kept the seal for three hundred years; now it obeys no one, and the Observatory has closed with it. "
          "The Wardens who built it left the way in with their dead: in their Crypt, north-east of the city, and in their Ruin, to the north-west.",

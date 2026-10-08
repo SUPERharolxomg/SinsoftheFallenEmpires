@@ -39,6 +39,9 @@ class ZoneRulesTest {
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.TAKE));
         assertFalse(ZoneRules.allowed(ZONES, 0, 70, 0, ZoneAction.USE_ITEM_ON_BLOCK));
         assertTrue(ZoneRules.allowed(ZONES, 120, 70, 120, ZoneAction.TAKE));
+        // a dungeon's and an arena's chests are their loot; their walls stay
+        assertTrue(ProtectedZone.Kind.DUNGEON.allows(ZoneAction.TAKE) && ProtectedZone.Kind.ARENA.allows(ZoneAction.TAKE));
+        assertFalse(ProtectedZone.Kind.DUNGEON.allows(ZoneAction.BREAK));
     }
 
     @Test

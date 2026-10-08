@@ -36,6 +36,10 @@ public sealed interface QuestEffect {
     record GiveItem(String item, int count) implements QuestEffect {
     }
 
+    /** Takes the player to a Waystone of the layout (data: its key, "sofe:nordrath/city") and wakes it for them: the next act's road. */
+    record Travel(String waystone) implements QuestEffect {
+    }
+
     /** A sound for a scene (the shard striking, a boss waking), heard by the player and those nearby. */
     record PlaySound(String sound, float volume, float pitch) implements QuestEffect {
     }

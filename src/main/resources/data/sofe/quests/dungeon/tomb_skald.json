@@ -1,0 +1,61 @@
+{
+  "type": "dungeon",
+  "act": 2,
+  "starts_near": {
+    "x": 2600,
+    "z": -2600,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 2600,
+        "z": -2600,
+        "radius": 14
+      },
+      "target": {
+        "x": 2600,
+        "z": -2600
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:draugr",
+        "count": 10
+      },
+      "target": {
+        "x": 2600,
+        "z": -2600
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:draugr",
+        "count": 1
+      },
+      "target": {
+        "x": 2618,
+        "z": -2600
+      },
+      "lair": {
+        "x": 2618,
+        "z": -2600,
+        "depth": 18,
+        "name": "lord.sofe.tomb_skald"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 900
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 2
+  }
+}

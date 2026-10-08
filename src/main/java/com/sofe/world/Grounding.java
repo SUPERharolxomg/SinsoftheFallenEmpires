@@ -65,6 +65,33 @@ public final class Grounding {
         return level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
     }
 
+    /**
+     * Where a creature of this size fits, nearest this spot: on a floor, its whole body clear of blocks and fluids (a big
+     * boss beside a stair would otherwise rise inside it). Looked for within range across and a few blocks up and down;
+     * the spot itself when there is no room anywhere.
+     */
+    public static BlockPos roomFor(ServerLevel level, net.minecraft.world.entity.EntityType<?> type, BlockPos at, int range) {
+        for (int r = 0; r <= range; r++) {
+            for (int dx = -r; dx <= r; dx++) {
+                for (int dz = -r; dz <= r; dz++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dz)) != r) continue;
+                    for (int dy : new int[]{0, 1, -1, 2, -2, 3, -3, 4, 5, 6}) {
+                        BlockPos p = at.offset(dx, dy, dz);
+                        if (fits(level, type, p)) return p;
+                    }
+                }
+            }
+        }
+        return at;
+    }
+
+    /** Whether a creature of this size can stand here: a floor under it and nothing in its body's box. */
+    public static boolean fits(ServerLevel level, net.minecraft.world.entity.EntityType<?> type, BlockPos p) {
+        if (passable(level, p.below())) return false;
+        var box = type.getAABB(p.getX() + 0.5, p.getY(), p.getZ() + 0.5);
+        return level.noCollision(box) && !level.containsAnyLiquid(box);
+    }
+
     /** Two blocks to stand in (air, a carpet, grass...) above a floor. */
     public static boolean standable(ServerLevel level, BlockPos pos) {
         return passable(level, pos) && passable(level, pos.above()) && !passable(level, pos.below())

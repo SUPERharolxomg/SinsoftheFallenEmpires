@@ -146,16 +146,34 @@ public class DungeonGameTests {
         String act2 = "sofe:act2_north";
         QuestEngine.startQuest(hero, act2);
         QuestEngine.event(hero, new com.sofe.quest.QuestEvent.EnteredRegion("nordrath"));
-        helper.assertTrue(story.questStep(act2) == 2, "the Burnt Longhall's runes should come right after Nordrath");
+        helper.assertTrue(story.questStep(act2) == 2, "Gunnhild's chapter should come right after Nordrath");
+        for (int i = 0; i < 5; i++) QuestEngine.advance(hero, act2); // her word, the Frost King's barrow, back to her
+        helper.assertTrue(story.questStep(act2) == 7, "the Burnt Longhall's runes should come after Gunnhild's chapter, is at " + story.questStep(act2));
         story.solvePuzzle("sofe:nordrath_ruin");
         QuestEngine.skipDone(hero);
-        helper.assertTrue(story.questStep(act2) == 3, "solved runes should move on to the guardian");
+        helper.assertTrue(story.questStep(act2) == 8, "solved runes should move on to the guardian");
         QuestEngine.advance(hero, act2); // the guardian
         story.defeat("sofe:kaleth");
         story.defeat("sofe:serath");
         QuestEngine.skipDone(hero);
-        helper.assertTrue(story.questStep(act2) == 6, "Kaleth and Serath were beaten: Vorath should be next, is at " + story.questStep(act2));
+        helper.assertTrue(story.questStep(act2) == 11, "Kaleth and Serath were beaten: Vorath should be next, is at " + story.questStep(act2));
         com.sofe.quest.DialogueService.close(hero);
         helper.succeed();
+    }
+
+    /** A boss never rises inside blocks: beside a stair it is put where its whole body fits, and it steps out of a wall. */
+    @GameTest(template = "empty", timeoutTicks = 120)
+    public static void aBossRisesWhereItFits(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var type = com.sofe.registry.EntityRegistry.BRASS_SENTINEL.get();
+        BlockPos at = helper.absolutePos(new BlockPos(4, 2, 4));
+        for (int dx = -1; dx <= 1; dx++) for (int dy = 0; dy < 3; dy++) level.setBlockAndUpdate(at.offset(dx, dy, 1), Blocks.STONE_BRICK_STAIRS.defaultBlockState());
+        helper.assertFalse(com.sofe.world.Grounding.fits(level, type, at), "the Sentinel should not fit against the stair");
+        BlockPos free = com.sofe.world.Grounding.roomFor(level, type, at, 8);
+        helper.assertTrue(com.sofe.world.Grounding.fits(level, type, free), "no room was found for the Sentinel near the stair");
+        var sentinel = type.create(level);
+        sentinel.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 1.5, 0, 0);
+        level.addFreshEntity(sentinel);
+        helper.succeedWhen(() -> helper.assertFalse(sentinel.isInWall(), "the Sentinel stayed stuck in the stair"));
     }
 }

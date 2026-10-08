@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "council_judge",
+  "lines": [
+    {
+      "speaker": "council_judge",
+      "text": "dialogue.sofe.council_judge.1"
+    }
+  ]
+}

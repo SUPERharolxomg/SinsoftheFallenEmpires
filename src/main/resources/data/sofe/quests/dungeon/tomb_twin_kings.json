@@ -1,0 +1,61 @@
+{
+  "type": "dungeon",
+  "act": 3,
+  "starts_near": {
+    "x": 4400,
+    "z": 2600,
+    "radius": 64
+  },
+  "steps": [
+    {
+      "objective": {
+        "type": "reach",
+        "x": 4400,
+        "z": 2600,
+        "radius": 14
+      },
+      "target": {
+        "x": 4400,
+        "z": 2600
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:bog_mummy",
+        "count": 10
+      },
+      "target": {
+        "x": 4400,
+        "z": 2600
+      }
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:bog_mummy",
+        "count": 1
+      },
+      "target": {
+        "x": 4418,
+        "z": 2600
+      },
+      "lair": {
+        "x": 4418,
+        "z": 2600,
+        "depth": 18,
+        "name": "lord.sofe.tomb_twin_kings"
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "type": "give_xp",
+      "amount": 1600
+    }
+  ],
+  "requires": {
+    "type": "act_reached",
+    "act": 3
+  }
+}

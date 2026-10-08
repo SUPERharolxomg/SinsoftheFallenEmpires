@@ -1,0 +1,10 @@
+{
+  "style": "sulthari",
+  "npc": "council_treasurer",
+  "lines": [
+    {
+      "speaker": "council_treasurer",
+      "text": "dialogue.sofe.council_treasurer.1"
+    }
+  ]
+}

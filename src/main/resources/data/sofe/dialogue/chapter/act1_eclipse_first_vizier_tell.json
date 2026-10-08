@@ -1,0 +1,49 @@
+{
+  "style": "sulthari",
+  "npc": "council_sage",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act1_eclipse",
+        "step": 8
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act1_eclipse",
+          "step": 9
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "council_sage",
+      "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_tell.1"
+    },
+    {
+      "speaker": "council_sage",
+      "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_tell.2"
+    },
+    {
+      "speaker": "council_sage",
+      "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_tell.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act1_eclipse_first_vizier_tell.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act1_eclipse"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

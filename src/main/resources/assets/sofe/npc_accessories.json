@@ -68,6 +68,22 @@
   "cape",
   "skirt"
  ],
+ "council_general": [
+  "cape"
+ ],
+ "council_judge": [
+  "cape",
+  "skirt"
+ ],
+ "council_sage": [
+  "cape",
+  "skirt"
+ ],
+ "council_treasurer": [
+  "fez",
+  "cape",
+  "skirt"
+ ],
  "isfaran_astronomer": [
   "beard",
   "cape",

@@ -20,6 +20,69 @@
     },
     {
       "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 7200,
+        "z": -400
+      },
+      "_chapter": "act3_east/veiled_queen"
+    },
+    {
+      "objective": {
+        "type": "reach",
+        "x": 2800,
+        "z": 1000,
+        "radius": 14
+      },
+      "target": {
+        "x": 2800,
+        "z": 1000
+      },
+      "_chapter": "act3_east/veiled_queen"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:mirage_dancer",
+        "count": 10
+      },
+      "target": {
+        "x": 2800,
+        "z": 1000
+      },
+      "_chapter": "act3_east/veiled_queen"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:mirage_dancer",
+        "count": 1
+      },
+      "target": {
+        "x": 2818,
+        "z": 1000
+      },
+      "lair": {
+        "x": 2818,
+        "z": 1000,
+        "depth": 18,
+        "name": "lord.sofe.tomb_veiled_queen"
+      },
+      "_chapter": "act3_east/veiled_queen"
+    },
+    {
+      "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 7200,
+        "z": -400
+      },
+      "_chapter": "act3_east/veiled_queen"
+    },
+    {
+      "objective": {
         "type": "solve_puzzle",
         "puzzle": "sofe:parsivan_ruin"
       },
@@ -104,6 +167,69 @@
     },
     {
       "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 6800,
+        "z": 3200
+      },
+      "_chapter": "act3_east/scarab_priest"
+    },
+    {
+      "objective": {
+        "type": "reach",
+        "x": 2200,
+        "z": 3300,
+        "radius": 14
+      },
+      "target": {
+        "x": 2200,
+        "z": 3300
+      },
+      "_chapter": "act3_east/scarab_priest"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "sofe:bog_mummy",
+        "count": 10
+      },
+      "target": {
+        "x": 2200,
+        "z": 3300
+      },
+      "_chapter": "act3_east/scarab_priest"
+    },
+    {
+      "objective": {
+        "type": "kill",
+        "entity": "lord:sofe:bog_mummy",
+        "count": 1
+      },
+      "target": {
+        "x": 2218,
+        "z": 3300
+      },
+      "lair": {
+        "x": 2218,
+        "z": 3300,
+        "depth": 18,
+        "name": "lord.sofe.tomb_scarab_priest"
+      },
+      "_chapter": "act3_east/scarab_priest"
+    },
+    {
+      "objective": {
+        "type": "manual"
+      },
+      "target": {
+        "x": 6800,
+        "z": 3200
+      },
+      "_chapter": "act3_east/scarab_priest"
+    },
+    {
+      "objective": {
         "type": "solve_puzzle",
         "puzzle": "sofe:khemet_ruin"
       },
@@ -173,6 +299,10 @@
     {
       "type": "advance_act",
       "act": 4
+    },
+    {
+      "type": "start_quest",
+      "quest": "sofe:act4_west"
     }
   ]
 }

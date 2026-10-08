@@ -1,0 +1,49 @@
+{
+  "style": "parsivan",
+  "npc": "parsivan_poet",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act3_east",
+        "step": 2
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act3_east",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.chapter.act3_east_veiled_queen_ask.1"
+    },
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.chapter.act3_east_veiled_queen_ask.2"
+    },
+    {
+      "speaker": "parsivan_poet",
+      "text": "dialogue.sofe.chapter.act3_east_veiled_queen_ask.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act3_east_veiled_queen_ask.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act3_east"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

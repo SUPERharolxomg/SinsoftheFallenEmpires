@@ -29,6 +29,11 @@ public final class SoFENetwork {
                 .decoder(RegionEnteredPacket::decode)
                 .consumerMainThread(RegionEnteredPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(InvasionHudPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(InvasionHudPacket::encode)
+                .decoder(InvasionHudPacket::decode)
+                .consumerMainThread(InvasionHudPacket::handle)
+                .add();
         CHANNEL.messageBuilder(OpenClassSelectPacket.class, nextId++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(OpenClassSelectPacket::encode)
                 .decoder(OpenClassSelectPacket::decode)

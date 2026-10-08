@@ -9,6 +9,36 @@
     {
       "speaker": "ozhan",
       "text": "dialogue.sofe.act1.epilogue.2"
+    },
+    {
+      "speaker": "narrator",
+      "text": "dialogue.sofe.road.act2_north",
+      "answers": [
+        {
+          "text": "dialogue.sofe.road.act2_north.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:act2_north"
+            },
+            {
+              "type": "travel",
+              "waystone": "sofe:nordrath/city"
+            }
+          ]
+        },
+        {
+          "text": "dialogue.sofe.road.act2_north.stay",
+          "next": -1,
+          "effects": [
+            {
+              "type": "start_quest",
+              "quest": "sofe:act2_north"
+            }
+          ]
+        }
+      ]
     }
   ],
   "on_end": [

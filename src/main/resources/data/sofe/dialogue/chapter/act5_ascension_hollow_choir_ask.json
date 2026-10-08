@@ -1,0 +1,49 @@
+{
+  "style": "sulthari",
+  "npc": "council_elder",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act5_ascension",
+        "step": 1
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act5_ascension",
+          "step": 2
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.chapter.act5_ascension_hollow_choir_ask.1"
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.chapter.act5_ascension_hollow_choir_ask.2"
+    },
+    {
+      "speaker": "council_elder",
+      "text": "dialogue.sofe.chapter.act5_ascension_hollow_choir_ask.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act5_ascension_hollow_choir_ask.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act5_ascension"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

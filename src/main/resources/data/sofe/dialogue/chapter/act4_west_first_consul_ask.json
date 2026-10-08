@@ -1,0 +1,49 @@
+{
+  "style": "aureum",
+  "npc": "aureum_senator",
+  "priority": 20,
+  "requires": {
+    "type": "all_of",
+    "conditions": [
+      {
+        "type": "quest_step",
+        "quest": "sofe:act4_west",
+        "step": 2
+      },
+      {
+        "type": "not",
+        "condition": {
+          "type": "quest_step",
+          "quest": "sofe:act4_west",
+          "step": 3
+        }
+      }
+    ]
+  },
+  "lines": [
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.chapter.act4_west_first_consul_ask.1"
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.chapter.act4_west_first_consul_ask.2"
+    },
+    {
+      "speaker": "aureum_senator",
+      "text": "dialogue.sofe.chapter.act4_west_first_consul_ask.3",
+      "answers": [
+        {
+          "text": "dialogue.sofe.chapter.act4_west_first_consul_ask.go",
+          "next": -1,
+          "effects": [
+            {
+              "type": "advance_quest",
+              "quest": "sofe:act4_west"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

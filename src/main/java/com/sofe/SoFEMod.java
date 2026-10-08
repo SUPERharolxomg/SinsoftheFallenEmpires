@@ -168,6 +168,9 @@ public class SoFEMod {
         MinecraftForge.EVENT_BUS.addListener(QuestEngine::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.VoidInvasion::onLogout);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.VoidInvasion::onJoin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.GateDoors::onServerTick);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.StoryPlacements::onNpcJoin);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.world.lock.GateDoors::onServerStopping);
         MinecraftForge.EVENT_BUS.addListener(DialogueService::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(DialogueService::onLogout);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.quest.SceneService::onAttack);

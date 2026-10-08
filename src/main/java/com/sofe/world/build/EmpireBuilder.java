@@ -32,6 +32,7 @@ final class EmpireBuilder {
     static boolean blockout(ServerLevel level, StructurePositions.Structure s, String piece) {
         int y = SultharisBuilder.surfaceY(level, s.x(), s.z());
         if (!piece.startsWith("nordrath/") && isPlace(piece)) y = ground(level, s, piece);
+        if (BossKeeps.has(piece)) return BossKeeps.build(level, s, piece); // a boss's keep: an island of rock, its hall inside
         switch (piece) {
             case "parsivan/baths" -> baths(level, s, y);
             case "parsivan/silk_road" -> caravanserai(level, s, y);
@@ -866,6 +867,7 @@ final class EmpireBuilder {
         }
         // the last steps up through the floor of the crown
         for (int h = 0; h < 3; h++) set(level, cx + 1, SPIRE_TOP - 2 + h, cz, Blocks.QUARTZ_STAIRS.defaultBlockState());
+        DeepHalls.spire(level, s, ground, SPIRE_TOP);
         StructurePositions.get().gates().values().stream()
                 .filter(g -> Math.abs(g.x() - cx) <= r + 2 && Math.abs(g.z() - cz) <= r + 2)
                 .forEach(g -> StructureBuilder.placeGate(level, g, ground));
@@ -928,6 +930,8 @@ final class EmpireBuilder {
                 for (int h = 0; h < 4; h++) set(level, sx0 + dx, f + h, z, Blocks.AIR.defaultBlockState());
             }
         }
+        DeepHalls.invertedThrone(level, s, f);
+        DeepHalls.throneDoor(level, sx0, top, sz0);
         StructurePositions.get().gates().values().stream()
                 .filter(g -> Math.abs(g.x() - sx0) <= 4 && Math.abs(g.z() - sz0) <= 4)
                 .forEach(g -> StructureBuilder.placeGate(level, g, top));
@@ -945,14 +949,14 @@ final class EmpireBuilder {
      * cave hall of basalt and dripstone, with pools of acid (slime and green-lit water) where the Devourer waits.
      */
     private static void caverns(ServerLevel level, StructurePositions.Structure s) {
-        int top = SultharisBuilder.surfaceY(level, s.x(), s.z() + SultharisBuilder.half(s.sizeZ()) + TUNNEL);
+        int top = DeepHalls.cavernsGround(level, s);
         int cy = top - CAVERNS_DEPTH;
         // the tunnel from the entrance (south of the hall) down to the hall's south side
         int entranceZ = s.z() + SultharisBuilder.half(s.sizeZ()) + TUNNEL, hallZ1 = maxZ(s);
         int length = entranceZ - hallZ1;
         for (int i = 0; i <= length; i++) {
             int z = entranceZ - i;
-            int floor = top - (int) Math.round((double) CAVERNS_DEPTH * i / length);
+            int floor = DeepHalls.tunnelFloor(top, i);
             for (int dx = -2; dx <= 2; dx++) {
                 set(level, s.x() + dx, floor - 1, z, Math.abs(dx) == 2 ? Blocks.SMOOTH_BASALT.defaultBlockState() : Blocks.POLISHED_BLACKSTONE_BRICKS.defaultBlockState());
                 for (int h = 0; h < 5; h++) set(level, s.x() + dx, floor + h, z, Blocks.AIR.defaultBlockState());
@@ -989,6 +993,7 @@ final class EmpireBuilder {
         }
         spawner(level, s.x() - rx + 5, cy, s.z(), EntityType.CAVE_SPIDER);
         spawner(level, s.x() + rx - 5, cy, s.z(), EntityType.SLIME);
+        DeepHalls.caverns(level, s, cy);
     }
 
     /**
@@ -997,8 +1002,7 @@ final class EmpireBuilder {
      */
     private static void feastHalls(ServerLevel level, StructurePositions.Structure s) {
         var caverns = StructurePositions.get().structure("sofe:nordrath/caverns");
-        int top = caverns.map(c -> SultharisBuilder.surfaceY(level, c.x(), c.z() + SultharisBuilder.half(c.sizeZ()) + TUNNEL))
-                .orElse(SultharisBuilder.surfaceY(level, s.x(), s.z()));
+        int top = caverns.map(c -> DeepHalls.cavernsGround(level, c)).orElse(SultharisBuilder.surfaceY(level, s.x(), s.z()));
         int cy = top - CAVERNS_DEPTH;
         int x0 = minX(s), x1 = maxX(s), z0 = minZ(s), z1 = maxZ(s);
         BlockState runestone = b(SoFEBlocks.NORDRATH_RUNESTONE_BRICKS), timber = b(SoFEBlocks.NORDRATH_DARK_TIMBER);
@@ -1046,5 +1050,7 @@ final class EmpireBuilder {
                 .forEach(g -> StructureBuilder.placeGate(level, g, cy));
         spawner(level, x0 + 3, cy, z0 + 3, EntityType.ZOMBIE);
         spawner(level, x1 - 3, cy, z0 + 3, EntityType.HUSK);
+        DeepHalls.feastHalls(level, s, cy, x0, z0, x1, z1);
+        DeepHalls.feastDoor(level, s.x(), cy, z1);
     }
 }

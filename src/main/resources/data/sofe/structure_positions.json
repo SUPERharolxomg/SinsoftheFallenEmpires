@@ -476,6 +476,83 @@
    "size_x": 37,
    "size_z": 29,
    "zone": "dungeon"
+  },
+  "sofe:sulthari/tomb_first_vizier": {
+   "x": 300,
+   "z": 620,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/tomb_frost_king": {
+   "x": -2400,
+   "z": -3200,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/tomb_veiled_queen": {
+   "x": 2800,
+   "z": 1000,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:khemet/tomb_scarab_priest": {
+   "x": 2200,
+   "z": 3300,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/tomb_first_consul": {
+   "x": -2600,
+   "z": 1800,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:void/tomb_hollow_choir": {
+   "x": -1100,
+   "z": -900,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:sulthari/tomb_lost_caravan": {
+   "x": -1100,
+   "z": 200,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:nordrath/tomb_skald": {
+   "x": 2600,
+   "z": -2600,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:parsivan/tomb_astronomer": {
+   "x": 4200,
+   "z": -1100,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:khemet/tomb_twin_kings": {
+   "x": 4400,
+   "z": 2600,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
+  },
+  "sofe:aureum/tomb_gladiators": {
+   "x": -4200,
+   "z": -900,
+   "size_x": 49,
+   "size_z": 49,
+   "zone": "dungeon"
   }
  },
  "waystones": {
@@ -603,9 +680,37 @@
   {
    "npc": "council_elder",
    "type": "story",
-   "x": 4,
-   "z": -74,
-   "yaw": 0
+   "x": 3,
+   "z": 85,
+   "yaw": 180
+  },
+  {
+   "npc": "council_treasurer",
+   "type": "story",
+   "x": -3,
+   "z": 85,
+   "yaw": 180
+  },
+  {
+   "npc": "council_general",
+   "type": "story",
+   "x": -6,
+   "z": 87,
+   "yaw": 180
+  },
+  {
+   "npc": "council_judge",
+   "type": "story",
+   "x": 6,
+   "z": 87,
+   "yaw": 180
+  },
+  {
+   "npc": "council_sage",
+   "type": "story",
+   "x": 0,
+   "z": 88,
+   "yaw": 180
   },
   {
    "npc": "knight",

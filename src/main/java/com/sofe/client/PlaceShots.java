@@ -54,7 +54,7 @@ public final class PlaceShots {
             Screenshot.grab(mc.gameDirectory, "place_" + name + "_" + (view == 0 ? "high" : "door") + ".png", mc.getMainRenderTarget(), m -> { });
             logPerformance(mc, name + "_" + (view == 0 ? "high" : "door"));
             view++;
-            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("crypt:") && !places.get(place).equals("rift") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
+            if (view < 2 && !places.get(place).startsWith("at:") && !places.get(place).startsWith("crypt:") && !places.get(place).startsWith("hall:") && !places.get(place).equals("rift") && !places.get(place).startsWith("eclipse:") && !places.get(place).equals("army") && !places.get(place).startsWith("npcs:") && !places.get(place).startsWith("npc:")
                     && !places.get(place).startsWith("scene:") && !places.get(place).startsWith("ending:") && !places.get(place).equals("loot")
                     && !places.get(place).startsWith("dialogue:")) {
                 look(mc, places.get(place), view);
@@ -69,7 +69,7 @@ public final class PlaceShots {
             return;
         }
         build(mc, places.get(place));
-        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") || places.get(place).startsWith("crypt:") || places.get(place).equals("rift") || places.get(place).startsWith("eclipse:") ? SETTLE * 2
+        wait = places.get(place).equals("death") ? 40 : places.get(place).startsWith("scene:") || places.get(place).startsWith("ending:") || places.get(place).startsWith("dialogue:") ? 40 : places.get(place).equals("loot") ? SETTLE * 2 : places.get(place).startsWith("at:") || places.get(place).startsWith("crypt:") || places.get(place).startsWith("hall:") || places.get(place).equals("rift") || places.get(place).startsWith("eclipse:") ? SETTLE * 2
                 : places.get(place).endsWith("/city") ? SETTLE * 12 : SETTLE * 4; // the chunks round the place need to load, and the build to reach the client (a death is caught while it is watched)
     }
 
@@ -243,6 +243,24 @@ public final class PlaceShots {
                 }
                 com.sofe.quest.VoidInvasion.showcase(level, at);
                 p.teleportTo(level, at.getX() + 4.5, at.getY() + 2.5, at.getZ() + 9.5, 155, 5);
+            });
+            return;
+        }
+        if (piece.startsWith("hall:")) { // hall:<empire/piece>:dx:dy:dz:yaw:pitch, a look inside a boss's hall built earlier in the run, from its gate and its floor
+            String[] v = piece.split(":");
+            server.execute(() -> {
+                ServerPlayer p = server.getPlayerList().getPlayer(mc.player.getUUID());
+                StructurePositions.Gate gate = StructurePositions.get().gates().get("sofe:" + v[1]);
+                if (p == null || gate == null) return;
+                p.setGameMode(GameType.SPECTATOR);
+                var level = p.serverLevel();
+                level.getChunk(gate.x() >> 4, gate.z() >> 4);
+                int floor = level.getMinBuildHeight();
+                for (int y = level.getMaxBuildHeight() - 1; y > level.getMinBuildHeight(); y--) {
+                    if (level.getBlockState(new net.minecraft.core.BlockPos(gate.x(), y, gate.z())).is(com.sofe.registry.SoFEBlocks.SEALED_GATE.get())) floor = y;
+                }
+                p.teleportTo(level, gate.x() + Double.parseDouble(v[2]) + 0.5, floor + Double.parseDouble(v[3]), gate.z() + Double.parseDouble(v[4]) + 0.5,
+                        Float.parseFloat(v[5]), Float.parseFloat(v[6]));
             });
             return;
         }

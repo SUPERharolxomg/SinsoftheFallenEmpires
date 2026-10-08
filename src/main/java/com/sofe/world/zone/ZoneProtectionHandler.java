@@ -61,6 +61,7 @@ public final class ZoneProtectionHandler {
 
     public static void onBreak(BlockEvent.BreakEvent event) {
         if (isFarmCrop(event.getState())) return; // the town's fields are there to be harvested
+        if (event.getState().is(net.minecraft.world.level.block.Blocks.SPAWNER) && inDungeon(event.getLevel(), event.getPos())) return; // a dungeon's spawners can be broken
         if (allowed(event.getLevel(), event.getPos(), ZoneAction.BREAK, event.getPlayer())) return;
         if (event.getLevel() instanceof ServerLevel server && ProtectedZoneData.get(server.getServer()).takePlaced(event.getPos())) return; // a player's own
         if (event.getLevel() instanceof ServerLevel level) {
@@ -72,6 +73,13 @@ public final class ZoneProtectionHandler {
         }
         event.setCanceled(true);
         tell(event.getPlayer());
+    }
+
+    /** Whether a block is in a dungeon or a boss's arena (not a town, a camp or a homestead). */
+    private static boolean inDungeon(LevelAccessor level, BlockPos pos) {
+        if (!(level instanceof ServerLevel server)) return false;
+        return ZoneRules.zoneAt(ProtectedZoneData.get(server.getServer()).zones(), pos.getX(), pos.getY(), pos.getZ())
+                .map(z -> z.kind() == ProtectedZone.Kind.DUNGEON || z.kind() == ProtectedZone.Kind.ARENA).orElse(false);
     }
 
     /** How far up a trunk and out from it a town's tree reaches (the palms spread their fronds three blocks). */

@@ -98,6 +98,7 @@ public class JourneyWorldGameTests {
         var bricks = net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState();
         for (int dx = -2; dx <= 2; dx++) {
             for (int dz = -2; dz <= 2; dz++) {
+                for (int dy = -4; dy <= -2; dy++) level.setBlock(hall.offset(dx, dy, dz), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 3); // the land under it (the test world keeps what earlier runs dug)
                 level.setBlock(hall.offset(dx, -1, dz), bricks, 3);
                 level.setBlock(hall.offset(dx, 0, dz), net.minecraft.world.level.block.Blocks.RED_CARPET.defaultBlockState(), 3);
                 level.setBlock(hall.offset(dx, 5, dz), bricks, 3); // a gallery no stairs reach
