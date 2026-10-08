@@ -111,7 +111,7 @@ final class Precinct {
         int hx = s.sizeX() / 2, hz = s.sizeZ() / 2;
         Direction door = door(s);
         BlockPos waystone = StructurePositions.get().waystones().get(s.id());
-        boolean mountain = MountainHalls.has(piece); // a hall in a mountain has its own terrace and stair: the grounds keep to the land below
+        boolean mountain = BossKeeps.has(piece); // a hall in a mountain has its own terrace and stair: the grounds keep to the land below
         int land = SultharisBuilder.surfaceY(level, s.x(), s.z() + s.sizeZ() / 2 + REACH) + 3;
         // 1. the ground: turned to the place's, its plants and trees cleared
         for (int x = s.x() - hx - REACH; x <= s.x() + hx + REACH; x++) {

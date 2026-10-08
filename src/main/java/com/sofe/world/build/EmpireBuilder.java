@@ -32,6 +32,7 @@ final class EmpireBuilder {
     static boolean blockout(ServerLevel level, StructurePositions.Structure s, String piece) {
         int y = SultharisBuilder.surfaceY(level, s.x(), s.z());
         if (!piece.startsWith("nordrath/") && isPlace(piece)) y = ground(level, s, piece);
+        if (BossKeeps.has(piece)) return BossKeeps.build(level, s, piece); // a boss's keep: an island of rock, its hall inside
         switch (piece) {
             case "parsivan/baths" -> baths(level, s, y);
             case "parsivan/silk_road" -> caravanserai(level, s, y);

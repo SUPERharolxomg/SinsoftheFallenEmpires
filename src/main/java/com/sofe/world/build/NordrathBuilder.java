@@ -28,7 +28,7 @@ final class NordrathBuilder {
                 return true;
             }
             case "nordrath/forge", "nordrath/arena", "nordrath/burning_citadel" -> {
-                return MountainHalls.build(level, s, piece); // halls cut into mountains, their gates set at their own floor
+                return BossKeeps.build(level, s, piece); // halls cut into mountains, their gates set at their own floor
             }
             case "nordrath/caverns_entrance" -> cavernsEntrance(level, s, y);
             case "nordrath/forge_boss_room", "nordrath/arena_floor", "nordrath/citadel_arena" -> {
