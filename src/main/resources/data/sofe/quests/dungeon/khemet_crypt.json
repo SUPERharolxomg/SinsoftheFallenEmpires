@@ -28,6 +28,13 @@
       "target": {
         "x": 3000,
         "z": 2500
+      },
+      "haunt": {
+        "x": 3000,
+        "z": 2500,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:bog_mummy"
       }
     },
     {

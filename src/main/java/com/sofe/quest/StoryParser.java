@@ -41,7 +41,14 @@ public final class StoryParser {
                 lair = new QuestDefinition.Lair(l.get("x").getAsInt(), l.get("z").getAsInt(), l.has("depth") ? l.get("depth").getAsInt() : 12,
                         str(l, "name", null));
             }
-            steps.add(new QuestDefinition.Step(objective, effects(step, "on_start"), target, invasion, lair));
+            QuestDefinition.Haunt haunt = null;
+            if (step.has("haunt")) {
+                JsonObject h = step.getAsJsonObject("haunt");
+                if (!(objective instanceof Objective.Kill)) throw new IllegalArgumentException("a haunt's step must ask for kills");
+                haunt = new QuestDefinition.Haunt(h.get("x").getAsInt(), h.get("z").getAsInt(), h.has("depth") ? h.get("depth").getAsInt() : 6,
+                        h.has("reach") ? h.get("reach").getAsInt() : 28, str(h, "entity", null));
+            }
+            steps.add(new QuestDefinition.Step(objective, effects(step, "on_start"), target, invasion, lair, haunt));
         }
         Condition requires = json.has("requires") ? ConditionParser.parse(json.get("requires")) : null;
         QuestDefinition.Discovery discovery = null;

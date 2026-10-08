@@ -38,8 +38,50 @@ public final class CryptLord {
             if (state.completed()) return;
             StoryDataManager.quest(id).flatMap(q -> q.step(state.step())).ifPresent(step -> {
                 if (step.lair() != null && step.objective() instanceof Objective.Kill kill) rise(player, step.lair(), kill.entity().substring(Objective.LORD.length()));
+                if (step.haunt() != null && step.objective() instanceof Objective.Kill kill) haunt(player, step.haunt(), kill.count() - state.count());
             });
         });
+    }
+
+    /** The tag of the dead a dungeon raises for a Bearer, and how many of them stand at once. */
+    public static final String RISEN = "sofe_risen";
+    static final int AT_ONCE = 3;
+
+    /** Whether the Bearer is inside a haunted dungeon: near its middle across, and under its ground. */
+    static boolean inside(ServerPlayer player, QuestDefinition.Haunt haunt) {
+        double dx = player.getX() - haunt.x(), dz = player.getZ() - haunt.z();
+        if (dx * dx + dz * dz > (double) haunt.reach() * haunt.reach()) return false;
+        int surface = player.serverLevel().getHeight(Heightmap.Types.WORLD_SURFACE, player.getBlockX(), player.getBlockZ());
+        return player.getY() <= surface - haunt.depth();
+    }
+
+    /**
+     * The dead the step still asks for rise near the Bearer inside the dungeon, never more than a few at once, out of
+     * sight a few blocks off; each counts for the Bearer whoever strikes it (QuestEngine.onKill).
+     */
+    static void haunt(ServerPlayer player, QuestDefinition.Haunt haunt, int remaining) {
+        if (remaining <= 0 || !inside(player, haunt)) return;
+        ServerLevel level = player.serverLevel();
+        String mine = VoidInvasion.forTag(player.getUUID());
+        int alive = level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(40), m -> m.isAlive() && m.getTags().contains(RISEN) && m.getTags().contains(mine)).size();
+        int come = Math.min(AT_ONCE, remaining) - alive;
+        EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(haunt.entity()));
+        if (type == null) return;
+        for (int i = 0; i < come; i++) {
+            double angle = level.random.nextDouble() * Math.PI * 2;
+            int x = (int) Math.floor(player.getX() + Math.cos(angle) * (5 + level.random.nextInt(4)));
+            int z = (int) Math.floor(player.getZ() + Math.sin(angle) * (5 + level.random.nextInt(4)));
+            BlockPos near = com.sofe.world.Grounding.near(level, x, player.getBlockY(), z, 4);
+            BlockPos at = com.sofe.world.Grounding.roomFor(level, type, near, 4);
+            if (!com.sofe.world.Grounding.fits(level, type, at) || Math.abs(at.getY() - player.getBlockY()) > 6) continue; // never through a floor
+            if (!(type.spawn(level, at, MobSpawnType.EVENT) instanceof Mob dead)) continue;
+            dead.addTag(RISEN);
+            dead.addTag(mine);
+            dead.setPersistenceRequired();
+            dead.setTarget(player);
+            level.sendParticles(ParticleTypes.SOUL, dead.getX(), dead.getY() + 1, dead.getZ(), 20, 0.4, 0.8, 0.4, 0.02);
+            level.playSound(null, at, SoundEvents.ZOMBIE_VILLAGER_CONVERTED, SoundSource.HOSTILE, 0.6f, 0.6f);
+        }
     }
 
     /** Whether the Bearer is in the lair: near it across, and deep enough under the ground above it. */

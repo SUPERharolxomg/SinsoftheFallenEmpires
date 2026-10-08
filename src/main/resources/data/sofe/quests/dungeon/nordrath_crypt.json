@@ -28,6 +28,13 @@
       "target": {
         "x": 760,
         "z": -2050
+      },
+      "haunt": {
+        "x": 760,
+        "z": -2050,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:draugr"
       }
     },
     {

@@ -270,6 +270,11 @@ public final class QuestEngine {
             BlockPos pos = com.sofe.world.Grounding.roomFor(level, type, com.sofe.world.Grounding.beside(level, x, z, player), 8);
             Entity entity = type.spawn(level, pos, MobSpawnType.EVENT);
             if (entity instanceof Mob mob) {
+                // the step's foes are the Bearer's: they count whoever strikes them (a companion, a soldier), and they
+                // stay until they fall (keepFoes calls them again if they are all gone)
+                mob.addTag(VoidInvasion.forTag(player.getUUID()));
+                mob.addTag(FOE);
+                mob.setPersistenceRequired();
                 if (spawn.elite()) com.sofe.mob.EliteMobs.make(mob, StoryCapability.get(player).map(StoryProgress::act).orElse(1), level.random);
                 mob.setTarget(player);
             }
@@ -319,6 +324,7 @@ public final class QuestEngine {
         wakeBosses(player);
         VoidInvasion.tick(player);
         CryptLord.wake(player);
+        keepFoes(player);
     }
 
     /**
@@ -407,6 +413,49 @@ public final class QuestEngine {
                 }
             });
         }));
+    }
+
+    /** The tag of the foes a quest step called for a Bearer; how long none must stand before they are called again, and how near its place. */
+    public static final String FOE = "sofe_foe";
+    public static final int FOES_AGAIN_TICKS = 20 * 10, FOES_NEAR = 64;
+    private static final Map<String, Long> FOES_GONE_SINCE = new java.util.HashMap<>();
+
+    /**
+     * A step that asks to kill the foes it called (a Ruin's guardian, a Bearer's quest) never hangs: when none of them
+     * stands any more (they despawned, fell in lava, were lost in an unloaded land) and the step still asks for more, they
+     * are called again near the Bearer after a little while (near the step's place, when it has one).
+     */
+    public static void keepFoes(ServerPlayer player) {
+        StoryProgress story = StoryCapability.get(player).orElse(null);
+        if (story == null || !player.isAlive() || player.isSpectator()) return;
+        ServerLevel level = player.serverLevel();
+        String mine = VoidInvasion.forTag(player.getUUID());
+        story.quests().forEach((id, state) -> {
+            if (state.completed()) return;
+            StoryDataManager.quest(id).flatMap(q -> q.step(state.step())).ifPresent(step -> {
+                if (!(step.objective() instanceof Objective.Kill kill) || step.invasion() != null || step.lair() != null || step.haunt() != null) return;
+                QuestEffect.Spawn spawn = step.onStart().stream().filter(e -> e instanceof QuestEffect.Spawn s && QuestLogic.matches(kill.entity(), s.entity()))
+                        .map(e -> (QuestEffect.Spawn) e).findFirst().orElse(null);
+                int remaining = kill.count() - state.count();
+                if (spawn == null || remaining <= 0) return;
+                String key = player.getUUID() + "|" + id + "|" + state.step();
+                if (step.target() != null) {
+                    double dx = player.getX() - step.target().x(), dz = player.getZ() - step.target().z();
+                    if (dx * dx + dz * dz > (double) FOES_NEAR * FOES_NEAR) return;
+                }
+                boolean standing = !level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(Mob.class),
+                        m -> m.isAlive() && m.getTags().contains(FOE) && m.getTags().contains(mine)).isEmpty();
+                long now = level.getGameTime();
+                if (standing) {
+                    FOES_GONE_SINCE.remove(key);
+                    return;
+                }
+                long since = FOES_GONE_SINCE.computeIfAbsent(key, k -> now);
+                if (now - since < FOES_AGAIN_TICKS) return;
+                FOES_GONE_SINCE.remove(key);
+                spawn(player, new QuestEffect.Spawn(spawn.entity(), Math.min(remaining, spawn.count()), spawn.radius(), spawn.elite()));
+            });
+        });
     }
 
     /** Joining a journey also sends the region layout, which the client needs for the Seal Veil. */

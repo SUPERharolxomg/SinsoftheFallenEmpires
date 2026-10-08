@@ -28,6 +28,13 @@
       "target": {
         "x": 4200,
         "z": -1100
+      },
+      "haunt": {
+        "x": 4200,
+        "z": -1100,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:mirage_dancer"
       }
     },
     {

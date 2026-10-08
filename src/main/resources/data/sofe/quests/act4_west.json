@@ -23,8 +23,8 @@
         "type": "manual"
       },
       "target": {
-        "x": -5400,
-        "z": 2800
+        "x": -5600,
+        "z": 1000
       },
       "_chapter": "act4_west/first_consul"
     },
@@ -51,6 +51,13 @@
         "x": -2600,
         "z": 1800
       },
+      "haunt": {
+        "x": -2600,
+        "z": 1800,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:gilded_legionnaire"
+      },
       "_chapter": "act4_west/first_consul"
     },
     {
@@ -76,8 +83,8 @@
         "type": "manual"
       },
       "target": {
-        "x": -5400,
-        "z": 2800
+        "x": -5600,
+        "z": 1000
       },
       "_chapter": "act4_west/first_consul"
     },

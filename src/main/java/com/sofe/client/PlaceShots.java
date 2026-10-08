@@ -86,7 +86,11 @@ public final class PlaceShots {
         }
     }
 
-    private static void build(Minecraft mc, String piece) {
+    private static void build(Minecraft mc, String requested) {
+        // health:<creature>, as boss: but with the HUD shown (the enemy health over its head)
+        final String piece = requested.startsWith("health:") ? "boss:" + requested.substring("health:".length()) : requested;
+        if (requested.startsWith("health:")) mc.options.hideGui = false;
+        else if (!piece.startsWith("dialogue:") && !piece.startsWith("scene:") && !piece.equals("death")) mc.options.hideGui = true;
         var server = mc.getSingleplayerServer();
         if (piece.startsWith("npc:")) { // npc:<id>, one story NPC close up, from the front three-quarters
             String[] parts = piece.substring(4).split(":");

@@ -138,6 +138,13 @@
         "x": 300,
         "z": 620
       },
+      "haunt": {
+        "x": 300,
+        "z": 620,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:sand_ghoul"
+      },
       "_chapter": "act1_eclipse/first_vizier"
     },
     {
@@ -177,6 +184,13 @@
       "target": {
         "x": 480,
         "z": -420
+      },
+      "haunt": {
+        "x": 480,
+        "z": -420,
+        "depth": 6,
+        "reach": 30,
+        "entity": "sofe:sand_ghoul"
       },
       "_dungeon": "sulthari/crypt"
     },

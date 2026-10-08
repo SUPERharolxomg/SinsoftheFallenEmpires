@@ -91,4 +91,53 @@ public class InvasionGameTests {
         }
         helper.succeed();
     }
+
+    /** A crypt's halls step never hangs on its spawners: inside the crypt, the dead it still asks for rise near the Bearer. */
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void aCryptsDeadRiseWithoutItsSpawners(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos at = helper.absolutePos(new BlockPos(4, 2, 4));
+        level.setBlockAndUpdate(at.above(12), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState()); // the crypt's ground, far over the Bearer
+        ServerPlayer hero = FakePlayerFactory.get(level, new GameProfile(UUID.randomUUID(), "sofe_test_delver"));
+        hero.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        String id = "sofe:test_crypt_" + Long.toHexString(System.nanoTime());
+        var haunt = new QuestDefinition.Haunt(at.getX(), at.getZ(), 6, 30, "sofe:sand_ghoul");
+        StoryDataManager.putForTest(new QuestDefinition(id, QuestDefinition.Type.DUNGEON, 1,
+                List.of(new QuestDefinition.Step(new Objective.Kill("sofe:sand_ghoul", 4), List.of(), null, null, null, haunt)), List.of(), null));
+        QuestEngine.startQuest(hero, id);
+        com.sofe.quest.CryptLord.wake(hero);
+        AABB around = new AABB(at).inflate(16);
+        List<Mob> risen = level.getEntitiesOfClass(Mob.class, around, m -> m.getTags().contains(com.sofe.quest.CryptLord.RISEN));
+        helper.assertTrue(risen.size() == 3, "three of the crypt's dead should rise at once, found " + risen.size());
+        // each is the Bearer's, so it counts for them whoever strikes it (QuestEngine.onKill finds a real player by this tag)
+        helper.assertTrue(risen.stream().allMatch(m -> m.getTags().contains(VoidInvasion.forTag(hero.getUUID()))), "the risen dead are not the Bearer's");
+        risen.forEach(net.minecraft.world.entity.Entity::discard);
+        level.setBlockAndUpdate(at.above(12), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        helper.succeed();
+    }
+
+    /** A step's foes that are all gone (despawned, lost) are called again a little later: the step never hangs. */
+    @GameTest(template = "empty", timeoutTicks = 320)
+    public static void aStepsLostFoesComeAgain(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos at = helper.absolutePos(new BlockPos(4, 2, 4));
+        ServerPlayer hero = FakePlayerFactory.get(level, new GameProfile(UUID.randomUUID(), "sofe_test_hunter"));
+        hero.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        String id = "sofe:test_foes_" + Long.toHexString(System.nanoTime());
+        StoryDataManager.putForTest(new QuestDefinition(id, QuestDefinition.Type.SIDE, 1, List.of(new QuestDefinition.Step(
+                new Objective.Kill("sofe:sand_ghoul", 2), List.of(new com.sofe.quest.QuestEffect.Spawn("sofe:sand_ghoul", 2, 6)), null)), List.of(), null));
+        QuestEngine.startQuest(hero, id);
+        String mine = VoidInvasion.forTag(hero.getUUID());
+        var called = level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(Mob.class), m -> m.getTags().contains(mine) && m.getTags().contains(QuestEngine.FOE));
+        helper.assertTrue(called.size() == 2, "the step did not call its two foes as the Bearer's, found " + called.size());
+        called.forEach(net.minecraft.world.entity.Entity::discard); // lost
+        QuestEngine.keepFoes(hero);
+        helper.runAfterDelay(QuestEngine.FOES_AGAIN_TICKS + 5, () -> {
+            QuestEngine.keepFoes(hero);
+            var again = level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(Mob.class), m -> m.isAlive() && m.getTags().contains(mine));
+            helper.assertTrue(again.size() == 2, "the lost foes were not called again, found " + again.size());
+            again.forEach(net.minecraft.world.entity.Entity::discard);
+            helper.succeed();
+        });
+    }
 }

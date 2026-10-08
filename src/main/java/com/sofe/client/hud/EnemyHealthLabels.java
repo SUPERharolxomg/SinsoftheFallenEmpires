@@ -7,13 +7,16 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderNameTagEvent;
 import org.joml.Matrix4f;
 
 /**
  * How much health an enemy has left, written over its head as numbers ("❤ 18 / 24"), not as a bar: green while it is
  * hale, yellow when hurt, red when nearly down. Only enemies near the player and in their sight; a boss has its own
  * bar at the top of the screen (BossHealthBar). The client option enemyHealth turns it off.
+ * <p>
+ * Drawn from the name-tag event, which every entity renderer fires (EntityRenderer.render): the mod's own creatures are
+ * drawn by GeckoLib, whose renderers never fire the living-render events, so a label hung on those was missing on them.
  */
 public final class EnemyHealthLabels {
     /** How far an enemy's health is written. */
@@ -22,10 +25,12 @@ public final class EnemyHealthLabels {
     private EnemyHealthLabels() {
     }
 
-    public static void onRenderLiving(RenderLivingEvent.Post<?, ?> event) {
-        LivingEntity mob = event.getEntity();
+    public static void onNameTag(RenderNameTagEvent event) {
+        if (!(event.getEntity() instanceof LivingEntity mob)) return;
         Minecraft mc = Minecraft.getInstance();
-        if (!(mob instanceof Enemy) || mob instanceof com.sofe.entity.boss.SoFEBossEntity || !mob.isAlive() || mob.isInvisible()
+        boolean enemy = mob instanceof Enemy || mob.getType().getCategory() == net.minecraft.world.entity.MobCategory.MONSTER;
+        boolean friend = mob instanceof com.sofe.entity.summon.Ally || mob instanceof com.sofe.entity.npc.StoryNpcEntity || mob instanceof net.minecraft.world.entity.player.Player;
+        if (!enemy || friend || mob instanceof com.sofe.entity.boss.SoFEBossEntity || !mob.isAlive() || mob.isInvisible()
                 || mc.player == null || mc.options.hideGui || !SoFEConfig.CLIENT.enemyHealth.get()) return;
         if (mob.distanceToSqr(mc.player) > RANGE * RANGE || !mc.player.hasLineOfSight(mob)) return;
         float health = mob.getHealth(), max = mob.getMaxHealth();

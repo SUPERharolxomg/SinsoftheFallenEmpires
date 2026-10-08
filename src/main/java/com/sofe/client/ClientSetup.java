@@ -40,7 +40,7 @@ public final class ClientSetup {
         MinecraftForge.EVENT_BUS.addListener(CombatHudOverlay::onRenderOverlay);
         MinecraftForge.EVENT_BUS.addListener(CastPoses::onRenderPlayer);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.BossHealthBar::onBossBar);
-        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.EnemyHealthLabels::onRenderLiving);
+        MinecraftForge.EVENT_BUS.addListener(com.sofe.client.hud.EnemyHealthLabels::onNameTag);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onTooltip);
         MinecraftForge.EVENT_BUS.addListener(GearClient::onRenderLevel);
         MinecraftForge.EVENT_BUS.addListener(com.sofe.client.screen.ThemedMenus::onInit);
