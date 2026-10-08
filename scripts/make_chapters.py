@@ -308,6 +308,8 @@ def main():
         positions["structures"]["sofe:%s/tomb_%s" % (region, name)] = {"x": xz[0], "z": xz[1], "size_x": make_dungeons.CRYPT_SIZE,
                                                                         "size_z": make_dungeons.CRYPT_SIZE, "zone": "dungeon"}
         text("place.sofe.%s.tomb_%s" % (region, name), place[0], place[1])
+        positions["waystones"]["sofe:%s/tomb_%s" % (region, name)] = {"x": xz[0] + 5, "z": xz[1] + 13}  # by its court, to travel back
+        text("waystone.sofe.%s.tomb_%s" % (region, name), place[0], place[1])
         text("lord.sofe.tomb_%s" % name, lord[1], lord[2])
     dump(path, positions, indent=1)
     for c in CHAPTERS:

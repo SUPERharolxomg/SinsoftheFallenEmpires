@@ -51,8 +51,25 @@ public final class CryptLord {
     static boolean inside(ServerPlayer player, QuestDefinition.Haunt haunt) {
         double dx = player.getX() - haunt.x(), dz = player.getZ() - haunt.z();
         if (dx * dx + dz * dz > (double) haunt.reach() * haunt.reach()) return false;
-        int surface = player.serverLevel().getHeight(Heightmap.Types.WORLD_SURFACE, player.getBlockX(), player.getBlockZ());
-        return player.getY() <= surface - haunt.depth();
+        return underground(player.serverLevel(), player.blockPosition(), haunt.x(), haunt.z(), haunt.reach(), haunt.depth());
+    }
+
+    /**
+     * Whether the Bearer is this deep in a dungeon: under a roof, and this far below the highest ground round its place
+     * (its hill, its court). Measured against the ground right over a chamber, a crypt by the sea or a lake (a low shore
+     * over its deepest chamber) never counted its Bearer as deep enough, and its lord never rose.
+     */
+    public static boolean underground(ServerLevel level, BlockPos at, int x, int z, int reach, int depth) {
+        // a roof over the Bearer: some block over them (not the sky's light, which a land just made may not have yet)
+        if (level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.getX(), at.getZ()) <= at.getY() + 1) return false;
+        int highest = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.getX(), at.getZ()); // the rock right over the Bearer too
+        int step = Math.max(4, reach / 2);
+        for (int dx = -reach; dx <= reach; dx += step) {
+            for (int dz = -reach; dz <= reach; dz += step) {
+                highest = Math.max(highest, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + dx, z + dz));
+            }
+        }
+        return at.getY() <= highest - depth;
     }
 
     /**
@@ -84,12 +101,55 @@ public final class CryptLord {
         }
     }
 
+    /**
+     * A survey of every dungeon's depths (a development check, PlaceShots' "survey"): for each step with a lair, the floor
+     * of its deepest chamber found under it, whether a Bearer standing there counts as in the lair, and where its lord
+     * would rise; for each step with a haunt, whether a Bearer in the first hall counts as inside.
+     */
+    public static java.util.List<String> survey(ServerLevel level) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        for (QuestDefinition quest : StoryDataManager.quests().values()) {
+            for (QuestDefinition.Step step : quest.steps()) {
+                if (step.lair() != null && step.objective() instanceof Objective.Kill kill) {
+                    QuestDefinition.Lair lair = step.lair();
+                    BlockPos floor = chamberFloor(level, lair.x() - 3, lair.z());
+                    EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(kill.entity().substring(Objective.LORD.length())));
+                    boolean in = floor != null && underground(level, floor, lair.x(), lair.z(), NEAR, lair.depth());
+                    BlockPos at = floor == null || type == null ? null
+                            : com.sofe.world.Grounding.roomFor(level, type, com.sofe.world.Grounding.near(level, lair.x(), floor.getY(), lair.z(), 3), 8);
+                    boolean fits = at != null && com.sofe.world.Grounding.fits(level, type, at);
+                    boolean ok = in && fits && Math.abs(at.getY() - floor.getY()) <= 3;
+                    out.add(String.format("%s lord %s floor=%s inLair=%s rises=%s fits=%s", ok ? "OK " : "BAD", quest.id(),
+                            floor == null ? "none" : floor.toShortString(), in, at == null ? "-" : at.toShortString(), fits));
+                }
+                if (step.haunt() != null) {
+                    QuestDefinition.Haunt h = step.haunt();
+                    BlockPos hall = chamberFloor(level, h.x(), h.z() - 20); // the Hall of the Dead, the first level
+                    boolean in = hall != null && underground(level, hall, h.x(), h.z(), h.reach(), h.depth());
+                    int over = hall == null ? 0 : level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, hall.getX(), hall.getZ());
+                    out.add(String.format("%s haunt %s hall=%s inside=%s over=%d", in ? "OK " : "BAD", quest.id(), hall == null ? "none" : hall.toShortString(), in, over));
+                }
+            }
+        }
+        return out;
+    }
+
+    /** The highest floor under a roof in this column (a dungeon's room under the ground), or null. */
+    private static BlockPos chamberFloor(ServerLevel level, int x, int z) {
+        level.getChunk(x >> 4, z >> 4);
+        int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        for (int y = top - 2; y > level.getMinBuildHeight() + 2; y--) {
+            BlockPos p = new BlockPos(x, y, z);
+            if (com.sofe.world.Grounding.standable(level, p) && top > y + 2) return p;
+        }
+        return null;
+    }
+
     /** Whether the Bearer is in the lair: near it across, and deep enough under the ground above it. */
     static boolean inLair(ServerPlayer player, QuestDefinition.Lair lair) {
         double dx = player.getX() - lair.x(), dz = player.getZ() - lair.z();
         if (dx * dx + dz * dz > NEAR * NEAR) return false;
-        int surface = player.serverLevel().getHeight(Heightmap.Types.WORLD_SURFACE, lair.x(), lair.z());
-        return player.getY() <= surface - lair.depth();
+        return underground(player.serverLevel(), player.blockPosition(), lair.x(), lair.z(), NEAR, lair.depth());
     }
 
     private static void rise(ServerPlayer player, QuestDefinition.Lair lair, String entity) {
@@ -99,7 +159,7 @@ public final class CryptLord {
         if (!level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(48), m -> m.isAlive() && m.getTags().contains(TAG) && m.getTags().contains(mine)).isEmpty()) return;
         EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(entity));
         if (type == null) return;
-        BlockPos at = com.sofe.world.Grounding.near(level, lair.x(), player.getBlockY(), lair.z(), 6);
+        BlockPos at = com.sofe.world.Grounding.roomFor(level, type, com.sofe.world.Grounding.near(level, lair.x(), player.getBlockY(), lair.z(), 3), 8);
         if (!(type.spawn(level, at, MobSpawnType.EVENT) instanceof Mob lord)) return;
         com.sofe.mob.EliteMobs.make(lord, StoryCapability.get(player).map(StoryProgress::act).orElse(1), level.random);
         lord.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(lord.getMaxHealth() * 2);
